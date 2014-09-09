@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <RelativeLayout android:id="@+id/about_body"
+        android:layout_width="500dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:layout_centerHorizontal="true">
+        <ImageView android:id="@+id/about_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sysmessage"
+            android:layout_centerHorizontal="true"/>
+        <TextView android:id="@+id/about_system_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/systemnum"
+            android:layout_below="@id/about_iv"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="40dp"/>
+        <TextView android:id="@+id/about_system_num_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_toRightOf="@id/about_system_num"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/about_iv"
+            android:layout_marginTop="40dp"/>
+        <EditText android:id="@+id/about_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/information"
+            android:textSize="25sp"
+            android:enabled="false"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/about_system_num"
+            android:layout_marginTop="40dp"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/help_bottom_btn_rl"
+       	style="@style/right_bottom_rl"
+       	android:layout_width="fill_parent">
+        <Button android:id="@+id/help_back_btn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:clickable="true"
+            android:background="@drawable/btn_selector"
+	        android:text="@string/back"
+	        android:textSize="15sp"
+	        android:textColor="@android:color/white"
+	        android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</RelativeLayout>

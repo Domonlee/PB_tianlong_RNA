@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Extraction System</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="sure_exit">确定要退出吗？</string>
+    <string name="sure">확\u0020\u0020\u0020\u0020\u0020정</string>
+    <string name="cancle">取\u0020\u0020\u0020\u0020\u0020消</string>
+    <string name="logout">注\u0020\u0020\u0020\u0020\u0020销</string>
+    <string name="stop">停\u0020\u0020\u0020\u0020\u0020止</string>
+    <string name="run">运\u0020\u0020\u0020\u0020\u0020行</string>
+    <string name="pause">暂\u0020\u0020\u0020\u0020\u0020停</string>
+    <string name="save">保\u0020\u0020\u0020\u0020\u0020存</string>
+    <string name="other_save">另\u0020\u0020\u0020\u0020\u0020存</string>
+    <string name="edit">编\u0020\u0020\u0020\u0020\u0020辑</string>
+    <string name="back">귀\u0020\u0020\u0020\u0020\u0020환</string>
+    <string name="send">发\u0020\u0020\u0020\u0020\u0020送</string>
+    <string name="reset">复\u0020\u0020\u0020\u0020\u0020位</string>
+    <string name="complete">完\u0020\u0020\u0020\u0020\u0020成</string>
+    <string name="update">升\u0020\u0020\u0020\u0020\u0020级</string>
+    <string name="system_reset">系统复位</string>
+    <string name="ultraviolet">紫外灯正在消毒</string>
+    <string name="wifi_error">Wifi连接错误或未连接</string>
+    <string name="template_null">不使用模板</string>
+    <string name="template_one">模板一</string>
+    <string name="waitting">请稍后&#8230;&#8230;</string>
+    <!--主页面-->
+    <string name="experiment">实验管理</string>
+    <string name="log">实验日志</string>
+    <string name="setting">系统设置</string>
+    <string name="up_down">上传 &amp; 下载</string>
+    <string name="disinfection">紫外消毒</string>
+    <string name="help">帮\u0020\u0020\u0020\u0020\u0020助</string>
+    <!--登录页面-->
+    <string name="user_name_null">用户名不能为空</string>
+    <string name="user_pass_null">密码不能为空</string>
+    <string name="user_error">用户名或密码错误</string>
+    <string name="user_name_input">请输入用户名</string>
+    <string name="user_pass_input">请输入密码</string>
+    <string name="login">登\u0020\u0020\u0020\u0020\u0020录</string>
+    <string name="register">注\u0020\u0020\u0020\u0020\u0020册</string>
+    <string name="user_pass_delete">请输入此用户密码</string>
+    <string name="user_pass_error">密码 错误</string>
+    <!--注册页面-->
+    <string name="user_rpass_null">确认密码不能为空</string>
+    <string name="user_name_ture">用户名已被注册</string>
+    <string name="user_register_success">注册成功！请登录</string>
+    <string name="user_pass_rpass">两次输入的密码不一致</string>
+    <string name="user_rpass_input">请确认密码</string>
+    <!--系统设置-->
+    <string name="system_language">语言设置</string>
+    <string name="system_net">网络设置</string>
+    <string name="system_clean">消毒设置</string>
+    <string name="system_user">用户设置</string>
+    <string name="system_update">仪器升级</string>
+    <string name="system_temp">系统温度</string>
+    <string name="system_machine">位置校准</string>
+    <string name="system_detection">仪器检测</string>
+    <!--系统设置_语言设置-->
+    <string name="language_english">English</string>
+    <string name="language_chinese">中\u0020\u0020 文</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_success">语言设置成功</string>
+    <string name="language_failure">语言设置失败</string>
+    <!--系统设置_网络设置-->
+    <string name="net_name">仪器名称</string>
+    <string name="net_name_input">请输入仪器名称</string>
+    <string name="net_name_not_null">仪器名称不能为空</string>
+    <string name="net_ip">IP地址</string>
+    <string name="net_ip_input">请输入IP地址</string>
+    <string name="net_ip_format">IP地址格式不正确</string>
+    <string name="net_ip_not_null">IP地址不能为空</string>
+    <string name="net_mac">Mac地址</string>
+    <string name="net_mac_input">请输入Mac地址</string>
+    <string name="net_mac_format">Mac地址格式不正确</string>
+    <string name="net_mac_not_null">Mac地址不能为空</string>
+    <string name="net_gateway">默认网关</string>
+    <string name="net_gateway_input">请输入默认网关</string>
+    <string name="net_gateway_format">默认网关格式不正确</string>
+    <string name="net_gateway_not_null">默认网关不能为空</string>
+    <string name="net_mask">子网掩码</string>
+    <string name="net_mask_input">请输入子网掩码</string>
+    <string name="net_mask_format">子网掩码格式不正确</string>
+    <string name="net_mask_not_null">子网掩码不能为空</string>
+    <string name="net_success">网络设置成功</string>
+    <string name="net_failure">网络设置失败</string>
+    <!--系统设置_消毒设置-->
+    <string name="dismdect">消毒时间</string>
+    <string name="dismdect_success">消毒时间设置成功</string>
+    <string name="dismdect_failure">消毒时间设置失败</string>
+    <!--系统设置_用户设置-->
+    <string name="user_default">默认登录</string>
+    <string name="user_pass">修改密码</string>
+    <string name="user_original_pass">用户密码</string>
+    <string name="user_original_pass_input">请输入用户密码</string>
+    <string name="user_original_pass_not_null">用户密码不能为空</string>
+    <string name="user_original_pass_error">用户密码错误</string>
+    <string name="user_new_pass">新密码</string>
+    <string name="user_new_pass_input">请输入新密码</string>
+    <string name="user_new_pass_not_null">新密码不能为空</string>
+    <string name="user_confirm_pass">确认密码</string>
+    <string name="user_confirm_pass_input">请输入确认密码</string>
+    <string name="user_confirm_pass_not_null">确认密码不能为空</string>
+    <string name="two_pass_error">两次密码不一致</string>
+    <string name="user_default_success">默认登录设置成功</string>
+    <string name="user_default_failure">默认登录设置失败</string>
+    <string name="user_pass_success">用户密码修改成功</string>
+    <string name="user_pass_failure">用户密码修改失败</string>
+    <string name="user_admin_admin">管理员</string>
+    <string name="user_admin_user">用户</string>
+    <string name="user_admin_name">姓\u0020\u0020名</string>
+    <string name="user_admin_permissions">权\u0020\u0020限</string>
+    <string name="user_admin_login">默认登录</string>
+    <!--系统设置_仪器设置-->
+    <string name="instrument_flux_name">通\u0020量\u0020设\u0020置</string>
+    <string name="instrument_parameter_run">运行参数设置(单位: mm)</string>
+    <string name="instrument_blend">混合电机控制</string>
+    <string name="instrument_magnetic">磁吸电机控制</string>
+    <string name="instrument_hole">水平运动电机控制</string>
+    <string name="instrument_blend_null">混合电机控制值不能为空</string>
+    <string name="instrument_magnetic_null">磁吸电机控制值不能为空</string>
+    <string name="instrument_hole_null">水平运动电机控制值不能为空</string>
+    <string name="instrument_hole_success">水平运动电机移动成功</string>
+    <string name="instrument_blend_success">混合电机移动成功</string>
+    <string name="instrument_magnetic_success">磁吸电机移动成功</string>
+    <string name="instrument_flux_selete">通量选择</string>
+    <string name="instrument_success">仪器设置成功</string>
+    <string name="instrument_failure">仪器设置失败</string>
+    <!--系统设置_仪器检测-->
+    <string name="detection_check">检\u0020\u0020\u0020\u0020\u0020测</string>
+    <string name="detection_not_back">正在检测,不能返回!</string>
+    <string name="detection_not_check">正在检测,不能切换!</string>
+    <string name="detection_checking">正在检测&#8230;&#8230;</string>
+    <string name="detection_power">供电电压</string>
+    <string name="detection_sensor">加热条传感器</string>
+    <string name="detection_heating">加热条升降温</string>
+    <string name="detection_shock">混合电机</string>
+    <string name="detection_magnet">磁吸电机</string>
+    <string name="detection_level">水平运动电机</string>
+    <string name="detection_five">•5伏电压错误</string>
+    <string name="detection_twelve">•12伏电压错误</string>
+    <string name="detection_thirty_three">•33伏电压错误</string>
+    <string name="detection_power_sucess">•供电电压检测正常</string>
+    <string name="detection_sensor_t1">•加热条1传感器错误</string>
+    <string name="detection_sensor_t2">•加热条2传感器错误</string>
+    <string name="detection_sensor_t3">•加热条3传感器错误</string>
+    <string name="detection_sensor_t4">•加热条4传感器错误</string>
+    <string name="detection_sensor_t5">•加热条5传感器错误</string>
+    <string name="detection_sensor_t6">•加热条6传感器错误</string>
+    <string name="detection_sensor_t7">•加热条7传感器错误</string>
+    <string name="detection_sensor_t8">•加热条8传感器错误</string>
+    <string name="detection_sensor_sucess">•加热条传感器正常</string>
+    <string name="detection_heating_error_one">•加热条:</string>
+    <string name="detection_heating_error_two">错误</string>
+    <string name="detection_heating_sucess">•加热条升降温正常</string>
+    <string name="detection_shock_sucess">•混合电机正常</string>
+    <string name="detection_magnet_sucess">•磁吸电机正常</string>
+    <string name="detection_level_sucess">•水平运动电机正常</string>
+    <string name="detection_shock_error">•混合电机错误</string>
+    <string name="detection_magnet_error">•磁吸电机错误</string>
+    <string name="detection_level_error">•水平运动电机错误</string>
+    <!--实验管理-->
+    <string name="exp_no_select">没有选择实验</string>
+    <string name="exp_sure_to_delete">确定要删除这条实验吗？</string>
+    <string name="exp_new_exp">新建实验</string>
+    <string name="exp_delete_exp">删除实验</string>
+    <string name="exp_add_quick">添加快捷实验</string>
+    <string name="exp_cancle_quick">取消快捷实验</string>
+    <string name="exp_name_null">实验名称不能为空</string>
+    <string name="exp_creating">正在建立实验,请稍后&#8230;&#8230;</string>
+    <string name="exp_prepareing">正在准备实验,请稍后&#8230;&#8230;</string>
+    <string name="exp_creat_date">创建时间:</string>
+    <string name="exp_edit_date">修改时间:</string>
+    <string name="exp_quick_exp">快捷实验:</string>
+    <string name="exp_remark">实验备注:</string>
+    <string name="exp_edit_success">修改成功</string>
+    <string name="exp_edit_failure">修改失败</string>
+    <!--新建实验-->
+    <string name="exp_new_not_exit">新建实验过程中不能退出</string>
+    <string name="exp_edit_not_exit">编辑实验过程中不能退出</string>
+    <string name="exp_inset_success">插入成功</string>
+    <string name="exp_delete_success">删除成功</string>
+    <string name="exp_step_name_null">步骤名不能为空</string>
+    <string name="exp_delete_step">删除步骤</string>
+    <string name="exp_insert_step">添加步骤</string>
+    <string name="exp_wait">等\u0200\u0200\u0200待</string>
+    <string name="exp_blend">混\u0200\u0200\u0200合</string>
+    <string name="exp_magnetic">磁\u0200\u0200\u0200吸</string>
+    <string name="exp_hole">孔\u0200\u0200\u0200位</string>
+    <string name="exp_vol">体\u0200\u0200\u0200积</string>
+    <string name="exp_blend_speed">混合频率</string>
+    <string name="exp_speed_unit">\u0200Hz</string>
+    <string name="exp_temp">温\u0200\u0200\u0200度</string>
+    <string name="exp_temp_unit">°C</string>
+    <string name="exp_temp_type">温度状态</string>
+    <string name="exp_next">下一步</string>
+    <string name="exp_closs">关闭</string>
+    <string name="exp_crack">裂解加温</string>
+    <string name="exp_elution">洗脱加温</string>
+    <string name="exp_name">实验名称:</string>
+    <string name="exp_name_input">请输入实验名称</string>
+    <string name="exp_template">选择模板</string>
+    <string name="exp_remark_inout">请输入实验备注</string>
+    <string name="exp_save_success">保存成功</string>
+    <string name="exp_wait_time_setting">等待时间设置</string>
+    <string name="exp_blend_time_setting">混合时间设置</string>
+    <string name="exp_magnetic_time_setting">磁吸时间设置</string>
+    <string name="exp_hole_select">孔位选择</string>
+    <string name="exp_vol_big">体积不能大于1000ul</string>
+    <string name="exp_vol_small">体积不能小于30ul</string>
+    <string name="exp_vol_empty">体积不能为空</string>
+    <string name="exp_speed_select">混合频率选择</string>
+    <string name="exp_temp_big">温度不能大于120°C</string>
+    <string name="exp_temp_empty">温度不能为空</string>
+    <string name="exp_sure_delete_all">确定要删除"全部"的step吗?</string>
+    <string name="exp_sure_delete_this">确定要删除这个的step吗?</string>
+    <string name="exp_temp_setting">温度设定</string>
+    <!--运行实验-->
+    <string name="run_exp_remain_time">剩余时间</string>
+    <string name="run_exp_stop_success">停止成功</string>
+    <string name="run_exp_send_info">正在发送数据，请稍后&#8230;&#8230;</string>
+    <string name="run_exp_not_exit">正在运行实验，不能退出！</string>
+    <string name="run_exp_stopping">正在停止实验，请稍后&#8230;&#8230;</string>
+    <string name="run_exp_finsh">实验完成！</string>
+    <string name="run_exp_not_run">还没有运行实验!</string>
+    <!--上传下载-->
+    <string name="up">上\u0020\u0020\u0020\u0020\u0020传</string>
+    <string name="down">下\u0020\u0020\u0020\u0020\u0020载</string>
+    <string name="local_file">本地文件</string>
+    <string name="upan_file">仪器文件</string>
+    <string name="no_select">没有选择文件</string>
+    <string name="delete_file">确定要删除这条仪器中的实验吗？</string>
+    <string name="down_file">确定要下载这条实验吗？</string>
+    <string name="up_file">确定要上传这条实验吗？</string>
+    
+    <!--快捷实验-->
+    <string name="quick_cancle">取消快捷方式</string>
+	<string name="quick_now_cancle">取消当前实验快捷方式</string>
+	<string name="quick_all_cancle">取消全部实验快捷方式</string>
+	<!--上传下载-->
+	<string name="down_is_full">仪器文件已满，请先删除！</string>
+	<string name="up_success">上传成功!</string>
+	<string name="up_failure">上传失败!</string>
+	<string name="downing">正在下载，请稍后&#8230;&#8230;</string>
+	<!--仪器升级-->
+	<string name="no_down_bin">没有可升级的文件</string>
+	<string name="no_select_down_bin">没有选择升级文件</string>
+	<!--帮助-->
+	<string name="information">Copyright 2010 by Xi‘an tianlong science﹠Technology Corporation.</string>
+	<string name="systemnum">	系统版本号:</string>
+	<string name="about_us">联系我们</string>
+	<string name="company_name">公司名称:</string>
+	<string name="company_name_info">西安天隆科技有限公司</string>
+	<string name="company_address">公司地址:</string>
+	<string name="company_address_info">西安市朱宏路389号</string>
+	<string name="company_phone">电话传真:</string>
+	<string name="company_phone_info">029\-82218051 83204255 传真:029\-82216680</string>
+	<string name="company_net">公司网址:</string>
+	<string name="company_net_info">http://www.medtl.com</string>
+	<string name="company_postcode">邮政编码:</string>
+	<string name="company_postcode_info">710018</string>
+	<string name="company_business">电子商务:</string>
+	<string name="company_business_info">medtl@medtl.com</string>
+	<string name="company_sell">销售部:</string>
+	<string name="company_sell_info">contact@medtl.com</string>
+	<string name="company_service">服务部:</string>
+	<string name="company_service_info">xatl@medtl.com</string>
+	<string name="company_technical">技术部:</string>
+	<string name="company_technical_info">support@medtl.com</string>
+	<string name="About">关于</string>
+	<string-array name="hour_array">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="minute_array">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+    </string-array>
+    <string-array name="second_array">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+    </string-array>
+    <string-array name="thousand_array">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="num_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="org.tianlong.rna.activity"
+    android:versionCode="1"
+    android:versionName="1.0.002" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="18" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+	<uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> 
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/rna_bg"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <activity
+            android:name="org.tianlong.rna.activity.LoginActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/app_name" 
+            android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".MainApplyActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".QuickExperimentActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".ExperimentActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".CreatExperimentActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".EditExperimentActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".RunExperimentActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".MachineActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".RunFileActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".UpAndDownActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".HelpActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+    </application>
+
+</manifest>
