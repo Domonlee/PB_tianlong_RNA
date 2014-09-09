@@ -41,6 +41,7 @@
     <string name="register">Register</string>
     <string name="user_pass_delete">Please enter the password of the user!</string>
     <string name="user_pass_error">Password incorrect!</string>
+    <string name="user_pass_delete_successful">Delete password successful!</string>
     <!--注册页面-->
     <string name="user_rpass_null">Password cannot be empty!</string>
     <string name="user_name_ture">The user name has been registered!</string>

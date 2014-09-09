@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
 	private List<DefaultExperiment> defaultExperiments;
 	// 点击快捷选择用户按钮计数器
 	private int num;
-	private int logout;
+	private int logout  = 0;
 	private int U_id;
 
 	private Intent intent;
@@ -75,8 +75,7 @@ public class LoginActivity extends Activity {
 		defaultExperiments = experimentDao
 				.getAllDefaultExperiments(LoginActivity.this);
 		intent = getIntent();
-		logout = intent.getIntExtra("logout", 9999);
-		U_id = intent.getIntExtra("U_id", 9999);
+
 		if (defaultExperiments.size() == 0) {
 			initial();
 			Experiment experiment = new Experiment();
@@ -196,8 +195,7 @@ public class LoginActivity extends Activity {
 		if (logout == 9999) {
 			user = userDao.getDefaultUser(this);
 			if (user != null) {
-				Intent intent = new Intent(LoginActivity.this,
-						MainActivity.class);
+				intent = new Intent(LoginActivity.this, MainActivity.class);
 				intent.putExtra("U_id", user.getU_id());
 				intent.putExtra("Uname", user.getUname());
 				startActivity(intent);
@@ -234,7 +232,6 @@ public class LoginActivity extends Activity {
 		});
 
 		// 点击快捷选择用户按钮监听
-		// Btn up & down
 		login_name_btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				num++;
@@ -266,7 +263,7 @@ public class LoginActivity extends Activity {
 							.getText().toString(), login_pass_et.getText()
 							.toString(), LoginActivity.this);
 					if (user != null) {
-						Intent intent = new Intent(LoginActivity.this,
+						intent = new Intent(LoginActivity.this,
 								MainActivity.class);
 						intent.putExtra("U_id", user.getU_id());
 						intent.putExtra("Uname", user.getUname());
@@ -283,8 +280,7 @@ public class LoginActivity extends Activity {
 		// 点击注册按钮监听
 		login_button_register.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(LoginActivity.this,
-						RegisterActivity.class);
+				intent = new Intent(LoginActivity.this, RegisterActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -458,6 +454,7 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	//Show Dialog For Close Activity
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -482,7 +479,6 @@ public class LoginActivity extends Activity {
 
 	public boolean onTouchEvent(MotionEvent event) {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		// TODO Auto-generated method stub
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (LoginActivity.this.getCurrentFocus() != null) {
 				if (LoginActivity.this.getCurrentFocus().getWindowToken() != null) {

@@ -41,6 +41,7 @@
     <string name="register">注\u0020\u0020\u0020\u0020\u0020册</string>
     <string name="user_pass_delete">请输入此用户密码</string>
     <string name="user_pass_error">密码 错误</string>
+    <string name="user_pass_delete_successful">刪除密码成功</string>
     <!--注册页面-->
     <string name="user_rpass_null">确认密码不能为空</string>
     <string name="user_name_ture">用户名已被注册</string>
@@ -58,7 +59,7 @@
     <string name="system_detection">仪器检测</string>
     <!--系统设置_语言设置-->
     <string name="language_english">English</string>
-    <string name="language_chinese">中\u0020\u0020 文</string>
+    <string name="language_chinese">中  文</string>
     <string name="language_korean">한국어</string>
     <string name="language_success">语言设置成功</string>
     <string name="language_failure">语言设置失败</string>
@@ -127,7 +128,7 @@
     <string name="instrument_success">仪器设置成功</string>
     <string name="instrument_failure">仪器设置失败</string>
     <!--系统设置_仪器检测-->
-    <string name="detection_check">检\u0020\u0020\u0020\u0020\u0020测</string>
+    <string name="detection_check">检    测</string>
     <string name="detection_not_back">正在检测,不能返回!</string>
     <string name="detection_not_check">正在检测,不能切换!</string>
     <string name="detection_checking">正在检测&#8230;&#8230;</string>
@@ -183,14 +184,14 @@
     <string name="exp_step_name_null">步骤名不能为空</string>
     <string name="exp_delete_step">删除步骤</string>
     <string name="exp_insert_step">添加步骤</string>
-    <string name="exp_wait">等\u0200\u0200\u0200待</string>
-    <string name="exp_blend">混\u0200\u0200\u0200合</string>
-    <string name="exp_magnetic">磁\u0200\u0200\u0200吸</string>
-    <string name="exp_hole">孔\u0200\u0200\u0200位</string>
-    <string name="exp_vol">体\u0200\u0200\u0200积</string>
+    <string name="exp_wait">等   待</string>
+    <string name="exp_blend">混   合</string>
+    <string name="exp_magnetic">磁   吸</string>
+    <string name="exp_hole">孔   位</string>
+    <string name="exp_vol">体   积</string>
     <string name="exp_blend_speed">混合频率</string>
-    <string name="exp_speed_unit">\u0200Hz</string>
-    <string name="exp_temp">温\u0200\u0200\u0200度</string>
+    <string name="exp_speed_unit">&#032;Hz</string>
+    <string name="exp_temp">温   度</string>
     <string name="exp_temp_unit">°C</string>
     <string name="exp_temp_type">温度状态</string>
     <string name="exp_next">下一步</string>

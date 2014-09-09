@@ -626,7 +626,9 @@ public class Utlis {
 		return info;
 	}
 
-	// 得到模板
+	/**
+	 * 得到模板
+	 */
 	public static List<String> getTemplate(Context context) {
 		List<String> list = new ArrayList<String>();
 		list.add(context.getString(R.string.template_null));
@@ -658,7 +660,13 @@ public class Utlis {
 				.updateConfiguration(config, null);
 	}
 
-	// 得到所有回复信息
+	/**
+	 * 
+	 * Title: getReceive Description: 得到所有回复信息
+	 * 
+	 * @param receive
+	 * @return
+	 */
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);

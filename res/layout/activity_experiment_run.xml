@@ -1,318 +1,402 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@android:color/white">
-    <RelativeLayout android:id="@+id/experiment_run_top_rl"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/experiment_run_top_rl"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:layout_alignParentTop="true"
-        android:background="@drawable/head">
-        <TextView android:id="@+id/experiment_run_top_uname_tv"
+        android:background="@drawable/head" >
+
+        <TextView
+            android:id="@+id/experiment_run_top_uname_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-		    android:textSize="20sp"
-		    android:layout_centerInParent="true"/>
+            android:textSize="20sp" />
+
         <org.tianlong.rna.utlis.DigitalClock
-		    android:id="@+id/experiment_run_top_time_dc"
-     		android:layout_width="260dp"
-     		android:layout_height="30dp"
-     		android:layout_gravity="center_horizontal"
-     		android:textColor="@android:color/white"
-		    android:textSize="20sp"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"/>
+            android:id="@+id/experiment_run_top_time_dc"
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </RelativeLayout>
-	<RelativeLayout android:id="@+id/experiment_run_body_rl"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_margin="2dip"
-	    android:layout_below="@id/experiment_run_top_rl">"
-	    <RelativeLayout android:id="@+id/experiment_run_body_left_rl"
-	        android:layout_width="240dip"
-	        android:layout_height="fill_parent">
-	        <TextView android:id="@+id/experiment_run_body_left_top_name_tv"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:text="实验一"
-	            android:textSize="25sp"
-	            android:textColor="@android:color/white"
-	            android:gravity="center"
-	            android:background="@drawable/left_top"/>
-	        <RelativeLayout android:id="@+id/experiment_run_body_left_body_rl"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:background="@android:color/white"
-	            android:layout_below="@id/experiment_run_body_left_top_name_tv"
-	            android:layout_marginLeft="3dip"
-	            android:layout_marginRight="3dip">
-	            <RelativeLayout android:id="@+id/experiment_run_body_left_body_t1_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" >
-					<TextView android:id="@+id/experiment_run_body_left_body_t1_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T1"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t1_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t1_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t2_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t1_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t2_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T2"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t2_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t2_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t3_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t2_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t3_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T3"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t3_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t3_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t4_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t3_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t4_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T4"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t4_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t4_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t5_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t4_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t5_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T5"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t5_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t5_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t6_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t5_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t6_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T6"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t6_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t6_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t7_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t6_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t7_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T7"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t7_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t7_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_t8_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="1dip"
-	                android:layout_below="@id/experiment_run_body_left_body_t7_rl">
-					<TextView android:id="@+id/experiment_run_body_left_body_t8_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:text="T8"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_t8_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="46dip"
-					    android:background="#314F67"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_t8_tv"/>
-				</RelativeLayout>
-				<RelativeLayout android:id="@+id/experiment_run_body_left_body_time_rl"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_below="@id/experiment_run_body_left_body_t8_rl"
-	                android:layout_marginTop="2dip">
-					<TextView android:id="@+id/experiment_run_body_left_body_time_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="fill_parent"
-					    android:text="@string/run_exp_remain_time"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:background="@drawable/temp_bg"/>
-					<TextView android:id="@+id/experiment_run_body_left_body_time_info_tv"
-					    android:layout_width="119dip"
-					    android:layout_height="fill_parent"
-					    android:background="#314F67"
-					    android:text="00:25:00"
-					    android:textSize="15sp"
-					    android:textColor="@android:color/white"
-					    android:gravity="center"
-					    android:layout_marginLeft="1dip"
-					    android:layout_toRightOf="@id/experiment_run_body_left_body_time_tv"/>
-				</RelativeLayout>
-	        </RelativeLayout>
-	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/experiment_run_body_righr_rl"
-	        android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:layout_marginLeft="3dip"
-		    android:layout_marginTop="2dip"
-		    android:layout_marginRight="2dip"
-		    android:layout_toRightOf="@id/experiment_run_body_left_rl"
-		    android:background="#505E8D">
-	        <RelativeLayout android:id="@+id/experiment_run_body_righr_body_rl"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:layout_marginTop="10dip"
-	            android:layout_marginBottom="60dip">
-	        	<HorizontalScrollView android:id="@+id/experiment_run_body_righr_body_hsv"
-	        	    android:layout_width="wrap_content"
-	        	    android:layout_height="wrap_content">
-	        	    <TableLayout android:id="@+id/experiment_run_body_righr_body_tl"
-	        	        android:layout_width="wrap_content"
-	        	        android:layout_height="wrap_content"/>
-	        	</HorizontalScrollView>
-	        </RelativeLayout>
-	        <RelativeLayout android:id="@+id/experiment_run_body_righr_bottom_rl"
-	            android:layout_width="wrap_content"
-	            android:layout_height="60dip"
-	            android:layout_alignParentBottom="true"
-	            android:layout_alignParentRight="true">
-	            <Button android:id="@+id/experiment_run_body_righr_bottom_reset_btn"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/stop"
-	                android:textSize="15sp"
-	                android:textColor="@android:color/white"
-	                android:background="@drawable/btn_selector"
-	                android:clickable="true"
-	                android:layout_centerVertical="true"/>
-	            <Button android:id="@+id/experiment_run_body_righr_bottom_run_btn"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/run"
-	                android:textSize="15sp"
-	                android:textColor="@android:color/white"
-	                android:background="@drawable/btn_selector"
-	                android:clickable="true"
-	                android:layout_centerVertical="true"
-	                android:layout_marginLeft="10dip"
-	                android:layout_toRightOf="@id/experiment_run_body_righr_bottom_reset_btn"/>
-	            <Button android:id="@+id/experiment_run_body_righr_bottom_back_btn"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/back"
-	                android:textSize="15sp"
-	                android:textColor="@android:color/white"
-	                android:background="@drawable/btn_selector"
-	                android:clickable="true"
-	                android:layout_centerVertical="true"
-	                android:layout_marginLeft="10dip"
-	                android:layout_toRightOf="@id/experiment_run_body_righr_bottom_run_btn"/>
-	        </RelativeLayout>
-	    </RelativeLayout>
-	</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/experiment_run_body_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/experiment_run_top_rl"
+        android:layout_margin="2dip" >
+
+        <RelativeLayout
+            android:id="@+id/experiment_run_body_left_rl"
+            android:layout_width="240dip"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:id="@+id/experiment_run_body_left_top_name_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_top"
+                android:gravity="center"
+                android:text="实验一"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+
+            <RelativeLayout
+                android:id="@+id/experiment_run_body_left_body_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/experiment_run_body_left_top_name_tv"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="3dip"
+                android:background="@android:color/white" >
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t1_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t1_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T1"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t1_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t1_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t2_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t1_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t2_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T2"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t2_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t2_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t3_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t2_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t3_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T3"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t3_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t3_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t4_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t3_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t4_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T4"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t4_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t4_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t5_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t4_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t5_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T5"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t5_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t5_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t6_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t5_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t6_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T6"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t6_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t6_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t7_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t6_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t7_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T7"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t7_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t7_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_t8_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t7_rl"
+                    android:layout_marginTop="1dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t8_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="T8"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_t8_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="46dip"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_t8_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/experiment_run_body_left_body_time_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experiment_run_body_left_body_t8_rl"
+                    android:layout_marginTop="2dip" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_time_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/temp_bg"
+                        android:gravity="center"
+                        android:text="@string/run_exp_remain_time"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_body_left_body_time_info_tv"
+                        android:layout_width="119dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="1dip"
+                        android:layout_toRightOf="@id/experiment_run_body_left_body_time_tv"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:text="00:25:00"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/experiment_run_body_righr_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_toRightOf="@id/experiment_run_body_left_rl"
+            android:background="#505E8D" >
+
+            <RelativeLayout
+                android:id="@+id/experiment_run_body_righr_body_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="60dip"
+                android:layout_marginTop="10dip" >
+
+                <HorizontalScrollView
+                    android:id="@+id/experiment_run_body_righr_body_hsv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TableLayout
+                        android:id="@+id/experiment_run_body_righr_body_tl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/experiment_run_body_righr_bottom_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="60dip"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" >
+
+                <Button
+                    android:id="@+id/experiment_run_body_righr_bottom_reset_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_selector"
+                    android:clickable="true"
+                    android:text="@string/stop"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/experiment_run_body_righr_bottom_run_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/experiment_run_body_righr_bottom_reset_btn"
+                    android:background="@drawable/btn_selector"
+                    android:clickable="true"
+                    android:text="@string/run"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/experiment_run_body_righr_bottom_back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/experiment_run_body_righr_bottom_run_btn"
+                    android:background="@drawable/btn_selector"
+                    android:clickable="true"
+                    android:text="@string/back"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
