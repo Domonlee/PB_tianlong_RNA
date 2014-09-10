@@ -5,7 +5,7 @@
     android:background="#505E8D">
     <RelativeLayout android:id="@+id/experiment_new_main_item_rl"
         android:layout_width="344dip"
-        android:layout_height="wrap_content"
+        android:layout_height="500dip"
         android:layout_marginRight="10dip"
     	android:background="@android:color/white">
     	<RelativeLayout android:id="@+id/experiment_new_main_item_bottom_rl"
@@ -34,7 +34,7 @@
 	        android:layout_below="@id/experiment_new_main_item_bottom_rl">
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_head_wait_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="56dip"
+	            android:layout_height="54dip"
 	            android:layout_centerHorizontal="true">
 	            <TextView android:id="@+id/experiment_new_main_item_head_wait_tv"
 	                android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
 	        </RelativeLayout>
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_head_blend_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="56dip"
+	            android:layout_height="54dip"
 	            android:layout_centerHorizontal="true"
 	            android:layout_below="@id/experiment_new_main_item_head_wait_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_head_blend_tv"
@@ -81,7 +81,7 @@
 	        </RelativeLayout>
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_head_magnet_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="56dip"
+	            android:layout_height="54dip"
 	            android:layout_centerHorizontal="true"
 	            android:layout_below="@id/experiment_new_main_item_head_blend_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_head_magnet_tv"
@@ -104,13 +104,14 @@
 	                android:gravity="center"/>
 	        </RelativeLayout>
 	    </RelativeLayout>
+	    <!-- 321dip  40 ->35dip-->
 	    <RelativeLayout android:id="@+id/experiment_new_main_item_body_rl"
 	        android:layout_width="fill_parent"
-	        android:layout_height="321dip"
+	        android:layout_height="wrap_content"
 	        android:layout_below="@id/experiment_new_main_item_head_rl">
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_body_temp_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="40dip">
+	            android:layout_height="32dip">
 	            <TextView android:id="@+id/experiment_new_main_item_body_temp_tv"
 	                android:layout_width="164dip"
 	                android:layout_height="fill_parent"
@@ -146,7 +147,7 @@
 	        </RelativeLayout>
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_body_vol_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="40dip"
+	            android:layout_height="32dip"
 	            android:layout_marginTop="2dip"
 	            android:layout_below="@id/experiment_new_main_item_body_temp_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_body_vol_tv"
@@ -184,7 +185,7 @@
 	        </RelativeLayout>
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_body_speed_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="40dip"
+	            android:layout_height="32dip"
 	            android:layout_marginTop="2dip"
 	            android:layout_below="@id/experiment_new_main_item_body_vol_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_body_speed_tv"
@@ -211,7 +212,7 @@
 	        </RelativeLayout>
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_body_hole_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="40dip"
+	            android:layout_height="32dip"
 	            android:layout_marginTop="2dip"
 	            android:layout_below="@id/experiment_new_main_item_body_speed_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_body_hole_tv"
@@ -239,7 +240,7 @@
 	        
 	        <RelativeLayout android:id="@+id/experiment_new_main_item_body_switch_rl"
 	            android:layout_width="wrap_content"
-	            android:layout_height="50dip"
+	            android:layout_height="42dip"
 	            android:layout_marginTop="2dip"
 	            android:layout_below="@id/experiment_new_main_item_body_hole_rl">
 	            <TextView android:id="@+id/experiment_new_main_item_body_switch_tv"
@@ -267,7 +268,7 @@
 	    </RelativeLayout>
 	    <TextView android:id="@+id/experiment_new_main_item_top_name_tv"
 	        android:layout_width="fill_parent"
-	        android:layout_height="50dip"
+	        android:layout_height="42dip"
 	        android:text="步骤一"
 	        android:textSize="25sp"
 	        android:textColor="@android:color/white"

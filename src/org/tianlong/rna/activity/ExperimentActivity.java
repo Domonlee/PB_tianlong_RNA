@@ -121,7 +121,9 @@ public class ExperimentActivity extends Activity {
 		
 		experiment_top_uname_tv.setText(Uname);
 		experiments = experimentDao.getAllExperimentsByU_id(ExperimentActivity.this, U_id);
-		experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
+		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(ExperimentActivity.this, experiments);
+//		experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
+		experiment_left_lv.setAdapter(experimentAdapter);
 		
 		if(experiments.size() != 0){
 			chooseE_id = experiments.get(listChooseId).getE_id();
@@ -183,6 +185,10 @@ public class ExperimentActivity extends Activity {
 								stepDao.deleteStep(steps.get(i), ExperimentActivity.this);
 							}
 							experimentDao.deleteExperiment(chooseE_id, ExperimentActivity.this);
+							experimentAdapter.getView(chooseE_id,null, null).setBackgroundResource(R.drawable.list_bg);
+							
+//							v.setBackgroundResource(R.d)
+//							ExperimentAdapter.views.get(chooseE_id).setBackgroundResource(R.drawable.list_bg);
 							experiments = experimentDao.getAllExperimentsByU_id(ExperimentActivity.this, U_id);
 							experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
 							if(view != null){

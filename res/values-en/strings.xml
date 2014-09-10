@@ -61,8 +61,8 @@
     <string name="language_english">English</string>
     <string name="language_chinese">中\u0020\u0020 文</string>
     <string name="language_korean">한국어</string>
-    <string name="language_success">Succeed</string>
-    <string name="language_failure">Failed</string>
+    <string name="language_success">Change Language Succeed</string>
+    <string name="language_failure">Change Language Failed</string>
     <!--系统设置_网络设置-->
     <string name="net_name">Instrument\nName</string>
     <string name="net_name_input">Please input instrument name</string>

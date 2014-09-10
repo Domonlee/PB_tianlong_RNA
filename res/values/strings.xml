@@ -168,6 +168,7 @@
     <string name="exp_add_quick">添加快捷实验</string>
     <string name="exp_cancle_quick">取消快捷实验</string>
     <string name="exp_name_null">实验名称不能为空</string>
+    <string name="exp_save_null">步骤不能为空</string>
     <string name="exp_creating">正在建立实验,请稍后&#8230;&#8230;</string>
     <string name="exp_prepareing">正在准备实验,请稍后&#8230;&#8230;</string>
     <string name="exp_creat_date">创建时间:</string>
@@ -210,12 +211,14 @@
     <string name="exp_vol_big">体积不能大于1000ul</string>
     <string name="exp_vol_small">体积不能小于30ul</string>
     <string name="exp_vol_empty">体积不能为空</string>
+    <string name="exp_vol_setting">温度设定</string>
     <string name="exp_speed_select">混合频率选择</string>
     <string name="exp_temp_big">温度不能大于120°C</string>
     <string name="exp_temp_empty">温度不能为空</string>
+    <string name="exp_save_failure">实验为空，保存失败</string>
     <string name="exp_sure_delete_all">确定要删除"全部"的step吗?</string>
     <string name="exp_sure_delete_this">确定要删除这个的step吗?</string>
-    <string name="exp_temp_setting">温度设定</string>
+    <string name="exp_temp_setting">体积设定</string>
     <!--运行实验-->
     <string name="run_exp_remain_time">剩余时间</string>
     <string name="run_exp_stop_success">停止成功</string>

@@ -683,6 +683,13 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_right_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+						if (wifiUtlis == null) {
+							Toast.makeText(RunExperimentActivity.this,
+									getString(R.string.wifi_error) + ",无法开始运行",
+									Toast.LENGTH_SHORT).show();
+						}
+						else {
+							
 						if (changeBg.size() != 0) {
 							((View) changeBg.get(0).get("view"))
 									.setBackgroundResource(R.anim.anim_view);
@@ -807,6 +814,7 @@ public class RunExperimentActivity extends Activity {
 										Toast.LENGTH_SHORT).show();
 							}
 						}
+					}
 					}
 				});
 

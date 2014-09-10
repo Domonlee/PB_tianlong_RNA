@@ -8,11 +8,10 @@ public class RnaOpenHelper extends SQLiteOpenHelper {
 
 	private static final String DBNAME = "rna.db";
 	private static final int VERSION = 1;
-	
+
 	public RnaOpenHelper(Context context) {
 		super(context, DBNAME, null, VERSION);
 	}
-
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("create table user(U_id integer primary key autoincrement,Uname varchar(32),Upass varchar(32),Udefault integer,Uadmin integer)");
