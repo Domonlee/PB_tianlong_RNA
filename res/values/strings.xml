@@ -60,7 +60,6 @@
     <!--系统设置_语言设置-->
     <string name="language_english">English</string>
     <string name="language_chinese">中  文</string>
-    <string name="language_korean">한국어</string>
     <string name="language_success">语言设置成功</string>
     <string name="language_failure">语言设置失败</string>
     <!--系统设置_网络设置-->

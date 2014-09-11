@@ -122,14 +122,15 @@ public class ExperimentActivity extends Activity {
 		experiment_top_uname_tv.setText(Uname);
 		experiments = experimentDao.getAllExperimentsByU_id(ExperimentActivity.this, U_id);
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(ExperimentActivity.this, experiments);
-//		experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
 		experiment_left_lv.setAdapter(experimentAdapter);
+//		experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
 		
 		if(experiments.size() != 0){
 			chooseE_id = experiments.get(listChooseId).getE_id();
 			showView();
 		}
 		
+		//Bug:删除上一项，下一项自动选中
 		experiment_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -185,10 +186,7 @@ public class ExperimentActivity extends Activity {
 								stepDao.deleteStep(steps.get(i), ExperimentActivity.this);
 							}
 							experimentDao.deleteExperiment(chooseE_id, ExperimentActivity.this);
-							experimentAdapter.getView(chooseE_id,null, null).setBackgroundResource(R.drawable.list_bg);
 							
-//							v.setBackgroundResource(R.d)
-//							ExperimentAdapter.views.get(chooseE_id).setBackgroundResource(R.drawable.list_bg);
 							experiments = experimentDao.getAllExperimentsByU_id(ExperimentActivity.this, U_id);
 							experiment_left_lv.setAdapter(new ExperimentAdapter(ExperimentActivity.this, experiments));
 							if(view != null){

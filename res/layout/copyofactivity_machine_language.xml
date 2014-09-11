@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/machine_language_iv"
+        style="@style/right_imageview"
+        android:background="@drawable/language" />
+
+    <RadioGroup
+        android:id="@+id/machine_language_body_rg"
+        style="@style/right_body_rl"
+        android:layout_below="@id/machine_language_iv"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/machine_language_body_chinese"
+            style="@style/language_setting_radiobtn"
+            android:paddingLeft="232dip"
+            android:text="中文" />
+
+        <!--
+        <RadioButton
+            android:id="@+id/machine_language_body_korean"
+            style="@style/language_setting_radiobtn"
+            android:layout_marginTop="20dip"
+            android:paddingLeft="234dip"
+            android:text="@string/language_korean" /> -->
+
+        <RadioButton
+            android:id="@+id/machine_language_body_english"
+            style="@style/language_setting_radiobtn"
+            android:layout_marginTop="20dip"
+            android:paddingLeft="218dip"
+            android:text="@string/language_english" />
+    </RadioGroup>
+    
+ 
+
+    <RelativeLayout
+        android:id="@+id/machine_language_bottom_btn_rl"
+        style="@style/right_bottom_rl"
+        android:layout_alignRight="@id/machine_language_iv" >
+
+        <Button
+            android:id="@+id/machine_language_bottom_btn_save"
+            style="@style/right_btn"
+            android:text="@string/sure" />
+    </RelativeLayout>
+
+</RelativeLayout>
