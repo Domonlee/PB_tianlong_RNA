@@ -81,11 +81,9 @@ public class MachineActivity extends Activity {
 	private Button machine_user_right_btn_default;
 
 	// 语言设置
-//	private RadioGroup machine_language_body_rg;
-//	private RadioButton machine_language_body_chinese;
-//	private RadioButton machine_language_body_english;
-	private Button machine_language_body_chinese;
-	private Button machine_language_body_english;
+	private RadioGroup machine_language_body_rg;
+	private RadioButton machine_language_body_chinese;
+	private RadioButton machine_language_body_english;
 	private Button machine_language_bottom_btn_save;
 
 	// //网络设置
@@ -988,43 +986,41 @@ public class MachineActivity extends Activity {
 		case 0:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_language, null);
-			machine_language_body_chinese = (Button)view.findViewById(R.id.machine_language_body_chinese);
-			machine_language_body_english = (Button)view.findViewById(R.id.machine_language_body_english);
-//			machine_language_body_rg = (RadioGroup) view
-//					.findViewById(R.id.machine_language_body_rg);
-//			machine_language_body_chinese = (RadioButton) view
-//					.findViewById(R.id.machine_language_body_chinese);
-//			machine_language_body_english = (RadioButton) view
-//					.findViewById(R.id.machine_language_body_english);
-//			machine_language_bottom_btn_save = (Button) view
-//					.findViewById(R.id.machine_language_bottom_btn_save);
+			machine_language_body_rg = (RadioGroup) view
+					.findViewById(R.id.machine_language_body_rg);
+			machine_language_body_chinese = (RadioButton) view
+					.findViewById(R.id.machine_language_body_chinese);
+			machine_language_body_english = (RadioButton) view
+					.findViewById(R.id.machine_language_body_english);
+			machine_language_bottom_btn_save = (Button) view
+					.findViewById(R.id.machine_language_bottom_btn_save);
 
 			if (machine.getMlanguage() == 0) {
-				machine_language_body_chinese.setSelected(true);
+				machine_language_body_chinese.setChecked(true);
 			} else if (machine.getMlanguage() == 1) {
 
 			} else {
-				machine_language_body_english.setSelected(true);
+				machine_language_body_english.setChecked(true);
 			}
 
-//			machine_language_body_rg
-//					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//						public void onCheckedChanged(RadioGroup group,
-//								int checkedId) {
-//							switch (checkedId) {
-//							case R.id.machine_language_body_chinese:
-//								machine.setMlanguage(0);
-//								LoginActivity.language = 0;
-//								break;
-//							case R.id.machine_language_body_english:
-//								machine.setMlanguage(2);
-//								LoginActivity.language = 2;
-//								break;
-//							default:
-//								break;
-//							}
-//						}
-//					});
+			machine_language_body_rg
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+						public void onCheckedChanged(RadioGroup group,
+								int checkedId) {
+							switch (checkedId) {
+							case R.id.machine_language_body_chinese:
+								machine.setMlanguage(0);
+								LoginActivity.language = 0;
+								break;
+							case R.id.machine_language_body_english:
+								machine.setMlanguage(2);
+								LoginActivity.language = 2;
+								break;
+							default:
+								break;
+							}
+						}
+					});
 
 			machine_language_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
@@ -1715,7 +1711,7 @@ public class MachineActivity extends Activity {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											// machine.setMflux(fluxNum);
+											 machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
 											// Utlis.sendSettingflux(getNum(fluxNum));
@@ -1733,7 +1729,9 @@ public class MachineActivity extends Activity {
 							builder.show();
 						}
 					});
-			machine_instrument_body_flux_info_tv.setClickable(false);
+			
+//			不可点击
+//			machine_instrument_body_flux_info_tv.setClickable(false);
 			// 系统复位
 			machine_instrument_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {

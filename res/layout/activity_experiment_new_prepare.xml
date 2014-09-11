@@ -3,134 +3,174 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-	<TextView android:id="@+id/experiment_new_prepare_top_name_tv"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/exp_new_exp"
-	    android:textSize="30sp"
-	    android:textColor="@android:color/white"
-	    android:layout_centerHorizontal="true"/>
-	<RelativeLayout android:id="@+id/experiment_new_prepare_body_rl"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_below="@id/experiment_new_prepare_top_name_tv"
-	    android:layout_marginTop="50dip">
-	    <RelativeLayout android:id="@+id/experiment_new_prepare_body_name_rl"
-	        android:layout_width="540dip"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true">
-	        <TextView android:id="@+id/experiment_new_prepare_body_name_tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/exp_name"
-	            android:textSize="25sp"
-	            android:textColor="@android:color/white"
-	            android:layout_centerVertical="true"/>
-	        <EditText android:id="@+id/experiment_new_prepare_body_name_et"
-	            android:layout_width="200dip"
-	            android:layout_height="wrap_content"
-	            android:hint="@string/exp_name_input"
-	            android:textColor="@android:color/white"
-	            android:gravity="center"
-	            android:layout_alignParentRight="true"
-	            android:background="@drawable/edittext"
-	            android:singleLine="true"
-	            android:digits="abcdefghijklmnopqorstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ1234567890_"/>
-	        <ImageView android:id="@+id/experiment_new_prepare_body_name_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/line"
-	            android:layout_centerHorizontal="true"
-	            android:layout_below="@id/experiment_new_prepare_body_name_et"/>
-	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/experiment_new_prepare_body_quick_rl"
-	        android:layout_width="540dip"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/experiment_new_prepare_body_name_rl"
-	        android:layout_centerHorizontal="true">
-	        <TextView android:id="@+id/experiment_new_prepare_body_quick_tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/exp_quick_exp"
-	            android:textSize="25sp"
-	            android:textColor="@android:color/white"
-	            android:layout_centerVertical="true"/>
-	        <CheckBox android:id="@+id/experiment_new_prepare_body_quick_cb"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginRight="10dip"
-	            android:layout_alignParentRight="true"/>
-	        <ImageView android:id="@+id/experiment_new_prepare_body_quick_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/line"
-	            android:layout_below="@id/experiment_new_prepare_body_quick_cb"
-	            android:layout_centerHorizontal="true"/>
-	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/experiment_new_prepare_body_template_rl"
-	        android:layout_width="540dip"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/experiment_new_prepare_body_quick_rl"
-	        android:layout_centerHorizontal="true">
-	        <TextView android:id="@+id/experiment_new_prepare_body_template_tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/exp_template"
-	            android:textSize="25sp"
-	            android:textColor="@android:color/white"
-	            android:layout_centerVertical="true"/>
-	        <Spinner android:id="@+id/experiment_new_prepare_body_template_sp"
-	            android:layout_width="200dip"
-	            android:layout_height="50dip"
-	            android:layout_alignParentRight="true"/>
-	        <ImageView android:id="@+id/experiment_new_prepare_body_template_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/line"
-	            android:layout_below="@id/experiment_new_prepare_body_template_sp"/>
-	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/experiment_new_prepare_body_remark_rl"
-	        android:layout_width="540dip"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/experiment_new_prepare_body_template_rl"
-	        android:layout_centerHorizontal="true">
-	        <TextView android:id="@+id/experiment_new_prepare_body_remark_tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dip"
-	            android:text="@string/exp_remark"
-	            android:textSize="25sp"
-	            android:textColor="@android:color/white"
-	            android:layout_centerVertical="true"/>
-	        <EditText android:id="@+id/experiment_new_prepare_body_remark_et"
-	            android:layout_width="200dip"
-	            android:layout_height="190dip"
-	            android:hint="@string/exp_remark_inout"
-	            android:textColor="@android:color/white"
-	            android:layout_alignParentRight="true"
-	            android:background="@drawable/info_bg"
-	            android:gravity="center"/>
-	        <ImageView android:id="@+id/experiment_new_prepare_body_remark_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/line"
-	            android:layout_below="@id/experiment_new_prepare_body_remark_et"
-	            android:layout_centerHorizontal="true"/>
-	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/experiment_new_prepare_body_btn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl">
-	        <Button android:id="@+id/experiment_new_prepare_body_btn_next"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:clickable="true"
-            	android:background="@drawable/btn_selector"
-	            android:text="@string/exp_next"
-	            android:textSize="15sp"
-	            android:textColor="@android:color/white"/>
-	    </RelativeLayout>
-	</RelativeLayout>
+
+    <TextView
+        android:id="@+id/experiment_new_prepare_top_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/exp_new_exp"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
+
+    <RelativeLayout
+        android:id="@+id/experiment_new_prepare_body_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/experiment_new_prepare_top_name_tv"
+        android:layout_marginTop="50dip" >
+
+        <RelativeLayout
+            android:id="@+id/experiment_new_prepare_body_name_rl"
+            android:layout_width="540dip"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/experiment_new_prepare_body_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/exp_name"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/experiment_new_prepare_body_name_et"
+                android:layout_width="200dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/edittext"
+                android:digits="abcdefghijklmnopqorstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ1234567890_"
+                android:gravity="center"
+                android:hint="@string/exp_name_input"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/experiment_new_prepare_body_name_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/experiment_new_prepare_body_name_et"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/line" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/experiment_new_prepare_body_quick_rl"
+            android:layout_width="540dip"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/experiment_new_prepare_body_name_rl"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/experiment_new_prepare_body_quick_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/exp_quick_exp"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+
+            <CheckBox
+                android:id="@+id/experiment_new_prepare_body_quick_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip" />
+
+            <ImageView
+                android:id="@+id/experiment_new_prepare_body_quick_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/experiment_new_prepare_body_quick_cb"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/line" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/experiment_new_prepare_body_template_rl"
+            android:layout_width="540dip"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/experiment_new_prepare_body_quick_rl"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/experiment_new_prepare_body_template_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/exp_template"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+
+            <Spinner
+                android:id="@+id/experiment_new_prepare_body_template_sp"
+                android:layout_width="200dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true" />
+
+            <ImageView
+                android:id="@+id/experiment_new_prepare_body_template_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/experiment_new_prepare_body_template_sp"
+                android:background="@drawable/line" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/experiment_new_prepare_body_remark_rl"
+            android:layout_width="540dip"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/experiment_new_prepare_body_template_rl"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/experiment_new_prepare_body_remark_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dip"
+                android:text="@string/exp_remark"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/experiment_new_prepare_body_remark_et"
+                android:layout_width="200dip"
+                android:layout_height="190dip"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/info_bg"
+                android:gravity="center"
+                android:hint="@string/exp_remark_inout"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/experiment_new_prepare_body_remark_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/experiment_new_prepare_body_remark_et"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/line" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/experiment_new_prepare_body_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl" >
+
+            <Button
+                android:id="@+id/experiment_new_prepare_body_btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector"
+                android:clickable="true"
+                android:text="@string/exp_next"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
