@@ -209,6 +209,7 @@ public class Utlis {
 	}
 
 	// 发送通量设置命令
+	// -------->>>>>需要添加，15通和48通 字符串
 	public static byte[] sendSettingflux(String num) {
 		byte[] byteList = new byte[9];
 		byteList[0] = (byte) Integer.parseInt("FF", 16);

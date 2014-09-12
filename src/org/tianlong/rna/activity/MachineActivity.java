@@ -139,7 +139,6 @@ public class MachineActivity extends Activity {
 	private RadioButton machine_instrument_flux_item_rb_one;
 	private RadioButton machine_instrument_flux_item_rb_two;
 	private RadioButton machine_instrument_flux_item_rb_there;
-	private RadioButton machine_instrument_flux_item_rb_four;
 	private Button machine_instrument_body_run_parameter_blend_info_reset_btn;
 	private Button machine_instrument_body_run_parameter_magnetic_info_reset_btn;
 	private Button machine_instrument_body_run_parameter_hole_info_reset_btn;
@@ -294,9 +293,9 @@ public class MachineActivity extends Activity {
 						case 48:
 							fluxNum = 3;
 							break;
-						case 64:
-							fluxNum = 4;
-							break;
+//						case 64:
+//							fluxNum = 4;
+//							break;
 						default:
 							break;
 						}
@@ -945,6 +944,7 @@ public class MachineActivity extends Activity {
 				showView(6);
 			}
 		});
+
 		machine_user_right_btn_default
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -959,11 +959,7 @@ public class MachineActivity extends Activity {
 
 	/**
 	 * 
-	* <p> Title: getList </p>
-	* <p> Description: </p>
-	* <p> Modified By：  Domon </p>                                       
-	* <p> Modified Date: 2014-9-11 </p>
-	* <p> @return </p>
+	 * Title: getList Description: Modified By： Domon Modified Date: 2014-9-11
 	 */
 	private List<String> getList() {
 		List<String> list = new ArrayList<String>();
@@ -997,8 +993,6 @@ public class MachineActivity extends Activity {
 
 			if (machine.getMlanguage() == 0) {
 				machine_language_body_chinese.setChecked(true);
-			} else if (machine.getMlanguage() == 1) {
-
 			} else {
 				machine_language_body_english.setChecked(true);
 			}
@@ -1539,6 +1533,7 @@ public class MachineActivity extends Activity {
 						public void afterTextChanged(Editable s) {
 						}
 					});
+
 			// 磁吸电机控制输入框监听
 			machine_instrument_body_run_parameter_magnetic_info_et
 					.addTextChangedListener(new TextWatcher() {
@@ -1641,7 +1636,11 @@ public class MachineActivity extends Activity {
 						public void afterTextChanged(Editable s) {
 						}
 					});
-			// 通量设置
+			/*
+			 * 通量设置 
+			 * Modified By： Domon 
+			 * Modified Date: 2014-9-11
+			 */
 			machine_instrument_body_flux_info_tv
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
@@ -1657,8 +1656,6 @@ public class MachineActivity extends Activity {
 									.findViewById(R.id.machine_instrument_flux_item_rb_two);
 							machine_instrument_flux_item_rb_there = (RadioButton) fluxView
 									.findViewById(R.id.machine_instrument_flux_item_rb_there);
-							machine_instrument_flux_item_rb_four = (RadioButton) fluxView
-									.findViewById(R.id.machine_instrument_flux_item_rb_four);
 
 							switch (fluxNum) {
 							case 1:
@@ -1671,10 +1668,6 @@ public class MachineActivity extends Activity {
 								break;
 							case 3:
 								machine_instrument_flux_item_rb_there
-										.setChecked(true);
-								break;
-							case 4:
-								machine_instrument_flux_item_rb_four
 										.setChecked(true);
 								break;
 							}
@@ -1693,9 +1686,6 @@ public class MachineActivity extends Activity {
 											case R.id.machine_instrument_flux_item_rb_there:
 												fluxNum = 3;
 												break;
-											case R.id.machine_instrument_flux_item_rb_four:
-												fluxNum = 4;
-												break;
 											default:
 												break;
 											}
@@ -1711,10 +1701,10 @@ public class MachineActivity extends Activity {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											 machine.setMflux(fluxNum);
+											machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
-											// Utlis.sendSettingflux(getNum(fluxNum));
+//											 Utlis.sendSettingflux(getNum(fluxNum));
 										}
 									});
 							builder.setNegativeButton(
@@ -1729,9 +1719,10 @@ public class MachineActivity extends Activity {
 							builder.show();
 						}
 					});
-			
-//			不可点击
-//			machine_instrument_body_flux_info_tv.setClickable(false);
+
+//			 --->不可点击
+			// machine_instrument_body_flux_info_tv.setClickable(false);
+
 			// 系统复位
 			machine_instrument_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {

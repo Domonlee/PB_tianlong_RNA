@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RadioGroup android:id="@+id/machine_instrument_flux_item_rg"
+    android:layout_height="match_parent" >
+
+    <RadioGroup
+        android:id="@+id/machine_instrument_flux_item_rg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
-        <RadioButton android:id="@+id/machine_instrument_flux_item_rb_one"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/machine_instrument_flux_item_rb_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="15"
-            android:textSize="25sp"
-            android:textColor="@android:color/white"/>
-        <RadioButton android:id="@+id/machine_instrument_flux_item_rb_two"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/machine_instrument_flux_item_rb_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dip"
             android:text="32"
-            android:textSize="25sp"
-            android:layout_marginLeft="40dip"
-            android:textColor="@android:color/white"/>
-        <RadioButton android:id="@+id/machine_instrument_flux_item_rb_there"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/machine_instrument_flux_item_rb_there"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dip"
             android:text="48"
-            android:textSize="25sp"
-            android:layout_marginLeft="40dip"
-            android:textColor="@android:color/white"/>
-        <RadioButton android:id="@+id/machine_instrument_flux_item_rb_four"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="64"
-            android:textSize="25sp"
-            android:layout_marginLeft="40dip"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
     </RadioGroup>
+
 </RelativeLayout>

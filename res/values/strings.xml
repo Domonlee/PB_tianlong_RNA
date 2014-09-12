@@ -207,17 +207,17 @@
     <string name="exp_blend_time_setting">混合时间设置</string>
     <string name="exp_magnetic_time_setting">磁吸时间设置</string>
     <string name="exp_hole_select">孔位选择</string>
-    <string name="exp_vol_big">体积不能大于1000ul</string>
-    <string name="exp_vol_small">体积不能小于30ul</string>
+    <string name="exp_vol_big">体积不能大于</string>
+    <string name="exp_vol_small">体积不能小于</string>
     <string name="exp_vol_empty">体积不能为空</string>
-    <string name="exp_vol_setting">温度设定</string>
+    <string name="exp_vol_setting">体积设定</string>
     <string name="exp_speed_select">混合频率选择</string>
     <string name="exp_temp_big">温度不能大于120°C</string>
     <string name="exp_temp_empty">温度不能为空</string>
     <string name="exp_save_failure">实验为空，保存失败</string>
     <string name="exp_sure_delete_all">确定要删除"全部"的step吗?</string>
     <string name="exp_sure_delete_this">确定要删除这个的step吗?</string>
-    <string name="exp_temp_setting">体积设定</string>
+    <string name="exp_temp_setting">温度设定</string>
     <!--运行实验-->
     <string name="run_exp_remain_time">剩余时间</string>
     <string name="run_exp_stop_success">停止成功</string>

@@ -630,7 +630,7 @@ public class EditExperimentActivity extends Activity {
 							public void onClick(View v) {
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
-								builder.setTitle(getString(R.string.exp_temp_setting));
+								builder.setTitle(getString(R.string.exp_vol_setting));
 								View view = LayoutInflater.from(
 										EditExperimentActivity.this).inflate(
 										R.layout.activity_vol, null);
@@ -1767,7 +1767,7 @@ public class EditExperimentActivity extends Activity {
 							public void onClick(View v) {
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
-								builder.setTitle(getString(R.string.exp_temp_setting));
+								builder.setTitle(getString(R.string.exp_vol_setting));
 								View view = LayoutInflater.from(
 										EditExperimentActivity.this).inflate(
 										R.layout.activity_vol, null);
