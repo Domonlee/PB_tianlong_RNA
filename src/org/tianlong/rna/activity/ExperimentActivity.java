@@ -91,6 +91,7 @@ public class ExperimentActivity extends Activity {
 	private Button experiment_info_bottom_run_btn;
 	private Button experiment_info_body_remark_info_btn;
 	private Button experiment_info_body_remark_info_cancle_btn;
+	private int expNum = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,39 +99,21 @@ public class ExperimentActivity extends Activity {
 		setContentView(R.layout.activity_experiment);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		stepDao = new StepDao();
-		experimentDao = new ExperimentDao();
-		views = new ArrayList<Map<String, Object>>();
-		map = new HashMap<String, Object>();
-		Intent intent = getIntent();
-		U_id = intent.getIntExtra("U_id", 9999);
-		Uname = intent.getStringExtra("Uname");
-		defaultExperiments = experimentDao
-				.getAllDefaultExperiments(ExperimentActivity.this);
+		initView();
 
-		experiment_right_back_btn = (Button) findViewById(R.id.experiment_right_back_btn);
-		expetiment_left_new_btn = (TextView) findViewById(R.id.expetiment_left_new_btn);
-		experiment_top_uname_tv = (TextView) findViewById(R.id.experiment_top_uname_tv);
-		expetiment_left_new = (RelativeLayout) findViewById(R.id.expetiment_left_new);
-		experiment_left_delete = (RelativeLayout) findViewById(R.id.experiment_left_delete);
-		experiment_left_lv = (ListView) findViewById(R.id.experiment_left_lv);
-		experiment_right_rl = (RelativeLayout) findViewById(R.id.experiment_right_rl);
-		expetiment_left_new_btn_iv = (ImageView) findViewById(R.id.expetiment_left_new_btn_iv);
-
-		experiment_top_uname_tv.setText(Uname);
-		experiments = experimentDao.getAllExperimentsByU_id(
-				ExperimentActivity.this, U_id);
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
 				ExperimentActivity.this, experiments);
 		experiment_left_lv.setAdapter(experimentAdapter);
-		// experiment_left_lv.setAdapter(new
-		// ExperimentAdapter(ExperimentActivity.this, experiments));
 
 		if (experiments.size() != 0) {
 			chooseE_id = experiments.get(listChooseId).getE_id();
 			showView();
 		}
 
+		/**
+		 * 
+		 * Bugs: Open
+		 */
 		// Bug:删除上一项，下一项自动选中
 		experiment_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -263,6 +246,32 @@ public class ExperimentActivity extends Activity {
 		});
 	}
 
+	private void initView() {
+		experiment_right_back_btn = (Button) findViewById(R.id.experiment_right_back_btn);
+		expetiment_left_new_btn = (TextView) findViewById(R.id.expetiment_left_new_btn);
+		experiment_top_uname_tv = (TextView) findViewById(R.id.experiment_top_uname_tv);
+		expetiment_left_new = (RelativeLayout) findViewById(R.id.expetiment_left_new);
+		experiment_left_delete = (RelativeLayout) findViewById(R.id.experiment_left_delete);
+		experiment_left_lv = (ListView) findViewById(R.id.experiment_left_lv);
+		experiment_right_rl = (RelativeLayout) findViewById(R.id.experiment_right_rl);
+		expetiment_left_new_btn_iv = (ImageView) findViewById(R.id.expetiment_left_new_btn_iv);
+
+		stepDao = new StepDao();
+		experimentDao = new ExperimentDao();
+		views = new ArrayList<Map<String, Object>>();
+		map = new HashMap<String, Object>();
+
+		Intent intent = getIntent();
+		U_id = intent.getIntExtra("U_id", 9999);
+		Uname = intent.getStringExtra("Uname");
+		defaultExperiments = experimentDao
+				.getAllDefaultExperiments(ExperimentActivity.this);
+
+		experiment_top_uname_tv.setText(Uname);
+		experiments = experimentDao.getAllExperimentsByU_id(
+				ExperimentActivity.this, U_id);
+	}
+
 	private void showNewView() {
 		view = LayoutInflater.from(ExperimentActivity.this).inflate(
 				R.layout.activity_experiment_new_prepare, null);
@@ -317,6 +326,7 @@ public class ExperimentActivity extends Activity {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.exp_name_null),
 									Toast.LENGTH_SHORT).show();
+//							experiment_new_prepare_body_name_et.setText("Experiment 1");
 						} else {
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									ExperimentActivity.this);
@@ -375,6 +385,7 @@ public class ExperimentActivity extends Activity {
 				.findViewById(R.id.experiment_info_body_remark_info_btn);
 		experiment_info_body_remark_info_cancle_btn = (Button) view
 				.findViewById(R.id.experiment_info_body_remark_info_cancle_btn);
+
 
 		experiment_info_top_ename_tv.setText(experiment.getEname());
 		experiment_info_body_cdate_info_tv.setText(experiment.getCdate());
@@ -553,7 +564,6 @@ public class ExperimentActivity extends Activity {
 
 	public boolean onTouchEvent(MotionEvent event) {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		// TODO Auto-generated method stub
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (ExperimentActivity.this.getCurrentFocus() != null) {
 				if (ExperimentActivity.this.getCurrentFocus().getWindowToken() != null) {

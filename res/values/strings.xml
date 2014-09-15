@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Extraction System</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
@@ -24,14 +25,14 @@
     <string name="template_null">不使用模板</string>
     <string name="template_one">模板一</string>
     <string name="waitting">请稍后&#8230;&#8230;</string>
-    <!--主页面-->
+    <!-- 主页面 -->
     <string name="experiment">实验管理</string>
     <string name="log">实验日志</string>
     <string name="setting">系统设置</string>
     <string name="up_down">上传 &amp; 下载</string>
     <string name="disinfection">紫外消毒</string>
     <string name="help">帮\u0020\u0020\u0020\u0020\u0020助</string>
-    <!--登录页面-->
+    <!-- 登录页面 -->
     <string name="user_name_null">用户名不能为空</string>
     <string name="user_pass_null">密码不能为空</string>
     <string name="user_error">用户名或密码错误</string>
@@ -42,13 +43,13 @@
     <string name="user_pass_delete">请输入此用户密码</string>
     <string name="user_pass_error">密码 错误</string>
     <string name="user_pass_delete_successful">刪除密码成功</string>
-    <!--注册页面-->
+    <!-- 注册页面 -->
     <string name="user_rpass_null">确认密码不能为空</string>
     <string name="user_name_ture">用户名已被注册</string>
     <string name="user_register_success">注册成功！请登录</string>
     <string name="user_pass_rpass">两次输入的密码不一致</string>
     <string name="user_rpass_input">请确认密码</string>
-    <!--系统设置-->
+    <!-- 系统设置 -->
     <string name="system_language">语言设置</string>
     <string name="system_net">网络设置</string>
     <string name="system_clean">消毒设置</string>
@@ -57,12 +58,12 @@
     <string name="system_temp">系统温度</string>
     <string name="system_machine">位置校准</string>
     <string name="system_detection">仪器检测</string>
-    <!--系统设置_语言设置-->
+    <!-- 系统设置_语言设置 -->
     <string name="language_english">English</string>
     <string name="language_chinese">中  文</string>
     <string name="language_success">语言设置成功</string>
     <string name="language_failure">语言设置失败</string>
-    <!--系统设置_网络设置-->
+    <!-- 系统设置_网络设置 -->
     <string name="net_name">仪器名称</string>
     <string name="net_name_input">请输入仪器名称</string>
     <string name="net_name_not_null">仪器名称不能为空</string>
@@ -84,11 +85,11 @@
     <string name="net_mask_not_null">子网掩码不能为空</string>
     <string name="net_success">网络设置成功</string>
     <string name="net_failure">网络设置失败</string>
-    <!--系统设置_消毒设置-->
+    <!-- 系统设置_消毒设置 -->
     <string name="dismdect">消毒时间</string>
     <string name="dismdect_success">消毒时间设置成功</string>
     <string name="dismdect_failure">消毒时间设置失败</string>
-    <!--系统设置_用户设置-->
+    <!-- 系统设置_用户设置 -->
     <string name="user_default">默认登录</string>
     <string name="user_pass">修改密码</string>
     <string name="user_original_pass">用户密码</string>
@@ -111,7 +112,7 @@
     <string name="user_admin_name">姓\u0020\u0020名</string>
     <string name="user_admin_permissions">权\u0020\u0020限</string>
     <string name="user_admin_login">默认登录</string>
-    <!--系统设置_仪器设置-->
+    <!-- 系统设置_仪器设置 -->
     <string name="instrument_flux_name">通\u0020量\u0020设\u0020置</string>
     <string name="instrument_parameter_run">运行参数设置(单位: mm)</string>
     <string name="instrument_blend">混合电机控制</string>
@@ -126,7 +127,7 @@
     <string name="instrument_flux_selete">通量选择</string>
     <string name="instrument_success">仪器设置成功</string>
     <string name="instrument_failure">仪器设置失败</string>
-    <!--系统设置_仪器检测-->
+    <!-- 系统设置_仪器检测 -->
     <string name="detection_check">检    测</string>
     <string name="detection_not_back">正在检测,不能返回!</string>
     <string name="detection_not_check">正在检测,不能切换!</string>
@@ -159,7 +160,7 @@
     <string name="detection_shock_error">•混合电机错误</string>
     <string name="detection_magnet_error">•磁吸电机错误</string>
     <string name="detection_level_error">•水平运动电机错误</string>
-    <!--实验管理-->
+    <!-- 实验管理 -->
     <string name="exp_no_select">没有选择实验</string>
     <string name="exp_sure_to_delete">确定要删除这条实验吗？</string>
     <string name="exp_new_exp">新建实验</string>
@@ -176,7 +177,7 @@
     <string name="exp_remark">实验备注:</string>
     <string name="exp_edit_success">修改成功</string>
     <string name="exp_edit_failure">修改失败</string>
-    <!--新建实验-->
+    <!-- 新建实验 -->
     <string name="exp_new_not_exit">新建实验过程中不能退出</string>
     <string name="exp_edit_not_exit">编辑实验过程中不能退出</string>
     <string name="exp_inset_success">插入成功</string>
@@ -218,7 +219,7 @@
     <string name="exp_sure_delete_all">确定要删除"全部"的step吗?</string>
     <string name="exp_sure_delete_this">确定要删除这个的step吗?</string>
     <string name="exp_temp_setting">温度设定</string>
-    <!--运行实验-->
+    <!-- 运行实验 -->
     <string name="run_exp_remain_time">剩余时间</string>
     <string name="run_exp_stop_success">停止成功</string>
     <string name="run_exp_send_info">正在发送数据，请稍后&#8230;&#8230;</string>
@@ -226,7 +227,7 @@
     <string name="run_exp_stopping">正在停止实验，请稍后&#8230;&#8230;</string>
     <string name="run_exp_finsh">实验完成！</string>
     <string name="run_exp_not_run">还没有运行实验!</string>
-    <!--上传下载-->
+    <!-- 上传下载 -->
     <string name="up">上\u0020\u0020\u0020\u0020\u0020传</string>
     <string name="down">下\u0020\u0020\u0020\u0020\u0020载</string>
     <string name="local_file">本地文件</string>
@@ -235,43 +236,44 @@
     <string name="delete_file">确定要删除这条仪器中的实验吗？</string>
     <string name="down_file">确定要下载这条实验吗？</string>
     <string name="up_file">确定要上传这条实验吗？</string>
-    
-    <!--快捷实验-->
+
+    <!-- 快捷实验 -->
     <string name="quick_cancle">取消快捷方式</string>
-	<string name="quick_now_cancle">取消当前实验快捷方式</string>
-	<string name="quick_all_cancle">取消全部实验快捷方式</string>
-	<!--上传下载-->
-	<string name="down_is_full">仪器文件已满，请先删除！</string>
-	<string name="up_success">上传成功!</string>
-	<string name="up_failure">上传失败!</string>
-	<string name="downing">正在下载，请稍后&#8230;&#8230;</string>
-	<!--仪器升级-->
-	<string name="no_down_bin">没有可升级的文件</string>
-	<string name="no_select_down_bin">没有选择升级文件</string>
-	<!--帮助-->
-	<string name="information">Copyright 2010 by Xi‘an tianlong science﹠Technology Corporation.</string>
-	<string name="systemnum">	系统版本号:</string>
-	<string name="about_us">联系我们</string>
-	<string name="company_name">公司名称:</string>
-	<string name="company_name_info">西安天隆科技有限公司</string>
-	<string name="company_address">公司地址:</string>
-	<string name="company_address_info">西安市朱宏路389号</string>
-	<string name="company_phone">电话传真:</string>
-	<string name="company_phone_info">029\-82218051 83204255 传真:029\-82216680</string>
-	<string name="company_net">公司网址:</string>
-	<string name="company_net_info">http://www.medtl.com</string>
-	<string name="company_postcode">邮政编码:</string>
-	<string name="company_postcode_info">710018</string>
-	<string name="company_business">电子商务:</string>
-	<string name="company_business_info">medtl@medtl.com</string>
-	<string name="company_sell">销售部:</string>
-	<string name="company_sell_info">contact@medtl.com</string>
-	<string name="company_service">服务部:</string>
-	<string name="company_service_info">xatl@medtl.com</string>
-	<string name="company_technical">技术部:</string>
-	<string name="company_technical_info">support@medtl.com</string>
-	<string name="About">关于</string>
-	<string-array name="hour_array">
+    <string name="quick_now_cancle">取消当前实验快捷方式</string>
+    <string name="quick_all_cancle">取消全部实验快捷方式</string>
+    <!-- 上传下载 -->
+    <string name="down_is_full">仪器文件已满，请先删除！</string>
+    <string name="up_success">上传成功!</string>
+    <string name="up_failure">上传失败!</string>
+    <string name="downing">正在下载，请稍后&#8230;&#8230;</string>
+    <!-- 仪器升级 -->
+    <string name="no_down_bin">没有可升级的文件</string>
+    <string name="no_select_down_bin">没有选择升级文件</string>
+    <!-- 帮助 -->
+    <string name="information">Copyright 2010 by Xi‘an tianlong science﹠Technology Corporation.</string>
+    <string name="systemnum">	系统版本号:</string>
+    <string name="about_us">联系我们</string>
+    <string name="company_name">公司名称:</string>
+    <string name="company_name_info">西安天隆科技有限公司</string>
+    <string name="company_address">公司地址:</string>
+    <string name="company_address_info">西安市朱宏路389号</string>
+    <string name="company_phone">电话传真:</string>
+    <string name="company_phone_info">029\-82218051 83204255 传真:029\-82216680</string>
+    <string name="company_net">公司网址:</string>
+    <string name="company_net_info">http://www.medtl.com</string>
+    <string name="company_postcode">邮政编码:</string>
+    <string name="company_postcode_info">710018</string>
+    <string name="company_business">电子商务:</string>
+    <string name="company_business_info">medtl@medtl.com</string>
+    <string name="company_sell">销售部:</string>
+    <string name="company_sell_info">contact@medtl.com</string>
+    <string name="company_service">服务部:</string>
+    <string name="company_service_info">xatl@medtl.com</string>
+    <string name="company_technical">技术部:</string>
+    <string name="company_technical_info">support@medtl.com</string>
+    <string name="About">关于</string>
+
+    <string-array name="hour_array">
         <item>00</item>
         <item>01</item>
         <item>02</item>
@@ -426,4 +428,7 @@
         <item>8</item>
         <item>9</item>
     </string-array>
+
+    <string name="title_activity_base">BaseActivity</string>
+
 </resources>

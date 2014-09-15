@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.tianlong.rna.dao.ExperimentDao;
+import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
 import org.tianlong.rna.pojo.Experiment;
+import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.AdvancedCountdownTimer;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
-
-import org.tianlong.rna.activity.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,8 +33,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -92,7 +92,10 @@ public class RunExperimentActivity extends Activity {
 	private AlertDialog.Builder builder;
 	private Dialog dialog;
 	private SelectInfoThread selectInfoThread;
+	private Machine machine;
+	private MachineDao machineDao;
 
+	private int fluxNum;
 	private int hour;
 	private int min;
 	private int sec;
@@ -627,6 +630,13 @@ public class RunExperimentActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 屏幕不关闭
 		// registerReceiver(homePressReceiver, homeFilter);
 
+		// 设置通量
+		// fluxNum 默认为 32,1 for 15,2 for 32,3 for 48
+		machineDao = new MachineDao();
+		machine = machineDao.getMachine(RunExperimentActivity.this);
+		fluxNum = machine.getMflux();
+		fluxNum = 1;
+
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
 		sbuilder.setTitle(getString(R.string.waitting));
@@ -687,134 +697,137 @@ public class RunExperimentActivity extends Activity {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error) + ",无法开始运行",
 									Toast.LENGTH_SHORT).show();
-						}
-						else {
-							
-						if (changeBg.size() != 0) {
-							((View) changeBg.get(0).get("view"))
-									.setBackgroundResource(R.anim.anim_view);
-							changeBg.removeAll(changeBg);
-						}
-						runBtnControl++;
-						if (runBtnControl % 2 == 0) {
-							try {
-								wifiUtlis.sendMessage(Utlis.sendPauseMessage());
-								experiment_run_body_right_bottom_run_btn
-										.setText(getString(R.string.run));
-								viewDrawable.stop();
-								selectInfoFlag = false;
-								if (waitTimeControl == 1) {
-									waitTimeCount.pause();
-								}
-								if (blendTimeControl == 1) {
-									blendTimeCount.pause();
-								}
-								if (magnetTimeControl == 1) {
-									magnetTimeCount.pause();
-								}
-								timeHandler.removeCallbacks(timeRunnable);
-							} catch (Exception e) {
-								Toast.makeText(RunExperimentActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-								// inn();
-							}
 						} else {
-							experiment_run_body_right_bottom_run_btn
-									.setText(getString(R.string.pause));
-							if (wifiUtlis != null) {
-								switch (runNum) {
-								case 0:
-									try {
-										wifiUtlis.sendMessage(Utlis
-												.getbyteList(sendInfo.get(0), 0));
-										sendFileThread.start();
-										builder.setMessage(getString(R.string.run_exp_send_info));
-										builder.setCancelable(false);
-										dialog = builder.show();
-										runNum = 1;
-									} catch (Exception e1) {
-										Toast.makeText(
-												RunExperimentActivity.this,
-												getString(R.string.wifi_error),
-												Toast.LENGTH_SHORT).show();
-										// inn();
+
+							if (changeBg.size() != 0) {
+								((View) changeBg.get(0).get("view"))
+										.setBackgroundResource(R.anim.anim_view);
+								changeBg.removeAll(changeBg);
+							}
+							runBtnControl++;
+							if (runBtnControl % 2 == 0) {
+								try {
+									wifiUtlis.sendMessage(Utlis
+											.sendPauseMessage());
+									experiment_run_body_right_bottom_run_btn
+											.setText(getString(R.string.run));
+									viewDrawable.stop();
+									selectInfoFlag = false;
+									if (waitTimeControl == 1) {
+										waitTimeCount.pause();
 									}
-									break;
-								case 1:
-									try {
-										selectInfoFlag = true;
-										// Log.i("info",
-										// "waitTimeControl:"+waitTimeControl);
-										// Log.i("info",
-										// "blendTimeControl:"+blendTimeControl);
-										// Log.i("info",
-										// "magnetTimeControl:"+magnetTimeControl);
-										if (waitTimeControl != 0
-												|| blendTimeControl != 0
-												|| magnetTimeControl != 0) {
-											continueControl = 1;
-										} else {
-											continueControl = 0;
-										}
-										if (waitTimeControl == 1) {
-											waitTimeCount.resume();
-											waitTimeControl = 0;
-										}
-										if (blendTimeControl == 1) {
-											blendTimeCount.resume();
-											blendTimeControl = 0;
-										}
-										if (magnetTimeControl == 1) {
-											magnetTimeCount.resume();
-											magnetTimeControl = 0;
-										}
-										new Thread(selectInfoThread).start();
-										viewDrawable.start();
-										try {
-											Thread.sleep(50);
-										} catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										timeHandler.post(timeRunnable);
-										wifiUtlis.sendMessage(Utlis
-												.sendContinueMessage());
-									} catch (Exception e) {
-										Toast.makeText(
-												RunExperimentActivity.this,
-												getString(R.string.wifi_error),
-												Toast.LENGTH_SHORT).show();
-										// inn();
-										selectInfoFlag = false;
+									if (blendTimeControl == 1) {
+										blendTimeCount.pause();
 									}
-									break;
-								case 2:
-									try {
-										selectInfoFlag = true;
-										new Thread(selectInfoThread).start();
-										wifiUtlis.sendMessage(Utlis
-												.sendRunMessage(controlNum));
-									} catch (Exception e) {
-										Toast.makeText(
-												RunExperimentActivity.this,
-												getString(R.string.wifi_error),
-												Toast.LENGTH_SHORT).show();
-										// inn();
-										selectInfoFlag = false;
+									if (magnetTimeControl == 1) {
+										magnetTimeCount.pause();
 									}
-									runNum = 1;
-									break;
-								default:
-									break;
+									timeHandler.removeCallbacks(timeRunnable);
+								} catch (Exception e) {
+									Toast.makeText(RunExperimentActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+									// inn();
 								}
 							} else {
-								Toast.makeText(RunExperimentActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
+								experiment_run_body_right_bottom_run_btn
+										.setText(getString(R.string.pause));
+								if (wifiUtlis != null) {
+									switch (runNum) {
+									case 0:
+										try {
+											wifiUtlis.sendMessage(Utlis
+													.getbyteList(
+															sendInfo.get(0), 0));
+											sendFileThread.start();
+											builder.setMessage(getString(R.string.run_exp_send_info));
+											builder.setCancelable(false);
+											dialog = builder.show();
+											runNum = 1;
+										} catch (Exception e1) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+										}
+										break;
+									case 1:
+										try {
+											selectInfoFlag = true;
+											// Log.i("info",
+											// "waitTimeControl:"+waitTimeControl);
+											// Log.i("info",
+											// "blendTimeControl:"+blendTimeControl);
+											// Log.i("info",
+											// "magnetTimeControl:"+magnetTimeControl);
+											if (waitTimeControl != 0
+													|| blendTimeControl != 0
+													|| magnetTimeControl != 0) {
+												continueControl = 1;
+											} else {
+												continueControl = 0;
+											}
+											if (waitTimeControl == 1) {
+												waitTimeCount.resume();
+												waitTimeControl = 0;
+											}
+											if (blendTimeControl == 1) {
+												blendTimeCount.resume();
+												blendTimeControl = 0;
+											}
+											if (magnetTimeControl == 1) {
+												magnetTimeCount.resume();
+												magnetTimeControl = 0;
+											}
+											new Thread(selectInfoThread)
+													.start();
+											viewDrawable.start();
+											try {
+												Thread.sleep(50);
+											} catch (InterruptedException e) {
+												// block
+												e.printStackTrace();
+											}
+											timeHandler.post(timeRunnable);
+											wifiUtlis.sendMessage(Utlis
+													.sendContinueMessage());
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
+										}
+										break;
+									case 2:
+										try {
+											selectInfoFlag = true;
+											new Thread(selectInfoThread)
+													.start();
+											wifiUtlis.sendMessage(Utlis
+													.sendRunMessage(controlNum));
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
+										}
+										runNum = 1;
+										break;
+									default:
+										break;
+									}
+								} else {
+									Toast.makeText(RunExperimentActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
 							}
 						}
-					}
 					}
 				});
 
@@ -921,6 +934,18 @@ public class RunExperimentActivity extends Activity {
 					.findViewById(R.id.experiment_run_item_body_switch_info_tv);
 			holder.experiment_run_item_bottom_name_et = (TextView) view
 					.findViewById(R.id.experiment_run_item_bottom_name_et);
+
+			holder.experiment_run_item_body_temp_rl = (RelativeLayout) view
+					.findViewById(R.id.experiment_run_item_body_temp_rl);
+			holder.experiment_run_item_body_switch_rl = (RelativeLayout) view
+					.findViewById(R.id.experiment_run_item_body_switch_rl);
+			// 通量属性展示 1-->15 3-->48
+			if (fluxNum == 1 || fluxNum == 3) {
+				holder.experiment_run_item_body_temp_rl
+						.setVisibility(View.GONE);
+				holder.experiment_run_item_body_switch_rl
+						.setVisibility(View.GONE);
+			}
 
 			holder.experiment_run_item_top_name_tv.setText("Number" + (i + 1));
 
@@ -1140,6 +1165,7 @@ public class RunExperimentActivity extends Activity {
 		return info;
 	}
 
+	// 倒计时
 	Runnable timeRunnable = new Runnable() {
 		public void run() {
 			sec--;
@@ -1572,4 +1598,7 @@ class RunViewHolder {
 	TextView experiment_run_item_body_temp_info_et;
 	TextView experiment_run_item_body_switch_info_tv;
 	TextView experiment_run_item_bottom_name_et;
+
+	RelativeLayout experiment_run_item_body_temp_rl;
+	RelativeLayout experiment_run_item_body_switch_rl;
 }

@@ -58,8 +58,8 @@ public class CreatExperimentActivity extends Activity {
 	private TextView experiment_new_main_top_uname_tv;
 	private TableLayout experiment_new_main_body_tl;
 	private TableRow stepRow;
-	private RelativeLayout experiment_new_main_body_temp_rl;
-	private RelativeLayout experiment_new_main_body_switch_rl;
+	// private RelativeLayout experiment_new_main_body_temp_rl;
+	// private RelativeLayout experiment_new_main_body_switch_rl;
 
 	private int U_id;
 	private String Uname;
@@ -76,9 +76,9 @@ public class CreatExperimentActivity extends Activity {
 	private int volMax = 1000;
 	private boolean deleteFlag = false;
 	private boolean saveFlag = false;
-	private String hours;
-	private String mins;
-	private String secs;
+	// private String hours;
+	// private String mins;
+	// private String secs;
 
 	private StepDao stepDao;
 	private ExperimentDao experimentDao;
@@ -663,7 +663,6 @@ public class CreatExperimentActivity extends Activity {
 							}
 						});
 
-				// /-------------------------->
 				holder.experiment_new_main_item_body_vol_info_et
 						.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
@@ -1432,21 +1431,12 @@ public class CreatExperimentActivity extends Activity {
 				holder.experiment_new_main_item_body_switch_rl = (RelativeLayout) convertView
 						.findViewById(R.id.experiment_new_main_item_body_switch_rl);
 
-				System.out.println("--->fluxNum = " + fluxNum);
 				// 通量属性展示 1-->15 3-->48
-				switch (fluxNum) {
-				case 1:
+				if (fluxNum == 1 || fluxNum == 3) {
 					holder.experiment_new_main_item_body_temp_rl
 							.setVisibility(View.GONE);
 					holder.experiment_new_main_item_body_switch_rl
 							.setVisibility(View.GONE);
-					break;
-				case 3:
-					holder.experiment_new_main_item_body_temp_rl
-							.setVisibility(View.GONE);
-					holder.experiment_new_main_item_body_switch_rl
-							.setVisibility(View.GONE);
-					break;
 				}
 
 				if (steps.get(i).getSwait().equals("00:00:00")) {

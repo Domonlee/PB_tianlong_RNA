@@ -77,8 +77,8 @@ public class LoginActivity extends Activity {
 		intent = getIntent();
 
 		//Ä¬ÈÏµÇÂ¼
-//		logout = intent.getIntExtra("logout", 9999);
-//		U_id = intent.getIntExtra("U_id", 9999);
+		logout = intent.getIntExtra("logout", 9999);
+		U_id = intent.getIntExtra("U_id", 9999);
 
 		if (defaultExperiments.size() == 0) {
 			initial();

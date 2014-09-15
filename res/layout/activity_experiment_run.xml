@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/experiment_run_body_left_top_name_tv"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:background="@drawable/left_top"
                 android:gravity="center"
                 android:text="实验一"
