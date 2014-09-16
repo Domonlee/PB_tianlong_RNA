@@ -57,6 +57,7 @@ public class RunExperimentActivity extends Activity {
 	private Button experiment_run_body_right_bottom_back_btn;
 	private TextView experiment_run_top_uname_tv;
 	private TextView experiment_run_body_left_body_time_info_tv;
+	private TextView experiment_run_body_left_body_time_infototal_tv;
 	private Button experiment_run_body_right_bottom_run_btn;
 	private Button experiment_run_body_right_bottom_stop_btn;
 	private HorizontalScrollView experiment_run_body_right_body_hsv;
@@ -666,6 +667,7 @@ public class RunExperimentActivity extends Activity {
 		sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
 
 		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
+		experiment_run_body_left_body_time_infototal_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_infototal_tv);
 		experiment_run_top_uname_tv = (TextView) findViewById(R.id.experiment_run_top_uname_tv);
 		experiment_run_body_left_top_name_tv = (TextView) findViewById(R.id.experiment_run_body_left_top_name_tv);
 		experiment_run_body_right_body_tl = (TableLayout) findViewById(R.id.experiment_run_body_righr_body_tl);
@@ -1489,11 +1491,11 @@ public class RunExperimentActivity extends Activity {
 		}
 	}
 
-	private void getTime(int num) {
+	private void getTime(int colNum) {
 		hour = 0;
 		min = 0;
 		sec = 0;
-		for (int j = num; j < (steps.size() - num); j++) {
+		for (int j = colNum; j < (steps.size() - colNum); j++) {
 			try {
 				sec = sec
 						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
@@ -1516,6 +1518,8 @@ public class RunExperimentActivity extends Activity {
 				hour = hour
 						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
 								.getHours();
+				
+				
 				sec = sec
 						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
 								.getSeconds();
@@ -1537,10 +1541,12 @@ public class RunExperimentActivity extends Activity {
 				hour = hour
 						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
 								.getHours();
-				if ((j + 1) < (steps.size() - num)) {
+				
+				
+				if ((j + 1) < (steps.size() - colNum)) {
 					sec = sec
 							+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
-									.getSeconds() + 30;
+									.getSeconds() ;
 					if (sec >= 60) {
 						min++;
 						if (min >= 60) {
@@ -1579,6 +1585,7 @@ public class RunExperimentActivity extends Activity {
 		} else {
 			time = time + sec;
 		}
+		experiment_run_body_left_body_time_infototal_tv.setText(time);
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 }

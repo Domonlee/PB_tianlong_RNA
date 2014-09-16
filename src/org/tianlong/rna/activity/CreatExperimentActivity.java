@@ -58,8 +58,6 @@ public class CreatExperimentActivity extends Activity {
 	private TextView experiment_new_main_top_uname_tv;
 	private TableLayout experiment_new_main_body_tl;
 	private TableRow stepRow;
-	// private RelativeLayout experiment_new_main_body_temp_rl;
-	// private RelativeLayout experiment_new_main_body_switch_rl;
 
 	private int U_id;
 	private String Uname;
@@ -76,9 +74,6 @@ public class CreatExperimentActivity extends Activity {
 	private int volMax = 1000;
 	private boolean deleteFlag = false;
 	private boolean saveFlag = false;
-	// private String hours;
-	// private String mins;
-	// private String secs;
 
 	private StepDao stepDao;
 	private ExperimentDao experimentDao;
@@ -415,27 +410,6 @@ public class CreatExperimentActivity extends Activity {
 		dialog.cancel();
 	};
 
-	/**
-	 * Title: getVolMax Description: 1 for 15 flux,2 for 32 flux,3 for 48 flux
-	 * Created By： Domon Modified Date: 2014-9-12
-	 * 
-	 * @return
-	 */
-	private int getVolMax() {
-		switch (fluxNum) {
-		case 1:
-			volMax = 1500;
-			break;
-		case 2:
-			volMax = 1000;
-			break;
-		case 3:
-			volMax = 1000;
-			break;
-		}
-		return volMax;
-	}
-
 	private void createTable() {
 		stepRow = new TableRow(this);
 		AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -476,6 +450,19 @@ public class CreatExperimentActivity extends Activity {
 				holder.experiment_new_main_item_bottom_name_et = (EditText) convertView
 						.findViewById(R.id.experiment_new_main_item_bottom_name_et);
 
+				
+				holder.experiment_new_main_item_body_temp_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_temp_rl);
+				holder.experiment_new_main_item_body_switch_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_switch_rl);
+				// 通量属性展示 1-->15 3-->48
+				if (fluxNum == 1 || fluxNum == 3) {
+					holder.experiment_new_main_item_body_temp_rl
+							.setVisibility(View.GONE);
+					holder.experiment_new_main_item_body_switch_rl
+							.setVisibility(View.GONE);
+				}
+
 				if (defaultSteps.get(i).getDSwait().equals("00:00:00")) {
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setBackgroundResource(R.drawable.zero);
@@ -488,6 +475,9 @@ public class CreatExperimentActivity extends Activity {
 					holder.experiment_new_main_item_head_magnet_info_tv
 							.setBackgroundResource(R.drawable.zero);
 				}
+				
+				//--模板填充数据 TODO
+				// 
 				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
 						+ (i + 1));
 				holder.experiment_new_main_item_head_wait_info_tv
@@ -511,6 +501,7 @@ public class CreatExperimentActivity extends Activity {
 						.setText(getSwitch(defaultSteps.get(i).getDSswitch()));
 				holder.experiment_new_main_item_bottom_name_et
 						.setText(defaultSteps.get(i).getDSname());
+
 
 				holder.experiment_new_main_item_body_temp_info_et
 						.setOnClickListener(new OnClickListener() {
@@ -758,10 +749,11 @@ public class CreatExperimentActivity extends Activity {
 														+ vol_bits
 																.getCurrentItem();
 
-												if (volTotal > 1000) {
+												if (volTotal > getVolMax()) {
 													Toast.makeText(
 															CreatExperimentActivity.this,
 															getString(R.string.exp_vol_big)
+																	+ getVolMax()
 																	+ "ul",
 															Toast.LENGTH_SHORT)
 															.show();
@@ -1194,6 +1186,21 @@ public class CreatExperimentActivity extends Activity {
 								default:
 									break;
 								}
+
+								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
+								switch (fluxNum) {
+								case 1:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									break;
+								case 3:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									experiment_new_main_item_hole_rb_five
+											.setVisibility(View.GONE);
+									break;
+								}
+
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
 								builder.setTitle(getString(R.string.exp_hole_select));
@@ -2130,6 +2137,7 @@ public class CreatExperimentActivity extends Activity {
 										.findViewById(R.id.experiment_new_main_item_hole_rb_five);
 								RadioButton experiment_new_main_item_hole_rb_six = (RadioButton) view
 										.findViewById(R.id.experiment_new_main_item_hole_rb_six);
+
 								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
 								switch (fluxNum) {
 								case 1:
@@ -2437,6 +2445,27 @@ public class CreatExperimentActivity extends Activity {
 			break;
 		}
 		return info;
+	}
+
+	/**
+	 * Title: getVolMax Description: 1 for 15 flux,2 for 32 flux,3 for 48 flux
+	 * Created By： Domon Modified Date: 2014-9-12
+	 * 
+	 * @return
+	 */
+	private int getVolMax() {
+		switch (fluxNum) {
+		case 1:
+			volMax = 1500;
+			break;
+		case 2:
+			volMax = 1000;
+			break;
+		case 3:
+			volMax = 1000;
+			break;
+		}
+		return volMax;
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

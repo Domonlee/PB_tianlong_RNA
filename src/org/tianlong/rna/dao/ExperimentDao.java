@@ -33,10 +33,8 @@ public class ExperimentDao {
 				null);
 		while (cursor.moveToNext()) {
 			DefaultExperiment defaultExperiment = new DefaultExperiment();
-			defaultExperiment.setE_id(cursor.getInt(cursor
-					.getColumnIndex("DE_id")));
-			defaultExperiment.setEname(cursor.getString(cursor
-					.getColumnIndex("DEname")));
+			defaultExperiment.setE_id(cursor.getInt(cursor .getColumnIndex("DE_id")));
+			defaultExperiment.setEname(cursor.getString(cursor.getColumnIndex("DEname")));
 			list.add(defaultExperiment);
 		}
 		cursor.close();

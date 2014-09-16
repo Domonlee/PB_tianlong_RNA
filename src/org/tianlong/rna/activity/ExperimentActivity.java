@@ -246,7 +246,7 @@ public class ExperimentActivity extends Activity {
 		});
 	}
 
-	private void initView() {
+	public void initView() {
 		experiment_right_back_btn = (Button) findViewById(R.id.experiment_right_back_btn);
 		expetiment_left_new_btn = (TextView) findViewById(R.id.expetiment_left_new_btn);
 		experiment_top_uname_tv = (TextView) findViewById(R.id.experiment_top_uname_tv);
@@ -306,18 +306,20 @@ public class ExperimentActivity extends Activity {
 					}
 				});
 
-		experiment_new_prepare_body_template_sp.setSelection(0);
+		//--
+//		experiment_new_prepare_body_template_sp.setSelection(0);
 		experiment_new_prepare_body_template_sp
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
+					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 						DE_id = defaultExperiments.get(arg2).getE_id();
+						Toast.makeText(ExperimentActivity.this, arg2 + "", 1000).show();
 					}
 
 					public void onNothingSelected(AdapterView<?> arg0) {
 					}
 				});
 
+		//--
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -335,19 +337,17 @@ public class ExperimentActivity extends Activity {
 							dialog = builder.show();
 							Intent intent = new Intent(ExperimentActivity.this,
 									CreatExperimentActivity.class);
+
 							if (experiment_new_prepare_body_quick_cb
 									.isChecked()) {
 								intent.putExtra("Equick", 1);
 							} else {
 								intent.putExtra("Equick", 0);
 							}
-							intent.putExtra("Ename",
-									experiment_new_prepare_body_name_et
-											.getText().toString());
+
+							intent.putExtra("Ename", experiment_new_prepare_body_name_et .getText().toString());
 							intent.putExtra("Enum", DE_id);
-							intent.putExtra("Eremark",
-									experiment_new_prepare_body_remark_et
-											.getText().toString());
+							intent.putExtra("Eremark",experiment_new_prepare_body_remark_et.getText().toString());
 							intent.putExtra("U_id", U_id);
 							intent.putExtra("Uname", Uname);
 							intent.putExtra("DE_id", DE_id);

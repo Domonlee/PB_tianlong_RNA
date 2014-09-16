@@ -627,6 +627,7 @@ public class Utlis {
 		return info;
 	}
 
+	//--
 	/**
 	 * µÃµ½Ä£°å
 	 */
@@ -634,6 +635,7 @@ public class Utlis {
 		List<String> list = new ArrayList<String>();
 		list.add(context.getString(R.string.template_null));
 		list.add(context.getString(R.string.template_one));
+//		list.add(context.getString(R.string.template_two));
 		return list;
 	}
 

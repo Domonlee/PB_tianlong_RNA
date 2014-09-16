@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.tianlong.rna.adapter.ArrayWheelAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
+import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
 import org.tianlong.rna.pojo.Experiment;
+import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.TimeWheelView;
 import org.tianlong.rna.utlis.Utlis;
@@ -37,6 +39,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -65,12 +68,17 @@ public class EditExperimentActivity extends Activity {
 	private int speed;
 	private int switchInfo;
 	private int stepChooseNum = -1;
+	private int volMax = 1000;
 	private boolean deleteFlag = false;
 	private boolean saveFlag = false;
 	private String hours;
 	private String mins;
 	private String secs;
 
+	private int fluxNum;
+
+	private MachineDao machineDao;
+	private Machine machine;
 	private StepDao stepDao;
 	private ExperimentDao experimentDao;
 	private List<Step> steps;
@@ -85,37 +93,12 @@ public class EditExperimentActivity extends Activity {
 		setContentView(R.layout.activity_experiment_new_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		initView();
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				EditExperimentActivity.this);
 		builder.setTitle("dsada");
 		Dialog dialog = builder.show();
-		experimentDao = new ExperimentDao();
-		stepDao = new StepDao();
-		Intent intent = getIntent();
-		U_id = intent.getIntExtra("U_id", 9999);
-		Uname = intent.getStringExtra("Uname");
-		E_id = intent.getIntExtra("E_id", 9999);
-		experiment = experimentDao.getExperimentById(E_id,
-				EditExperimentActivity.this, U_id);
-		steps = stepDao.getAllStep(EditExperimentActivity.this, E_id);
-		editSteps = new ArrayList<Step>();
-		holders = new ArrayList<RViewHolder>();
-		textViews = new ArrayList<TextView>();
-
-		experiment_new_main_bottom_ename_info_tv = (TextView) findViewById(R.id.experiment_new_main_bottom_ename_info_tv);
-		experiment_new_main_bottom_ename_info_et = (EditText) findViewById(R.id.experiment_new_main_bottom_ename_info_et);
-		experiment_new_main_body_tl = (TableLayout) findViewById(R.id.experiment_new_main_body_tl);
-		experiment_new_main_top_uname_tv = (TextView) findViewById(R.id.experiment_new_main_top_uname_tv);
-		experiment_new_main_bottom_back_btn = (Button) findViewById(R.id.experiment_new_main_bottom_back_btn);
-		experiment_new_main_bottom_save_btn = (Button) findViewById(R.id.experiment_new_main_bottom_save_btn);
-		experiment_new_main_bottom_insert_btn = (Button) findViewById(R.id.experiment_new_main_bottom_insert_btn);
-		experiment_new_main_bottom_delete_btn = (Button) findViewById(R.id.experiment_new_main_bottom_delete_btn);
-
-		experiment_new_main_top_uname_tv.setText(Uname);
-		experiment_new_main_bottom_ename_info_tv.setVisibility(View.GONE);
-		experiment_new_main_bottom_ename_info_et.setVisibility(View.VISIBLE);
-		experiment_new_main_bottom_ename_info_et.setText(experiment.getEname());
-		experiment_new_main_body_tl.setStretchAllColumns(true);
 
 		experiment_new_main_bottom_insert_btn
 				.setOnClickListener(new OnClickListener() {
@@ -388,6 +371,43 @@ public class EditExperimentActivity extends Activity {
 		dialog.cancel();
 	};
 
+	public void initView() {
+		experimentDao = new ExperimentDao();
+		stepDao = new StepDao();
+		Intent intent = getIntent();
+		U_id = intent.getIntExtra("U_id", 9999);
+		Uname = intent.getStringExtra("Uname");
+		E_id = intent.getIntExtra("E_id", 9999);
+		experiment = experimentDao.getExperimentById(E_id,
+				EditExperimentActivity.this, U_id);
+		steps = stepDao.getAllStep(EditExperimentActivity.this, E_id);
+		editSteps = new ArrayList<Step>();
+		holders = new ArrayList<RViewHolder>();
+		textViews = new ArrayList<TextView>();
+
+		experiment_new_main_bottom_ename_info_tv = (TextView) findViewById(R.id.experiment_new_main_bottom_ename_info_tv);
+		experiment_new_main_bottom_ename_info_et = (EditText) findViewById(R.id.experiment_new_main_bottom_ename_info_et);
+		experiment_new_main_body_tl = (TableLayout) findViewById(R.id.experiment_new_main_body_tl);
+		experiment_new_main_top_uname_tv = (TextView) findViewById(R.id.experiment_new_main_top_uname_tv);
+		experiment_new_main_bottom_back_btn = (Button) findViewById(R.id.experiment_new_main_bottom_back_btn);
+		experiment_new_main_bottom_save_btn = (Button) findViewById(R.id.experiment_new_main_bottom_save_btn);
+		experiment_new_main_bottom_insert_btn = (Button) findViewById(R.id.experiment_new_main_bottom_insert_btn);
+		experiment_new_main_bottom_delete_btn = (Button) findViewById(R.id.experiment_new_main_bottom_delete_btn);
+
+		experiment_new_main_top_uname_tv.setText(Uname);
+		experiment_new_main_bottom_ename_info_tv.setVisibility(View.GONE);
+		experiment_new_main_bottom_ename_info_et.setVisibility(View.VISIBLE);
+		experiment_new_main_bottom_ename_info_et.setText(experiment.getEname());
+		experiment_new_main_body_tl.setStretchAllColumns(true);
+
+		// --setting the flux
+		machineDao = new MachineDao();
+		machine = machineDao.getMachine(EditExperimentActivity.this);
+		fluxNum = machine.getMflux();
+		fluxNum = 1;
+
+	}
+
 	private void createTable() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				EditExperimentActivity.this);
@@ -426,6 +446,20 @@ public class EditExperimentActivity extends Activity {
 						.findViewById(R.id.experiment_new_main_item_body_switch_info_tv);
 				holder.experiment_new_main_item_bottom_name_et = (EditText) convertView
 						.findViewById(R.id.experiment_new_main_item_bottom_name_et);
+
+				holder.experiment_new_main_item_body_switch_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_switch_rl);
+				holder.experiment_new_main_item_body_temp_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_temp_rl);
+
+				// 通量属性展示 1-->15 3-->48
+				if (fluxNum == 1 || fluxNum == 3) {
+					holder.experiment_new_main_item_body_temp_rl
+							.setVisibility(View.GONE);
+					holder.experiment_new_main_item_body_switch_rl
+							.setVisibility(View.GONE);
+				}
+
 				if (editSteps.get(i).getSwait().equals("00:00:00")) {
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setBackgroundResource(R.drawable.zero);
@@ -1223,6 +1257,21 @@ public class EditExperimentActivity extends Activity {
 										.findViewById(R.id.experiment_new_main_item_hole_rb_five);
 								RadioButton experiment_new_main_item_hole_rb_six = (RadioButton) view
 										.findViewById(R.id.experiment_new_main_item_hole_rb_six);
+								
+								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
+								switch (fluxNum) {
+								case 1:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									break;
+								case 3:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									experiment_new_main_item_hole_rb_five
+											.setVisibility(View.GONE);
+									break;
+								}	
+
 								switch (Integer
 										.valueOf(holder.experiment_new_main_item_body_hole_info_tv
 												.getText().toString())) {
@@ -1564,6 +1613,20 @@ public class EditExperimentActivity extends Activity {
 						.findViewById(R.id.experiment_new_main_item_body_switch_info_tv);
 				holder.experiment_new_main_item_bottom_name_et = (EditText) convertView
 						.findViewById(R.id.experiment_new_main_item_bottom_name_et);
+
+				holder.experiment_new_main_item_body_switch_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_switch_rl);
+				holder.experiment_new_main_item_body_temp_rl = (RelativeLayout) convertView
+						.findViewById(R.id.experiment_new_main_item_body_temp_rl);
+
+				// 通量属性展示 1-->15 3-->48
+				if (fluxNum == 1 || fluxNum == 3) {
+					holder.experiment_new_main_item_body_temp_rl
+							.setVisibility(View.GONE);
+					holder.experiment_new_main_item_body_switch_rl
+							.setVisibility(View.GONE);
+				}
+
 				if (steps.get(i).getSwait().equals("00:00:00")) {
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setBackgroundResource(R.drawable.zero);
@@ -1677,13 +1740,15 @@ public class EditExperimentActivity extends Activity {
 												public void onClick(
 														DialogInterface dialog,
 														int which) {
-													if ((temp_thousand
+													int tempTotal = temp_thousand
 															.getCurrentItem()
 															* 100
 															+ temp_hundred
 																	.getCurrentItem()
-															* 10 + temp_ten
-															.getCurrentItem()) > 120) {
+															* 10
+															+ temp_ten
+																	.getCurrentItem();
+													if (tempTotal > 120) {
 														Toast.makeText(
 																EditExperimentActivity.this,
 																getString(R.string.exp_temp_big),
@@ -1702,25 +1767,11 @@ public class EditExperimentActivity extends Activity {
 															e.printStackTrace();
 														}
 													} else {
-														steps.get(p)
-																.setStemp(
-																		temp_thousand
-																				.getCurrentItem()
-																				* 100
-																				+ temp_hundred
-																						.getCurrentItem()
-																				* 10
-																				+ temp_ten
-																						.getCurrentItem());
-														holder.experiment_new_main_item_body_temp_info_et.setText(temp_thousand
-																.getCurrentItem()
-																* 100
-																+ temp_hundred
-																		.getCurrentItem()
-																* 10
-																+ temp_ten
-																		.getCurrentItem()
-																+ "");
+														steps.get(p).setStemp(
+																tempTotal);
+														holder.experiment_new_main_item_body_temp_info_et
+																.setText(tempTotal
+																		+ "");
 														try {
 															Field field = dialog
 																	.getClass()
@@ -1844,7 +1895,7 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if ((vol_thousand
+												int volTotal = vol_thousand
 														.getCurrentItem()
 														* 1000
 														+ vol_hundred
@@ -1852,11 +1903,15 @@ public class EditExperimentActivity extends Activity {
 														* 100
 														+ vol_ten
 																.getCurrentItem()
-														* 10 + vol_bits
-														.getCurrentItem()) > 1000) {
+														* 10
+														+ vol_bits
+																.getCurrentItem();
+												if (volTotal > getVolMax()) {
 													Toast.makeText(
 															EditExperimentActivity.this,
-															getString(R.string.exp_vol_big),
+															getString(R.string.exp_vol_big)
+																	+ getVolMax()
+																	+ "ul",
 															Toast.LENGTH_SHORT)
 															.show();
 													try {
@@ -1870,19 +1925,11 @@ public class EditExperimentActivity extends Activity {
 													} catch (Exception e) {
 														e.printStackTrace();
 													}
-												} else if ((vol_thousand
-														.getCurrentItem()
-														* 1000
-														+ vol_hundred
-																.getCurrentItem()
-														* 100
-														+ vol_ten
-																.getCurrentItem()
-														* 10 + vol_bits
-														.getCurrentItem()) < 30) {
+												} else if (volTotal < 30) {
 													Toast.makeText(
 															EditExperimentActivity.this,
-															getString(R.string.exp_vol_small),
+															getString(R.string.exp_vol_small)
+																	+ "30ul",
 															Toast.LENGTH_SHORT)
 															.show();
 													try {
@@ -1897,31 +1944,11 @@ public class EditExperimentActivity extends Activity {
 														e.printStackTrace();
 													}
 												} else {
-													steps.get(p)
-															.setSvol(
-																	vol_thousand
-																			.getCurrentItem()
-																			* 1000
-																			+ vol_hundred
-																					.getCurrentItem()
-																			* 100
-																			+ vol_ten
-																					.getCurrentItem()
-																			* 10
-																			+ vol_bits
-																					.getCurrentItem());
-													holder.experiment_new_main_item_body_vol_info_et.setText(vol_thousand
-															.getCurrentItem()
-															* 1000
-															+ vol_hundred
-																	.getCurrentItem()
-															* 100
-															+ vol_ten
-																	.getCurrentItem()
-															* 10
-															+ vol_bits
-																	.getCurrentItem()
-															+ "");
+													steps.get(p).setSvol(
+															volTotal);
+													holder.experiment_new_main_item_body_vol_info_et
+															.setText(volTotal
+																	+ "");
 													try {
 														Field field = dialog
 																.getClass()
@@ -2065,37 +2092,14 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_hour
-														.getCurrentItem() < 10) {
-													hours = "0"
-															+ experiment_new_main_item_time_hour_hour
-																	.getCurrentItem();
-												} else {
-													hours = experiment_new_main_item_time_hour_hour
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem();
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															+ "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														experiment_new_main_item_time_hour_hour
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -2104,12 +2108,9 @@ public class EditExperimentActivity extends Activity {
 															.setBackgroundResource(R.drawable.wait);
 												}
 												editSteps.get(p).setSwait(
-														hours + ":" + mins
-																+ ":" + secs);
+														timeFromatStr);
 												holder.experiment_new_main_item_head_wait_info_tv
-														.setText(hours + ":"
-																+ mins + ":"
-																+ secs);
+														.setText(timeFromatStr);
 											}
 										});
 								builder.setNegativeButton(
@@ -2182,37 +2183,14 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_hour
-														.getCurrentItem() < 10) {
-													hours = "0"
-															+ experiment_new_main_item_time_hour_hour
-																	.getCurrentItem();
-												} else {
-													hours = experiment_new_main_item_time_hour_hour
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem();
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															+ "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														experiment_new_main_item_time_hour_hour
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -2221,12 +2199,9 @@ public class EditExperimentActivity extends Activity {
 															.setBackgroundResource(R.drawable.blend);
 												}
 												editSteps.get(p).setSblend(
-														hours + ":" + mins
-																+ ":" + secs);
+														timeFromatStr);
 												holder.experiment_new_main_item_head_blend_info_tv
-														.setText(hours + ":"
-																+ mins + ":"
-																+ secs);
+														.setText(timeFromatStr);
 											}
 										});
 								builder.setNegativeButton(
@@ -2288,27 +2263,13 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem();
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															+ "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														0,
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_magnet_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -2317,11 +2278,9 @@ public class EditExperimentActivity extends Activity {
 															.setBackgroundResource(R.drawable.magnet);
 												}
 												editSteps.get(p).setSmagnet(
-														"00:" + mins + ":"
-																+ secs);
+														timeFromatStr);
 												holder.experiment_new_main_item_head_magnet_info_tv
-														.setText("00:" + mins
-																+ ":" + secs);
+														.setText(timeFromatStr);
 											}
 										});
 								builder.setNegativeButton(
@@ -2359,6 +2318,21 @@ public class EditExperimentActivity extends Activity {
 										.findViewById(R.id.experiment_new_main_item_hole_rb_five);
 								RadioButton experiment_new_main_item_hole_rb_six = (RadioButton) view
 										.findViewById(R.id.experiment_new_main_item_hole_rb_six);
+								
+								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
+								switch (fluxNum) {
+								case 1:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									break;
+								case 3:
+									experiment_new_main_item_hole_rb_six
+											.setVisibility(View.GONE);
+									experiment_new_main_item_hole_rb_five
+											.setVisibility(View.GONE);
+									break;
+								}
+								
 								switch (Integer
 										.valueOf(holder.experiment_new_main_item_body_hole_info_tv
 												.getText().toString())) {
@@ -2637,6 +2611,27 @@ public class EditExperimentActivity extends Activity {
 		waitDialog.cancel();
 	}
 
+	/**
+	 * Title: getVolMax Description: 1 for 15 flux,2 for 32 flux,3 for 48 flux
+	 * Created By： Domon Modified Date: 2014-9-12
+	 * 
+	 * @return
+	 */
+	private int getVolMax() {
+		switch (fluxNum) {
+		case 1:
+			volMax = 1500;
+			break;
+		case 2:
+			volMax = 1000;
+			break;
+		case 3:
+			volMax = 1000;
+			break;
+		}
+		return volMax;
+	}
+
 	private String getSwitch(int id) {
 		String info = null;
 		switch (id) {
@@ -2753,6 +2748,37 @@ public class EditExperimentActivity extends Activity {
 		}
 		return flag;
 	}
+
+	/**
+	 * 
+	 * Title: timeFormat Description: Modified By： Domon Modified Date:
+	 * 2014-9-12
+	 * 
+	 * @param hour
+	 * @param min
+	 * @param sec
+	 * @return
+	 */
+	public String timeFormat(int hour, int min, int sec) {
+		String hourStr, minStr, secStr;
+		if (hour < 10) {
+			hourStr = "0" + hour;
+		} else {
+			hourStr = "" + hour;
+		}
+
+		if (min < 10) {
+			minStr = "0" + min;
+		} else {
+			minStr = "" + min;
+		}
+		if (sec < 10) {
+			secStr = "0" + sec;
+		} else {
+			secStr = "" + sec;
+		}
+		return hourStr + ":" + minStr + ":" + secStr;
+	}
 }
 
 class RViewHolder {
@@ -2766,4 +2792,8 @@ class RViewHolder {
 	TextView experiment_new_main_item_body_temp_info_et;
 	TextView experiment_new_main_item_body_switch_info_tv;
 	TextView experiment_new_main_item_bottom_name_et;
+
+	RelativeLayout experiment_new_main_item_body_temp_rl;
+	RelativeLayout experiment_new_main_item_body_switch_rl;
+
 }

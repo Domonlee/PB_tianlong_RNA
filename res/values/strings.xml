@@ -24,6 +24,7 @@
     <string name="wifi_error">Wifi连接错误或未连接</string>
     <string name="template_null">不使用模板</string>
     <string name="template_one">模板一</string>
+    <string name="template_two">模板二</string>
     <string name="waitting">请稍后&#8230;&#8230;</string>
     <!-- 主页面 -->
     <string name="experiment">实验管理</string>
@@ -221,6 +222,7 @@
     <string name="exp_temp_setting">温度设定</string>
     <!-- 运行实验 -->
     <string name="run_exp_remain_time">剩余时间</string>
+    <string name="run_exp_total_time">总时间</string>
     <string name="run_exp_stop_success">停止成功</string>
     <string name="run_exp_send_info">正在发送数据，请稍后&#8230;&#8230;</string>
     <string name="run_exp_not_exit">正在运行实验，不能退出！</string>

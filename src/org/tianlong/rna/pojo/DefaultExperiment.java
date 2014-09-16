@@ -4,7 +4,7 @@ public class DefaultExperiment {
 	private int E_id;
 	private String Ename;
 	private int Enum;
-	
+
 	public DefaultExperiment() {
 		super();
 	}
