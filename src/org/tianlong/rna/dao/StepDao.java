@@ -123,6 +123,7 @@ public class StepDao {
 			step.setDSmagnet(cursor.getString(cursor.getColumnIndex("DSmagnet")));
 			step.setDSswitch(cursor.getInt(cursor.getColumnIndex("DSswitch")));
 			step.setDStemp(cursor.getInt(cursor.getColumnIndex("DStemp")));
+			step.setDStemplet(cursor.getInt(cursor.getColumnIndex("DStemplet")));
 			step.setDE_id(cursor.getInt(cursor.getColumnIndex("DE_id")));
 			dsteps.add(step);
 		}
@@ -146,6 +147,7 @@ public class StepDao {
 		values.put("DSmagnet", step.getDSmagnet());
 		values.put("DSswitch", step.getDSswitch());
 		values.put("DStemp", step.getDStemp());
+		values.put("DStemplet", step.getDStemplet());
 		values.put("DE_id", step.getDE_id());
 		long id = database.insert("defaultstep", null, values);
 		if(id != -1){

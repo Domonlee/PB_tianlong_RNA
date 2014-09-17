@@ -4,6 +4,7 @@ public class DefaultStep {
 	private int DS_id;
 	private String DSname;
 	private int DShole;
+	private int DStemplet;
 	private int DSspeed;
 	private int DSvol;
 	private String DSwait;
@@ -12,13 +13,14 @@ public class DefaultStep {
 	private int DSswitch;
 	private int DStemp;
 	private int DE_id;
-	public DefaultStep(int dS_id, String dSname, int dShole, int dSspeed,
+	public DefaultStep(int dS_id, String dSname, int dShole,int dStemplet, int dSspeed,
 			int dSvol, String dSwait, String dSblend, String dSmagnet,
 			int dSswitch, int dStemp, int dE_id) {
 		super();
 		DS_id = dS_id;
 		DSname = dSname;
 		DShole = dShole;
+		DStemplet = dStemplet;
 		DSspeed = dSspeed;
 		DSvol = dSvol;
 		DSwait = dSwait;
@@ -43,6 +45,14 @@ public class DefaultStep {
 	public void setDSname(String dSname) {
 		DSname = dSname;
 	}
+
+	public int getDStemplet() {
+		return DStemplet;
+	}
+	public void setDStemplet(int dStemplet) {
+		DStemplet = dStemplet;
+	}
+
 	public int getDShole() {
 		return DShole;
 	}

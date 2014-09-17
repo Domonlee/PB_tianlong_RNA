@@ -294,6 +294,7 @@ public class LoginActivity extends Activity {
 	private void initial() {
 		List<DefaultExperiment> defaultExperiments = experimentDao
 				.getAllDefaultExperiments(LoginActivity.this);
+		Toast.makeText(getApplicationContext(), ""+defaultExperiments.size(), 1000).show()	;
 		if (defaultExperiments.size() == 0) {
 			List<String> list = Utlis.getTemplate(LoginActivity.this);
 			for (int i = 0; i < list.size(); i++) {
