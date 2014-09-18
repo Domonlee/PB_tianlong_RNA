@@ -479,10 +479,7 @@ public class CreatExperimentActivity extends Activity {
 				//
 				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
 						+ (i + 1));
-				System.out.println("1111----------->" + defaultSteps.get(i).getDStemplet());
 				if (defaultSteps.get(i).getDStemplet() == 1) {
-
-					System.out.println("2222----------->");
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setText(defaultSteps.get(i).getDSwait());
 					holder.experiment_new_main_item_head_blend_info_tv
@@ -506,31 +503,6 @@ public class CreatExperimentActivity extends Activity {
 					holder.experiment_new_main_item_bottom_name_et
 							.setText(defaultSteps.get(i).getDSname());
 				}
-
-					// for (int j = 0; j < defaultSteps.size(); j++) {
-					// holder.experiment_new_main_item_head_wait_info_tv
-					// .setText(defaultSteps.get(j).getDSwait());
-					// holder.experiment_new_main_item_head_blend_info_tv
-					// .setText(defaultSteps.get(j).getDSblend());
-					// holder.experiment_new_main_item_head_magnet_info_tv
-					// .setText(defaultSteps.get(j).getDSmagnet());
-					// holder.experiment_new_main_item_body_hole_info_tv
-					// .setText(defaultSteps.get(j).getDShole() + "");
-					// holder.experiment_new_main_item_body_vol_info_et
-					// .setText(defaultSteps.get(j).getDSvol() + "");
-					// // speed = defaultSteps.get(i).getDSspeed();
-					// holder.experiment_new_main_item_body_speed_info_tv
-					// .setText(defaultSteps.get(j).getDSspeed()
-					// + getString(R.string.exp_speed_unit));
-					// holder.experiment_new_main_item_body_temp_info_et
-					// .setText(defaultSteps.get(j).getDStemp() + "");
-					// // switchInfo = defaultSteps.get(i).getDSswitch();
-					// holder.experiment_new_main_item_body_switch_info_tv
-					// .setText(getSwitch(defaultSteps.get(j)
-					// .getDSswitch()));
-					// holder.experiment_new_main_item_bottom_name_et
-					// .setText(defaultSteps.get(j).getDSname());
-					// }
 
 				holder.experiment_new_main_item_body_temp_info_et
 						.setOnClickListener(new OnClickListener() {

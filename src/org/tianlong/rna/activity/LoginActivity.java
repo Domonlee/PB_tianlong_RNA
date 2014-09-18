@@ -1,5 +1,6 @@
 package org.tianlong.rna.activity;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.tianlong.rna.adapter.LoginAdapter;
@@ -13,29 +14,29 @@ import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.pojo.User;
+import org.tianlong.rna.utlis.DBTempletManager;
 import org.tianlong.rna.utlis.Utlis;
 
-import org.tianlong.rna.activity.R;
-
-import android.os.Bundle;
-import android.os.Process;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Process;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -57,9 +58,11 @@ public class LoginActivity extends Activity {
 	private List<DefaultExperiment> defaultExperiments;
 	// 点击快捷选择用户按钮计数器
 	private int num;
-	private int logout  = 0;
+	private int logout = 0;
 	private int U_id;
 
+	// --创建模板数据库
+	public DBTempletManager dbTempletManager;
 	private Intent intent;
 
 	public static int language = 0;
@@ -67,131 +70,31 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		userDao = new UserDao();
 		experimentDao = new ExperimentDao();
 		stepDao = new StepDao();
 		machineDao = new MachineDao();
 
+		dbTempletManager = new DBTempletManager(LoginActivity.this);
+		dbTempletManager.openDatabase();
+		dbTempletManager.closeDatabase();
+
+		System.out.println("1---->new Dao");
 		defaultExperiments = experimentDao
 				.getAllDefaultExperiments(LoginActivity.this);
 		intent = getIntent();
 
-		//默认登录
-		logout = intent.getIntExtra("logout", 9999);
-		U_id = intent.getIntExtra("U_id", 9999);
+		// 默认登录
+		// logout = intent.getIntExtra("logout", 9999);
+		// U_id = intent.getIntExtra("U_id", 9999);
 
+		//--always flase
 		if (defaultExperiments.size() == 0) {
-			initial();
-			Experiment experiment = new Experiment();
-			experiment.setEname("Whole blood DNA");
-			experiment.setEquick(0);
-			experiment.setEremark("");
-			String time = Utlis.getSystemTime();
-			experiment.setCdate(time);
-			experiment.setRdate(time);
-			experiment.setEDE_id(0);
-			experiment.setU_id(userDao.getUserByRUname("guest",
-					LoginActivity.this).getU_id());
-
-			experimentDao.insertExperiment(experiment, LoginActivity.this);
-
-			experiment = experimentDao.getExperimentByCdate(time,
-					LoginActivity.this,
-					userDao.getUserByRUname("guest", LoginActivity.this)
-							.getU_id());
-			for (int i = 0; i < 7; i++) {
-				Step step = new Step();
-				switch (i) {
-				case 0:
-					step.setSname("Lysis");
-					step.setShole(1);
-					step.setSspeed(6);
-					step.setSvol(750);
-					step.setSwait("00:00:00");
-					step.setSblend("00:20:00");
-					step.setSmagnet("00:01:30");
-					step.setSswitch(1);
-					step.setStemp(65);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 1:
-					step.setSname("Washing1");
-					step.setShole(2);
-					step.setSspeed(5);
-					step.setSvol(600);
-					step.setSwait("00:00:00");
-					step.setSblend("00:03:00");
-					step.setSmagnet("00:01:30");
-					step.setSswitch(0);
-					step.setStemp(0);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 2:
-					step.setSname("Washing2");
-					step.setShole(3);
-					step.setSspeed(5);
-					step.setSvol(600);
-					step.setSwait("00:00:00");
-					step.setSblend("00:03:00");
-					step.setSmagnet("00:01:30");
-					step.setSswitch(2);
-					step.setStemp(65);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 3:
-					step.setSname("Washing3");
-					step.setShole(4);
-					step.setSspeed(5);
-					step.setSvol(600);
-					step.setSwait("00:00:00");
-					step.setSblend("00:02:00");
-					step.setSmagnet("00:01:30");
-					step.setSswitch(2);
-					step.setStemp(65);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 4:
-					step.setSname("Washing4");
-					step.setShole(5);
-					step.setSspeed(5);
-					step.setSvol(600);
-					step.setSwait("00:00:00");
-					step.setSblend("00:00:00");
-					step.setSmagnet("00:00:30");
-					step.setSswitch(2);
-					step.setStemp(65);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 5:
-					step.setSname("Elution");
-					step.setShole(6);
-					step.setSspeed(6);
-					step.setSvol(100);
-					step.setSwait("00:00:00");
-					step.setSblend("00:05:00");
-					step.setSmagnet("00:01:30");
-					step.setSswitch(2);
-					step.setStemp(65);
-					step.setE_id(experiment.getE_id());
-					break;
-				case 6:
-					step.setSname("Move the magnet");
-					step.setShole(2);
-					step.setSspeed(5);
-					step.setSvol(600);
-					step.setSwait("00:00:00");
-					step.setSblend("00:01:00");
-					step.setSmagnet("00:00:00");
-					step.setSswitch(0);
-					step.setStemp(0);
-					step.setE_id(experiment.getE_id());
-					break;
-				default:
-					break;
-				}
-				stepDao.insertStep(step, LoginActivity.this);
-			}
+			initExperiment();
 		}
+
+		initial();
 		language = machineDao.getMachine(LoginActivity.this).getMlanguage();
 		Utlis.setLanguage(LoginActivity.this, language);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -291,140 +194,128 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	private void initial() {
-		List<DefaultExperiment> defaultExperiments = experimentDao
-				.getAllDefaultExperiments(LoginActivity.this);
-		Toast.makeText(getApplicationContext(), ""+defaultExperiments.size(), 1000).show()	;
-		if (defaultExperiments.size() == 0) {
-			List<String> list = Utlis.getTemplate(LoginActivity.this);
-			for (int i = 0; i < list.size(); i++) {
-				DefaultExperiment defaultExperiment = new DefaultExperiment();
-				defaultExperiment.setEname(list.get(i));
-				experimentDao.insertDefaultExperiment(defaultExperiment,
-						LoginActivity.this);
-			}
-		}
+	/**
+	 * 
+	 * Title: initExperiment Description:init guest Experiment Modified By：
+	 * Domon Modified Date: 2014-9-17
+	 */
+	private void initExperiment() {
+		Experiment experiment = new Experiment();
+		experiment.setEname("Whole blood DNA");
+		experiment.setEquick(0);
+		experiment.setEremark("");
+		String time = Utlis.getSystemTime();
+		experiment.setCdate(time);
+		experiment.setRdate(time);
+		experiment.setEDE_id(0);
+		experiment.setU_id(userDao.getUserByRUname("guest", LoginActivity.this)
+				.getU_id());
 
-		defaultExperiments = experimentDao
-				.getAllDefaultExperiments(LoginActivity.this);
-		if (defaultExperiments.size() != 0) {
-			for (int i = 0; i < defaultExperiments.size(); i++) {
-				if (i != 0) {
-					for (int j = 0; j < 8; j++) {
-						DefaultStep defaultStep = new DefaultStep();
-						switch (j) {
-						case 0:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(2);
-							defaultStep.setDSspeed(3);
-							defaultStep.setDSvol(500);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:01:00");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(0);
-							defaultStep.setDStemp(0);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 1:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(1);
-							defaultStep.setDSspeed(5);
-							defaultStep.setDSvol(550);
-							defaultStep.setDSwait("00:00:30");
-							defaultStep.setDSblend("00:03:00");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(1);
-							defaultStep.setDStemp(80);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 2:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(2);
-							defaultStep.setDSspeed(5);
-							defaultStep.setDSvol(500);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:02:00");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(0);
-							defaultStep.setDStemp(0);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 3:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(3);
-							defaultStep.setDSspeed(3);
-							defaultStep.setDSvol(400);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:02:00");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(0);
-							defaultStep.setDStemp(0);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 4:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(4);
-							defaultStep.setDSspeed(4);
-							defaultStep.setDSvol(300);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:02:00");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(0);
-							defaultStep.setDStemp(0);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 5:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(5);
-							defaultStep.setDSspeed(2);
-							defaultStep.setDSvol(550);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:00:40");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(2);
-							defaultStep.setDStemp(90);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 6:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(6);
-							defaultStep.setDSspeed(3);
-							defaultStep.setDSvol(100);
-							defaultStep.setDSwait("00:00:30");
-							defaultStep.setDSblend("00:03:00");
-							defaultStep.setDSmagnet("00:01:30");
-							defaultStep.setDSswitch(2);
-							defaultStep.setDStemp(90);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						case 7:
-							defaultStep.setDSname("Step");
-							defaultStep.setDShole(2);
-							defaultStep.setDSspeed(3);
-							defaultStep.setDSvol(500);
-							defaultStep.setDSwait("00:00:00");
-							defaultStep.setDSblend("00:00:20");
-							defaultStep.setDSmagnet("00:00:30");
-							defaultStep.setDSswitch(0);
-							defaultStep.setDStemp(0);
-							defaultStep.setDE_id(defaultExperiments.get(i)
-									.getE_id());
-							break;
-						default:
-							break;
-						}
-						stepDao.insertDStep(defaultStep, LoginActivity.this);
-					}
-				}
+		experimentDao.insertExperiment(experiment, LoginActivity.this);
+
+		experiment = experimentDao.getExperimentByCdate(time,
+				LoginActivity.this,
+				userDao.getUserByRUname("guest", LoginActivity.this).getU_id());
+		for (int i = 0; i < 7; i++) {
+			Step step = new Step();
+			switch (i) {
+			case 0:
+				step.setSname("Lysis");
+				step.setShole(1);
+				step.setSspeed(6);
+				step.setSvol(750);
+				step.setSwait("00:00:00");
+				step.setSblend("00:20:00");
+				step.setSmagnet("00:01:30");
+				step.setSswitch(1);
+				step.setStemp(65);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 1:
+				step.setSname("Washing1");
+				step.setShole(2);
+				step.setSspeed(5);
+				step.setSvol(600);
+				step.setSwait("00:00:00");
+				step.setSblend("00:03:00");
+				step.setSmagnet("00:01:30");
+				step.setSswitch(0);
+				step.setStemp(0);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 2:
+				step.setSname("Washing2");
+				step.setShole(3);
+				step.setSspeed(5);
+				step.setSvol(600);
+				step.setSwait("00:00:00");
+				step.setSblend("00:03:00");
+				step.setSmagnet("00:01:30");
+				step.setSswitch(2);
+				step.setStemp(65);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 3:
+				step.setSname("Washing3");
+				step.setShole(4);
+				step.setSspeed(5);
+				step.setSvol(600);
+				step.setSwait("00:00:00");
+				step.setSblend("00:02:00");
+				step.setSmagnet("00:01:30");
+				step.setSswitch(2);
+				step.setStemp(65);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 4:
+				step.setSname("Washing4");
+				step.setShole(5);
+				step.setSspeed(5);
+				step.setSvol(600);
+				step.setSwait("00:00:00");
+				step.setSblend("00:00:00");
+				step.setSmagnet("00:00:30");
+				step.setSswitch(2);
+				step.setStemp(65);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 5:
+				step.setSname("Elution");
+				step.setShole(6);
+				step.setSspeed(6);
+				step.setSvol(100);
+				step.setSwait("00:00:00");
+				step.setSblend("00:05:00");
+				step.setSmagnet("00:01:30");
+				step.setSswitch(2);
+				step.setStemp(65);
+				step.setE_id(experiment.getE_id());
+				break;
+			case 6:
+				step.setSname("Move the magnet");
+				step.setShole(2);
+				step.setSspeed(5);
+				step.setSvol(600);
+				step.setSwait("00:00:00");
+				step.setSblend("00:01:00");
+				step.setSmagnet("00:00:00");
+				step.setSswitch(0);
+				step.setStemp(0);
+				step.setE_id(experiment.getE_id());
+				break;
+			default:
+				break;
 			}
+			stepDao.insertStep(step, LoginActivity.this);
 		}
+	}
+
+	/**
+	 * 
+	 * Title: initial Description: Init  Modified By：
+	 * Domon Modified Date: 2014-9-18
+	 */
+	private void initial() {
 
 		List<User> userlist = userDao.getAllUser(LoginActivity.this);
 		if (userlist.size() == 0) {
@@ -459,7 +350,6 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	//Show Dialog For Close Activity
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(

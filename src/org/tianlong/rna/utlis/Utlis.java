@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.tianlong.rna.activity.R;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Step;
 
+import android.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 
 @SuppressLint({ "SimpleDateFormat", "HandlerLeak", "DefaultLocale" })
 @SuppressWarnings("deprecation")
@@ -627,15 +628,17 @@ public class Utlis {
 		return info;
 	}
 
-	//--
+	// --
 	/**
 	 * µÃµ½Ä£°å
 	 */
 	public static List<String> getTemplate(Context context) {
 		List<String> list = new ArrayList<String>();
-		list.add(context.getString(R.string.template_null));
-		list.add(context.getString(R.string.template_one));
-//		list.add(context.getString(R.string.template_two));
+		String string[] = context.getResources().getStringArray(
+				org.tianlong.rna.activity.R.array.Templet);
+		for (int i = 0; i < string.length; i++) {
+			list.add(string[i]);
+		}
 		return list;
 	}
 

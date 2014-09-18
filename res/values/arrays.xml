@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="Templet">
+        <item>不使用模板</item>
+        <item>模板一</item>
+        <item>模板二</item>
+        <item>模板三</item>
+        <item>模板四</item>
+        <item>模板五</item>
+        <item>模板六</item>
+        <item>模板七</item>
+        <item>模板八</item>
+        <item>模板九</item>
+        <item>模板十</item>
+    </string-array>
+
+</resources>

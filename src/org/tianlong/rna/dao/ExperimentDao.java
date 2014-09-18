@@ -8,6 +8,7 @@ import java.util.Map;
 import org.tianlong.rna.db.RnaOpenHelper;
 import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.Experiment;
+import org.tianlong.rna.utlis.DBTempletManager;
 
 import org.tianlong.rna.activity.R;
 
@@ -17,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class ExperimentDao {
+	public SQLiteDatabase sqLiteDatabase;
 
 	// 得到数据库连接
 	public RnaOpenHelper getDatebase(Context context) {
@@ -27,19 +29,28 @@ public class ExperimentDao {
 	// 查询所有模板实验
 	public List<DefaultExperiment> getAllDefaultExperiments(Context context) {
 		List<DefaultExperiment> list = new ArrayList<DefaultExperiment>();
-		RnaOpenHelper helper = getDatebase(context);
-		SQLiteDatabase database = helper.getReadableDatabase();
-		Cursor cursor = database.rawQuery("select * from defaultexperiment",
-				null);
+
+		try {
+			sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(
+					DBTempletManager.DB_PATH + "/" + DBTempletManager.DB_NAME,
+					null);
+		} catch (Exception e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}
+
+		Cursor cursor = sqLiteDatabase.rawQuery(
+				"select * from defaultexperiment", null);
 		while (cursor.moveToNext()) {
 			DefaultExperiment defaultExperiment = new DefaultExperiment();
-			defaultExperiment.setE_id(cursor.getInt(cursor .getColumnIndex("DE_id")));
-			defaultExperiment.setEname(cursor.getString(cursor.getColumnIndex("DEname")));
+			defaultExperiment.setE_id(cursor.getInt(cursor
+					.getColumnIndex("DE_id")));
+			defaultExperiment.setEname(cursor.getString(cursor
+					.getColumnIndex("DEname")));
 			list.add(defaultExperiment);
 		}
 		cursor.close();
-		database.close();
-		helper.close();
+		sqLiteDatabase.close();
 		return list;
 	}
 
@@ -49,14 +60,18 @@ public class ExperimentDao {
 		boolean flag = false;
 		RnaOpenHelper helper = getDatebase(context);
 		SQLiteDatabase database = helper.getWritableDatabase();
+		// sqLiteDatabase =
+		// SQLiteDatabase.openOrCreateDatabase(DBTempletManager.DB_PATH
+		// + "/" + DBTempletManager.DB_NAME, null);
 		ContentValues values = new ContentValues();
 		values.put("DEname", experiment.getEname());
-		long id = database.insert("defaultexperiment", null, values);
+		long id = sqLiteDatabase.insert("defaultexperiment", null, values);
 		if (id != -1) {
 			flag = true;
 		}
-		database.close();
+		// sqLiteDatabase.close();
 		helper.close();
+		database.close();
 		return flag;
 	}
 
@@ -91,15 +106,15 @@ public class ExperimentDao {
 		return list;
 	}
 
-	// 添加实验
+	// --添加实验
 	public boolean insertExperiment(Experiment experiment, Context context) {
 		boolean flag = false;
 		RnaOpenHelper helper = getDatebase(context);
 		SQLiteDatabase database = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-//		if (experiment.getEname().equals("")) {
-//			experiment.setEname("Experiment 1");
-//		}
+		// if (experiment.getEname().equals("")) {
+		// experiment.setEname("Experiment 1");
+		// }
 		values.put("Ename", experiment.getEname());
 		values.put("Cdate", experiment.getCdate());
 		values.put("Rdate", experiment.getRdate());
