@@ -306,20 +306,18 @@ public class ExperimentActivity extends Activity {
 					}
 				});
 
-		//--
-//		experiment_new_prepare_body_template_sp.setSelection(0);
 		experiment_new_prepare_body_template_sp
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
 						DE_id = defaultExperiments.get(arg2).getE_id();
-						Toast.makeText(ExperimentActivity.this, arg2 + "", 1000).show();
 					}
 
 					public void onNothingSelected(AdapterView<?> arg0) {
 					}
 				});
 
-		//--
+		// --Next Btn实现同名检测
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -328,31 +326,42 @@ public class ExperimentActivity extends Activity {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.exp_name_null),
 									Toast.LENGTH_SHORT).show();
-//							experiment_new_prepare_body_name_et.setText("Experiment 1");
+							// experiment_new_prepare_body_name_et.setText("Experiment 1");
 						} else {
-							AlertDialog.Builder builder = new AlertDialog.Builder(
-									ExperimentActivity.this);
-							builder.setMessage(getString(R.string.exp_creating));
-							builder.setCancelable(false);
-							dialog = builder.show();
-							Intent intent = new Intent(ExperimentActivity.this,
-									CreatExperimentActivity.class);
-
-							if (experiment_new_prepare_body_quick_cb
-									.isChecked()) {
-								intent.putExtra("Equick", 1);
+							if (experimentDao.hasEname(ExperimentActivity.this,experiment_new_prepare_body_name_et.getText().toString())){
+								Toast.makeText(ExperimentActivity.this, getString(R.string.exp_name_already_exist),
+										Toast.LENGTH_SHORT).show();
 							} else {
-								intent.putExtra("Equick", 0);
-							}
 
-							intent.putExtra("Ename", experiment_new_prepare_body_name_et .getText().toString());
-							intent.putExtra("Enum", DE_id);
-							intent.putExtra("Eremark",experiment_new_prepare_body_remark_et.getText().toString());
-							intent.putExtra("U_id", U_id);
-							intent.putExtra("Uname", Uname);
-							intent.putExtra("DE_id", DE_id);
-							startActivity(intent);
-							finish();
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										ExperimentActivity.this);
+								builder.setMessage(getString(R.string.exp_creating));
+								builder.setCancelable(false);
+								dialog = builder.show();
+								Intent intent = new Intent(
+										ExperimentActivity.this,
+										CreatExperimentActivity.class);
+
+								if (experiment_new_prepare_body_quick_cb
+										.isChecked()) {
+									intent.putExtra("Equick", 1);
+								} else {
+									intent.putExtra("Equick", 0);
+								}
+
+								intent.putExtra("Ename",
+										experiment_new_prepare_body_name_et
+												.getText().toString());
+								intent.putExtra("Enum", DE_id);
+								intent.putExtra("Eremark",
+										experiment_new_prepare_body_remark_et
+												.getText().toString());
+								intent.putExtra("U_id", U_id);
+								intent.putExtra("Uname", Uname);
+								intent.putExtra("DE_id", DE_id);
+								startActivity(intent);
+								finish();
+							}
 						}
 					}
 				});
@@ -385,7 +394,6 @@ public class ExperimentActivity extends Activity {
 				.findViewById(R.id.experiment_info_body_remark_info_btn);
 		experiment_info_body_remark_info_cancle_btn = (Button) view
 				.findViewById(R.id.experiment_info_body_remark_info_cancle_btn);
-
 
 		experiment_info_top_ename_tv.setText(experiment.getEname());
 		experiment_info_body_cdate_info_tv.setText(experiment.getCdate());

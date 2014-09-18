@@ -10,6 +10,7 @@ import org.tianlong.rna.adapter.ArrayWheelAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
+import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.DefaultStep;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
@@ -25,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -85,6 +87,7 @@ public class CreatExperimentActivity extends Activity {
 	private Dialog dialog;
 	private Machine machine;
 	private MachineDao machineDao;
+	private List<DefaultExperiment> defaultExperiments;
 
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -187,6 +190,7 @@ public class CreatExperimentActivity extends Activity {
 					public void onClick(View v) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								CreatExperimentActivity.this);
+						deleteFlag = hasTemplet();
 						if (!deleteFlag) {
 							builder.setTitle("当前没有步骤!");
 							builder.setPositiveButton(getString(R.string.sure),
@@ -201,7 +205,7 @@ public class CreatExperimentActivity extends Activity {
 									});
 							builder.show();
 						} else {
-							if (stepChooseNum == -1) {
+							if (stepChooseNum == -1 || hasTemplet()) {
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -289,7 +293,8 @@ public class CreatExperimentActivity extends Activity {
 		experiment_new_main_bottom_save_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						if (!saveFlag) {
+						saveFlag = hasTemplet();
+						if (!saveFlag ) {
 							Toast.makeText(CreatExperimentActivity.this,
 									getString(R.string.exp_save_null),
 									Toast.LENGTH_SHORT).show();
@@ -409,6 +414,24 @@ public class CreatExperimentActivity extends Activity {
 		createTable();
 		dialog.cancel();
 	};
+	
+	/**
+	 * 
+	*  Title: hasTemplet 
+	*  Description: 
+	*  Modified By：  Domon                                        
+	*  Modified Date: 2014-9-18 
+	*  @return
+	 */
+	public boolean hasTemplet() {
+		ExperimentDao experimentDao = new ExperimentDao();
+		defaultExperiments = experimentDao
+				.getAllDefaultExperiments(CreatExperimentActivity.this);
+		if (defaultExperiments.size() == 0) {
+			return false;
+		}
+		return true;
+	}
 
 	private void createTable() {
 		stepRow = new TableRow(this);

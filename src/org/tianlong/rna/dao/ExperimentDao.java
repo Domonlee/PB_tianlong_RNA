@@ -55,25 +55,25 @@ public class ExperimentDao {
 	}
 
 	// 添加模板实验
-	public boolean insertDefaultExperiment(DefaultExperiment experiment,
-			Context context) {
-		boolean flag = false;
-		RnaOpenHelper helper = getDatebase(context);
-		SQLiteDatabase database = helper.getWritableDatabase();
-		// sqLiteDatabase =
-		// SQLiteDatabase.openOrCreateDatabase(DBTempletManager.DB_PATH
-		// + "/" + DBTempletManager.DB_NAME, null);
-		ContentValues values = new ContentValues();
-		values.put("DEname", experiment.getEname());
-		long id = sqLiteDatabase.insert("defaultexperiment", null, values);
-		if (id != -1) {
-			flag = true;
-		}
-		// sqLiteDatabase.close();
-		helper.close();
-		database.close();
-		return flag;
-	}
+//	public boolean insertDefaultExperiment(DefaultExperiment experiment,
+//			Context context) {
+//		boolean flag = false;
+//		RnaOpenHelper helper = getDatebase(context);
+//		SQLiteDatabase database = helper.getWritableDatabase();
+//		// sqLiteDatabase =
+//		// SQLiteDatabase.openOrCreateDatabase(DBTempletManager.DB_PATH
+//		// + "/" + DBTempletManager.DB_NAME, null);
+//		ContentValues values = new ContentValues();
+//		values.put("DEname", experiment.getEname());
+//		long id = sqLiteDatabase.insert("defaultexperiment", null, values);
+//		if (id != -1) {
+//			flag = true;
+//		}
+//		// sqLiteDatabase.close();
+//		helper.close();
+//		database.close();
+//		return flag;
+//	}
 
 	// 根据用户ID查询实验
 	public List<Experiment> getAllExperimentsByU_id(Context context, int U_id) {
@@ -104,6 +104,29 @@ public class ExperimentDao {
 		database.close();
 		helper.close();
 		return list;
+	}
+
+	public boolean hasEname(Context context,String Ename){
+		RnaOpenHelper helper = getDatebase(context);
+		SQLiteDatabase database = helper.getReadableDatabase();
+		Cursor cursor = database.rawQuery("select * from experiment where Ename=" + Ename, null);
+		if (cursor.getCount() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	// 根据实验名称查询实验
+	public Experiment getExperimentByEname(String Ename, Context context,
+			int U_id) {
+		Experiment experiment = null;
+		List<Experiment> list = getAllExperimentsByU_id(context, U_id);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getEname().equals(Ename)) {
+				experiment = list.get(i);
+			}
+		}
+		return experiment;
 	}
 
 	// --添加实验
@@ -185,19 +208,6 @@ public class ExperimentDao {
 		List<Experiment> list = getAllExperimentsByU_id(context, U_id);
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getE_id() == E_id) {
-				experiment = list.get(i);
-			}
-		}
-		return experiment;
-	}
-
-	// 根据实验名称查询实验
-	public Experiment getExperimentByEname(String Ename, Context context,
-			int U_id) {
-		Experiment experiment = null;
-		List<Experiment> list = getAllExperimentsByU_id(context, U_id);
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getEname().equals(Ename)) {
 				experiment = list.get(i);
 			}
 		}

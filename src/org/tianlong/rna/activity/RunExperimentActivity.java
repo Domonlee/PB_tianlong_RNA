@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -57,7 +58,6 @@ public class RunExperimentActivity extends Activity {
 	private Button experiment_run_body_right_bottom_back_btn;
 	private TextView experiment_run_top_uname_tv;
 	private TextView experiment_run_body_left_body_time_info_tv;
-	private TextView experiment_run_body_left_body_time_infototal_tv;
 	private Button experiment_run_body_right_bottom_run_btn;
 	private Button experiment_run_body_right_bottom_stop_btn;
 	private HorizontalScrollView experiment_run_body_right_body_hsv;
@@ -69,6 +69,7 @@ public class RunExperimentActivity extends Activity {
 	private TextView experiment_run_body_left_body_t6_info_tv;
 	private TextView experiment_run_body_left_body_t7_info_tv;
 	private TextView experiment_run_body_left_body_t8_info_tv;
+	private LinearLayout experiment_run_body_left_temp_body;
 
 	private TableRow stepRow;
 	private StepDao stepDao;
@@ -637,54 +638,16 @@ public class RunExperimentActivity extends Activity {
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();
 		fluxNum = 1;
-
+		
+		
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
 		sbuilder.setTitle(getString(R.string.waitting));
 		Dialog waitDialog = sbuilder.show();
 
-		selectInfoThread = new SelectInfoThread();
-		stepDao = new StepDao();
-		experimentDao = new ExperimentDao();
-		Intent intent = getIntent();
-		U_id = intent.getIntExtra("U_id", 9999);
-		Uname = intent.getStringExtra("Uname");
-		jump = intent.getStringExtra("jump");
-		E_id = intent.getIntExtra("E_id", 9999);
-		steps = stepDao.getAllStep(RunExperimentActivity.this, E_id);
-		views = new ArrayList<View>();
-		changeBg = new ArrayList<Map<String, Object>>();
-		holders = new ArrayList<RunViewHolder>();
-		waitTimeList = new ArrayList<WaitTimeCount>();
-		blendTimeList = new ArrayList<BlendTimeCount>();
-		magnetTimeList = new ArrayList<MagnetTimeCount>();
-		builder = new AlertDialog.Builder(RunExperimentActivity.this);
-		stepRow = new TableRow(this);
+		initView();
 
-		experiment = experimentDao.getExperimentById(E_id,
-				RunExperimentActivity.this, U_id);
-
-		sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
-
-		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
-		experiment_run_body_left_body_time_infototal_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_infototal_tv);
-		experiment_run_top_uname_tv = (TextView) findViewById(R.id.experiment_run_top_uname_tv);
-		experiment_run_body_left_top_name_tv = (TextView) findViewById(R.id.experiment_run_body_left_top_name_tv);
-		experiment_run_body_right_body_tl = (TableLayout) findViewById(R.id.experiment_run_body_righr_body_tl);
-		experiment_run_body_right_bottom_back_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_back_btn);
-		experiment_run_body_right_bottom_run_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_run_btn);
-		experiment_run_body_right_bottom_stop_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_reset_btn);
-		experiment_run_body_right_body_hsv = (HorizontalScrollView) findViewById(R.id.experiment_run_body_righr_body_hsv);
-		experiment_run_body_left_body_t1_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t1_info_tv);
-		experiment_run_body_left_body_t2_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t2_info_tv);
-		experiment_run_body_left_body_t3_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t3_info_tv);
-		experiment_run_body_left_body_t4_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t4_info_tv);
-		experiment_run_body_left_body_t5_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t5_info_tv);
-		experiment_run_body_left_body_t6_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t6_info_tv);
-		experiment_run_body_left_body_t7_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t7_info_tv);
-		experiment_run_body_left_body_t8_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t8_info_tv);
-
-		getTime(0);
+		
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -902,6 +865,67 @@ public class RunExperimentActivity extends Activity {
 		}
 	}
 
+	public void initView(){
+
+
+		selectInfoThread = new SelectInfoThread();
+		stepDao = new StepDao();
+		experimentDao = new ExperimentDao();
+		Intent intent = getIntent();
+		U_id = intent.getIntExtra("U_id", 9999);
+		Uname = intent.getStringExtra("Uname");
+		jump = intent.getStringExtra("jump");
+		E_id = intent.getIntExtra("E_id", 9999);
+		steps = stepDao.getAllStep(RunExperimentActivity.this, E_id);
+		views = new ArrayList<View>();
+		changeBg = new ArrayList<Map<String, Object>>();
+		holders = new ArrayList<RunViewHolder>();
+		waitTimeList = new ArrayList<WaitTimeCount>();
+		blendTimeList = new ArrayList<BlendTimeCount>();
+		magnetTimeList = new ArrayList<MagnetTimeCount>();
+		builder = new AlertDialog.Builder(RunExperimentActivity.this);
+		stepRow = new TableRow(this);
+
+		experiment = experimentDao.getExperimentById(E_id,
+				RunExperimentActivity.this, U_id);
+
+		sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
+
+		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
+		experiment_run_top_uname_tv = (TextView) findViewById(R.id.experiment_run_top_uname_tv);
+		experiment_run_body_left_top_name_tv = (TextView) findViewById(R.id.experiment_run_body_left_top_name_tv);
+		experiment_run_body_right_body_tl = (TableLayout) findViewById(R.id.experiment_run_body_righr_body_tl);
+		experiment_run_body_right_bottom_back_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_back_btn);
+		experiment_run_body_right_bottom_run_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_run_btn);
+		experiment_run_body_right_bottom_stop_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_reset_btn);
+		experiment_run_body_right_body_hsv = (HorizontalScrollView) findViewById(R.id.experiment_run_body_righr_body_hsv);
+		experiment_run_body_left_body_t1_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t1_info_tv);
+		experiment_run_body_left_body_t2_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t2_info_tv);
+		experiment_run_body_left_body_t3_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t3_info_tv);
+		experiment_run_body_left_body_t4_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t4_info_tv);
+		experiment_run_body_left_body_t5_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t5_info_tv);
+		experiment_run_body_left_body_t6_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t6_info_tv);
+		experiment_run_body_left_body_t7_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t7_info_tv);
+		experiment_run_body_left_body_t8_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t8_info_tv);
+
+		experiment_run_body_left_temp_body = (LinearLayout)findViewById(R.id.experiment_run_body_left_temp_body);
+		hideTempBody();
+		getTime(0);	
+	}
+	
+	/**
+	 * 
+	*  Title: hideTempBody 
+	*  Description: 
+	*  Modified By：  Domon                                        
+	*  Modified Date: 2014-9-18
+	 */
+	private void hideTempBody() {
+		if (fluxNum == 1 || fluxNum == 3) {
+			experiment_run_body_left_temp_body.setVisibility(View.GONE);
+		}
+	}
+
 	private void createTable() {
 		experiment_run_body_right_body_hsv.scrollTo(0, 0);
 		for (int i = 0; i < steps.size(); i++) {
@@ -941,6 +965,7 @@ public class RunExperimentActivity extends Activity {
 					.findViewById(R.id.experiment_run_item_body_temp_rl);
 			holder.experiment_run_item_body_switch_rl = (RelativeLayout) view
 					.findViewById(R.id.experiment_run_item_body_switch_rl);
+
 			// 通量属性展示 1-->15 3-->48
 			if (fluxNum == 1 || fluxNum == 3) {
 				holder.experiment_run_item_body_temp_rl
@@ -1518,8 +1543,6 @@ public class RunExperimentActivity extends Activity {
 				hour = hour
 						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
 								.getHours();
-				
-				
 				sec = sec
 						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
 								.getSeconds();
@@ -1541,12 +1564,11 @@ public class RunExperimentActivity extends Activity {
 				hour = hour
 						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
 								.getHours();
-				
-				
+
 				if ((j + 1) < (steps.size() - colNum)) {
 					sec = sec
 							+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
-									.getSeconds() ;
+									.getSeconds();
 					if (sec >= 60) {
 						min++;
 						if (min >= 60) {
@@ -1585,7 +1607,6 @@ public class RunExperimentActivity extends Activity {
 		} else {
 			time = time + sec;
 		}
-		experiment_run_body_left_body_time_infototal_tv.setText(time);
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 }

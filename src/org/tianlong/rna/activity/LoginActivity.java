@@ -80,14 +80,13 @@ public class LoginActivity extends Activity {
 		dbTempletManager.openDatabase();
 		dbTempletManager.closeDatabase();
 
-		System.out.println("1---->new Dao");
 		defaultExperiments = experimentDao
 				.getAllDefaultExperiments(LoginActivity.this);
 		intent = getIntent();
 
-		// Ä¬ÈÏµÇÂ¼
-		// logout = intent.getIntExtra("logout", 9999);
-		// U_id = intent.getIntExtra("U_id", 9999);
+//		 Ä¬ÈÏµÇÂ¼
+		 logout = intent.getIntExtra("logout", 9999);
+		 U_id = intent.getIntExtra("U_id", 9999);
 
 		//--always flase
 		if (defaultExperiments.size() == 0) {

@@ -10,13 +10,12 @@ import org.tianlong.rna.adapter.ArrayWheelAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
+import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.TimeWheelView;
 import org.tianlong.rna.utlis.Utlis;
-
-import org.tianlong.rna.activity.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,15 +29,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -88,6 +87,8 @@ public class EditExperimentActivity extends Activity {
 	private Experiment experiment;
 	private Dialog dialog;
 
+	private List<DefaultExperiment> defaultExperiments;
+
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_new_main);
@@ -130,6 +131,7 @@ public class EditExperimentActivity extends Activity {
 					public void onClick(View v) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								EditExperimentActivity.this);
+						deleteFlag= hasTemplet();
 						if (!deleteFlag) {
 							builder.setTitle("当前没有步骤!");
 							builder.setPositiveButton(getString(R.string.sure),
@@ -144,7 +146,7 @@ public class EditExperimentActivity extends Activity {
 									});
 							builder.show();
 						} else {
-							if (stepChooseNum == -1) {
+							if (stepChooseNum == -1 || hasTemplet()) {
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -237,6 +239,7 @@ public class EditExperimentActivity extends Activity {
 		experiment_new_main_bottom_save_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+						saveFlag = hasTemplet();
 						if (!saveFlag) {
 							Toast.makeText(EditExperimentActivity.this,
 									getString(R.string.exp_save_null),
@@ -371,6 +374,24 @@ public class EditExperimentActivity extends Activity {
 		dialog.cancel();
 	};
 
+	
+	/**
+	 * 
+	*  Title: hasTemplet 
+	*  Description: 
+	*  Modified By：  Domon                                        
+	*  Modified Date: 2014-9-18 
+	*  @return
+	 */
+	public boolean hasTemplet() {
+		ExperimentDao experimentDao = new ExperimentDao();
+		defaultExperiments = experimentDao
+				.getAllDefaultExperiments(EditExperimentActivity.this);
+		if (defaultExperiments.size() == 0) {
+			return false;
+		}
+		return true;
+	}
 	public void initView() {
 		experimentDao = new ExperimentDao();
 		stepDao = new StepDao();
