@@ -28,6 +28,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * @author Domon
+ *
+ */
 @SuppressLint("HandlerLeak")
 public class RunFileActivity extends Activity {
 

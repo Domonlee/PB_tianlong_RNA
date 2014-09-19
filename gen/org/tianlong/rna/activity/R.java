@@ -20,11 +20,12 @@ public final class R {
     }
     public static final class array {
         public static final int Templet=0x7f0d0000;
-        public static final int hour_array=0x7f0d0001;
-        public static final int minute_array=0x7f0d0002;
-        public static final int num_array=0x7f0d0005;
-        public static final int second_array=0x7f0d0003;
-        public static final int thousand_array=0x7f0d0004;
+        public static final int hour_array=0x7f0d0002;
+        public static final int hour_array_magnetic=0x7f0d0001;
+        public static final int minute_array=0x7f0d0003;
+        public static final int num_array=0x7f0d0006;
+        public static final int second_array=0x7f0d0004;
+        public static final int thousand_array=0x7f0d0005;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 

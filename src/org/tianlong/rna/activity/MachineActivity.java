@@ -293,9 +293,9 @@ public class MachineActivity extends Activity {
 						case 48:
 							fluxNum = 3;
 							break;
-//						case 64:
-//							fluxNum = 4;
-//							break;
+						// case 64:
+						// fluxNum = 4;
+						// break;
 						default:
 							break;
 						}
@@ -783,6 +783,7 @@ public class MachineActivity extends Activity {
 		machine_left_lv.setAdapter(new MachineAdapter(MachineActivity.this,
 				getList()));
 		showView(0);
+
 		machine_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -967,8 +968,6 @@ public class MachineActivity extends Activity {
 		// list.add(getString(R.string.system_net));
 		list.add(getString(R.string.system_clean));
 		list.add(getString(R.string.system_user));
-		// list.add("getString(R.string.system_update)");
-		list.add(getString(R.string.system_temp));
 		if (user.getUadmin() == 1) {
 			list.add(getString(R.string.system_machine));
 			list.add(getString(R.string.system_detection));
@@ -1221,35 +1220,16 @@ public class MachineActivity extends Activity {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											if (time_hour_hour.getCurrentItem() < 10) {
-												hours = "0"
-														+ time_hour_hour
-																.getCurrentItem();
-											} else {
-												hours = time_hour_hour
-														.getCurrentItem() + "";
-											}
-											if (time_hour_minutes
-													.getCurrentItem() < 10) {
-												mins = "0"
-														+ time_hour_minutes
-																.getCurrentItem();
-											} else {
-												mins = time_hour_minutes
-														.getCurrentItem() + "";
-											}
-											if (time_hour_seconds
-													.getCurrentItem() < 10) {
-												secs = "0"
-														+ time_hour_seconds
-																.getCurrentItem();
-											} else {
-												secs = time_hour_seconds
-														.getCurrentItem() + "";
-											}
+
+											String timeTotal = timeFormat(
+													time_hour_hour
+															.getCurrentItem(),
+													time_hour_minutes
+															.getCurrentItem(),
+													time_hour_seconds
+															.getCurrentItem());
 											machine_dismdect_body_time_et
-													.setText(hours + ":" + mins
-															+ ":" + secs);
+													.setText(timeTotal);
 										}
 									});
 							builder.setNegativeButton(
@@ -1282,6 +1262,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
+
 		// 用户设置
 		case 2:
 			if (user.getUadmin() != 1) {
@@ -1391,41 +1372,9 @@ public class MachineActivity extends Activity {
 		// }
 		// });
 		// break;
-		// 系统温度
-		case 3:
-			view = LayoutInflater.from(MachineActivity.this).inflate(
-					R.layout.activity_machine_temperature, null);
-			machine_body_left_body_t1_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_left_body_t1_info_tv);
-			machine_body_right_body_t2_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_right_body_t2_info_tv);
-			machine_body_left_body_t3_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_left_body_t3_info_tv);
-			machine_body_right_body_t4_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_right_body_t4_info_tv);
-			machine_body_left_body_t5_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_left_body_t5_info_tv);
-			machine_body_right_body_t6_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_right_body_t6_info_tv);
-			machine_body_left_body_t7_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_left_body_t7_info_tv);
-			machine_body_right_body_t8_info_tv = (TextView) view
-					.findViewById(R.id.machine_body_right_body_t8_info_tv);
-			try {
-				if (wifiUtlis == null) {
-					wifiUtlis = new WifiUtlis(MachineActivity.this);
-				}
-				tempInfoFlag = true;
-				new Thread(tempInfoThread).start();
-				wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
-			} catch (Exception e) {
-				Toast.makeText(MachineActivity.this,
-						getString(R.string.wifi_error), Toast.LENGTH_SHORT)
-						.show();
-			}
-			break;
+
 		// 仪器设置
-		case 4:
+		case 3:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -1637,9 +1586,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			/*
-			 * 通量设置 
-			 * Modified By： Domon 
-			 * Modified Date: 2014-9-11
+			 * 通量设置 Modified By： Domon Modified Date: 2014-9-11
 			 */
 			machine_instrument_body_flux_info_tv
 					.setOnClickListener(new OnClickListener() {
@@ -1704,7 +1651,7 @@ public class MachineActivity extends Activity {
 											machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
-//											 Utlis.sendSettingflux(getNum(fluxNum));
+											// Utlis.sendSettingflux(getNum(fluxNum));
 										}
 									});
 							builder.setNegativeButton(
@@ -1720,7 +1667,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-//			 --->不可点击
+			// --->不可点击
 			// machine_instrument_body_flux_info_tv.setClickable(false);
 
 			// 系统复位
@@ -1869,7 +1816,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 5:
+		case 4:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_detection, null);
 			machine_detection_body_bottom_left_info_iv = (ImageView) view
@@ -2025,7 +1972,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 6:
+		case 5:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_user_pass, null);
 			userViewControNum = 6;
@@ -2211,5 +2158,26 @@ public class MachineActivity extends Activity {
 				}
 			}
 		}
+	}
+
+	public String timeFormat(int hour, int min, int sec) {
+		String hourStr, minStr, secStr;
+		if (hour < 10) {
+			hourStr = "0" + hour;
+		} else {
+			hourStr = "" + hour;
+		}
+
+		if (min < 10) {
+			minStr = "0" + min;
+		} else {
+			minStr = "" + min;
+		}
+		if (sec < 10) {
+			secStr = "0" + sec;
+		} else {
+			secStr = "" + sec;
+		}
+		return hourStr + ":" + minStr + ":" + secStr;
 	}
 }

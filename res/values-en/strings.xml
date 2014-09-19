@@ -266,6 +266,7 @@
 	<string name="company_technical">Technical Department:</string>
 	<string name="company_technical_info">support@medtl.com</string>
 	<string name="About">About</string>
+
 	<string-array name="hour_array">
         <item>00</item>
         <item>01</item>

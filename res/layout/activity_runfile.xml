@@ -2,58 +2,80 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
-    <RelativeLayout android:id="@+id/runfile_top_rl"
-        style="@style/top_rl">
-        <TextView android:id="@+id/runfile_top_uname_tv"
-            style="@style/top_uname"/>
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/runfile_top_rl"
+        style="@style/top_rl" >
+
+        <TextView
+            android:id="@+id/runfile_top_uname_tv"
+            style="@style/top_uname" />
+
         <org.tianlong.rna.utlis.DigitalClock
-		    android:id="@+id/runfile_top_time_dc"
-     		android:layout_width="260dp"
-     		android:layout_height="30dp"
-     		android:layout_gravity="center_horizontal"
-     		android:textColor="@android:color/white"
-		    android:textSize="20sp"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"/>
+            android:id="@+id/runfile_top_time_dc"
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </RelativeLayout>
-	<RelativeLayout android:id="@+id/runfile_left_rl"
-	    style="@style/left_rl"
-	    android:layout_below="@id/runfile_top_rl">
-        <RelativeLayout android:id="@+id/runfile_left_top_rl"
-           	style="@style/left_top_rl"
-            android:background="@drawable/left_top">
-            <TextView android:id="@+id/runfile_left_top_ename_tv"
+
+    <RelativeLayout
+        android:id="@+id/runfile_left_rl"
+        style="@style/left_rl"
+        android:layout_below="@id/runfile_top_rl" >
+
+        <RelativeLayout
+            android:id="@+id/runfile_left_top_rl"
+            style="@style/left_top_rl"
+            android:background="@drawable/left_top" >
+
+            <TextView
+                android:id="@+id/runfile_left_top_ename_tv"
                 style="@style/left_top_name"
-                android:text="@string/log"/>
+                android:text="@string/log" />
         </RelativeLayout>
-	    <ListView android:id="@+id/runfile_left_lv" 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/runfile_left_top_rl"/>
-	</RelativeLayout>
-	<RelativeLayout android:id="@+id/runfile_right_rl"
-	    android:layout_width="770dip"
-	    android:layout_height="fill_parent"
-	    android:layout_margin="5dip"
-	    android:background="#505E8D"
-	    android:layout_below="@id/runfile_top_rl"
-	    android:layout_alignParentRight="true">
-	    <TextView android:id="@+id/runfile_right_tv"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:textSize="20sp"
-	        android:textColor="@android:color/white"
-	        android:layout_centerHorizontal="true"/>
-	    <Button android:id="@+id/runfile_right_back_btn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:clickable="true"
+
+        <ListView
+            android:id="@+id/runfile_left_lv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/runfile_left_top_rl" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/runfile_right_rl"
+        android:layout_width="770dip"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/runfile_top_rl"
+        android:layout_margin="5dip"
+        android:background="#505E8D" >
+
+        <!-- 需要旁边留取宽度 -->
+        <TextView
+            android:id="@+id/runfile_right_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dip"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/runfile_right_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:background="@drawable/btn_selector"
-	        android:text="@string/back"
-	        android:textSize="15sp"
-	        android:textColor="@android:color/white"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentBottom="true"/>
-	</RelativeLayout>
+            android:clickable="true"
+            android:text="@string/back"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

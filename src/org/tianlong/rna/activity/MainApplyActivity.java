@@ -76,6 +76,7 @@ public class MainApplyActivity extends Activity {
 		ma_bottom_gv = (GridView) findViewById(R.id.ma_bottom_gv);
 		ma_bottom_gv.setAdapter(new MainApplyAdapter(MainApplyActivity.this,
 				getguanList()));
+		
 		ma_bottom_gv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -114,7 +115,6 @@ public class MainApplyActivity extends Activity {
 							Thread.sleep(50);
 							utlis.sendMessage(Utlis.getseleteMessage(8));
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -130,7 +130,6 @@ public class MainApplyActivity extends Activity {
 											utlis.sendMessage(Utlis
 													.ultravioletCloseMessage());
 										} catch (Exception e) {
-											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
 										dialog.dismiss();

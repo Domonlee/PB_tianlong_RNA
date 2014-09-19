@@ -7,11 +7,12 @@ int anim abc_slide_out_top 0x7f040005
 int anim anim_view 0x7f040006
 int anim detection 0x7f040007
 int array Templet 0x7f0d0000
-int array hour_array 0x7f0d0001
-int array minute_array 0x7f0d0002
-int array num_array 0x7f0d0005
-int array second_array 0x7f0d0003
-int array thousand_array 0x7f0d0004
+int array hour_array 0x7f0d0002
+int array hour_array_magnetic 0x7f0d0001
+int array minute_array 0x7f0d0003
+int array num_array 0x7f0d0006
+int array second_array 0x7f0d0004
+int array thousand_array 0x7f0d0005
 int attr actionBarDivider 0x7f01000f
 int attr actionBarItemBackground 0x7f010010
 int attr actionBarSize 0x7f01000e

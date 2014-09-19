@@ -498,7 +498,6 @@ public class CreatExperimentActivity extends Activity {
 							.setBackgroundResource(R.drawable.zero);
 				}
 
-				// --Ä£°åÌî³äÊý¾Ý TODO
 				//
 				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
 						+ (i + 1));
@@ -1093,24 +1092,36 @@ public class CreatExperimentActivity extends Activity {
 								View view = LayoutInflater.from(
 										CreatExperimentActivity.this).inflate(
 										R.layout.activity_time_minute, null);
+								final TimeWheelView experiment_new_main_item_time_hour_hour = (TimeWheelView) view
+										.findViewById(R.id.time_hour_hour);
 								final TimeWheelView experiment_new_main_item_time_hour_minutes = (TimeWheelView) view
 										.findViewById(R.id.time_minute_minutes);
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
 										.findViewById(R.id.time_minute_seconds);
+								
+								String[] hour = getResources().getStringArray(
+										R.array.hour_array_magnetic);
 								String[] min = getResources().getStringArray(
 										R.array.minute_array);
 								String[] sec = getResources().getStringArray(
 										R.array.second_array);
+								experiment_new_main_item_time_hour_hour
+								.setAdapter(new ArrayWheelAdapter<String>(
+										hour));
 								experiment_new_main_item_time_hour_minutes
 										.setAdapter(new ArrayWheelAdapter<String>(
 												min));
 								experiment_new_main_item_time_hour_seconds
 										.setAdapter(new ArrayWheelAdapter<String>(
 												sec));
+								experiment_new_main_item_time_hour_hour
+								.setCyclic(true);
 								experiment_new_main_item_time_hour_minutes
 										.setCyclic(true);
 								experiment_new_main_item_time_hour_seconds
 										.setCyclic(true);
+								experiment_new_main_item_time_hour_hour
+								.setCurrentItem(date.getHours());
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
@@ -1127,7 +1138,8 @@ public class CreatExperimentActivity extends Activity {
 													DialogInterface dialog,
 													int which) {
 												String timeFromatStr = timeFormat(
-														0,
+														experiment_new_main_item_time_hour_hour
+														.getCurrentItem(),
 														experiment_new_main_item_time_hour_minutes
 																.getCurrentItem(),
 														experiment_new_main_item_time_hour_seconds
@@ -1989,7 +2001,7 @@ public class CreatExperimentActivity extends Activity {
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
 										.findViewById(R.id.time_hour_seconds);
 								String[] hour = getResources().getStringArray(
-										R.array.hour_array);
+										R.array.hour_array_magnetic);
 								String[] min = getResources().getStringArray(
 										R.array.minute_array);
 								String[] sec = getResources().getStringArray(
@@ -2073,24 +2085,35 @@ public class CreatExperimentActivity extends Activity {
 								View view = LayoutInflater.from(
 										CreatExperimentActivity.this).inflate(
 										R.layout.activity_time_minute, null);
+								final TimeWheelView experiment_new_main_item_time_hour_hour = (TimeWheelView) view
+										.findViewById(R.id.time_hour_hour);
 								final TimeWheelView experiment_new_main_item_time_hour_minutes = (TimeWheelView) view
 										.findViewById(R.id.time_minute_minutes);
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
 										.findViewById(R.id.time_minute_seconds);
+								String[] hour = getResources().getStringArray(
+										R.array.hour_array_magnetic);
 								String[] min = getResources().getStringArray(
 										R.array.minute_array);
 								String[] sec = getResources().getStringArray(
 										R.array.second_array);
+								experiment_new_main_item_time_hour_hour
+										.setAdapter(new ArrayWheelAdapter<String>(
+												hour));
 								experiment_new_main_item_time_hour_minutes
 										.setAdapter(new ArrayWheelAdapter<String>(
 												min));
 								experiment_new_main_item_time_hour_seconds
 										.setAdapter(new ArrayWheelAdapter<String>(
 												sec));
+								experiment_new_main_item_time_hour_hour
+										.setCyclic(true);
 								experiment_new_main_item_time_hour_minutes
 										.setCyclic(true);
 								experiment_new_main_item_time_hour_seconds
 										.setCyclic(true);
+								experiment_new_main_item_time_hour_hour
+										.setCurrentItem(date.getHours());
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
