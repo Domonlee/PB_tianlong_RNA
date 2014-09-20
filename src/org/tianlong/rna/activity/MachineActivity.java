@@ -28,6 +28,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +42,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -47,6 +50,7 @@ import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,19 +62,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-//import java.util.regex.Pattern;
-//import org.tianlong.rna.adapter.UpanFlieAdapter;
-//import org.tianlong.rna.pojo.Net;
-//import android.os.Environment;
 
 @SuppressLint("HandlerLeak")
 public class MachineActivity extends Activity {
-
-	// private final String patternMac =
-	// "^[a-fA-F0-9]{2}+:[a-fA-F0-9]{2}+:[a-fA-F0-9]{2}+:[a-fA-F0-9]{2}+:[a-fA-F0-9]{2}+:[a-fA-F0-9]{2}$";
-	// private final String patternIP =
-	// "\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\b";
-	// private Pattern pa;
 
 	private ListView machine_left_lv;
 	private Button machine_right_back_btn;
@@ -86,13 +80,14 @@ public class MachineActivity extends Activity {
 	private RadioButton machine_language_body_english;
 	private Button machine_language_bottom_btn_save;
 
-	// //网络设置
-	// private EditText machine_net_body_name_et;
-	// private EditText machine_net_body_ip_et;
-	// private EditText machine_net_body_mac_et;
-	// private EditText machine_net_body_gateway_et;
-	// private EditText machine_net_body_mask_et;
-	// private Button machine_net_bottom_btn_save;
+	// 网络设置
+	private ListView machine_net_wifi_lv;
+	private Button machine_net_bottom_btn_save;
+	private WifiManager wifiManager;
+	private TextView wifi_SignalStrenth_tv;
+	private TextView wifi_tv;
+	private ImageView wifi_Iv;
+	List<ScanResult> list;
 
 	// 消毒设置
 	private TextView machine_dismdect_body_time_et;
@@ -103,6 +98,7 @@ public class MachineActivity extends Activity {
 	private String hours;
 	private String mins;
 	private String secs;
+	private String disinfectStr ;
 
 	// 用户设置
 	private Button machine_user_body_default_btn;
@@ -115,19 +111,7 @@ public class MachineActivity extends Activity {
 	private TextView machine_admin_body_head_admin_tv;
 	private TextView machine_admin_body_head_login_tv;
 
-	// //仪器升级
-	// private ListView machine_update_body_lv;
-	// private Button machine_update_bottom_btn_save;
-	// //存放所有升级文件中的二进制数
-	// private ArrayList<Byte> bList = new ArrayList<Byte>();
-	// 存放取出的二进制数
 	byte[] b = new byte[1];
-	// 得到升级文件列表
-	// private List<Map<String, Object>> upanList;
-	// //选中升级文件的ID
-	// private int selectID = -1;
-	// //发送数据循环数
-	// private int cycleNum = 0;
 
 	// 仪器设置
 	private TextView machine_instrument_body_flux_info_tv;
@@ -181,21 +165,11 @@ public class MachineActivity extends Activity {
 	private ImageView detection_item_left_level_iv;
 	private ImageView detection_item_left_info_level_iv;
 
-	// 系统温度
-	private TextView machine_body_left_body_t1_info_tv;
-	private TextView machine_body_right_body_t2_info_tv;
-	private TextView machine_body_left_body_t3_info_tv;
-	private TextView machine_body_right_body_t4_info_tv;
-	private TextView machine_body_left_body_t5_info_tv;
-	private TextView machine_body_right_body_t6_info_tv;
-	private TextView machine_body_left_body_t7_info_tv;
-	private TextView machine_body_right_body_t8_info_tv;
-
 	public List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
 	public Map<String, Object> map = new HashMap<String, Object>();
 
 	private int U_id, index, fluxInfoNum;
-	private float t1, t2, t3, t4, t5, t6, t7, t8, hole, blend, magnetic;
+	private float hole, blend, magnetic;
 	private String Uname;
 	private List<User> users;
 	private List<String> receive;
@@ -203,549 +177,13 @@ public class MachineActivity extends Activity {
 	private MachineDao machineDao;
 	private User user;
 	private UserDao userDao;
-	// private Net net;
 	private View view;
 	private WifiUtlis wifiUtlis;
 	private SelectInfoThread selectInfoThread;
-	private TempInfoThread tempInfoThread;
 	private DetectionInfoThread detectionInfoThread;
 	private String receiveMeg; // 接收信息
 	private List<Map<String, Object>> listViews;
 	private Map<String, Object> listMap;
-
-	// 电机位置校准接受线程
-	private Handler selectInfoHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				receive = Utlis.getReceive(info);
-				for (int i = 0; i < receive.size(); i++) {
-					receiveMeg = receive.get(i);
-					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
-						machine_instrument_body_run_parameter_hole_info_btn_rl
-								.setVisibility(View.VISIBLE);
-						machine_instrument_body_run_parameter_hole_info_et
-								.setVisibility(View.VISIBLE);
-						machine_instrument_body_run_parameter_hole_info_tv
-								.setVisibility(View.GONE);
-						machine_instrument_body_flux_info_tv.setClickable(true);
-						machine_instrument_body_run_parameter_blend_btn_rl
-								.setVisibility(View.VISIBLE);
-						machine_instrument_body_run_parameter_magnetic_btn_rl
-								.setVisibility(View.VISIBLE);
-						machine_instrument_body_run_parameter_hol_btn_rl
-								.setVisibility(View.VISIBLE);
-					} else if (receiveMeg
-							.equals("ff ff 0a d1 01 09 02 01 e6 fe ")) {
-						Toast.makeText(MachineActivity.this,
-								getString(R.string.instrument_hole_success),
-								Toast.LENGTH_SHORT).show();
-					} else if (receiveMeg
-							.equals("ff ff 0a d1 01 09 01 01 e5 fe ")) {
-						Toast.makeText(
-								MachineActivity.this,
-								getString(R.string.instrument_magnetic_success),
-								Toast.LENGTH_SHORT).show();
-					} else if (receiveMeg
-							.equals("ff ff 0a d1 01 09 00 01 e4 fe ")) {
-						Toast.makeText(MachineActivity.this,
-								getString(R.string.instrument_blend_success),
-								Toast.LENGTH_SHORT).show();
-					} else if (receiveMeg.substring(15, 17).equals("09")) {
-						try {
-							hole = (Integer.parseInt(
-									receiveMeg.substring(21, 23), 16) * 256 + Integer
-									.parseInt(receiveMeg.substring(24, 26), 16)) / 10.0f;
-							magnetic = (Integer.parseInt(
-									receiveMeg.substring(27, 29), 16) * 256 + Integer
-									.parseInt(receiveMeg.substring(30, 32), 16)) / 10.0f;
-							blend = (Integer.parseInt(
-									receiveMeg.substring(33, 35), 16) * 256 + Integer
-									.parseInt(receiveMeg.substring(36, 38), 16)) / 10.0f;
-							machine_instrument_body_run_parameter_blend_info_et
-									.setText(blend + "");
-							machine_instrument_body_run_parameter_magnetic_info_et
-									.setText(magnetic + "");
-							machine_instrument_body_run_parameter_hole_info_et
-									.setText(hole + "");
-							machine_instrument_body_run_parameter_blend_info_tv
-									.setText(blend + "");
-							machine_instrument_body_run_parameter_magnetic_info_tv
-									.setText(magnetic + "");
-							machine_instrument_body_run_parameter_hole_info_tv
-									.setText(hole + "");
-							wifiUtlis.sendMessage(Utlis
-									.sendSystemResetMessage());
-						} catch (Exception e) {
-							Toast.makeText(MachineActivity.this,
-									getString(R.string.wifi_error),
-									Toast.LENGTH_SHORT).show();
-						}
-					} else if (receiveMeg.substring(15, 17).equals("07")) {
-						switch (Integer.parseInt(receiveMeg.substring(21, 23),
-								16)) {
-						case 15:
-							fluxNum = 1;
-							break;
-						case 32:
-							fluxNum = 2;
-							break;
-						case 48:
-							fluxNum = 3;
-							break;
-						// case 64:
-						// fluxNum = 4;
-						// break;
-						default:
-							break;
-						}
-						Log.i("info", fluxNum + "");
-						machine_instrument_body_flux_info_tv
-								.setText(getNum(fluxNum));
-					}
-				}
-			}
-		};
-	};
-	// 温度查询接受线程
-	private Handler tempInfoHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				receive = Utlis.getReceive(info);
-				for (int i = 0; i < receive.size(); i++) {
-					receiveMeg = receive.get(i);
-					index = Integer.parseInt(receiveMeg.substring(15, 17), 16);
-					switch (index) {
-					case 5:
-						t1 = (Integer.parseInt(receiveMeg.substring(21, 23)
-								+ receiveMeg.substring(24, 26), 16) + 5) / 10;
-						t2 = (Integer.parseInt(receiveMeg.substring(27, 29)
-								+ receiveMeg.substring(30, 32), 16) + 5) / 10;
-						t3 = (Integer.parseInt(receiveMeg.substring(33, 35)
-								+ receiveMeg.substring(36, 38), 16) + 5) / 10;
-						t4 = (Integer.parseInt(receiveMeg.substring(39, 41)
-								+ receiveMeg.substring(42, 44), 16) + 5) / 10;
-						t5 = (Integer.parseInt(receiveMeg.substring(45, 47)
-								+ receiveMeg.substring(48, 50), 16) + 5) / 10;
-						t6 = (Integer.parseInt(receiveMeg.substring(51, 53)
-								+ receiveMeg.substring(54, 56), 16) + 5) / 10;
-						t7 = (Integer.parseInt(receiveMeg.substring(57, 59)
-								+ receiveMeg.substring(60, 62), 16) + 5) / 10;
-						t8 = (Integer.parseInt(receiveMeg.substring(63, 65)
-								+ receiveMeg.substring(66, 68), 16) + 5) / 10;
-						machine_body_left_body_t1_info_tv.setText(t1 + "°C");
-						machine_body_right_body_t2_info_tv.setText(t2 + "°C");
-						machine_body_left_body_t3_info_tv.setText(t3 + "°C");
-						machine_body_right_body_t4_info_tv.setText(t4 + "°C");
-						machine_body_left_body_t5_info_tv.setText(t5 + "°C");
-						machine_body_right_body_t6_info_tv.setText(t6 + "°C");
-						machine_body_left_body_t7_info_tv.setText(t7 + "°C");
-						machine_body_right_body_t8_info_tv.setText(t8 + "°C");
-						break;
-					default:
-						break;
-					}
-				}
-				try {
-					wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
-					// Log.i("info", "我在查询");
-				} catch (Exception e1) {
-					Toast.makeText(MachineActivity.this,
-							getString(R.string.wifi_error), Toast.LENGTH_SHORT)
-							.show();
-				}
-			}
-		}
-	};
-	// 仪器自检接受线程
-	private Handler detectionInfoHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				machine_detection_body_bottom_right_sv.scrollTo(0, 364);
-				receive = Utlis.getReceive(info);
-				for (int i = 0; i < receive.size(); i++) {
-					receiveMeg = receive.get(i);
-					index = Integer.valueOf(receiveMeg.substring(15, 17));
-					try {
-						switch (index) {
-						case 1:
-							if (receiveMeg.substring(9, 11).equals("51")) {
-								if (checkNum == 1) {
-									if (Integer.parseInt(
-											receiveMeg.substring(24, 26), 16) < 48
-											|| Integer.parseInt(receiveMeg
-													.substring(24, 26), 16) > 52) {
-										machine_detection_body_bottom_right_tv
-												.setText(getString(R.string.detection_five));
-										detection_item_left_info_power_iv
-												.setBackgroundResource(R.drawable.error);
-									} else if (Integer.parseInt(
-											receiveMeg.substring(30, 32), 16) < 115
-											|| Integer.parseInt(receiveMeg
-													.substring(30, 32), 16) > 125) {
-										machine_detection_body_bottom_right_tv
-												.setText(getString(R.string.detection_twelve));
-										detection_item_left_info_power_iv
-												.setBackgroundResource(R.drawable.error);
-									} else if ((Integer.parseInt(
-											receiveMeg.substring(33, 35), 16) * 256 + Integer
-											.parseInt(receiveMeg.substring(36,
-													38), 16)) < 325
-											|| (Integer.parseInt(receiveMeg
-													.substring(33, 35), 16) * 256 + Integer
-													.parseInt(receiveMeg
-															.substring(36, 38),
-															16)) > 335) {
-										machine_detection_body_bottom_right_tv
-												.setText(getString(R.string.detection_thirty_three));
-										detection_item_left_info_power_iv
-												.setBackgroundResource(R.drawable.error);
-									} else {
-										machine_detection_body_bottom_right_tv
-												.setText(getString(R.string.detection_power_sucess));
-										detection_item_left_info_power_iv
-												.setBackgroundResource(R.drawable.yes);
-									}
-									detection_item_left_power_iv
-											.setVisibility(View.GONE);
-									detection_item_left_info_power_iv
-											.setVisibility(View.VISIBLE);
-									detection_item_left_sensor_iv
-											.setVisibility(View.VISIBLE);
-									animationDrawable.stop();
-									animationDrawable = (AnimationDrawable) detection_item_left_sensor_iv
-											.getBackground();
-									animationDrawable.start();
-									wifiUtlis.sendMessage(Utlis
-											.sendDetectionMessage(2));
-									checkNum++;
-								}
-							} else if (receiveMeg.substring(9, 11).equals("d1")) {
-								if (receiveMeg.substring(18, 20).equals("00")) {
-									if (checkNum == 4) {
-										if (receiveMeg.substring(21, 23)
-												.equals("01")) {
-											detection_item_left_info_shock_iv
-													.setBackgroundResource(R.drawable.yes);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_shock_sucess));
-										} else {
-											detection_item_left_info_shock_iv
-													.setBackgroundResource(R.drawable.error);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_shock_error));
-										}
-										detection_item_left_shock_iv
-												.setVisibility(View.GONE);
-										detection_item_left_info_shock_iv
-												.setVisibility(View.VISIBLE);
-										detection_item_left_magnet_iv
-												.setVisibility(View.VISIBLE);
-										animationDrawable.stop();
-										animationDrawable = (AnimationDrawable) detection_item_left_magnet_iv
-												.getBackground();
-										animationDrawable.start();
-										wifiUtlis.sendMessage(Utlis
-												.sendDetectionMessage(5));
-										checkNum++;
-									}
-								} else if (receiveMeg.substring(18, 20).equals(
-										"01")) {
-									if (checkNum == 5) {
-										if (receiveMeg.substring(21, 23)
-												.equals("01")) {
-											detection_item_left_info_magnet_iv
-													.setBackgroundResource(R.drawable.yes);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_magnet_sucess));
-										} else {
-											detection_item_left_info_magnet_iv
-													.setBackgroundResource(R.drawable.error);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_magnet_error));
-										}
-										detection_item_left_magnet_iv
-												.setVisibility(View.GONE);
-										detection_item_left_info_magnet_iv
-												.setVisibility(View.VISIBLE);
-										detection_item_left_level_iv
-												.setVisibility(View.VISIBLE);
-										animationDrawable.stop();
-										animationDrawable = (AnimationDrawable) detection_item_left_level_iv
-												.getBackground();
-										animationDrawable.start();
-										wifiUtlis.sendMessage(Utlis
-												.sendDetectionMessage(6));
-										checkNum++;
-									}
-								} else if (receiveMeg.substring(18, 20).equals(
-										"02")) {
-									if (checkNum == 6) {
-										if (receiveMeg.substring(21, 23)
-												.equals("01")) {
-											detection_item_left_info_level_iv
-													.setBackgroundResource(R.drawable.yes);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_level_sucess));
-										} else {
-											detection_item_left_info_level_iv
-													.setBackgroundResource(R.drawable.error);
-											machine_detection_body_bottom_right_tv
-													.setText(machine_detection_body_bottom_right_tv
-															.getText()
-															.toString()
-															+ "\n"
-															+ getString(R.string.detection_level_error));
-										}
-										detection_item_left_level_iv
-												.setVisibility(View.GONE);
-										detection_item_left_info_level_iv
-												.setVisibility(View.VISIBLE);
-										detection_item_left_level_iv
-												.setVisibility(View.VISIBLE);
-										animationDrawable.stop();
-										detectionNum = 0;
-										machine_detection_body_bottom_left_info_iv
-												.setVisibility(View.GONE);
-										machine_detection_body_bottom_left_tv
-												.setVisibility(View.INVISIBLE);
-										machine_detection_body_bottom_left_info_iv
-												.clearAnimation();
-										machine_detection_bottom_btn_check
-												.setText(getString(R.string.detection_check));
-										detectionCheckNum--;
-										detectionInfoFlag = false;
-										checkNum = 0;
-										machine_detection_body_bottom_right_sv
-												.scrollTo(0, 364);
-									}
-								}
-							}
-							break;
-						case 5:
-							if (checkNum == 2) {
-								boolean t1 = false, t2 = false, t3 = false, t4 = false, t5 = false, t6 = false, t7 = false, t8 = false;
-								if (receiveMeg.substring(21, 26).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t1));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t1 = true;
-								}
-								if (receiveMeg.substring(27, 32).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t2));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t2 = true;
-								}
-								if (receiveMeg.substring(33, 38).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t3));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t3 = true;
-								}
-								if (receiveMeg.substring(39, 44).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t4));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t4 = true;
-								}
-								if (receiveMeg.substring(45, 50).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t5));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t5 = true;
-								}
-								if (receiveMeg.substring(51, 56).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t6));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t6 = true;
-								}
-								if (receiveMeg.substring(57, 62).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t7));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t7 = true;
-								}
-								if (receiveMeg.substring(63, 68).indexOf(
-										"00 00") != -1) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_t8));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									t8 = true;
-								}
-								if (t1 && t2 && t3 && t4 && t5 && t6 && t7
-										&& t8) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_sensor_sucess));
-									detection_item_left_info_sensor_iv
-											.setBackgroundResource(R.drawable.yes);
-								}
-								detection_item_left_sensor_iv
-										.setVisibility(View.GONE);
-								detection_item_left_info_sensor_iv
-										.setVisibility(View.VISIBLE);
-								detection_item_left_heating_iv
-										.setVisibility(View.VISIBLE);
-								animationDrawable.stop();
-								animationDrawable = (AnimationDrawable) detection_item_left_heating_iv
-										.getBackground();
-								animationDrawable.start();
-								wifiUtlis.sendMessage(Utlis
-										.sendDetectionMessage(3));
-								checkNum++;
-							}
-							break;
-						case 6:
-							if (checkNum == 0) {
-								if (Integer.parseInt(
-										receiveMeg.substring(21, 23), 16) != 3
-										&& Integer.parseInt(
-												receiveMeg.substring(21, 23),
-												16) != 4) {
-									wifiUtlis.sendMessage(Utlis
-											.sendDetectionMessage(1));
-									checkNum++;
-								}
-							}
-							break;
-						case 7:
-							fluxInfoNum = Integer.parseInt(
-									receiveMeg.substring(21, 23), 16);
-							if (fluxInfoNum != 32) {
-								detection_item_right_sensor_tv
-										.setTextColor(getResources().getColor(
-												R.color.black));
-								detection_item_right_heating_tv
-										.setTextColor(getResources().getColor(
-												R.color.black));
-							}
-							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-							break;
-						case 10:
-							if (checkNum == 3) {
-								if (!receiveMeg.substring(21, 23).equals("00")) {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_heating_error_one)
-													+ receiveMeg
-															.substring(
-																	24,
-																	receiveMeg
-																			.length() - 6)
-													+ getString(R.string.detection_heating_error_two));
-
-									detection_item_left_info_heating_iv
-											.setBackgroundResource(R.drawable.error);
-								} else {
-									machine_detection_body_bottom_right_tv
-											.setText(machine_detection_body_bottom_right_tv
-													.getText().toString()
-													+ "\n"
-													+ getString(R.string.detection_heating_sucess));
-									detection_item_left_info_heating_iv
-											.setBackgroundResource(R.drawable.yes);
-								}
-								detection_item_left_heating_iv
-										.setVisibility(View.GONE);
-								detection_item_left_info_heating_iv
-										.setVisibility(View.VISIBLE);
-								detection_item_left_shock_iv
-										.setVisibility(View.VISIBLE);
-								animationDrawable.stop();
-								animationDrawable = (AnimationDrawable) detection_item_left_shock_iv
-										.getBackground();
-								animationDrawable.start();
-								wifiUtlis.sendMessage(Utlis
-										.sendDetectionMessage(4));
-								checkNum++;
-
-							}
-						default:
-							break;
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					machine_detection_body_bottom_right_sv.scrollTo(0, 364);
-				}
-			}
-		};
-	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -755,22 +193,15 @@ public class MachineActivity extends Activity {
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
-		// upanList = new ArrayList<Map<String,Object>>();
 		listViews = new ArrayList<Map<String, Object>>();
 		listMap = new HashMap<String, Object>();
 		userDao = new UserDao();
 		machineDao = new MachineDao();
-		// net = new Net();
 		selectInfoThread = new SelectInfoThread();
-		tempInfoThread = new TempInfoThread();
 		detectionInfoThread = new DetectionInfoThread();
 		user = userDao.getUserById(U_id, MachineActivity.this);
 		machine = machineDao.getMachine(MachineActivity.this);
-		// net.setMname(machine.getMname());
-		// net.setMip(machine.getMip());
-		// net.setMmac(machine.getMmac());
-		// net.setMgateway(machine.getMgateway());
-		// net.setMmask(machine.getMmask());
+
 
 		machine_right_back_btn = (Button) findViewById(R.id.machine_right_back_btn);
 		machine_left_lv = (ListView) findViewById(R.id.machine_left_lv);
@@ -965,9 +396,9 @@ public class MachineActivity extends Activity {
 	private List<String> getList() {
 		List<String> list = new ArrayList<String>();
 		list.add(getString(R.string.system_language));
-		// list.add(getString(R.string.system_net));
-		list.add(getString(R.string.system_clean));
+		list.add(getString(R.string.system_net));
 		list.add(getString(R.string.system_user));
+		list.add(getString(R.string.system_clean));
 		if (user.getUadmin() == 1) {
 			list.add(getString(R.string.system_machine));
 			list.add(getString(R.string.system_detection));
@@ -1042,104 +473,56 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		// //网络设置
-		// case 1:
-		// view =
-		// LayoutInflater.from(MachineActivity.this).inflate(R.layout.activity_machine_net,
-		// null);
-		// machine_net_body_name_et = (EditText)
-		// view.findViewById(R.id.machine_net_body_name_et);
-		// machine_net_body_ip_et = (EditText)
-		// view.findViewById(R.id.machine_net_body_ip_et);
-		// machine_net_body_mac_et = (EditText)
-		// view.findViewById(R.id.machine_net_body_mac_et);
-		// machine_net_body_gateway_et = (EditText)
-		// view.findViewById(R.id.machine_net_body_gateway_et);
-		// machine_net_body_mask_et = (EditText)
-		// view.findViewById(R.id.machine_net_body_mask_et);
-		// machine_net_bottom_btn_save = (Button)
-		// view.findViewById(R.id.machine_net_bottom_btn_save);
-		//
-		// machine_net_body_name_et.setText(net.getMname());
-		// machine_net_body_ip_et.setText(net.getMip());
-		// machine_net_body_mac_et.setText(net.getMmac());
-		// machine_net_body_gateway_et.setText(net.getMgateway());
-		// machine_net_body_mask_et.setText(net.getMmask());
-		//
-		// machine_net_bottom_btn_save.setOnClickListener(new OnClickListener()
-		// {
-		// public void onClick(View v) {
-		// if(!machine_net_body_name_et.getText().toString().equals("")){
-		// if(!machine_net_body_ip_et.getText().toString().equals("")){
-		// if(!machine_net_body_mac_et.getText().toString().equals("")){
-		// if(!machine_net_body_gateway_et.getText().toString().equals("")){
-		// if(!machine_net_body_mask_et.getText().toString().equals("")){
-		// pa = Pattern.compile(patternIP);
-		// if(pa.matcher(net.getMip()).find()){
-		// pa = Pattern.compile(patternMac);
-		// if(pa.matcher(net.getMmac()).find()){
-		// pa = Pattern.compile(patternIP);
-		// if(pa.matcher(net.getMmask()).find()){
-		// if(pa.matcher(net.getMgateway()).find()){
-		// if(machineDao.upDateNet(net, MachineActivity.this)){
-		// Toast.makeText(MachineActivity.this, getString(R.string.net_success),
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this, getString(R.string.net_failure),
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_gateway_format), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_mask_format), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_mac_format), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_ip_format), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_mask_not_null), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_gateway_not_null), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_mac_not_null), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_ip_not_null), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// else{
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.net_name_not_null), Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// });
-		//
-		// break;
-		// 消毒设置
+		// -- 网络设置
 		case 1:
+			wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+			list = wifiManager.getScanResults();
+			view = LayoutInflater.from(MachineActivity.this).inflate(
+					R.layout.activity_machine_net, null);
+			machine_net_wifi_lv = (ListView) view
+					.findViewById(R.id.machine_net_wifi_lv);
+			machine_net_bottom_btn_save = (Button) view
+					.findViewById(R.id.machine_net_bottom_btn_save);
+			if (list == null) {
+				Toast.makeText(this, "wifi未打开！", Toast.LENGTH_LONG).show();
+			} else {
+				machine_net_wifi_lv.setAdapter(new WifiListAdapter(
+						MachineActivity.this, list));
+			}
+
+			machine_net_wifi_lv
+					.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							Intent intent = new Intent(
+									"android.settings.WIFI_SETTINGS");
+							startActivity(intent);
+						}
+					});
+
+			machine_net_bottom_btn_save
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							Toast.makeText(getApplicationContext(), "设置wifi成功",
+									1000).show();
+						}
+					});
+
+			break;
+			
+			// 用户设置
+			case 2:
+				if (user.getUadmin() != 1) {
+					defaultLogin();
+				} else {
+					showAdamin();
+				}
+				break;
+
+		// 消毒设置
+		case 3:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_disinfect, null);
 
@@ -1148,6 +531,9 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
 
+			if (machine.getMDtime().equals("null:null:null")) {
+				machine.setMDtime("01:00:00");
+			}
 			machine_dismdect_body_time_et.setText(machine.getMDtime());
 			machine_dismdect_body_time_et
 					.setOnClickListener(new OnClickListener() {
@@ -1193,23 +579,7 @@ public class MachineActivity extends Activity {
 							time_hour_seconds.setCyclic(true);
 							time_hour_hour.setCurrentItem(date.getHours());
 							time_hour_minutes.setCurrentItem(date.getMinutes());
-							time_hour_seconds.setCurrentItem(date.getSeconds());
-
-							if (time_hour_hour.getCurrentItem() < 10) {
-								hours = "0" + time_hour_hour.getCurrentItem();
-							} else {
-								hours = time_hour_hour.getCurrentItem() + "";
-							}
-							if (time_hour_minutes.getCurrentItem() < 10) {
-								mins = "0" + time_hour_minutes.getCurrentItem();
-							} else {
-								mins = time_hour_minutes.getCurrentItem() + "";
-							}
-							if (time_hour_seconds.getCurrentItem() < 10) {
-								secs = "0" + time_hour_seconds.getCurrentItem();
-							} else {
-								secs = time_hour_seconds.getCurrentItem() + "";
-							}
+							time_hour_seconds.setCurrentItem(date.getSeconds()/5);
 
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									MachineActivity.this);
@@ -1228,6 +598,8 @@ public class MachineActivity extends Activity {
 															.getCurrentItem(),
 													time_hour_seconds
 															.getCurrentItem());
+											
+											disinfectStr = timeTotal;
 											machine_dismdect_body_time_et
 													.setText(timeTotal);
 										}
@@ -1247,13 +619,11 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
-							if (machineDao.upDateDisinfectTime(hours + ":"
-									+ mins + ":" + secs, MachineActivity.this)) {
+							if (machineDao.upDateDisinfectTime(disinfectStr, MachineActivity.this)) {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.dismdect_success),
 										Toast.LENGTH_SHORT).show();
-								machine.setMDtime(hours + ":" + mins + ":"
-										+ secs);
+								machine.setMDtime(disinfectStr);
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.dismdect_failure),
@@ -1263,118 +633,10 @@ public class MachineActivity extends Activity {
 					});
 			break;
 
-		// 用户设置
-		case 2:
-			if (user.getUadmin() != 1) {
-				defaultLogin();
-			} else {
-				showAdamin();
-			}
-			break;
-		// 仪器升级
-		// case 4:
-		// view =
-		// LayoutInflater.from(MachineActivity.this).inflate(R.layout.activity_machine_update,
-		// null);
-		// machine_update_body_lv = (ListView)
-		// view.findViewById(R.id.machine_update_body_lv);
-		// machine_update_bottom_btn_save = (Button)
-		// view.findViewById(R.id.machine_update_bottom_btn_save);
-		// upanList =
-		// Utlis.getApkByPath(Environment.getExternalStorageDirectory().getAbsolutePath());
-		// if(upanList.size() == 0){
-		// Toast.makeText(MachineActivity.this, getString(R.string.no_down_bin),
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// else{
-		// machine_update_body_lv.setAdapter(new
-		// UpanFlieAdapter(MachineActivity.this,upanList));
-		// }
-		//
-		// machine_update_body_lv.setOnItemClickListener(new
-		// OnItemClickListener() {
-		// public void onItemClick(AdapterView<?> arg0, View arg1,
-		// int arg2, long arg3) {
-		// selectID = arg2;
-		// }
-		// });
-		//
-		// machine_update_bottom_btn_save.setOnClickListener(new
-		// OnClickListener() {
-		// public void onClick(View v) {
-		// if(selectID == -1){
-		// Toast.makeText(MachineActivity.this,
-		// getString(R.string.no_select_down_bin), Toast.LENGTH_SHORT).show();
-		// }
-		// else{
-		//
-		// File file = new File((String) upanList.get(selectID).get("path"));
-		// try {
-		// FileInputStream inputStream = new FileInputStream(file);
-		// while(inputStream.read(b)>0){
-		// bList.add(b[0]);
-		// }
-		// inputStream.close();
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// cycleNum = bList.size()%200;
-		// if(cycleNum != 0){
-		// cycleNum = (bList.size()/200)+1;
-		// }
-		// else{
-		// cycleNum = bList.size()/200;
-		// }
-		// if(bList.size() <= 200){
-		// cycleNum = 1;
-		// }
-		// if(wifiUtlis == null){
-		// try {
-		// wifiUtlis = new WifiUtlis(MachineActivity.this);
-		// } catch (Exception e) {
-		// Toast.makeText(MachineActivity.this, getString(R.string.wifi_error),
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// for (int i = 0; i < cycleNum; i++) {
-		// try {
-		// // Log.i("info", "总字节数："+bList.size());
-		// // Log.i("info", "总循环数："+cycleNum);
-		// // Log.i("info", "当前循环数："+i);
-		// byte[] b = null;
-		// if((i+1)==cycleNum){
-		// b = Utlis.sendUpdateFile(bList, (i*200), (bList.size()-1));
-		// wifiUtlis.sendMessage(b);
-		// }
-		// else{
-		// b = Utlis.sendUpdateFile(bList, (i*200), (i*200)+199);
-		// wifiUtlis.sendMessage(b);
-		// }
-		// // Log.i("info", (i+1)+"--"+CHexConver.bytes2HexStr(b, b.length));
-		// Thread.sleep(1000);
-		// } catch (Exception e) {
-		// Toast.makeText(MachineActivity.this, getString(R.string.wifi_error),
-		// Toast.LENGTH_SHORT).show();
-		// break;
-		// }
-		// }
-		// selectID = -1;
-		// try {
-		// Thread.sleep(1000);
-		// wifiUtlis.sendMessage(Utlis.sendUpdateFinsh());
-		// // byte[] b = Utlis.sendUpdateFinsh();
-		// // Log.i("info", CHexConver.bytes2HexStr(b, b.length));
-		// } catch (Exception e) {
-		// Toast.makeText(MachineActivity.this, getString(R.string.wifi_error),
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		// }
-		// });
-		// break;
+
 
 		// 仪器设置
-		case 3:
+		case 4:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -1816,7 +1078,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 4:
+		case 5:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_detection, null);
 			machine_detection_body_bottom_left_info_iv = (ImageView) view
@@ -1972,7 +1234,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 5:
+		case 6:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_user_pass, null);
 			userViewControNum = 6;
@@ -2126,23 +1388,6 @@ public class MachineActivity extends Activity {
 		}
 	};
 
-	// 温度查询线程
-	class TempInfoThread implements Runnable {
-		public void run() {
-			// Log.i("info", "温度查询线程"+tempInfoFlag);
-			while (tempInfoFlag) {
-				try {
-					Message message = tempInfoHandler.obtainMessage();
-					message.obj = wifiUtlis.getByteMessage();
-					tempInfoHandler.sendMessage(message);
-					Thread.sleep(1000);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	};
-
 	// 仪器自检线程
 	class DetectionInfoThread implements Runnable {
 		public void run() {
@@ -2173,6 +1418,7 @@ public class MachineActivity extends Activity {
 		} else {
 			minStr = "" + min;
 		}
+		sec = sec * 5;
 		if (sec < 10) {
 			secStr = "0" + sec;
 		} else {
@@ -2180,4 +1426,534 @@ public class MachineActivity extends Activity {
 		}
 		return hourStr + ":" + minStr + ":" + secStr;
 	}
+
+	public class WifiListAdapter extends BaseAdapter {
+
+		LayoutInflater inflater;
+		List<ScanResult> list;
+
+		public WifiListAdapter(Context context, List<ScanResult> list) {
+			this.inflater = LayoutInflater.from(context);
+			this.list = list;
+		}
+
+		@Override
+		public int getCount() {
+			return list.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return position;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null) {
+				convertView = inflater.inflate(R.layout.item_wifi_list, null);
+				wifi_SignalStrenth_tv = (TextView) convertView
+						.findViewById(R.id.wifi_signal_strenth_tv);
+				wifi_tv = (TextView) convertView.findViewById(R.id.wifi_tv);
+				wifi_Iv = (ImageView) convertView.findViewById(R.id.wifi_ig);
+			}
+			ScanResult scanResult = list.get(position);
+			if (scanResult.SSID.substring(0, 6).equals("NP968_")) {
+				wifi_tv.setText(scanResult.SSID);
+				wifi_SignalStrenth_tv.setText(String.valueOf(Math
+						.abs(scanResult.level)) + "%");
+			} else {
+				wifi_tv.setVisibility(View.INVISIBLE);
+				wifi_Iv.setVisibility(View.INVISIBLE);
+				wifi_SignalStrenth_tv.setVisibility(View.INVISIBLE);
+			}
+
+			return convertView;
+		}
+
+	}
+
+	// 电机位置校准接受线程
+	private Handler selectInfoHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			byte[] info = (byte[]) msg.obj;
+			if (info.length != 0) {
+				receive = Utlis.getReceive(info);
+				for (int i = 0; i < receive.size(); i++) {
+					receiveMeg = receive.get(i);
+					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
+						machine_instrument_body_run_parameter_hole_info_btn_rl
+								.setVisibility(View.VISIBLE);
+						machine_instrument_body_run_parameter_hole_info_et
+								.setVisibility(View.VISIBLE);
+						machine_instrument_body_run_parameter_hole_info_tv
+								.setVisibility(View.GONE);
+						machine_instrument_body_flux_info_tv.setClickable(true);
+						machine_instrument_body_run_parameter_blend_btn_rl
+								.setVisibility(View.VISIBLE);
+						machine_instrument_body_run_parameter_magnetic_btn_rl
+								.setVisibility(View.VISIBLE);
+						machine_instrument_body_run_parameter_hol_btn_rl
+								.setVisibility(View.VISIBLE);
+					} else if (receiveMeg
+							.equals("ff ff 0a d1 01 09 02 01 e6 fe ")) {
+						Toast.makeText(MachineActivity.this,
+								getString(R.string.instrument_hole_success),
+								Toast.LENGTH_SHORT).show();
+					} else if (receiveMeg
+							.equals("ff ff 0a d1 01 09 01 01 e5 fe ")) {
+						Toast.makeText(
+								MachineActivity.this,
+								getString(R.string.instrument_magnetic_success),
+								Toast.LENGTH_SHORT).show();
+					} else if (receiveMeg
+							.equals("ff ff 0a d1 01 09 00 01 e4 fe ")) {
+						Toast.makeText(MachineActivity.this,
+								getString(R.string.instrument_blend_success),
+								Toast.LENGTH_SHORT).show();
+					} else if (receiveMeg.substring(15, 17).equals("09")) {
+						try {
+							hole = (Integer.parseInt(
+									receiveMeg.substring(21, 23), 16) * 256 + Integer
+									.parseInt(receiveMeg.substring(24, 26), 16)) / 10.0f;
+							magnetic = (Integer.parseInt(
+									receiveMeg.substring(27, 29), 16) * 256 + Integer
+									.parseInt(receiveMeg.substring(30, 32), 16)) / 10.0f;
+							blend = (Integer.parseInt(
+									receiveMeg.substring(33, 35), 16) * 256 + Integer
+									.parseInt(receiveMeg.substring(36, 38), 16)) / 10.0f;
+							machine_instrument_body_run_parameter_blend_info_et
+									.setText(blend + "");
+							machine_instrument_body_run_parameter_magnetic_info_et
+									.setText(magnetic + "");
+							machine_instrument_body_run_parameter_hole_info_et
+									.setText(hole + "");
+							machine_instrument_body_run_parameter_blend_info_tv
+									.setText(blend + "");
+							machine_instrument_body_run_parameter_magnetic_info_tv
+									.setText(magnetic + "");
+							machine_instrument_body_run_parameter_hole_info_tv
+									.setText(hole + "");
+							wifiUtlis.sendMessage(Utlis
+									.sendSystemResetMessage());
+						} catch (Exception e) {
+							Toast.makeText(MachineActivity.this,
+									getString(R.string.wifi_error),
+									Toast.LENGTH_SHORT).show();
+						}
+					} else if (receiveMeg.substring(15, 17).equals("07")) {
+						switch (Integer.parseInt(receiveMeg.substring(21, 23),
+								16)) {
+						case 15:
+							fluxNum = 1;
+							break;
+						case 32:
+							fluxNum = 2;
+							break;
+						case 48:
+							fluxNum = 3;
+							break;
+						default:
+							break;
+						}
+						Log.i("info", fluxNum + "");
+						machine_instrument_body_flux_info_tv
+								.setText(getNum(fluxNum));
+					}
+				}
+			}
+		};
+	};
+	// 仪器自检接受线程
+	private Handler detectionInfoHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			byte[] info = (byte[]) msg.obj;
+			if (info.length != 0) {
+				machine_detection_body_bottom_right_sv.scrollTo(0, 364);
+				receive = Utlis.getReceive(info);
+				for (int i = 0; i < receive.size(); i++) {
+					receiveMeg = receive.get(i);
+					index = Integer.valueOf(receiveMeg.substring(15, 17));
+					try {
+						switch (index) {
+						case 1:
+							if (receiveMeg.substring(9, 11).equals("51")) {
+								if (checkNum == 1) {
+									if (Integer.parseInt(
+											receiveMeg.substring(24, 26), 16) < 48
+											|| Integer.parseInt(receiveMeg
+													.substring(24, 26), 16) > 52) {
+										machine_detection_body_bottom_right_tv
+												.setText(getString(R.string.detection_five));
+										detection_item_left_info_power_iv
+												.setBackgroundResource(R.drawable.error);
+									} else if (Integer.parseInt(
+											receiveMeg.substring(30, 32), 16) < 115
+											|| Integer.parseInt(receiveMeg
+													.substring(30, 32), 16) > 125) {
+										machine_detection_body_bottom_right_tv
+												.setText(getString(R.string.detection_twelve));
+										detection_item_left_info_power_iv
+												.setBackgroundResource(R.drawable.error);
+									} else if ((Integer.parseInt(
+											receiveMeg.substring(33, 35), 16) * 256 + Integer
+											.parseInt(receiveMeg.substring(36,
+													38), 16)) < 325
+											|| (Integer.parseInt(receiveMeg
+													.substring(33, 35), 16) * 256 + Integer
+													.parseInt(receiveMeg
+															.substring(36, 38),
+															16)) > 335) {
+										machine_detection_body_bottom_right_tv
+												.setText(getString(R.string.detection_thirty_three));
+										detection_item_left_info_power_iv
+												.setBackgroundResource(R.drawable.error);
+									} else {
+										machine_detection_body_bottom_right_tv
+												.setText(getString(R.string.detection_power_sucess));
+										detection_item_left_info_power_iv
+												.setBackgroundResource(R.drawable.yes);
+									}
+									detection_item_left_power_iv
+											.setVisibility(View.GONE);
+									detection_item_left_info_power_iv
+											.setVisibility(View.VISIBLE);
+									detection_item_left_sensor_iv
+											.setVisibility(View.VISIBLE);
+									animationDrawable.stop();
+									animationDrawable = (AnimationDrawable) detection_item_left_sensor_iv
+											.getBackground();
+									animationDrawable.start();
+									wifiUtlis.sendMessage(Utlis
+											.sendDetectionMessage(2));
+									checkNum++;
+								}
+							} else if (receiveMeg.substring(9, 11).equals("d1")) {
+								if (receiveMeg.substring(18, 20).equals("00")) {
+									if (checkNum == 4) {
+										if (receiveMeg.substring(21, 23)
+												.equals("01")) {
+											detection_item_left_info_shock_iv
+													.setBackgroundResource(R.drawable.yes);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_shock_sucess));
+										} else {
+											detection_item_left_info_shock_iv
+													.setBackgroundResource(R.drawable.error);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_shock_error));
+										}
+										detection_item_left_shock_iv
+												.setVisibility(View.GONE);
+										detection_item_left_info_shock_iv
+												.setVisibility(View.VISIBLE);
+										detection_item_left_magnet_iv
+												.setVisibility(View.VISIBLE);
+										animationDrawable.stop();
+										animationDrawable = (AnimationDrawable) detection_item_left_magnet_iv
+												.getBackground();
+										animationDrawable.start();
+										wifiUtlis.sendMessage(Utlis
+												.sendDetectionMessage(5));
+										checkNum++;
+									}
+								} else if (receiveMeg.substring(18, 20).equals(
+										"01")) {
+									if (checkNum == 5) {
+										if (receiveMeg.substring(21, 23)
+												.equals("01")) {
+											detection_item_left_info_magnet_iv
+													.setBackgroundResource(R.drawable.yes);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_magnet_sucess));
+										} else {
+											detection_item_left_info_magnet_iv
+													.setBackgroundResource(R.drawable.error);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_magnet_error));
+										}
+										detection_item_left_magnet_iv
+												.setVisibility(View.GONE);
+										detection_item_left_info_magnet_iv
+												.setVisibility(View.VISIBLE);
+										detection_item_left_level_iv
+												.setVisibility(View.VISIBLE);
+										animationDrawable.stop();
+										animationDrawable = (AnimationDrawable) detection_item_left_level_iv
+												.getBackground();
+										animationDrawable.start();
+										wifiUtlis.sendMessage(Utlis
+												.sendDetectionMessage(6));
+										checkNum++;
+									}
+								} else if (receiveMeg.substring(18, 20).equals(
+										"02")) {
+									if (checkNum == 6) {
+										if (receiveMeg.substring(21, 23)
+												.equals("01")) {
+											detection_item_left_info_level_iv
+													.setBackgroundResource(R.drawable.yes);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_level_sucess));
+										} else {
+											detection_item_left_info_level_iv
+													.setBackgroundResource(R.drawable.error);
+											machine_detection_body_bottom_right_tv
+													.setText(machine_detection_body_bottom_right_tv
+															.getText()
+															.toString()
+															+ "\n"
+															+ getString(R.string.detection_level_error));
+										}
+										detection_item_left_level_iv
+												.setVisibility(View.GONE);
+										detection_item_left_info_level_iv
+												.setVisibility(View.VISIBLE);
+										detection_item_left_level_iv
+												.setVisibility(View.VISIBLE);
+										animationDrawable.stop();
+										detectionNum = 0;
+										machine_detection_body_bottom_left_info_iv
+												.setVisibility(View.GONE);
+										machine_detection_body_bottom_left_tv
+												.setVisibility(View.INVISIBLE);
+										machine_detection_body_bottom_left_info_iv
+												.clearAnimation();
+										machine_detection_bottom_btn_check
+												.setText(getString(R.string.detection_check));
+										detectionCheckNum--;
+										detectionInfoFlag = false;
+										checkNum = 0;
+										machine_detection_body_bottom_right_sv
+												.scrollTo(0, 364);
+									}
+								}
+							}
+							break;
+						case 5:
+							if (checkNum == 2) {
+								boolean t1 = false, t2 = false, t3 = false, t4 = false, t5 = false, t6 = false, t7 = false, t8 = false;
+								if (receiveMeg.substring(21, 26).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t1));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t1 = true;
+								}
+								if (receiveMeg.substring(27, 32).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t2));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t2 = true;
+								}
+								if (receiveMeg.substring(33, 38).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t3));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t3 = true;
+								}
+								if (receiveMeg.substring(39, 44).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t4));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t4 = true;
+								}
+								if (receiveMeg.substring(45, 50).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t5));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t5 = true;
+								}
+								if (receiveMeg.substring(51, 56).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t6));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t6 = true;
+								}
+								if (receiveMeg.substring(57, 62).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t7));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t7 = true;
+								}
+								if (receiveMeg.substring(63, 68).indexOf(
+										"00 00") != -1) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_t8));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									t8 = true;
+								}
+								if (t1 && t2 && t3 && t4 && t5 && t6 && t7
+										&& t8) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_sensor_sucess));
+									detection_item_left_info_sensor_iv
+											.setBackgroundResource(R.drawable.yes);
+								}
+								detection_item_left_sensor_iv
+										.setVisibility(View.GONE);
+								detection_item_left_info_sensor_iv
+										.setVisibility(View.VISIBLE);
+								detection_item_left_heating_iv
+										.setVisibility(View.VISIBLE);
+								animationDrawable.stop();
+								animationDrawable = (AnimationDrawable) detection_item_left_heating_iv
+										.getBackground();
+								animationDrawable.start();
+								wifiUtlis.sendMessage(Utlis
+										.sendDetectionMessage(3));
+								checkNum++;
+							}
+							break;
+						case 6:
+							if (checkNum == 0) {
+								if (Integer.parseInt(
+										receiveMeg.substring(21, 23), 16) != 3
+										&& Integer.parseInt(
+												receiveMeg.substring(21, 23),
+												16) != 4) {
+									wifiUtlis.sendMessage(Utlis
+											.sendDetectionMessage(1));
+									checkNum++;
+								}
+							}
+							break;
+						case 7:
+							fluxInfoNum = Integer.parseInt(
+									receiveMeg.substring(21, 23), 16);
+							if (fluxInfoNum != 32) {
+								detection_item_right_sensor_tv
+										.setTextColor(getResources().getColor(
+												R.color.black));
+								detection_item_right_heating_tv
+										.setTextColor(getResources().getColor(
+												R.color.black));
+							}
+							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+							break;
+						case 10:
+							if (checkNum == 3) {
+								if (!receiveMeg.substring(21, 23).equals("00")) {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_heating_error_one)
+													+ receiveMeg
+															.substring(
+																	24,
+																	receiveMeg
+																			.length() - 6)
+													+ getString(R.string.detection_heating_error_two));
+	
+									detection_item_left_info_heating_iv
+											.setBackgroundResource(R.drawable.error);
+								} else {
+									machine_detection_body_bottom_right_tv
+											.setText(machine_detection_body_bottom_right_tv
+													.getText().toString()
+													+ "\n"
+													+ getString(R.string.detection_heating_sucess));
+									detection_item_left_info_heating_iv
+											.setBackgroundResource(R.drawable.yes);
+								}
+								detection_item_left_heating_iv
+										.setVisibility(View.GONE);
+								detection_item_left_info_heating_iv
+										.setVisibility(View.VISIBLE);
+								detection_item_left_shock_iv
+										.setVisibility(View.VISIBLE);
+								animationDrawable.stop();
+								animationDrawable = (AnimationDrawable) detection_item_left_shock_iv
+										.getBackground();
+								animationDrawable.start();
+								wifiUtlis.sendMessage(Utlis
+										.sendDetectionMessage(4));
+								checkNum++;
+	
+							}
+						default:
+							break;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					machine_detection_body_bottom_right_sv.scrollTo(0, 364);
+				}
+			}
+		};
+	};
 }

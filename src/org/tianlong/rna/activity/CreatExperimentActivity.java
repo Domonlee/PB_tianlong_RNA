@@ -498,7 +498,6 @@ public class CreatExperimentActivity extends Activity {
 							.setBackgroundResource(R.drawable.zero);
 				}
 
-				//
 				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
 						+ (i + 1));
 				if (defaultSteps.get(i).getDStemplet() == 1) {
@@ -943,7 +942,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1033,7 +1032,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1091,14 +1090,13 @@ public class CreatExperimentActivity extends Activity {
 								}
 								View view = LayoutInflater.from(
 										CreatExperimentActivity.this).inflate(
-										R.layout.activity_time_minute, null);
+										R.layout.activity_time_hour, null);
 								final TimeWheelView experiment_new_main_item_time_hour_hour = (TimeWheelView) view
 										.findViewById(R.id.time_hour_hour);
 								final TimeWheelView experiment_new_main_item_time_hour_minutes = (TimeWheelView) view
-										.findViewById(R.id.time_minute_minutes);
+										.findViewById(R.id.time_hour_minutes);
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
-										.findViewById(R.id.time_minute_seconds);
-								
+										.findViewById(R.id.time_hour_seconds);
 								String[] hour = getResources().getStringArray(
 										R.array.hour_array_magnetic);
 								String[] min = getResources().getStringArray(
@@ -1106,8 +1104,8 @@ public class CreatExperimentActivity extends Activity {
 								String[] sec = getResources().getStringArray(
 										R.array.second_array);
 								experiment_new_main_item_time_hour_hour
-								.setAdapter(new ArrayWheelAdapter<String>(
-										hour));
+										.setAdapter(new ArrayWheelAdapter<String>(
+												hour));
 								experiment_new_main_item_time_hour_minutes
 										.setAdapter(new ArrayWheelAdapter<String>(
 												min));
@@ -1115,17 +1113,18 @@ public class CreatExperimentActivity extends Activity {
 										.setAdapter(new ArrayWheelAdapter<String>(
 												sec));
 								experiment_new_main_item_time_hour_hour
-								.setCyclic(true);
+										.setCyclic(true);
 								experiment_new_main_item_time_hour_minutes
 										.setCyclic(true);
 								experiment_new_main_item_time_hour_seconds
 										.setCyclic(true);
 								experiment_new_main_item_time_hour_hour
-								.setCurrentItem(date.getHours());
+										.setCurrentItem(date.getHours());
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
+
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1935,7 +1934,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2001,7 +2000,7 @@ public class CreatExperimentActivity extends Activity {
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
 										.findViewById(R.id.time_hour_seconds);
 								String[] hour = getResources().getStringArray(
-										R.array.hour_array_magnetic);
+										R.array.hour_array);
 								String[] min = getResources().getStringArray(
 										R.array.minute_array);
 								String[] sec = getResources().getStringArray(
@@ -2026,7 +2025,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2071,6 +2070,8 @@ public class CreatExperimentActivity extends Activity {
 								builder.show();
 							}
 						});
+				
+				//--¥≈Œ¸ ±º‰ fixed
 				holder.experiment_new_main_item_head_magnet_info_tv
 						.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
@@ -2084,13 +2085,13 @@ public class CreatExperimentActivity extends Activity {
 								}
 								View view = LayoutInflater.from(
 										CreatExperimentActivity.this).inflate(
-										R.layout.activity_time_minute, null);
+										R.layout.activity_time_hour, null);
 								final TimeWheelView experiment_new_main_item_time_hour_hour = (TimeWheelView) view
 										.findViewById(R.id.time_hour_hour);
 								final TimeWheelView experiment_new_main_item_time_hour_minutes = (TimeWheelView) view
-										.findViewById(R.id.time_minute_minutes);
+										.findViewById(R.id.time_hour_minutes);
 								final TimeWheelView experiment_new_main_item_time_hour_seconds = (TimeWheelView) view
-										.findViewById(R.id.time_minute_seconds);
+										.findViewById(R.id.time_hour_seconds);
 								String[] hour = getResources().getStringArray(
 										R.array.hour_array_magnetic);
 								String[] min = getResources().getStringArray(
@@ -2117,7 +2118,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2130,7 +2131,7 @@ public class CreatExperimentActivity extends Activity {
 													DialogInterface dialog,
 													int which) {
 												String timeFromatStr = timeFormat(
-														0,
+														experiment_new_main_item_time_hour_hour.getCurrentItem(),
 														experiment_new_main_item_time_hour_minutes
 																.getCurrentItem(),
 														experiment_new_main_item_time_hour_seconds
@@ -2641,6 +2642,7 @@ public class CreatExperimentActivity extends Activity {
 		} else {
 			minStr = "" + min;
 		}
+		sec = sec *5;
 		if (sec < 10) {
 			secStr = "0" + sec;
 		} else {

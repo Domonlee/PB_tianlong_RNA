@@ -54,27 +54,6 @@ public class ExperimentDao {
 		return list;
 	}
 
-	// 添加模板实验
-//	public boolean insertDefaultExperiment(DefaultExperiment experiment,
-//			Context context) {
-//		boolean flag = false;
-//		RnaOpenHelper helper = getDatebase(context);
-//		SQLiteDatabase database = helper.getWritableDatabase();
-//		// sqLiteDatabase =
-//		// SQLiteDatabase.openOrCreateDatabase(DBTempletManager.DB_PATH
-//		// + "/" + DBTempletManager.DB_NAME, null);
-//		ContentValues values = new ContentValues();
-//		values.put("DEname", experiment.getEname());
-//		long id = sqLiteDatabase.insert("defaultexperiment", null, values);
-//		if (id != -1) {
-//			flag = true;
-//		}
-//		// sqLiteDatabase.close();
-//		helper.close();
-//		database.close();
-//		return flag;
-//	}
-
 	// 根据用户ID查询实验
 	public List<Experiment> getAllExperimentsByU_id(Context context, int U_id) {
 		List<Experiment> list = new ArrayList<Experiment>();
@@ -106,13 +85,24 @@ public class ExperimentDao {
 		return list;
 	}
 
+	/**
+	 * 
+	*  Title: hasEname 
+	*  Modified By：  Domon                                        
+	*  Modified Date: 2014-9-20 
+	*  @param context
+	*  @param Ename
+	*  @return
+	 */
 	public boolean hasEname(Context context,String Ename){
 		RnaOpenHelper helper = getDatebase(context);
 		SQLiteDatabase database = helper.getReadableDatabase();
 		Cursor cursor = database.rawQuery("select * from experiment where Ename=" + Ename, null);
 		if (cursor.getCount() == 0) {
+			cursor.close();
 			return false;
 		}
+			cursor.close();
 		return true;
 	}
 	

@@ -55,15 +55,21 @@
         android:layout_margin="5dip"
         android:background="#505E8D" >
 
-        <!-- 需要旁边留取宽度 -->
-        <TextView
-            android:id="@+id/runfile_right_tv"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dip"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+        <ScrollView
+            android:layout_width="770dip"
+            android:layout_height="wrap_content" >
+
+            <!-- 需要旁边留取宽度 -->
+
+            <TextView
+                android:id="@+id/runfile_right_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dip"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </ScrollView>
 
         <Button
             android:id="@+id/runfile_right_back_btn"

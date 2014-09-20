@@ -972,7 +972,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -1089,7 +1089,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -1195,7 +1195,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2101,7 +2101,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2192,7 +2192,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2272,7 +2272,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds());
+										.setCurrentItem(date.getSeconds()/5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2793,6 +2793,7 @@ public class EditExperimentActivity extends Activity {
 		} else {
 			minStr = "" + min;
 		}
+		sec = sec * 5;
 		if (sec < 10) {
 			secStr = "0" + sec;
 		} else {

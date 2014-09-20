@@ -48,70 +48,6 @@ public class RunFileActivity extends Activity {
 	private int U_id;
 	private String Uname;
 
-	// 读取下位机运行日志列表接受handler
-	private Handler readListHandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				if (receive != null) {
-					receive.removeAll(receive);
-				}
-				receive = Utlis.getReceive(info);
-				strings = Utlis.getRunFileList(receive);
-				runfile_left_lv.setAdapter(new RunFileAdapert(strings,
-						RunFileActivity.this));
-				readListFlag = false;
-			}
-		};
-	};
-
-	// 读取下位机运行日志列表接受线程
-	class readListThread implements Runnable {
-		public void run() {
-			while (readListFlag) {
-				try {
-					Message message = readListHandler.obtainMessage();
-					message.obj = wifiUtlis.getByteMessage();
-					readListHandler.sendMessage(message);
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};
-
-	// 读取下位机运行日志详细信息接受handler
-	private Handler readInfoHandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				if (receive != null) {
-					receive.removeAll(receive);
-				}
-				receive = Utlis.getReceive(info);
-				runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
-				readInfoFlag = false;
-			}
-		};
-	};
-
-	// 读取下位机运行日志详细信息接受线程
-	class readInfoThread implements Runnable {
-		public void run() {
-			while (readInfoFlag) {
-				try {
-					Message message = readInfoHandler.obtainMessage();
-					message.obj = wifiUtlis.getByteMessage();
-					readInfoHandler.sendMessage(message);
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};
-
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -179,6 +115,70 @@ public class RunFileActivity extends Activity {
 				finish();
 			}
 		});
+	}
+
+	// 读取下位机运行日志列表接受handler
+	private Handler readListHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			byte[] info = (byte[]) msg.obj;
+			if (info.length != 0) {
+				if (receive != null) {
+					receive.removeAll(receive);
+				}
+				receive = Utlis.getReceive(info);
+				strings = Utlis.getRunFileList(receive);
+				runfile_left_lv.setAdapter(new RunFileAdapert(strings,
+						RunFileActivity.this));
+				readListFlag = false;
+			}
+		};
+	};
+
+	// 读取下位机运行日志列表接受线程
+	class readListThread implements Runnable {
+		public void run() {
+			while (readListFlag) {
+				try {
+					Message message = readListHandler.obtainMessage();
+					message.obj = wifiUtlis.getByteMessage();
+					readListHandler.sendMessage(message);
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+	}
+
+	// 读取下位机运行日志详细信息接受handler
+	private Handler readInfoHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			byte[] info = (byte[]) msg.obj;
+			if (info.length != 0) {
+				if (receive != null) {
+					receive.removeAll(receive);
+				}
+				receive = Utlis.getReceive(info);
+				runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
+				readInfoFlag = false;
+			}
+		};
+	};
+
+	// 读取下位机运行日志详细信息接受线程
+	class readInfoThread implements Runnable {
+		public void run() {
+			while (readInfoFlag) {
+				try {
+					Message message = readInfoHandler.obtainMessage();
+					message.obj = wifiUtlis.getByteMessage();
+					readInfoHandler.sendMessage(message);
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
