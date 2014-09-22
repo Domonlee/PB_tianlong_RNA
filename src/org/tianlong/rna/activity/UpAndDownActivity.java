@@ -10,8 +10,10 @@ import org.tianlong.rna.adapter.DownAdapter;
 import org.tianlong.rna.adapter.UpAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.StepDao;
+import org.tianlong.rna.dao.UserDao;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Step;
+import org.tianlong.rna.pojo.User;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
@@ -24,8 +26,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -36,6 +40,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * 未完成：修改 仪器实验名称
+ * 	     不能删除仪器中Demo的实验
+ */
 @SuppressLint({ "HandlerLeak", "DefaultLocale", "ShowToast" })
 public class UpAndDownActivity extends Activity {
 
@@ -46,6 +54,7 @@ public class UpAndDownActivity extends Activity {
 	private ListView activity_upanddown_down_top_lv;
 	private TextView activity_upanddown_top_uname_tv;
 
+	private boolean sameNameFlag = false;
 	private List<Experiment> experiments;
 	private ExperimentDao experimentDao;
 	private StepDao stepDao;
@@ -107,6 +116,7 @@ public class UpAndDownActivity extends Activity {
 
 		activity_upanddown_up_top_lv
 				.setOnItemClickListener(new OnItemClickListener() {
+
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						if (downViewList.size() != 0) {
@@ -144,18 +154,21 @@ public class UpAndDownActivity extends Activity {
 					}
 				});
 
-		activity_upanddown_up_top_lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-		};
-			
-			
+		// --长按事件
+		activity_upanddown_up_top_lv
+				.setOnItemLongClickListener(new OnItemLongClickListener() {
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						Intent gotoInfoIntent = new Intent(
+								UpAndDownActivity.this,
+								ExperimentActivity.class);
+						gotoInfoIntent.putExtra("U_id", U_id);
+						gotoInfoIntent.putExtra("Uname", Uname);
+						startActivity(gotoInfoIntent);
+						return false;
+					}
+				});
 
 		activity_upanddown_down_top_lv
 				.setOnItemClickListener(new OnItemClickListener() {
@@ -201,6 +214,7 @@ public class UpAndDownActivity extends Activity {
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, final int arg2, long arg3) {
+					
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								UpAndDownActivity.this);
 						builder.setTitle(getString(R.string.delete_file));
@@ -212,18 +226,16 @@ public class UpAndDownActivity extends Activity {
 											readListFlag = true;
 										}
 										try {
-											wifiUtlis.sendMessage(Utlis
-													.sendDeleteExperiment((Integer) experimentsList
-															.get(arg2)
-															.get("id")));
-											wifiUtlis.sendMessage(Utlis
-													.getseleteMessage(10));
-											new Thread(listThread).start();
+											if (arg2 == 0) {
+												Toast.makeText( UpAndDownActivity.this, getString(R.string.up_delete_forbid), Toast.LENGTH_SHORT) .show();
+											} else {
+												wifiUtlis.sendMessage(Utlis .sendDeleteExperiment((Integer) experimentsList .get(arg2).get( "id")));
+												wifiUtlis.sendMessage(Utlis .getseleteMessage(10));
+												Toast.makeText( UpAndDownActivity.this, getString(R.string.up_delete_successful),Toast.LENGTH_SHORT) .show();
+												new Thread(listThread).start();
+											}
 										} catch (Exception e) {
-											Toast.makeText(
-													UpAndDownActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
+											Toast.makeText( UpAndDownActivity.this, getString(R.string.wifi_error), Toast.LENGTH_SHORT).show();
 										}
 									}
 								});
@@ -239,6 +251,7 @@ public class UpAndDownActivity extends Activity {
 					}
 				});
 
+		// --下载按键
 		activity_upanddown_up_top_btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (up_id == -1) {
@@ -311,6 +324,7 @@ public class UpAndDownActivity extends Activity {
 			}
 		});
 
+		// --上传按键  实现同命名检测
 		activity_upanddown_down_top_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -513,8 +527,21 @@ public class UpAndDownActivity extends Activity {
 				}
 				receive = Utlis.getReceive(info);
 				infoList = Utlis.getExperimentInfoList(receive);
+				for (int i = 0; i < experiments.size(); i++) {
+					if (experiments
+							.get(i)
+							.getEname()
+							.equals(infoList.get(0).substring(
+									infoList.get(0).indexOf(":") + 1,
+									infoList.get(0).length()))) {
+						Toast.makeText(UpAndDownActivity.this, getString(R.string.up_samename),
+								Toast.LENGTH_SHORT).show();
+						sameNameFlag = true;
+					}
+				}
+
 				Experiment experiment = new Experiment();
-				if (infoList.size() != 0) {
+				if (infoList.size() != 0 && !sameNameFlag) {
 					if ((infoList.get(infoList.size() - 2).substring(0, 9))
 							.indexOf("#END_FILE") != -1) {
 						experiment.setU_id(U_id);

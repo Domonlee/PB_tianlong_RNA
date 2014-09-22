@@ -41,7 +41,8 @@ public class HelpActivity extends Activity {
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+//        setContentView(R.layout.activity_help);
+        setContentView(R.layout.copyofactivity_help);
         Intent intent = getIntent();
         uName = intent.getStringExtra("Uname");
         uId = intent.getIntExtra("U_id", uId);

@@ -317,7 +317,7 @@ public class ExperimentActivity extends Activity {
 					}
 				});
 
-		// --Next Btn实现同名检测
+		// --Next Btn实现同名检测  未实现默认命名
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -328,7 +328,7 @@ public class ExperimentActivity extends Activity {
 									Toast.LENGTH_SHORT).show();
 							// experiment_new_prepare_body_name_et.setText("Experiment 1");
 						} else {
-							if (experimentDao.hasEname(ExperimentActivity.this,experiment_new_prepare_body_name_et.getText().toString())){
+							if (experimentDao.hasEname(ExperimentActivity.this,experiment_new_prepare_body_name_et.getText().toString(),U_id)){
 								Toast.makeText(ExperimentActivity.this, getString(R.string.exp_name_already_exist),
 										Toast.LENGTH_SHORT).show();
 							} else {

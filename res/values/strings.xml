@@ -247,6 +247,9 @@
     <!-- 上传下载 -->
     <string name="down_is_full">仪器文件已满，请先删除！</string>
     <string name="up_success">上传成功!</string>
+    <string name="up_delete_forbid">无法删除该试验</string>
+    <string name="up_delete_successful">删除该试验成功</string>
+    <string name="up_samename">本地有相同文件!</string>
     <string name="up_failure">上传失败!</string>
     <string name="downing">正在下载，请稍后&#8230;&#8230;</string>
     <!-- 仪器升级 -->

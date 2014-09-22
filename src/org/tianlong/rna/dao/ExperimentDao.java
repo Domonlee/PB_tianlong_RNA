@@ -94,10 +94,10 @@ public class ExperimentDao {
 	*  @param Ename
 	*  @return
 	 */
-	public boolean hasEname(Context context,String Ename){
+	public boolean hasEname(Context context,String Ename,int U_id){
 		RnaOpenHelper helper = getDatebase(context);
 		SQLiteDatabase database = helper.getReadableDatabase();
-		Cursor cursor = database.rawQuery("select * from experiment where Ename=" + Ename, null);
+		Cursor cursor = database.rawQuery("select * from experiment where Ename=" + Ename + " and U_id="+ U_id, null);
 		if (cursor.getCount() == 0) {
 			cursor.close();
 			return false;
