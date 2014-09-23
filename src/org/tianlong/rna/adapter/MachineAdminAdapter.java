@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MachineAdminAdapter extends BaseAdapter {
-	
+
 	private Context context;
 	private List<User> lists;
 	private LayoutInflater inflater;
-	
+
 	public MachineAdminAdapter(Context context, List<User> list) {
 		super();
 		this.context = context;
@@ -28,53 +28,55 @@ public class MachineAdminAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return lists.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return lists.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
 		return arg0;
 	}
 
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 		ViewHolder holder = null;
-		if(arg1 == null){
+		if (arg1 == null) {
 			holder = new ViewHolder();
-			arg1 = inflater.inflate(R.layout.activity_machine_user_admin_item, null);
-			holder.user_admin_item_name_tv = (TextView) arg1.findViewById(R.id.user_admin_item_name_tv);
-			holder.user_admin_item_admin_tv = (TextView) arg1.findViewById(R.id.user_admin_item_admin_tv);
-			holder.user_admin_item_login_iv = (ImageView) arg1.findViewById(R.id.user_admin_item_login_iv);
+			arg1 = inflater.inflate(R.layout.activity_machine_user_admin_item,
+					null);
+			holder.user_admin_item_name_tv = (TextView) arg1
+					.findViewById(R.id.user_admin_item_name_tv);
+			holder.user_admin_item_admin_tv = (TextView) arg1
+					.findViewById(R.id.user_admin_item_admin_tv);
+			holder.user_admin_item_login_iv = (ImageView) arg1
+					.findViewById(R.id.user_admin_item_login_iv);
 			arg1.setTag(holder);
-		}
-		else{
+		} else {
 			holder = (ViewHolder) arg1.getTag();
 		}
 		holder.user_admin_item_name_tv.setText(lists.get(arg0).getUname());
-		if(lists.get(arg0).getUadmin()==1){
-			holder.user_admin_item_admin_tv.setText(context.getString(R.string.user_admin_admin));
+		if (lists.get(arg0).getUadmin() == 1) {
+			holder.user_admin_item_admin_tv.setText(context
+					.getString(R.string.user_admin_admin));
+		} else {
+			holder.user_admin_item_admin_tv.setText(context
+					.getString(R.string.user_admin_user));
 		}
-		else{
-			holder.user_admin_item_admin_tv.setText(context.getString(R.string.user_admin_user));
-		}
-		if(lists.get(arg0).getUdefault() == 1){
-			holder.user_admin_item_login_iv.setBackgroundResource(R.drawable.yes);
-		}
-		else{
-			holder.user_admin_item_login_iv.setBackgroundResource(R.drawable.error);
+		if (lists.get(arg0).getUdefault() == 1) {
+			holder.user_admin_item_login_iv
+					.setBackgroundResource(R.drawable.yes);
+		} else {
+			holder.user_admin_item_login_iv
+					.setBackgroundResource(R.drawable.error);
 		}
 		return arg1;
 	}
 
-	class ViewHolder{
+	class ViewHolder {
 		TextView user_admin_item_name_tv;
 		TextView user_admin_item_admin_tv;
 		ImageView user_admin_item_login_iv;

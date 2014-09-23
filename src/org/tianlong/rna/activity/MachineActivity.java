@@ -73,6 +73,7 @@ public class MachineActivity extends Activity {
 	private Button machine_user_right_btn_save;
 	private Button machine_user_right_btn_pass;
 	private Button machine_user_right_btn_default;
+	private Button machine_user_right_btn_pass_default;
 
 	// 语言设置
 	private RadioGroup machine_language_body_rg;
@@ -98,7 +99,7 @@ public class MachineActivity extends Activity {
 	private String hours;
 	private String mins;
 	private String secs;
-	private String disinfectStr ;
+	private String disinfectStr;
 
 	// 用户设置
 	private Button machine_user_body_default_btn;
@@ -202,7 +203,6 @@ public class MachineActivity extends Activity {
 		user = userDao.getUserById(U_id, MachineActivity.this);
 		machine = machineDao.getMachine(MachineActivity.this);
 
-
 		machine_right_back_btn = (Button) findViewById(R.id.machine_right_back_btn);
 		machine_left_lv = (ListView) findViewById(R.id.machine_left_lv);
 		machine_right_rl = (RelativeLayout) findViewById(R.id.machine_right_rl);
@@ -210,6 +210,7 @@ public class MachineActivity extends Activity {
 		machine_user_right_btn_save = (Button) findViewById(R.id.machine_user_right_btn_save);
 		machine_user_right_btn_pass = (Button) findViewById(R.id.machine_user_right_btn_pass);
 		machine_user_right_btn_default = (Button) findViewById(R.id.machine_user_right_btn_default);
+		machine_user_right_btn_pass_default = (Button) findViewById(R.id.machine_user_right_btn_pass_default);
 
 		machine_left_lv.setAdapter(new MachineAdapter(MachineActivity.this,
 				getList()));
@@ -387,6 +388,15 @@ public class MachineActivity extends Activity {
 						defaultLogin();
 					}
 				});
+
+		machine_user_right_btn_pass_default
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Toast.makeText(MachineActivity.this, "Make sth ", 1000)
+								.show();
+					}
+				});
 	}
 
 	/**
@@ -486,9 +496,20 @@ public class MachineActivity extends Activity {
 			if (list == null) {
 				Toast.makeText(this, "wifi未打开！", Toast.LENGTH_LONG).show();
 			} else {
-				machine_net_wifi_lv.setAdapter(new WifiListAdapter(
-						MachineActivity.this, list));
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).SSID.length() <= 6) {
+						list.remove(i);
+						--i;
+					} else if (!list.get(i).SSID.substring(0, 6).equals(
+							"NP968_")) {
+						list.remove(i);
+						--i;
+					}
+				}
 			}
+
+			machine_net_wifi_lv.setAdapter(new WifiListAdapter(
+					MachineActivity.this, list));
 
 			machine_net_wifi_lv
 					.setOnItemClickListener(new OnItemClickListener() {
@@ -511,15 +532,15 @@ public class MachineActivity extends Activity {
 					});
 
 			break;
-			
-			// 用户设置
-			case 2:
-				if (user.getUadmin() != 1) {
-					defaultLogin();
-				} else {
-					showAdamin();
-				}
-				break;
+
+		// 用户设置
+		case 2:
+			if (user.getUadmin() != 1) {
+				defaultLogin();
+			} else {
+				showAdamin();
+			}
+			break;
 
 		// 消毒设置
 		case 3:
@@ -579,7 +600,7 @@ public class MachineActivity extends Activity {
 							time_hour_seconds.setCyclic(true);
 							time_hour_hour.setCurrentItem(date.getHours());
 							time_hour_minutes.setCurrentItem(date.getMinutes());
-							time_hour_seconds.setCurrentItem(date.getSeconds()/5);
+							time_hour_seconds.setCurrentItem(date.getSeconds() / 5);
 
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									MachineActivity.this);
@@ -598,7 +619,7 @@ public class MachineActivity extends Activity {
 															.getCurrentItem(),
 													time_hour_seconds
 															.getCurrentItem());
-											
+
 											disinfectStr = timeTotal;
 											machine_dismdect_body_time_et
 													.setText(timeTotal);
@@ -619,7 +640,8 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
-							if (machineDao.upDateDisinfectTime(disinfectStr, MachineActivity.this)) {
+							if (machineDao.upDateDisinfectTime(disinfectStr,
+									MachineActivity.this)) {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.dismdect_success),
 										Toast.LENGTH_SHORT).show();
@@ -632,8 +654,6 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-
-
 
 		// 仪器设置
 		case 4:
@@ -1288,6 +1308,7 @@ public class MachineActivity extends Activity {
 		}
 	}
 
+	// -- TODO
 	private void showAdamin() {
 		view = LayoutInflater.from(MachineActivity.this).inflate(
 				R.layout.activity_machine_user_admin, null);
@@ -1359,7 +1380,6 @@ public class MachineActivity extends Activity {
 
 	public boolean onTouchEvent(MotionEvent event) {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		// TODO Auto-generated method stub
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (MachineActivity.this.getCurrentFocus() != null) {
 				if (MachineActivity.this.getCurrentFocus().getWindowToken() != null) {
@@ -1439,6 +1459,7 @@ public class MachineActivity extends Activity {
 
 		@Override
 		public int getCount() {
+			Log.w("getview-----", list.size() + "");
 			return list.size();
 		}
 
@@ -1454,25 +1475,18 @@ public class MachineActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.item_wifi_list, null);
-				wifi_SignalStrenth_tv = (TextView) convertView
-						.findViewById(R.id.wifi_signal_strenth_tv);
-				wifi_tv = (TextView) convertView.findViewById(R.id.wifi_tv);
-				wifi_Iv = (ImageView) convertView.findViewById(R.id.wifi_ig);
-			}
+			View view = null;
+			view = inflater.inflate(R.layout.item_wifi_list, null);
+			wifi_SignalStrenth_tv = (TextView) view
+					.findViewById(R.id.wifi_signal_strenth_tv);
+			wifi_tv = (TextView) view.findViewById(R.id.wifi_tv);
+			wifi_Iv = (ImageView) view.findViewById(R.id.wifi_ig);
 			ScanResult scanResult = list.get(position);
-			if (scanResult.SSID.substring(0, 6).equals("NP968_")) {
-				wifi_tv.setText(scanResult.SSID);
-				wifi_SignalStrenth_tv.setText(String.valueOf(Math
-						.abs(scanResult.level)) + "%");
-			} else {
-				wifi_tv.setVisibility(View.INVISIBLE);
-				wifi_Iv.setVisibility(View.INVISIBLE);
-				wifi_SignalStrenth_tv.setVisibility(View.INVISIBLE);
-			}
 
-			return convertView;
+			wifi_tv.setText(scanResult.SSID);
+			wifi_SignalStrenth_tv.setText(String.valueOf(Math
+					.abs(scanResult.level)) + "%");
+			return view;
 		}
 
 	}
@@ -1918,7 +1932,7 @@ public class MachineActivity extends Activity {
 																	receiveMeg
 																			.length() - 6)
 													+ getString(R.string.detection_heating_error_two));
-	
+
 									detection_item_left_info_heating_iv
 											.setBackgroundResource(R.drawable.error);
 								} else {
@@ -1943,7 +1957,7 @@ public class MachineActivity extends Activity {
 								wifiUtlis.sendMessage(Utlis
 										.sendDetectionMessage(4));
 								checkNum++;
-	
+
 							}
 						default:
 							break;

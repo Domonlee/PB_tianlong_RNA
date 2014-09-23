@@ -23,54 +23,68 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/help_left_rl"
-        style="@style/left_rl"
-        android:layout_below="@id/help_top_rl" >
-
-        <RelativeLayout
-            android:id="@+id/help_left_top_rl"
-            style="@style/left_top_rl"
-            android:background="@drawable/left_top" >
-
-            <TextView
-                android:id="@+id/help_left_top_name_tv"
-                style="@style/left_top_name"
-                android:text="@string/help" />
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/help_left_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/help_left_top_rl" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/help_right_rl"
-        android:layout_width="670dip"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/help_top_rl"
-        android:layout_margin="5dip"
-        android:background="#505E8D" >
+        android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:id="@+id/help_right_bottom_btn_rl"
-            style="@style/right_bottom_rl"
-            android:layout_width="fill_parent" >
+        <LinearLayout
+            android:id="@+id/help_left_rl"
+            style="@style/left_rl"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/help_right_back_btn"
+            <RelativeLayout
+                android:id="@+id/help_left_top_rl"
+                style="@style/left_top_rl"
+                android:background="@drawable/left_top" >
+
+                <TextView
+                    android:id="@+id/help_left_top_name_tv"
+                    style="@style/left_top_name"
+                    android:text="@string/help" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/help_left_lv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_selector"
-                android:clickable="true"
-                android:text="@string/back"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="6" >
+
+            <RelativeLayout
+                android:id="@+id/help_right_rl"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
+                android:background="#505E8D" >
+
+                <RelativeLayout
+                    android:id="@+id/help_right_bottom_btn_rl"
+                    style="@style/right_bottom_rl"
+                    android:layout_width="fill_parent" >
+
+                    <Button
+                        android:id="@+id/help_right_back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/btn_selector"
+                        android:clickable="true"
+                        android:text="@string/back"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

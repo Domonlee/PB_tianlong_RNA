@@ -12,6 +12,7 @@
     <RadioGroup
         android:id="@+id/machine_language_body_rg"
         style="@style/right_body_rl"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/machine_language_iv"
         android:orientation="vertical" >
 
@@ -30,24 +31,35 @@
             android:layout_width="100dip"
             android:layout_height="70dip"
             android:layout_marginTop="20dip"
-            android:paddingLeft="218dip"
+            android:paddingLeft="232dip"
             android:text="@string/language_english" />
     </RadioGroup>
+    
+    <LinearLayout 
+        android:layout_alignTop="@+id/machine_language_body_rg"
+        android:layout_toRightOf="@+id/machine_language_body_rg"
+        android:layout_width="100dip"
+        android:layout_height="160dip"
+        android:orientation="vertical"
+        >
 
-    <TextView
+        <TextView
         android:id="@+id/textView1"
         android:layout_width="100dip"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/machine_language_body_rg"
-        android:layout_alignLeft="@id/machine_language_body_rg"
-        android:layout_marginBottom="42dip"
-        android:layout_marginLeft="100dip"
-        android:drawableBottom="@drawable/line"
-        android:drawablePadding="16dip"
-        android:textColor="@color/white"
         android:text="@string/language_chinese"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/white"
         android:textSize="25sp" />
-
+        
+        <TextView
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:text="@string/language_english"
+        android:textColor="@color/white"
+        android:layout_marginTop="54dp"
+        android:textSize="25sp" />
+</LinearLayout>
     <RelativeLayout
         android:id="@+id/machine_language_bottom_btn_rl"
         style="@style/right_bottom_rl"
@@ -59,15 +71,26 @@
             android:text="@string/sure" />
     </RelativeLayout>
 
+    <!--  
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/machine_language_body_rg"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/machine_language_body_rg"
+        android:text="@string/language_chinese"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
     <TextView
         android:layout_width="100dip"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_marginTop="275dip"
-        android:drawableBottom="@drawable/line"
-        android:drawablePadding="16dip"
-        android:textColor="@color/white"
+        android:layout_alignBottom="@+id/machine_language_body_rg"
+        android:layout_toRightOf="@+id/machine_language_body_rg"
         android:text="@string/language_english"
+        android:textColor="@color/white"
+        android:paddingBottom="25dp"
         android:textSize="25sp" />
-
+-->
 </RelativeLayout>

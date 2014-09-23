@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-       <TextView android:id="@+id/user_admin_item_name_tv"
-           android:layout_width="255dip"
-           android:layout_height="50dip"
-           android:layout_margin="1dip"
-           android:background="#314F66"
-           android:gravity="center"
-           android:textSize="20sp"
-           android:textColor="@android:color/white"/>
-       <TextView android:id="@+id/user_admin_item_admin_tv"
-           android:layout_width="256dip"
-           android:layout_height="50dip"
-           android:layout_margin="1dip"
-           android:background="#314F66"
-           android:gravity="center"
-           android:textSize="20sp"
-           android:textColor="@android:color/white"
-           android:layout_toRightOf="@id/user_admin_item_name_tv"/>
-       <RelativeLayout android:id="@+id/user_admin_item_login_rl"
-           android:layout_width="256dip"
-           android:layout_height="50dip"
-           android:layout_margin="1dip"
-           android:background="#314F66"
-           android:layout_toRightOf="@id/user_admin_item_admin_tv">
-           <ImageView android:id="@+id/user_admin_item_login_iv"
-               android:layout_width="40dip"
-               android:layout_height="40dip"
-               android:layout_centerInParent="true"/>
-       </RelativeLayout>
-</RelativeLayout>
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/user_admin_item_name_tv"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="50dip"
+        android:layout_margin="1dip"
+        android:background="#314F66"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/user_admin_item_admin_tv"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="50dip"
+        android:layout_margin="1dip"
+        android:background="#314F66"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/user_admin_item_login_rl"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="50dip"
+        android:layout_margin="1dip"
+        android:background="#314F66" >
+
+        <ImageView
+            android:id="@+id/user_admin_item_login_iv"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</LinearLayout>

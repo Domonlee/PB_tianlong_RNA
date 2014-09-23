@@ -92,6 +92,7 @@
     <string name="dismdect_failure">消毒时间设置失败</string>
     <!-- 系统设置_用户设置 -->
     <string name="user_default">默认登录</string>
+    <string name="user_pass_default">重置密码</string>
     <string name="user_pass">修改密码</string>
     <string name="user_original_pass">用户密码</string>
     <string name="user_original_pass_input">请输入用户密码</string>
@@ -256,7 +257,7 @@
     <string name="no_down_bin">没有可升级的文件</string>
     <string name="no_select_down_bin">没有选择升级文件</string>
     <!-- 帮助 -->
-    <string name="information">Copyright 2010 by Xi‘an tianlong science﹠Technology Corporation.</string>
+    <string name="information">Copyright 2010 by Xi‘an tianlong\nscience﹠Technology Corporation.</string>
     <string name="systemnum">	系统版本号:</string>
     <string name="about_us">联系我们</string>
     <string name="company_name">公司名称:</string>

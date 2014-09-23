@@ -23,83 +23,106 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/machine_left_rl"
-        style="@style/left_rl"
-        android:layout_below="@id/machine_top_rl" >
-
-        <RelativeLayout
-            android:id="@+id/machine_left_top_rl"
-            style="@style/left_top_rl"
-            android:background="@drawable/left_top" >
-
-            <TextView
-                android:id="@+id/machine_left_top_name_tv"
-                style="@style/left_top_name"
-                android:text="@string/setting" />
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/machine_left_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/machine_left_top_rl" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/machine_right_rl"
-        android:layout_width="770dip"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/machine_top_rl"
-        android:layout_margin="5dip"
-        android:background="#505E8D" >
+        android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:id="@+id/machine_right_bottom_btn_rl"
-            style="@style/right_bottom_rl"
-            android:layout_width="fill_parent" >
-
-            <Button
-                android:id="@+id/machine_right_back_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_selector"
-                android:clickable="true"
-                android:text="@string/back"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+        <LinearLayout
+            android:id="@+id/machine_left_rl"
+            style="@style/left_rl"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
             <RelativeLayout
-                android:id="@+id/machine_right_user_btn_rl"
+                android:id="@+id/machine_left_top_rl"
+                style="@style/left_top_rl"
+                android:background="@drawable/left_top" >
+
+                <TextView
+                    android:id="@+id/machine_left_top_name_tv"
+                    style="@style/left_top_name"
+                    android:text="@string/setting" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/machine_left_lv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dip"
-                android:layout_toLeftOf="@id/machine_right_back_btn"
-                android:visibility="gone" >
+                android:layout_below="@id/machine_left_top_rl" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/machine_user_right_btn_save"
-                    style="@style/right_btn"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/sure" />
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="6" >
 
-                <Button
-                    android:id="@+id/machine_user_right_btn_pass"
-                    style="@style/right_btn"
-                    android:layout_marginRight="8dip"
-                    android:layout_toLeftOf="@id/machine_user_right_btn_save"
-                    android:text="@string/user_pass" />
+            <RelativeLayout
+                android:id="@+id/machine_right_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
+                android:background="#505E8D" >
 
-                <Button
-                    android:id="@+id/machine_user_right_btn_default"
-                    style="@style/right_btn"
-                    android:layout_marginRight="8dip"
-                    android:layout_toLeftOf="@id/machine_user_right_btn_pass"
-                    android:text="@string/user_default" />
+                <RelativeLayout
+                    android:id="@+id/machine_right_bottom_btn_rl"
+                    style="@style/right_bottom_rl"
+                    android:layout_width="fill_parent" >
+
+                    <Button
+                        android:id="@+id/machine_right_back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/btn_selector"
+                        android:clickable="true"
+                        android:text="@string/back"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/machine_right_user_btn_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dip"
+                        android:layout_toLeftOf="@id/machine_right_back_btn"
+                        android:visibility="gone"
+                         >
+
+                        <Button
+                            android:id="@+id/machine_user_right_btn_save"
+                            style="@style/right_btn"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/sure" />
+
+                        <Button
+                            android:id="@+id/machine_user_right_btn_pass"
+                            style="@style/right_btn"
+                            android:layout_marginRight="8dip"
+                            android:layout_toLeftOf="@id/machine_user_right_btn_save"
+                            android:text="@string/user_pass" />
+
+                        <Button
+                            android:id="@+id/machine_user_right_btn_default"
+                            style="@style/right_btn"
+                            android:layout_marginRight="8dip"
+                            android:layout_toLeftOf="@id/machine_user_right_btn_pass"
+                            android:text="@string/user_default" />
+
+                         <Button
+                            android:id="@+id/machine_user_right_btn_pass_default"
+                            style="@style/right_btn"
+                            android:layout_marginRight="8dip"
+                            android:layout_toLeftOf="@id/machine_user_right_btn_default"
+                            android:text="@string/user_pass_default" />   
+                    </RelativeLayout>
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
