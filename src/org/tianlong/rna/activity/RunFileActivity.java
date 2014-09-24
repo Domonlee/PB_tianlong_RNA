@@ -1,6 +1,10 @@
 package org.tianlong.rna.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +17,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaMuxer.OutputFormat;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
@@ -30,12 +36,14 @@ import android.widget.Toast;
 
 /**
  * @author Domon
- *
+ * 
  */
 @SuppressLint("HandlerLeak")
 public class RunFileActivity extends Activity {
 
 	private Button runfile_right_back_btn;
+	private Button runfile_right_output_btn;
+	private TextView runfile_right_output_location_tv;
 	private TextView runfile_right_tv;
 	private ListView runfile_left_lv;
 	private List<Map<String, Object>> strings = new ArrayList<Map<String, Object>>();
@@ -47,13 +55,14 @@ public class RunFileActivity extends Activity {
 
 	private int U_id;
 	private String Uname;
+	private String experNameString;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setContentView(R.layout.activity_runfile);
 		listThread = new readListThread();
 		infoThread = new readInfoThread();
+		setContentView(R.layout.activity_runfile);
 		try {
 			wifiUtlis = new WifiUtlis(RunFileActivity.this);
 			wifiUtlis.sendMessage(Utlis.sendSelectRunfileList());
@@ -69,7 +78,9 @@ public class RunFileActivity extends Activity {
 
 		runfile_right_tv = (TextView) findViewById(R.id.runfile_right_tv);
 		runfile_right_back_btn = (Button) findViewById(R.id.runfile_right_back_btn);
+		runfile_right_output_btn = (Button) findViewById(R.id.runfile_right_output_btn);
 		runfile_left_lv = (ListView) findViewById(R.id.runfile_left_lv);
+		runfile_right_output_location_tv = (TextView) findViewById(R.id.runfile_right_output_location_tv);
 
 		runfile_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -84,6 +95,8 @@ public class RunFileActivity extends Activity {
 						wifiUtlis.sendMessage(Utlis
 								.sendSelectRunfileInfo((Integer) strings.get(
 										arg2).get("id")));
+						experNameString = (String) strings.get(arg2)
+								.get("info");
 						new Thread(infoThread).start();
 					} catch (Exception e) {
 						Toast.makeText(RunFileActivity.this,
@@ -95,6 +108,10 @@ public class RunFileActivity extends Activity {
 						wifiUtlis.sendMessage(Utlis
 								.sendSelectRunfileInfo((Integer) strings.get(
 										arg2).get("id")));
+						experNameString = (String) strings.get(arg2)
+								.get("info");
+					TextView activity_runfile_item_tv = (TextView)findViewById(R.id.activity_runfile_item_tv);	
+						activity_runfile_item_tv.setBackgroundResource(R.drawable.wheel_bg);
 						new Thread(infoThread).start();
 					} catch (Exception e) {
 						Toast.makeText(RunFileActivity.this,
@@ -113,6 +130,46 @@ public class RunFileActivity extends Activity {
 				intent.putExtra("Uname", Uname);
 				startActivity(intent);
 				finish();
+			}
+		});
+
+		/**
+		 * 导出日志
+		 * @author Domon
+		 */
+		 
+		runfile_right_output_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String logString = runfile_right_tv.getText().toString();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String fileNameString = experNameString
+						+ sdf.format(new Date()) + ".txt";
+				try {
+					if (Environment.MEDIA_MOUNTED.equals(Environment
+							.getExternalStorageState())) {
+						File file = new File(Environment
+								.getExternalStorageDirectory(), fileNameString);
+						FileOutputStream fos = new FileOutputStream(file);
+						fos.write(logString.getBytes());
+						fos.flush();
+						fos.close();
+						runfile_right_output_location_tv.setText("导出地址为：手机目录/"
+								+ fileNameString);
+						Toast.makeText(RunFileActivity.this,
+								getString(R.string.log_output_successful),
+								Toast.LENGTH_LONG).show();
+					} else {
+						Toast.makeText(RunFileActivity.this,
+								getString(R.string.log_sdcard_error),
+								Toast.LENGTH_LONG).show();
+					}
+
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.log_output_error),
+							Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 	}

@@ -1199,31 +1199,31 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f060279;
+        public static final int action_settings=0x7f06027b;
         public static final int activity_chooser_view_content=0x7f060025;
-        public static final int activity_runfile_item_tv=0x7f06024f;
-        public static final int activity_upanddown_down_bg_rl=0x7f060269;
-        public static final int activity_upanddown_down_info_top_rl=0x7f06026b;
-        public static final int activity_upanddown_down_rl=0x7f06026a;
-        public static final int activity_upanddown_down_top_btn=0x7f060270;
-        public static final int activity_upanddown_down_top_iv=0x7f06026e;
-        public static final int activity_upanddown_down_top_lv=0x7f06026f;
-        public static final int activity_upanddown_down_top_name_iv=0x7f06026c;
-        public static final int activity_upanddown_down_top_tv=0x7f06026d;
-        public static final int activity_upanddown_left_rl=0x7f06025f;
-        public static final int activity_upanddown_right_rl=0x7f060268;
-        public static final int activity_upanddown_rl=0x7f06025e;
-        public static final int activity_upanddown_top_rl=0x7f06025b;
-        public static final int activity_upanddown_top_time_dc=0x7f06025d;
-        public static final int activity_upanddown_top_uname_tv=0x7f06025c;
-        public static final int activity_upanddown_up_bg_rl=0x7f060260;
-        public static final int activity_upanddown_up_info_top_rl=0x7f060262;
-        public static final int activity_upanddown_up_rl=0x7f060261;
-        public static final int activity_upanddown_up_top_btn=0x7f060267;
-        public static final int activity_upanddown_up_top_iv=0x7f060265;
-        public static final int activity_upanddown_up_top_lv=0x7f060266;
-        public static final int activity_upanddown_up_top_name_iv=0x7f060263;
-        public static final int activity_upanddown_up_top_tv=0x7f060264;
+        public static final int activity_runfile_item_tv=0x7f060251;
+        public static final int activity_upanddown_down_bg_rl=0x7f06026b;
+        public static final int activity_upanddown_down_info_top_rl=0x7f06026d;
+        public static final int activity_upanddown_down_rl=0x7f06026c;
+        public static final int activity_upanddown_down_top_btn=0x7f060272;
+        public static final int activity_upanddown_down_top_iv=0x7f060270;
+        public static final int activity_upanddown_down_top_lv=0x7f060271;
+        public static final int activity_upanddown_down_top_name_iv=0x7f06026e;
+        public static final int activity_upanddown_down_top_tv=0x7f06026f;
+        public static final int activity_upanddown_left_rl=0x7f060261;
+        public static final int activity_upanddown_right_rl=0x7f06026a;
+        public static final int activity_upanddown_rl=0x7f060260;
+        public static final int activity_upanddown_top_rl=0x7f06025d;
+        public static final int activity_upanddown_top_time_dc=0x7f06025f;
+        public static final int activity_upanddown_top_uname_tv=0x7f06025e;
+        public static final int activity_upanddown_up_bg_rl=0x7f060262;
+        public static final int activity_upanddown_up_info_top_rl=0x7f060264;
+        public static final int activity_upanddown_up_rl=0x7f060263;
+        public static final int activity_upanddown_up_top_btn=0x7f060269;
+        public static final int activity_upanddown_up_top_iv=0x7f060267;
+        public static final int activity_upanddown_up_top_lv=0x7f060268;
+        public static final int activity_upanddown_up_top_name_iv=0x7f060265;
+        public static final int activity_upanddown_up_top_tv=0x7f060266;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
         public static final int checkbox=0x7f06002d;
@@ -1762,7 +1762,9 @@ containing a value of this type.
         public static final int runfile_left_rl=0x7f060248;
         public static final int runfile_left_top_ename_tv=0x7f06024a;
         public static final int runfile_left_top_rl=0x7f060249;
-        public static final int runfile_right_back_btn=0x7f06024e;
+        public static final int runfile_right_back_btn=0x7f060250;
+        public static final int runfile_right_output_btn=0x7f06024f;
+        public static final int runfile_right_output_location_tv=0x7f06024e;
         public static final int runfile_right_rl=0x7f06024c;
         public static final int runfile_right_tv=0x7f06024d;
         public static final int runfile_top_rl=0x7f060245;
@@ -1786,18 +1788,18 @@ containing a value of this type.
         public static final int split_action_bar=0x7f06001e;
         public static final int submit_area=0x7f060039;
         public static final int tabMode=0x7f060002;
-        public static final int temp_hundred=0x7f060252;
-        public static final int temp_rl=0x7f060250;
-        public static final int temp_ten=0x7f060253;
-        public static final int temp_thousand=0x7f060251;
+        public static final int temp_hundred=0x7f060254;
+        public static final int temp_rl=0x7f060252;
+        public static final int temp_ten=0x7f060255;
+        public static final int temp_thousand=0x7f060253;
         public static final int textView1=0x7f0601dd;
-        public static final int time_hour_hour=0x7f060255;
-        public static final int time_hour_minutes=0x7f060256;
-        public static final int time_hour_rl=0x7f060254;
-        public static final int time_hour_seconds=0x7f060257;
-        public static final int time_minute_minutes=0x7f060259;
-        public static final int time_minute_rl=0x7f060258;
-        public static final int time_minute_seconds=0x7f06025a;
+        public static final int time_hour_hour=0x7f060257;
+        public static final int time_hour_minutes=0x7f060258;
+        public static final int time_hour_rl=0x7f060256;
+        public static final int time_hour_seconds=0x7f060259;
+        public static final int time_minute_minutes=0x7f06025b;
+        public static final int time_minute_rl=0x7f06025a;
+        public static final int time_minute_seconds=0x7f06025c;
         public static final int title=0x7f06002b;
         public static final int top_action_bar=0x7f060020;
         public static final int up=0x7f060021;
@@ -1806,14 +1808,14 @@ containing a value of this type.
         public static final int user_admin_item_login_iv=0x7f060212;
         public static final int user_admin_item_login_rl=0x7f060211;
         public static final int user_admin_item_name_tv=0x7f06020f;
-        public static final int vol_bits=0x7f060275;
-        public static final int vol_hundred=0x7f060273;
-        public static final int vol_rl=0x7f060271;
-        public static final int vol_ten=0x7f060274;
-        public static final int vol_thousand=0x7f060272;
-        public static final int wifi_ig=0x7f060276;
-        public static final int wifi_signal_strenth_tv=0x7f060278;
-        public static final int wifi_tv=0x7f060277;
+        public static final int vol_bits=0x7f060277;
+        public static final int vol_hundred=0x7f060275;
+        public static final int vol_rl=0x7f060273;
+        public static final int vol_ten=0x7f060276;
+        public static final int vol_thousand=0x7f060274;
+        public static final int wifi_ig=0x7f060278;
+        public static final int wifi_signal_strenth_tv=0x7f06027a;
+        public static final int wifi_tv=0x7f060279;
         public static final int withText=0x7f06000c;
     }
     public static final class integer {
@@ -1923,7 +1925,7 @@ containing a value of this type.
         public static final int rnatemplet=0x7f050000;
     }
     public static final class string {
-        public static final int About=0x7f0b010f;
+        public static final int About=0x7f0b0116;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1964,145 +1966,145 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
-        public static final int about_us=0x7f0b00fc;
+        public static final int about_us=0x7f0b0103;
         public static final int action_settings=0x7f0b000e;
         public static final int app_name=0x7f0b000d;
         public static final int back=0x7f0b001a;
         public static final int cancle=0x7f0b0012;
-        public static final int company_address=0x7f0b00ff;
-        public static final int company_address_info=0x7f0b0100;
-        public static final int company_business=0x7f0b0107;
-        public static final int company_business_info=0x7f0b0108;
-        public static final int company_name=0x7f0b00fd;
-        public static final int company_name_info=0x7f0b00fe;
-        public static final int company_net=0x7f0b0103;
-        public static final int company_net_info=0x7f0b0104;
-        public static final int company_phone=0x7f0b0101;
-        public static final int company_phone_info=0x7f0b0102;
-        public static final int company_postcode=0x7f0b0105;
-        public static final int company_postcode_info=0x7f0b0106;
-        public static final int company_sell=0x7f0b0109;
-        public static final int company_sell_info=0x7f0b010a;
-        public static final int company_service=0x7f0b010b;
-        public static final int company_service_info=0x7f0b010c;
-        public static final int company_technical=0x7f0b010d;
-        public static final int company_technical_info=0x7f0b010e;
+        public static final int company_address=0x7f0b0106;
+        public static final int company_address_info=0x7f0b0107;
+        public static final int company_business=0x7f0b010e;
+        public static final int company_business_info=0x7f0b010f;
+        public static final int company_name=0x7f0b0104;
+        public static final int company_name_info=0x7f0b0105;
+        public static final int company_net=0x7f0b010a;
+        public static final int company_net_info=0x7f0b010b;
+        public static final int company_phone=0x7f0b0108;
+        public static final int company_phone_info=0x7f0b0109;
+        public static final int company_postcode=0x7f0b010c;
+        public static final int company_postcode_info=0x7f0b010d;
+        public static final int company_sell=0x7f0b0110;
+        public static final int company_sell_info=0x7f0b0111;
+        public static final int company_service=0x7f0b0112;
+        public static final int company_service_info=0x7f0b0113;
+        public static final int company_technical=0x7f0b0114;
+        public static final int company_technical_info=0x7f0b0115;
         public static final int complete=0x7f0b001d;
-        public static final int delete_file=0x7f0b00eb;
+        public static final int delete_file=0x7f0b00ee;
         /**  系统设置_仪器检测 
 系统设置_仪器检测
          */
-        public static final int detection_check=0x7f0b0084;
-        public static final int detection_checking=0x7f0b0087;
-        public static final int detection_five=0x7f0b008e;
-        public static final int detection_heating=0x7f0b008a;
-        public static final int detection_heating_error_one=0x7f0b009b;
-        public static final int detection_heating_error_two=0x7f0b009c;
-        public static final int detection_heating_sucess=0x7f0b009d;
-        public static final int detection_level=0x7f0b008d;
-        public static final int detection_level_error=0x7f0b00a3;
-        public static final int detection_level_sucess=0x7f0b00a0;
-        public static final int detection_magnet=0x7f0b008c;
-        public static final int detection_magnet_error=0x7f0b00a2;
-        public static final int detection_magnet_sucess=0x7f0b009f;
-        public static final int detection_not_back=0x7f0b0085;
-        public static final int detection_not_check=0x7f0b0086;
-        public static final int detection_power=0x7f0b0088;
-        public static final int detection_power_sucess=0x7f0b0091;
-        public static final int detection_sensor=0x7f0b0089;
-        public static final int detection_sensor_sucess=0x7f0b009a;
-        public static final int detection_sensor_t1=0x7f0b0092;
-        public static final int detection_sensor_t2=0x7f0b0093;
-        public static final int detection_sensor_t3=0x7f0b0094;
-        public static final int detection_sensor_t4=0x7f0b0095;
-        public static final int detection_sensor_t5=0x7f0b0096;
-        public static final int detection_sensor_t6=0x7f0b0097;
-        public static final int detection_sensor_t7=0x7f0b0098;
-        public static final int detection_sensor_t8=0x7f0b0099;
-        public static final int detection_shock=0x7f0b008b;
-        public static final int detection_shock_error=0x7f0b00a1;
-        public static final int detection_shock_sucess=0x7f0b009e;
-        public static final int detection_thirty_three=0x7f0b0090;
-        public static final int detection_twelve=0x7f0b008f;
+        public static final int detection_check=0x7f0b0087;
+        public static final int detection_checking=0x7f0b008a;
+        public static final int detection_five=0x7f0b0091;
+        public static final int detection_heating=0x7f0b008d;
+        public static final int detection_heating_error_one=0x7f0b009e;
+        public static final int detection_heating_error_two=0x7f0b009f;
+        public static final int detection_heating_sucess=0x7f0b00a0;
+        public static final int detection_level=0x7f0b0090;
+        public static final int detection_level_error=0x7f0b00a6;
+        public static final int detection_level_sucess=0x7f0b00a3;
+        public static final int detection_magnet=0x7f0b008f;
+        public static final int detection_magnet_error=0x7f0b00a5;
+        public static final int detection_magnet_sucess=0x7f0b00a2;
+        public static final int detection_not_back=0x7f0b0088;
+        public static final int detection_not_check=0x7f0b0089;
+        public static final int detection_power=0x7f0b008b;
+        public static final int detection_power_sucess=0x7f0b0094;
+        public static final int detection_sensor=0x7f0b008c;
+        public static final int detection_sensor_sucess=0x7f0b009d;
+        public static final int detection_sensor_t1=0x7f0b0095;
+        public static final int detection_sensor_t2=0x7f0b0096;
+        public static final int detection_sensor_t3=0x7f0b0097;
+        public static final int detection_sensor_t4=0x7f0b0098;
+        public static final int detection_sensor_t5=0x7f0b0099;
+        public static final int detection_sensor_t6=0x7f0b009a;
+        public static final int detection_sensor_t7=0x7f0b009b;
+        public static final int detection_sensor_t8=0x7f0b009c;
+        public static final int detection_shock=0x7f0b008e;
+        public static final int detection_shock_error=0x7f0b00a4;
+        public static final int detection_shock_sucess=0x7f0b00a1;
+        public static final int detection_thirty_three=0x7f0b0093;
+        public static final int detection_twelve=0x7f0b0092;
         public static final int disinfection=0x7f0b002a;
         /**  系统设置_消毒设置 
 系统设置_消毒设置
          */
-        public static final int dismdect=0x7f0b005c;
-        public static final int dismdect_failure=0x7f0b005e;
-        public static final int dismdect_success=0x7f0b005d;
-        public static final int down=0x7f0b00e7;
-        public static final int down_file=0x7f0b00ec;
+        public static final int dismdect=0x7f0b005d;
+        public static final int dismdect_failure=0x7f0b005f;
+        public static final int dismdect_success=0x7f0b005e;
+        public static final int down=0x7f0b00ea;
+        public static final int down_file=0x7f0b00ef;
         /**  上传下载 
 上传下载
          */
-        public static final int down_is_full=0x7f0b00f1;
-        public static final int downing=0x7f0b00f7;
+        public static final int down_is_full=0x7f0b00f5;
+        public static final int downing=0x7f0b00fb;
         public static final int edit=0x7f0b0019;
-        public static final int exp_add_quick=0x7f0b00a8;
-        public static final int exp_blend=0x7f0b00bd;
-        public static final int exp_blend_speed=0x7f0b00c1;
-        public static final int exp_blend_time_setting=0x7f0b00d0;
-        public static final int exp_cancle_quick=0x7f0b00a9;
-        public static final int exp_closs=0x7f0b00c7;
-        public static final int exp_crack=0x7f0b00c8;
-        public static final int exp_creat_date=0x7f0b00af;
-        public static final int exp_creating=0x7f0b00ad;
-        public static final int exp_delete_exp=0x7f0b00a7;
-        public static final int exp_delete_step=0x7f0b00ba;
-        public static final int exp_delete_success=0x7f0b00b8;
-        public static final int exp_edit_date=0x7f0b00b0;
-        public static final int exp_edit_failure=0x7f0b00b4;
-        public static final int exp_edit_not_exit=0x7f0b00b6;
-        public static final int exp_edit_success=0x7f0b00b3;
-        public static final int exp_elution=0x7f0b00c9;
-        public static final int exp_hole=0x7f0b00bf;
-        public static final int exp_hole_select=0x7f0b00d2;
-        public static final int exp_insert_step=0x7f0b00bb;
-        public static final int exp_inset_success=0x7f0b00b7;
-        public static final int exp_magnetic=0x7f0b00be;
-        public static final int exp_magnetic_time_setting=0x7f0b00d1;
-        public static final int exp_name=0x7f0b00ca;
-        public static final int exp_name_already_exist=0x7f0b00ab;
-        public static final int exp_name_input=0x7f0b00cb;
-        public static final int exp_name_null=0x7f0b00aa;
-        public static final int exp_new_exp=0x7f0b00a6;
+        public static final int exp_add_quick=0x7f0b00ab;
+        public static final int exp_blend=0x7f0b00c0;
+        public static final int exp_blend_speed=0x7f0b00c4;
+        public static final int exp_blend_time_setting=0x7f0b00d3;
+        public static final int exp_cancle_quick=0x7f0b00ac;
+        public static final int exp_closs=0x7f0b00ca;
+        public static final int exp_crack=0x7f0b00cb;
+        public static final int exp_creat_date=0x7f0b00b2;
+        public static final int exp_creating=0x7f0b00b0;
+        public static final int exp_delete_exp=0x7f0b00aa;
+        public static final int exp_delete_step=0x7f0b00bd;
+        public static final int exp_delete_success=0x7f0b00bb;
+        public static final int exp_edit_date=0x7f0b00b3;
+        public static final int exp_edit_failure=0x7f0b00b7;
+        public static final int exp_edit_not_exit=0x7f0b00b9;
+        public static final int exp_edit_success=0x7f0b00b6;
+        public static final int exp_elution=0x7f0b00cc;
+        public static final int exp_hole=0x7f0b00c2;
+        public static final int exp_hole_select=0x7f0b00d5;
+        public static final int exp_insert_step=0x7f0b00be;
+        public static final int exp_inset_success=0x7f0b00ba;
+        public static final int exp_magnetic=0x7f0b00c1;
+        public static final int exp_magnetic_time_setting=0x7f0b00d4;
+        public static final int exp_name=0x7f0b00cd;
+        public static final int exp_name_already_exist=0x7f0b00ae;
+        public static final int exp_name_input=0x7f0b00ce;
+        public static final int exp_name_null=0x7f0b00ad;
+        public static final int exp_new_exp=0x7f0b00a9;
         /**  新建实验 
 新建实验
          */
-        public static final int exp_new_not_exit=0x7f0b00b5;
-        public static final int exp_next=0x7f0b00c6;
+        public static final int exp_new_not_exit=0x7f0b00b8;
+        public static final int exp_next=0x7f0b00c9;
         /**  实验管理 
 实验管理
          */
-        public static final int exp_no_select=0x7f0b00a4;
-        public static final int exp_prepareing=0x7f0b00ae;
-        public static final int exp_quick_exp=0x7f0b00b1;
-        public static final int exp_remark=0x7f0b00b2;
-        public static final int exp_remark_inout=0x7f0b00cd;
-        public static final int exp_save_failure=0x7f0b00da;
-        public static final int exp_save_null=0x7f0b00ac;
-        public static final int exp_save_success=0x7f0b00ce;
-        public static final int exp_speed_select=0x7f0b00d7;
-        public static final int exp_speed_unit=0x7f0b00c2;
-        public static final int exp_step_name_null=0x7f0b00b9;
-        public static final int exp_sure_delete_all=0x7f0b00db;
-        public static final int exp_sure_delete_this=0x7f0b00dc;
-        public static final int exp_sure_to_delete=0x7f0b00a5;
-        public static final int exp_temp=0x7f0b00c3;
-        public static final int exp_temp_big=0x7f0b00d8;
-        public static final int exp_temp_empty=0x7f0b00d9;
-        public static final int exp_temp_setting=0x7f0b00dd;
-        public static final int exp_temp_type=0x7f0b00c5;
-        public static final int exp_temp_unit=0x7f0b00c4;
-        public static final int exp_template=0x7f0b00cc;
-        public static final int exp_vol=0x7f0b00c0;
-        public static final int exp_vol_big=0x7f0b00d3;
-        public static final int exp_vol_empty=0x7f0b00d5;
-        public static final int exp_vol_setting=0x7f0b00d6;
-        public static final int exp_vol_small=0x7f0b00d4;
-        public static final int exp_wait=0x7f0b00bc;
-        public static final int exp_wait_time_setting=0x7f0b00cf;
+        public static final int exp_no_select=0x7f0b00a7;
+        public static final int exp_prepareing=0x7f0b00b1;
+        public static final int exp_quick_exp=0x7f0b00b4;
+        public static final int exp_remark=0x7f0b00b5;
+        public static final int exp_remark_inout=0x7f0b00d0;
+        public static final int exp_save_failure=0x7f0b00dd;
+        public static final int exp_save_null=0x7f0b00af;
+        public static final int exp_save_success=0x7f0b00d1;
+        public static final int exp_speed_select=0x7f0b00da;
+        public static final int exp_speed_unit=0x7f0b00c5;
+        public static final int exp_step_name_null=0x7f0b00bc;
+        public static final int exp_sure_delete_all=0x7f0b00de;
+        public static final int exp_sure_delete_this=0x7f0b00df;
+        public static final int exp_sure_to_delete=0x7f0b00a8;
+        public static final int exp_temp=0x7f0b00c6;
+        public static final int exp_temp_big=0x7f0b00db;
+        public static final int exp_temp_empty=0x7f0b00dc;
+        public static final int exp_temp_setting=0x7f0b00e0;
+        public static final int exp_temp_type=0x7f0b00c8;
+        public static final int exp_temp_unit=0x7f0b00c7;
+        public static final int exp_template=0x7f0b00cf;
+        public static final int exp_vol=0x7f0b00c3;
+        public static final int exp_vol_big=0x7f0b00d6;
+        public static final int exp_vol_empty=0x7f0b00d8;
+        public static final int exp_vol_setting=0x7f0b00d9;
+        public static final int exp_vol_small=0x7f0b00d7;
+        public static final int exp_wait=0x7f0b00bf;
+        public static final int exp_wait_time_setting=0x7f0b00d2;
         /**  主页面 
 主页面
          */
@@ -2112,88 +2114,95 @@ containing a value of this type.
         /**  帮助 
 帮助
          */
-        public static final int information=0x7f0b00fa;
-        public static final int instrument_blend=0x7f0b0078;
-        public static final int instrument_blend_null=0x7f0b007b;
-        public static final int instrument_blend_success=0x7f0b007f;
-        public static final int instrument_failure=0x7f0b0083;
+        public static final int information=0x7f0b0101;
+        public static final int instrument_blend=0x7f0b007b;
+        public static final int instrument_blend_null=0x7f0b007e;
+        public static final int instrument_blend_success=0x7f0b0082;
+        public static final int instrument_failure=0x7f0b0086;
         /**  系统设置_仪器设置 
 系统设置_仪器设置
          */
-        public static final int instrument_flux_name=0x7f0b0076;
-        public static final int instrument_flux_selete=0x7f0b0081;
-        public static final int instrument_hole=0x7f0b007a;
-        public static final int instrument_hole_null=0x7f0b007d;
-        public static final int instrument_hole_success=0x7f0b007e;
-        public static final int instrument_magnetic=0x7f0b0079;
-        public static final int instrument_magnetic_null=0x7f0b007c;
-        public static final int instrument_magnetic_success=0x7f0b0080;
-        public static final int instrument_parameter_run=0x7f0b0077;
-        public static final int instrument_success=0x7f0b0082;
+        public static final int instrument_flux_name=0x7f0b0079;
+        public static final int instrument_flux_selete=0x7f0b0084;
+        public static final int instrument_hole=0x7f0b007d;
+        public static final int instrument_hole_null=0x7f0b0080;
+        public static final int instrument_hole_success=0x7f0b0081;
+        public static final int instrument_magnetic=0x7f0b007c;
+        public static final int instrument_magnetic_null=0x7f0b007f;
+        public static final int instrument_magnetic_success=0x7f0b0083;
+        public static final int instrument_parameter_run=0x7f0b007a;
+        public static final int instrument_success=0x7f0b0085;
         public static final int language_chinese=0x7f0b0044;
         /**  系统设置_语言设置 
 系统设置_语言设置
          */
         public static final int language_english=0x7f0b0043;
         public static final int language_failure=0x7f0b0046;
-        public static final int language_korean=0x7f0b0111;
+        public static final int language_korean=0x7f0b0118;
         public static final int language_success=0x7f0b0045;
-        public static final int local_file=0x7f0b00e8;
+        public static final int local_file=0x7f0b00eb;
         public static final int log=0x7f0b0027;
+        public static final int log_output_error=0x7f0b00fd;
+        public static final int log_output_successful=0x7f0b00fe;
+        /**   
+         */
+        public static final int log_sdcard_error=0x7f0b00fc;
         public static final int login=0x7f0b0031;
         public static final int logout=0x7f0b0013;
-        public static final int net_failure=0x7f0b005b;
-        public static final int net_gateway=0x7f0b0052;
-        public static final int net_gateway_format=0x7f0b0054;
-        public static final int net_gateway_input=0x7f0b0053;
-        public static final int net_gateway_not_null=0x7f0b0055;
-        public static final int net_ip=0x7f0b004a;
-        public static final int net_ip_format=0x7f0b004c;
-        public static final int net_ip_input=0x7f0b004b;
-        public static final int net_ip_not_null=0x7f0b004d;
-        public static final int net_mac=0x7f0b004e;
-        public static final int net_mac_format=0x7f0b0050;
-        public static final int net_mac_input=0x7f0b004f;
-        public static final int net_mac_not_null=0x7f0b0051;
-        public static final int net_mask=0x7f0b0056;
-        public static final int net_mask_format=0x7f0b0058;
-        public static final int net_mask_input=0x7f0b0057;
-        public static final int net_mask_not_null=0x7f0b0059;
+        public static final int net_failure=0x7f0b005c;
+        public static final int net_gateway=0x7f0b0053;
+        public static final int net_gateway_format=0x7f0b0055;
+        public static final int net_gateway_input=0x7f0b0054;
+        public static final int net_gateway_not_null=0x7f0b0056;
+        public static final int net_ip=0x7f0b004b;
+        public static final int net_ip_format=0x7f0b004d;
+        public static final int net_ip_input=0x7f0b004c;
+        public static final int net_ip_not_null=0x7f0b004e;
+        public static final int net_mac=0x7f0b004f;
+        public static final int net_mac_format=0x7f0b0051;
+        public static final int net_mac_input=0x7f0b0050;
+        public static final int net_mac_not_null=0x7f0b0052;
+        public static final int net_mask=0x7f0b0057;
+        public static final int net_mask_format=0x7f0b0059;
+        public static final int net_mask_input=0x7f0b0058;
+        public static final int net_mask_not_null=0x7f0b005a;
         /**  系统设置_网络设置 
 系统设置_网络设置
          */
         public static final int net_name=0x7f0b0047;
-        public static final int net_name_input=0x7f0b0048;
-        public static final int net_name_not_null=0x7f0b0049;
-        public static final int net_success=0x7f0b005a;
+        public static final int net_name_input=0x7f0b0049;
+        public static final int net_name_not_null=0x7f0b004a;
+        public static final int net_success=0x7f0b005b;
+        public static final int net_wifi_unopen=0x7f0b0048;
         /**  仪器升级 
 仪器升级
          */
-        public static final int no_down_bin=0x7f0b00f8;
-        public static final int no_select=0x7f0b00ea;
-        public static final int no_select_down_bin=0x7f0b00f9;
+        public static final int no_down_bin=0x7f0b00ff;
+        public static final int no_select=0x7f0b00ed;
+        public static final int no_select_down_bin=0x7f0b0100;
         public static final int other_save=0x7f0b0018;
         public static final int pause=0x7f0b0016;
-        public static final int quick_all_cancle=0x7f0b00f0;
+        public static final int quick_all_cancle=0x7f0b00f4;
         /**  快捷实验 
 快捷实验
          */
-        public static final int quick_cancle=0x7f0b00ee;
-        public static final int quick_now_cancle=0x7f0b00ef;
+        public static final int quick_cancle=0x7f0b00f2;
+        public static final int quick_now_cancle=0x7f0b00f3;
         public static final int register=0x7f0b0032;
         public static final int reset=0x7f0b001c;
         public static final int run=0x7f0b0015;
-        public static final int run_exp_finsh=0x7f0b00e4;
-        public static final int run_exp_not_exit=0x7f0b00e2;
-        public static final int run_exp_not_run=0x7f0b00e5;
+        public static final int run_exp_finsh=0x7f0b00e7;
+        public static final int run_exp_not_exit=0x7f0b00e5;
+        public static final int run_exp_not_run=0x7f0b00e8;
         /**  运行实验 
 运行实验
          */
-        public static final int run_exp_remain_time=0x7f0b00de;
-        public static final int run_exp_send_info=0x7f0b00e1;
-        public static final int run_exp_stop_success=0x7f0b00e0;
-        public static final int run_exp_stopping=0x7f0b00e3;
-        public static final int run_exp_total_time=0x7f0b00df;
+        public static final int run_exp_remain_time=0x7f0b00e1;
+        public static final int run_exp_send_info=0x7f0b00e4;
+        public static final int run_exp_stop_success=0x7f0b00e3;
+        public static final int run_exp_stopping=0x7f0b00e6;
+        public static final int run_exp_total_time=0x7f0b00e2;
+        public static final int run_file_log_output=0x7f0b00f1;
         public static final int save=0x7f0b0017;
         public static final int send=0x7f0b001b;
         public static final int setting=0x7f0b0028;
@@ -2212,40 +2221,40 @@ containing a value of this type.
         public static final int system_temp=0x7f0b0040;
         public static final int system_update=0x7f0b003f;
         public static final int system_user=0x7f0b003e;
-        public static final int systemnum=0x7f0b00fb;
+        public static final int systemnum=0x7f0b0102;
         public static final int template_null=0x7f0b0022;
         public static final int template_one=0x7f0b0023;
         public static final int template_two=0x7f0b0024;
-        public static final int title_activity_base=0x7f0b0110;
-        public static final int two_pass_error=0x7f0b006c;
+        public static final int title_activity_base=0x7f0b0117;
+        public static final int two_pass_error=0x7f0b006f;
         public static final int ultraviolet=0x7f0b0020;
         /**  上传下载 
 上传下载
          */
-        public static final int up=0x7f0b00e6;
-        public static final int up_delete_forbid=0x7f0b00f3;
-        public static final int up_delete_successful=0x7f0b00f4;
+        public static final int up=0x7f0b00e9;
+        public static final int up_delete_forbid=0x7f0b00f7;
+        public static final int up_delete_successful=0x7f0b00f8;
         public static final int up_down=0x7f0b0029;
-        public static final int up_failure=0x7f0b00f6;
-        public static final int up_file=0x7f0b00ed;
-        public static final int up_samename=0x7f0b00f5;
-        public static final int up_success=0x7f0b00f2;
-        public static final int upan_file=0x7f0b00e9;
+        public static final int up_failure=0x7f0b00fa;
+        public static final int up_file=0x7f0b00f0;
+        public static final int up_samename=0x7f0b00f9;
+        public static final int up_success=0x7f0b00f6;
+        public static final int upan_file=0x7f0b00ec;
         public static final int update=0x7f0b001e;
-        public static final int user_admin_admin=0x7f0b0071;
-        public static final int user_admin_login=0x7f0b0075;
-        public static final int user_admin_name=0x7f0b0073;
-        public static final int user_admin_permissions=0x7f0b0074;
-        public static final int user_admin_user=0x7f0b0072;
-        public static final int user_confirm_pass=0x7f0b0069;
-        public static final int user_confirm_pass_input=0x7f0b006a;
-        public static final int user_confirm_pass_not_null=0x7f0b006b;
+        public static final int user_admin_admin=0x7f0b0074;
+        public static final int user_admin_login=0x7f0b0078;
+        public static final int user_admin_name=0x7f0b0076;
+        public static final int user_admin_permissions=0x7f0b0077;
+        public static final int user_admin_user=0x7f0b0075;
+        public static final int user_confirm_pass=0x7f0b006c;
+        public static final int user_confirm_pass_input=0x7f0b006d;
+        public static final int user_confirm_pass_not_null=0x7f0b006e;
         /**  系统设置_用户设置 
 系统设置_用户设置
          */
-        public static final int user_default=0x7f0b005f;
-        public static final int user_default_failure=0x7f0b006e;
-        public static final int user_default_success=0x7f0b006d;
+        public static final int user_default=0x7f0b0060;
+        public static final int user_default_failure=0x7f0b0071;
+        public static final int user_default_success=0x7f0b0070;
         public static final int user_error=0x7f0b002e;
         public static final int user_name_input=0x7f0b002f;
         /**  登录页面 
@@ -2253,23 +2262,25 @@ containing a value of this type.
          */
         public static final int user_name_null=0x7f0b002c;
         public static final int user_name_ture=0x7f0b0037;
-        public static final int user_new_pass=0x7f0b0066;
-        public static final int user_new_pass_input=0x7f0b0067;
-        public static final int user_new_pass_not_null=0x7f0b0068;
-        public static final int user_original_pass=0x7f0b0062;
-        public static final int user_original_pass_error=0x7f0b0065;
-        public static final int user_original_pass_input=0x7f0b0063;
-        public static final int user_original_pass_not_null=0x7f0b0064;
-        public static final int user_pass=0x7f0b0061;
-        public static final int user_pass_default=0x7f0b0060;
+        public static final int user_new_pass=0x7f0b0069;
+        public static final int user_new_pass_input=0x7f0b006a;
+        public static final int user_new_pass_not_null=0x7f0b006b;
+        public static final int user_original_pass=0x7f0b0065;
+        public static final int user_original_pass_error=0x7f0b0068;
+        public static final int user_original_pass_input=0x7f0b0066;
+        public static final int user_original_pass_not_null=0x7f0b0067;
+        public static final int user_pass=0x7f0b0064;
+        public static final int user_pass_default=0x7f0b0061;
+        public static final int user_pass_default_modify_error=0x7f0b0063;
+        public static final int user_pass_default_modify_successful=0x7f0b0062;
         public static final int user_pass_delete=0x7f0b0033;
         public static final int user_pass_delete_successful=0x7f0b0035;
         public static final int user_pass_error=0x7f0b0034;
-        public static final int user_pass_failure=0x7f0b0070;
+        public static final int user_pass_failure=0x7f0b0073;
         public static final int user_pass_input=0x7f0b0030;
         public static final int user_pass_null=0x7f0b002d;
         public static final int user_pass_rpass=0x7f0b0039;
-        public static final int user_pass_success=0x7f0b006f;
+        public static final int user_pass_success=0x7f0b0072;
         public static final int user_register_success=0x7f0b0038;
         public static final int user_rpass_input=0x7f0b003a;
         /**  注册页面 

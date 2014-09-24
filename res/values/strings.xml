@@ -66,6 +66,7 @@
     <string name="language_failure">语言设置失败</string>
     <!-- 系统设置_网络设置 -->
     <string name="net_name">仪器名称</string>
+    <string name="net_wifi_unopen">Wifi没有打开</string>
     <string name="net_name_input">请输入仪器名称</string>
     <string name="net_name_not_null">仪器名称不能为空</string>
     <string name="net_ip">IP地址</string>
@@ -93,6 +94,8 @@
     <!-- 系统设置_用户设置 -->
     <string name="user_default">默认登录</string>
     <string name="user_pass_default">重置密码</string>
+    <string name="user_pass_default_modify_successful">重置成功，初始密码为：123456</string>
+    <string name="user_pass_default_modify_error">重置失败</string>
     <string name="user_pass">修改密码</string>
     <string name="user_original_pass">用户密码</string>
     <string name="user_original_pass_input">请输入用户密码</string>
@@ -240,6 +243,7 @@
     <string name="delete_file">确定要删除这条仪器中的实验吗？</string>
     <string name="down_file">确定要下载这条实验吗？</string>
     <string name="up_file">确定要上传这条实验吗？</string>
+    <string name="run_file_log_output">导出日志</string>
 
     <!-- 快捷实验 -->
     <string name="quick_cancle">取消快捷方式</string>
@@ -253,6 +257,11 @@
     <string name="up_samename">本地有相同文件!</string>
     <string name="up_failure">上传失败!</string>
     <string name="downing">正在下载，请稍后&#8230;&#8230;</string>
+    <!--  -->
+
+    <string name="log_sdcard_error">手机存储不可用</string>
+    <string name="log_output_error">日志导出失败</string>
+    <string name="log_output_successful">日志导出成功</string>
     <!-- 仪器升级 -->
     <string name="no_down_bin">没有可升级的文件</string>
     <string name="no_select_down_bin">没有选择升级文件</string>

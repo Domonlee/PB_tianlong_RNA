@@ -389,12 +389,27 @@ public class MachineActivity extends Activity {
 					}
 				});
 
+		// --初始化密码 完成
 		machine_user_right_btn_pass_default
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(MachineActivity.this, "Make sth ", 1000)
-								.show();
+
+						List<User> list = new ArrayList<User>();
+						list = userDao.getAllUser(MachineActivity.this);
+
+						for (int i = 0; i < list.size(); i++) {
+							if (!(list.get(i).getUname().equals("admin"))
+									&& !(list.get(i).getUname().equals("guest"))) {
+								list.get(i).setUpass("123456");
+								userDao.updatePassword(list.get(i),
+										MachineActivity.this);
+							}
+						}
+						Toast.makeText(
+								MachineActivity.this,
+								getString(R.string.user_pass_default_modify_successful),
+								Toast.LENGTH_LONG).show();
 					}
 				});
 	}
@@ -493,8 +508,10 @@ public class MachineActivity extends Activity {
 					.findViewById(R.id.machine_net_wifi_lv);
 			machine_net_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_net_bottom_btn_save);
+			machine_net_bottom_btn_save.setVisibility(View.GONE);
 			if (list == null) {
-				Toast.makeText(this, "wifi未打开！", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.net_wifi_unopen),
+						Toast.LENGTH_LONG).show();
 			} else {
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).SSID.length() <= 6) {
@@ -511,9 +528,9 @@ public class MachineActivity extends Activity {
 			machine_net_wifi_lv.setAdapter(new WifiListAdapter(
 					MachineActivity.this, list));
 
+			// --跳转系统wifi设置。
 			machine_net_wifi_lv
 					.setOnItemClickListener(new OnItemClickListener() {
-
 						@Override
 						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
@@ -523,13 +540,13 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			machine_net_bottom_btn_save
-					.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							Toast.makeText(getApplicationContext(), "设置wifi成功",
-									1000).show();
-						}
-					});
+//			machine_net_bottom_btn_save
+//					.setOnClickListener(new OnClickListener() {
+//						public void onClick(View v) {
+//							Toast.makeText(getApplicationContext(), "设置wifi成功",
+//									1000).show();
+//						}
+//					});
 
 			break;
 
@@ -552,7 +569,7 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
 
-			if (machine.getMDtime().equals("null:null:null")) {
+			if (machine.getMDtime().equals("null:null:null") ||machine.getMDtime().equals("null")) {
 				machine.setMDtime("01:00:00");
 			}
 			machine_dismdect_body_time_et.setText(machine.getMDtime());
@@ -933,7 +950,7 @@ public class MachineActivity extends Activity {
 											machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
-											// Utlis.sendSettingflux(getNum(fluxNum));
+											Utlis.sendSettingflux(getNum(fluxNum));
 										}
 									});
 							builder.setNegativeButton(
@@ -1308,7 +1325,6 @@ public class MachineActivity extends Activity {
 		}
 	}
 
-	// -- TODO
 	private void showAdamin() {
 		view = LayoutInflater.from(MachineActivity.this).inflate(
 				R.layout.activity_machine_user_admin, null);
