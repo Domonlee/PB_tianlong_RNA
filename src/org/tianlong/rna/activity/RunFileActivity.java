@@ -110,8 +110,6 @@ public class RunFileActivity extends Activity {
 										arg2).get("id")));
 						experNameString = (String) strings.get(arg2)
 								.get("info");
-					TextView activity_runfile_item_tv = (TextView)findViewById(R.id.activity_runfile_item_tv);	
-						activity_runfile_item_tv.setBackgroundResource(R.drawable.wheel_bg);
 						new Thread(infoThread).start();
 					} catch (Exception e) {
 						Toast.makeText(RunFileActivity.this,

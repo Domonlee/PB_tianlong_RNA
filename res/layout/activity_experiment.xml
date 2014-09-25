@@ -2,95 +2,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
-    <RelativeLayout android:id="@+id/experiment_top_rl"
-        style="@style/top_rl">
-        <TextView android:id="@+id/experiment_top_uname_tv"
-            style="@style/top_uname"/>
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/experiment_top_rl"
+        style="@style/top_rl"
+        android:layout_width="match_parent" >
+
+        <TextView
+            android:id="@+id/experiment_top_uname_tv"
+            style="@style/top_uname" />
+
         <org.tianlong.rna.utlis.DigitalClock
-		    android:id="@+id/experiment_top_time_dc"
-     		android:layout_width="260dp"
-     		android:layout_height="30dp"
-     		android:layout_gravity="center_horizontal"
-     		android:textColor="@android:color/white"
-		    android:textSize="20sp"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"/>
+            android:id="@+id/experiment_top_time_dc"
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </RelativeLayout>
-	<RelativeLayout android:id="@+id/experiment_left_rl"
-	    style="@style/left_rl"
-	    android:layout_below="@id/experiment_top_rl">
-        <RelativeLayout android:id="@+id/experiment_left_top_rl"
-           	style="@style/left_top_rl"
-            android:background="@drawable/left_top">
-            <TextView android:id="@+id/experiment_left_top_ename_tv"
-                style="@style/left_top_name"
-                android:text="@string/experiment"/>
-        </RelativeLayout>
-        <RelativeLayout android:id="@+id/expetiment_left_new"
-            android:layout_width="wrap_content"
-            android:layout_height="60dip"
-            android:background="@drawable/list_selector"
-            android:clickable="true"
-            android:layout_below="@id/experiment_left_top_rl">
-            <ImageView android:id="@+id/expetiment_left_new_btn_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="18dip"
-	            android:layout_marginLeft="20dip"
-	            android:background="@drawable/add"/>
-            <TextView android:id="@+id/expetiment_left_new_btn"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:gravity="center"
-	            android:textColor="@android:color/white"
-	            android:textSize="20sp"
-	            android:text="@string/exp_new_exp"
-	            android:layout_toRightOf="@id/expetiment_left_new_btn_iv"/>
-        </RelativeLayout>
-	    <ListView android:id="@+id/experiment_left_lv"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/expetiment_left_new"
-	        android:layout_marginBottom="60dip"/>
-	    <RelativeLayout android:id="@+id/experiment_left_delete"
-	        android:layout_width="wrap_content"
-	        android:layout_height="60dip"
-	        android:layout_alignParentBottom="true"
-	        android:background="@drawable/list_selector"
-	        android:clickable="true">
-	        <ImageView android:id="@+id/experiment_left_delete_btn_iv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="26dip"
-	            android:layout_marginLeft="20dip"
-	            android:background="@drawable/delete"/>
-	        <TextView android:id="@+id/experiment_left_delete_btn"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:gravity="center"
-	            android:textColor="@android:color/white"
-	            android:textSize="20sp"
-	            android:text="@string/exp_delete_exp"
-	            android:layout_toRightOf="@id/experiment_left_delete_btn_iv"/>
-	    </RelativeLayout>
-	</RelativeLayout>
-	<RelativeLayout android:id="@+id/experiment_right_rl"
-	    android:layout_width="770dip"
-	    android:layout_height="fill_parent"
-	    android:layout_margin="5dip"
-	    android:background="#505E8D"
-	    android:layout_below="@id/experiment_top_rl"
-	    android:layout_alignParentRight="true">
-	    <Button android:id="@+id/experiment_right_back_btn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:clickable="true"
-            android:background="@drawable/btn_selector"
-	        android:text="@string/back"
-	        android:textSize="15sp"
-	        android:textColor="@android:color/white"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentBottom="true"/>
-	</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/experiment_top_rl"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/experiment_left_rl"
+            style="@style/left_rl"
+            android:layout_width="0dp"
+            android:background="#755B80"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/experiment_left_top_rl"
+                style="@style/left_top_rl"
+                android:layout_width="fill_parent"
+                android:background="@drawable/left_top" >
+
+                <TextView
+                    android:id="@+id/experiment_left_top_ename_tv"
+                    style="@style/left_top_name"
+                    android:text="@string/experiment" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/expetiment_left_new"
+                android:layout_width="fill_parent"
+                android:layout_height="60dip"
+                android:background="@drawable/list_selector"
+                android:clickable="true" >
+
+                <ImageView
+                    android:id="@+id/expetiment_left_new_btn_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginTop="18dip"
+                    android:background="@drawable/add" />
+
+                <TextView
+                    android:id="@+id/expetiment_left_new_btn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_toRightOf="@id/expetiment_left_new_btn_iv"
+                    android:gravity="center"
+                    android:text="@string/exp_new_exp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/experiment_left_lv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:id="@+id/experiment_left_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/list_selector"
+                android:clickable="true" >
+
+                <ImageView
+                    android:id="@+id/experiment_left_delete_btn_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginTop="26dip"
+                    android:background="@drawable/delete" />
+
+                <TextView
+                    android:id="@+id/experiment_left_delete_btn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_toRightOf="@id/experiment_left_delete_btn_iv"
+                    android:gravity="center"
+                    android:text="@string/exp_delete_exp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="6"
+            android:background="#505E8D" >
+
+            <RelativeLayout
+                android:id="@+id/experiment_right_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#505E8D"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/experiment_right_back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_selector"
+                    android:clickable="true"
+                    android:text="@string/back"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

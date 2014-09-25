@@ -18,12 +18,15 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/experiment_new_prepare_top_name_tv"
-        android:layout_marginTop="50dip" >
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="30dp" >
 
         <RelativeLayout
             android:id="@+id/experiment_new_prepare_body_name_rl"
-            android:layout_width="540dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" 
             android:layout_centerHorizontal="true" >
 
             <TextView
@@ -40,6 +43,7 @@
                 android:layout_width="200dip"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/edittext"
                 android:digits="abcdefghijklmnopqorstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ1234567890_"
                 android:gravity="center"
@@ -50,7 +54,7 @@
 
             <ImageView
                 android:id="@+id/experiment_new_prepare_body_name_iv"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/experiment_new_prepare_body_name_et"
                 android:layout_centerHorizontal="true"
@@ -59,8 +63,10 @@
 
         <RelativeLayout
             android:id="@+id/experiment_new_prepare_body_quick_rl"
-            android:layout_width="540dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+              android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_name_rl"
             android:layout_centerHorizontal="true" >
 
@@ -82,7 +88,7 @@
 
             <ImageView
                 android:id="@+id/experiment_new_prepare_body_quick_iv"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/experiment_new_prepare_body_quick_cb"
                 android:layout_centerHorizontal="true"
@@ -91,8 +97,10 @@
 
         <RelativeLayout
             android:id="@+id/experiment_new_prepare_body_template_rl"
-            android:layout_width="540dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+              android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_quick_rl"
             android:layout_centerHorizontal="true" >
 
@@ -109,11 +117,12 @@
                 android:id="@+id/experiment_new_prepare_body_template_sp"
                 android:layout_width="200dip"
                 android:layout_height="50dip"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp" />
 
             <ImageView
                 android:id="@+id/experiment_new_prepare_body_template_iv"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/experiment_new_prepare_body_template_sp"
                 android:background="@drawable/line" />
@@ -121,8 +130,10 @@
 
         <RelativeLayout
             android:id="@+id/experiment_new_prepare_body_remark_rl"
-            android:layout_width="540dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+              android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_template_rl"
             android:layout_centerHorizontal="true" >
 
@@ -131,6 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="10dip"
                 android:text="@string/exp_remark"
                 android:textColor="@android:color/white"
@@ -139,8 +151,9 @@
             <EditText
                 android:id="@+id/experiment_new_prepare_body_remark_et"
                 android:layout_width="200dip"
-                android:layout_height="190dip"
+                android:layout_height="180dip"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/info_bg"
                 android:gravity="center"
                 android:hint="@string/exp_remark_inout"
@@ -148,7 +161,7 @@
 
             <ImageView
                 android:id="@+id/experiment_new_prepare_body_remark_iv"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/experiment_new_prepare_body_remark_et"
                 android:layout_centerHorizontal="true"
@@ -160,12 +173,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl" >
+            android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl"
+            android:layout_marginRight="10dp" >
 
             <Button
                 android:id="@+id/experiment_new_prepare_body_btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/btn_selector"
                 android:clickable="true"
                 android:text="@string/exp_next"

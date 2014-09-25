@@ -80,7 +80,6 @@ public class ExperimentActivity extends Activity {
 	private int DE_id;
 
 	// 实验信息页面控件
-	private Button experiment_info_body_save_btn;
 	private TextView experiment_info_top_ename_tv;
 	private TextView experiment_info_body_cdate_info_tv;
 	private TextView experiment_info_body_rdate_info_tv;
@@ -374,8 +373,7 @@ public class ExperimentActivity extends Activity {
 				R.layout.activity_experiment_right_info, null);
 		experiment_info_top_ename_tv = (TextView) view
 				.findViewById(R.id.experiment_info_top_ename_tv);
-		experiment_info_body_save_btn = (Button) view
-				.findViewById(R.id.experiment_info_body_save_btn);
+
 		experiment_info_body_cdate_info_tv = (TextView) view
 				.findViewById(R.id.experiment_info_body_cdate_info_tv);
 		experiment_info_body_rdate_info_tv = (TextView) view
@@ -493,12 +491,6 @@ public class ExperimentActivity extends Activity {
 								.setVisibility(View.VISIBLE);
 					}
 				});
-
-		experiment_info_body_save_btn.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-
-			}
-		});
 
 		experiment_info_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
