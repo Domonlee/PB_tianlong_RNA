@@ -25,9 +25,9 @@
             android:id="@+id/experiment_new_prepare_body_name_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" 
-            android:layout_centerHorizontal="true" >
+            android:layout_marginRight="30dp" >
 
             <TextView
                 android:id="@+id/experiment_new_prepare_body_name_tv"
@@ -65,10 +65,10 @@
             android:id="@+id/experiment_new_prepare_body_quick_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-              android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_name_rl"
-            android:layout_centerHorizontal="true" >
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" >
 
             <TextView
                 android:id="@+id/experiment_new_prepare_body_quick_tv"
@@ -99,10 +99,10 @@
             android:id="@+id/experiment_new_prepare_body_template_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-              android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_quick_rl"
-            android:layout_centerHorizontal="true" >
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" >
 
             <TextView
                 android:id="@+id/experiment_new_prepare_body_template_tv"
@@ -132,10 +132,10 @@
             android:id="@+id/experiment_new_prepare_body_remark_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-              android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" 
             android:layout_below="@id/experiment_new_prepare_body_template_rl"
-            android:layout_centerHorizontal="true" >
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" >
 
             <TextView
                 android:id="@+id/experiment_new_prepare_body_remark_tv"
@@ -174,13 +174,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl"
+            android:layout_marginBottom="6dp"
             android:layout_marginRight="10dp" >
 
             <Button
                 android:id="@+id/experiment_new_prepare_body_btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="14dp"
                 android:background="@drawable/btn_selector"
                 android:clickable="true"
                 android:text="@string/exp_next"

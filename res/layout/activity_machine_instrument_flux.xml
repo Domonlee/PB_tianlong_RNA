@@ -5,7 +5,7 @@
 
     <RadioGroup
         android:id="@+id/machine_instrument_flux_item_rg"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="horizontal" >

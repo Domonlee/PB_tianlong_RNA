@@ -63,21 +63,23 @@
                 android:id="@+id/machine_right_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
-                android:layout_marginBottom="5dip"
                 android:background="#505E8D" >
 
                 <RelativeLayout
                     android:id="@+id/machine_right_bottom_btn_rl"
                     style="@style/right_bottom_rl"
-                    android:layout_width="fill_parent" >
+                    android:layout_width="fill_parent"
+                    android:layout_marginRight="6dp" >
 
                     <Button
                         android:id="@+id/machine_right_back_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginBottom="6dp"
                         android:background="@drawable/btn_selector"
                         android:clickable="true"
                         android:text="@string/back"
@@ -90,8 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dip"
                         android:layout_toLeftOf="@id/machine_right_back_btn"
-                        android:visibility="gone"
-                         >
+                        android:visibility="gone" >
 
                         <Button
                             android:id="@+id/machine_user_right_btn_save"
@@ -113,12 +114,12 @@
                             android:layout_toLeftOf="@id/machine_user_right_btn_pass"
                             android:text="@string/user_default" />
 
-                         <Button
+                        <Button
                             android:id="@+id/machine_user_right_btn_pass_default"
                             style="@style/right_btn"
                             android:layout_marginRight="8dip"
                             android:layout_toLeftOf="@id/machine_user_right_btn_default"
-                            android:text="@string/user_pass_default" />   
+                            android:text="@string/user_pass_default" />
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

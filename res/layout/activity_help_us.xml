@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-        <ScrollView 
-            android:id="@+id/info_sv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            >
+    <ScrollView
+        android:id="@+id/info_sv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true" >
+
         <RelativeLayout
             android:id="@+id/dasdffff"
             android:layout_width="wrap_content"
@@ -30,14 +29,13 @@
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_right_new_item_head_iv"
                     android:layout_width="600dip"
                     android:layout_height="1dip"
                     android:layout_below="@id/help_right_new_item_head_tv"
                     android:layout_centerHorizontal="true"
-                    android:background="#626980" 
-                    />
+                    android:background="#626980" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -66,7 +64,7 @@
                         android:text="@string/company_name_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_name_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_name" />
@@ -91,7 +89,7 @@
                         android:text="@string/company_address_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_edittime_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_edittime" />
@@ -167,7 +165,7 @@
                         android:text="@string/company_postcode_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_downspeed_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_downspeed" />
@@ -192,7 +190,7 @@
                         android:text="@string/company_business_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_template_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_template" />
@@ -218,7 +216,7 @@
                         android:text="@string/company_sell_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_gradient_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_gradient" />
@@ -244,7 +242,7 @@
                         android:text="@string/company_service_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_touchdown_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_touchdown" />
@@ -270,37 +268,40 @@
                         android:text="@string/company_technical_info" />
                 </RelativeLayout>
 
-                <TextView 
+                <TextView
                     android:id="@+id/help_main_right_body_long_iv"
                     style="@style/imageStyle"
                     android:layout_below="@id/help_main_right_body_long" />
             </RelativeLayout>
         </RelativeLayout>
-        </ScrollView>
+    </ScrollView>
 
-        <!--  
+    <!--
         <TextView
             android:layout_below="@id/info_sv"
             android:layout_above="@+id/help_right_about_bottom_btn_rl"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            />-->
+            />
+    -->
 
-        <RelativeLayout
-            android:id="@+id/help_right_about_bottom_btn_rl"
-            style="@style/right_bottom_rl"
-            android:layout_width="fill_parent" >
+    <RelativeLayout
+        android:id="@+id/help_right_about_bottom_btn_rl"
+        style="@style/right_bottom_rl"
+        android:layout_width="fill_parent" >
 
-            <Button
-                android:id="@+id/help_right_about_back_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_selector"
-                android:clickable="true"
-                android:text="@string/back"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
-        </RelativeLayout>
+        <Button
+            android:id="@+id/help_right_about_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/btn_selector"
+            android:clickable="true"
+            android:text="@string/back"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
     </RelativeLayout>
-  
+
+</RelativeLayout>

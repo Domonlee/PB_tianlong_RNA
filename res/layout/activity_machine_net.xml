@@ -18,21 +18,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/machine_net_wifi_tv"
-                style="@style/right_textview"
-                android:text="WIFI列表"
-                android:gravity="left"
-				android:paddingTop="10dip"
-                android:layout_alignParentLeft="true"/>
+            style="@style/right_textview"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:paddingTop="10dip"
+            android:text="WIFI列表" />
 
         <ListView
             android:id="@+id/machine_net_wifi_lv"
             android:layout_width="500dip"
-            android:layout_below="@id/machine_net_wifi_tv"
-            android:layout_height="wrap_content" >
-            >
+            android:layout_height="wrap_content"
+            android:layout_below="@id/machine_net_wifi_tv" >
         </ListView>
     </RelativeLayout>
 
@@ -40,11 +39,12 @@
         android:id="@+id/machine_net_bottom_btn_rl"
         style="@style/right_bottom_rl"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="80dip" >
+        android:layout_marginRight="86dip" >
 
         <Button
             android:id="@+id/machine_net_bottom_btn_save"
             style="@style/right_btn"
+            android:layout_marginBottom="6dp"
             android:text="@string/sure" />
     </RelativeLayout>
 

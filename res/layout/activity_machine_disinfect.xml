@@ -49,6 +49,8 @@
         <Button
             android:id="@+id/machine_dismdect_bottom_btn_save"
             style="@style/right_btn"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
             android:text="@string/sure" />
     </RelativeLayout>
 

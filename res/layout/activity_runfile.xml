@@ -84,7 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="1dp" >
+                android:layout_marginBottom="6dp"
+                android:layout_marginRight="6dp" >
 
                 <TextView
                     android:id="@+id/runfile_right_output_location_tv"

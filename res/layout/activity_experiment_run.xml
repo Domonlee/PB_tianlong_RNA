@@ -376,6 +376,7 @@
                 android:id="@+id/experiment_run_body_righr_bottom_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="60dip"
+                android:layout_marginRight="6dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true" >
 

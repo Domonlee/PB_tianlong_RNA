@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.tianlong.rna.adapter.DownAdapter;
 import org.tianlong.rna.adapter.UpAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.StepDao;
@@ -20,6 +19,7 @@ import org.tianlong.rna.utlis.WifiUtlis;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,14 +28,18 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnLongClickListener;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +57,7 @@ public class UpAndDownActivity extends Activity {
 	private Button activity_upanddown_down_top_btn;
 	private ListView activity_upanddown_down_top_lv;
 	private TextView activity_upanddown_top_uname_tv;
+	private ImageView activity_upanddown_down_top_delete_btn;
 
 	private boolean sameNameFlag = false;
 	private List<Experiment> experiments;
@@ -60,6 +65,7 @@ public class UpAndDownActivity extends Activity {
 	private StepDao stepDao;
 	private boolean readListFlag = true, getInfoListFlag = true,
 			sendFileFlag = true; // 读取列表线程控制，得到下位机文件线程控制，上位机发送文件线程控制
+	private boolean deleteFlag = false; // 仪器实验删除
 	// private String receiveMeg; //接收信息
 	private WifiUtlis wifiUtlis; // wifi控制工具
 	private List<String> receive; // 接受信息列表
@@ -74,6 +80,7 @@ public class UpAndDownActivity extends Activity {
 	private int U_id, up_id = -1, down_id = -1;
 	private String Uname;
 	private int sendControlNum; // 发送文件控制数
+	private int num;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -108,6 +115,7 @@ public class UpAndDownActivity extends Activity {
 		activity_upanddown_down_top_btn = (Button) findViewById(R.id.activity_upanddown_down_top_btn);
 		activity_upanddown_down_top_lv = (ListView) findViewById(R.id.activity_upanddown_down_top_lv);
 		activity_upanddown_top_uname_tv = (TextView) findViewById(R.id.activity_upanddown_top_uname_tv);
+		activity_upanddown_down_top_delete_btn = (ImageView) findViewById(R.id.activity_upanddown_down_top_delete_btn);
 
 		activity_upanddown_top_uname_tv.setText(Uname);
 
@@ -170,6 +178,7 @@ public class UpAndDownActivity extends Activity {
 					}
 				});
 
+		// --仪器文件 lv
 		activity_upanddown_down_top_lv
 				.setOnItemClickListener(new OnItemClickListener() {
 					public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -214,7 +223,7 @@ public class UpAndDownActivity extends Activity {
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, final int arg2, long arg3) {
-					
+
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								UpAndDownActivity.this);
 						builder.setTitle(getString(R.string.delete_file));
@@ -227,15 +236,30 @@ public class UpAndDownActivity extends Activity {
 										}
 										try {
 											if (arg2 == 0) {
-												Toast.makeText( UpAndDownActivity.this, getString(R.string.up_delete_forbid), Toast.LENGTH_SHORT) .show();
+												Toast.makeText(
+														UpAndDownActivity.this,
+														getString(R.string.up_delete_forbid),
+														Toast.LENGTH_SHORT)
+														.show();
 											} else {
-												wifiUtlis.sendMessage(Utlis .sendDeleteExperiment((Integer) experimentsList .get(arg2).get( "id")));
-												wifiUtlis.sendMessage(Utlis .getseleteMessage(10));
-												Toast.makeText( UpAndDownActivity.this, getString(R.string.up_delete_successful),Toast.LENGTH_SHORT) .show();
+												wifiUtlis.sendMessage(Utlis
+														.sendDeleteExperiment((Integer) experimentsList
+																.get(arg2).get(
+																		"id")));
+												wifiUtlis.sendMessage(Utlis
+														.getseleteMessage(10));
+												Toast.makeText(
+														UpAndDownActivity.this,
+														getString(R.string.up_delete_successful),
+														Toast.LENGTH_SHORT)
+														.show();
 												new Thread(listThread).start();
 											}
 										} catch (Exception e) {
-											Toast.makeText( UpAndDownActivity.this, getString(R.string.wifi_error), Toast.LENGTH_SHORT).show();
+											Toast.makeText(
+													UpAndDownActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
 										}
 									}
 								});
@@ -248,6 +272,24 @@ public class UpAndDownActivity extends Activity {
 								});
 						builder.show();
 						return false;
+					}
+				});
+
+		// 删除按钮展示
+		activity_upanddown_down_top_delete_btn
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						num++;
+						if (num % 2 == 0) {
+							deleteFlag = false;
+						} else {
+							deleteFlag = true;
+						}
+						DownAdapter downAdapter = new DownAdapter(
+								UpAndDownActivity.this, experimentsList,
+								deleteFlag);
+						activity_upanddown_down_top_lv.setAdapter(downAdapter);
 					}
 				});
 
@@ -324,7 +366,7 @@ public class UpAndDownActivity extends Activity {
 			}
 		});
 
-		// --上传按键  实现同命名检测
+		// --上传按键 实现同命名检测
 		activity_upanddown_down_top_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -495,7 +537,7 @@ public class UpAndDownActivity extends Activity {
 				receive = Utlis.getReceive(info);
 				experimentsList = Utlis.getExperimentList(receive);
 				activity_upanddown_down_top_lv.setAdapter(new DownAdapter(
-						UpAndDownActivity.this, experimentsList));
+						UpAndDownActivity.this, experimentsList,deleteFlag));
 				readListFlag = false;
 			}
 		};
@@ -534,7 +576,8 @@ public class UpAndDownActivity extends Activity {
 							.equals(infoList.get(0).substring(
 									infoList.get(0).indexOf(":") + 1,
 									infoList.get(0).length()))) {
-						Toast.makeText(UpAndDownActivity.this, getString(R.string.up_samename),
+						Toast.makeText(UpAndDownActivity.this,
+								getString(R.string.up_samename),
 								Toast.LENGTH_SHORT).show();
 						sameNameFlag = true;
 					}
@@ -624,5 +667,134 @@ public class UpAndDownActivity extends Activity {
 			builder.show();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	public class DownAdapter extends BaseAdapter {
+
+		private List<Map<String, Object>> strings;
+		private LayoutInflater inflater;
+		private boolean deleteFlag = false;
+
+		public DownAdapter(Context context, List<Map<String, Object>> strings) {
+			super();
+			this.strings = strings;
+			this.inflater = LayoutInflater.from(context);
+		}
+
+		public DownAdapter(Context context, List<Map<String, Object>> strings,
+				boolean deleteFlag) {
+			super();
+			this.strings = strings;
+			this.inflater = LayoutInflater.from(context);
+			this.deleteFlag = deleteFlag;
+		}
+
+		@Override
+		public int getCount() {
+			return strings.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			return strings.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			return arg0;
+		}
+
+		@Override
+		public View getView(final int arg0, View arg1, ViewGroup arg2) {
+			ViewHolder holder = null;
+			if (arg1 == null) {
+				holder = new ViewHolder();
+				arg1 = inflater.inflate(
+						R.layout.activity_upanddown_left_listview_item, null);
+				holder.left_listview_item_name = (TextView) arg1
+						.findViewById(R.id.left_listview_item_name);
+				holder.left_listview_item_delete_icon = (ImageView) arg1
+						.findViewById(R.id.left_listview_item_delete_icon);
+				arg1.setTag(holder);
+			} else {
+				holder = (ViewHolder) arg1.getTag();
+			}
+			holder.left_listview_item_name.setText((String) strings.get(arg0)
+					.get("info")
+					+ " -- "
+					+ (String) strings.get(arg0).get("user"));
+			if (deleteFlag == true) {
+				holder.left_listview_item_delete_icon
+						.setVisibility(View.VISIBLE);
+				holder.left_listview_item_delete_icon
+						.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+
+								
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										UpAndDownActivity.this);
+								builder.setTitle(getString(R.string.delete_file));
+								builder.setPositiveButton(getString(R.string.sure),
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int which) {
+												if (!readListFlag) {
+													readListFlag = true;
+												}
+												try {
+													if (arg0 == 0) {
+														Toast.makeText(
+																UpAndDownActivity.this,
+																getString(R.string.up_delete_forbid),
+																Toast.LENGTH_SHORT)
+																.show();
+													} else {
+														wifiUtlis.sendMessage(Utlis
+																.sendDeleteExperiment((Integer) experimentsList
+																		.get(arg0).get(
+																				"id")));
+														wifiUtlis.sendMessage(Utlis
+																.getseleteMessage(10));
+														strings.remove(arg0);
+														Toast.makeText(
+																UpAndDownActivity.this,
+																getString(R.string.up_delete_successful),
+																Toast.LENGTH_SHORT)
+																.show();
+														new Thread(listThread).start();
+													}
+												} catch (Exception e) {
+													Toast.makeText(
+															UpAndDownActivity.this,
+															getString(R.string.wifi_error),
+															Toast.LENGTH_SHORT).show();
+												}
+											}
+										});
+								builder.setNegativeButton(getString(R.string.cancle),
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int which) {
+												dialog.cancel();
+											}
+										});
+								builder.show();
+								
+								DownAdapter.this.notifyDataSetChanged();
+							}
+						});
+			} else {
+				holder.left_listview_item_delete_icon.setVisibility(View.GONE);
+			}
+			return arg1;
+		}
+
+		class ViewHolder {
+			TextView left_listview_item_name;
+			ImageView left_listview_item_delete_icon;
+		}
+
 	}
 }

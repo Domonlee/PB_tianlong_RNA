@@ -152,7 +152,7 @@
             <TextView
                 android:id="@+id/experiment_info_body_remark_info_tv"
                 android:layout_width="240dip"
-                android:layout_height="180dip"
+                android:layout_height="175dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dip"
@@ -164,7 +164,7 @@
             <EditText
                 android:id="@+id/experiment_info_body_remark_info_et"
                 android:layout_width="240dip"
-                android:layout_height="180dip"
+                android:layout_height="175dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dip"
@@ -189,6 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@id/experiment_info_body_remark"
+            android:layout_marginBottom="6dp"
             android:layout_marginRight="10dp" >
 
             <Button
@@ -206,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dip"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="14dp"
                 android:layout_toRightOf="@id/experiment_info_bottom_run_btn"
                 android:background="@drawable/btn_selector"
                 android:clickable="true"

@@ -21,6 +21,7 @@ import org.tianlong.rna.utlis.TimeWheelView;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -424,6 +425,7 @@ public class MachineActivity extends Activity {
 		list.add(getString(R.string.system_net));
 		list.add(getString(R.string.system_user));
 		list.add(getString(R.string.system_clean));
+		list.add(getString(R.string.system_qr));
 		if (user.getUadmin() == 1) {
 			list.add(getString(R.string.system_machine));
 			list.add(getString(R.string.system_detection));
@@ -506,9 +508,13 @@ public class MachineActivity extends Activity {
 					R.layout.activity_machine_net, null);
 			machine_net_wifi_lv = (ListView) view
 					.findViewById(R.id.machine_net_wifi_lv);
-			machine_net_bottom_btn_save = (Button) view
-					.findViewById(R.id.machine_net_bottom_btn_save);
-			machine_net_bottom_btn_save.setVisibility(View.GONE);
+			// machine_net_bottom_btn_save = (Button) view
+			// .findViewById(R.id.machine_net_bottom_btn_save);
+			if (!wifiManager.isWifiEnabled()) {
+				Intent intent = new Intent("android.settings.WIFI_SETTINGS");
+				startActivity(intent);
+			}
+			// machine_net_bottom_btn_save.setVisibility(View.GONE);
 			if (list == null) {
 				Toast.makeText(this, getString(R.string.net_wifi_unopen),
 						Toast.LENGTH_LONG).show();
@@ -524,10 +530,8 @@ public class MachineActivity extends Activity {
 					}
 				}
 			}
-
 			machine_net_wifi_lv.setAdapter(new WifiListAdapter(
 					MachineActivity.this, list));
-
 			// --跳转系统wifi设置。
 			machine_net_wifi_lv
 					.setOnItemClickListener(new OnItemClickListener() {
@@ -539,15 +543,6 @@ public class MachineActivity extends Activity {
 							startActivity(intent);
 						}
 					});
-
-//			machine_net_bottom_btn_save
-//					.setOnClickListener(new OnClickListener() {
-//						public void onClick(View v) {
-//							Toast.makeText(getApplicationContext(), "设置wifi成功",
-//									1000).show();
-//						}
-//					});
-
 			break;
 
 		// 用户设置
@@ -569,7 +564,8 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
 
-			if (machine.getMDtime().equals("null:null:null") ||machine.getMDtime().equals("null")) {
+			if (machine.getMDtime().equals("null:null:null")
+					|| machine.getMDtime().equals("null")) {
 				machine.setMDtime("01:00:00");
 			}
 			machine_dismdect_body_time_et.setText(machine.getMDtime());
@@ -672,8 +668,14 @@ public class MachineActivity extends Activity {
 					});
 			break;
 
-		// 仪器设置
+			//二维码
 		case 4:
+			view = LayoutInflater.from(MachineActivity.this).inflate(
+					R.layout.activity_machine_qr, null);
+			TextView machine_qr_name_tv = (TextView)view.findViewById(R.id.machine_qr_name_tv);
+			break;
+		// 仪器设置
+		case 5:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -1115,7 +1117,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 5:
+		case 6:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_detection, null);
 			machine_detection_body_bottom_left_info_iv = (ImageView) view
@@ -1271,7 +1273,7 @@ public class MachineActivity extends Activity {
 						}
 					});
 			break;
-		case 6:
+		case 7:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_user_pass, null);
 			userViewControNum = 6;
@@ -1502,6 +1504,17 @@ public class MachineActivity extends Activity {
 			wifi_tv.setText(scanResult.SSID);
 			wifi_SignalStrenth_tv.setText(String.valueOf(Math
 					.abs(scanResult.level)) + "%");
+			if (Math.abs(scanResult.level) > 100) {
+				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_0));
+			} else if (Math.abs(scanResult.level) > 75) {
+				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_1));
+			} else if (Math.abs(scanResult.level) > 50) {
+				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_2));
+			} else if (Math.abs(scanResult.level) > 25) {
+				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_3));
+			} else {
+				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_4));
+			}
 			return view;
 		}
 

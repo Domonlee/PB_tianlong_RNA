@@ -144,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dip"
+                android:layout_marginRight="6dip"
                 android:layout_toRightOf="@id/experiment_new_main_bottom_save_btn"
                 android:background="@drawable/btn_selector"
                 android:clickable="true"

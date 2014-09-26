@@ -1500,6 +1500,7 @@ public class EditExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
+												//TODO
 												editSteps.get(p).setSspeed(
 														speed);
 												holder.experiment_new_main_item_body_speed_info_tv
@@ -2561,6 +2562,7 @@ public class EditExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
+												//TODO
 												editSteps.get(p).setSspeed(
 														speed);
 												holder.experiment_new_main_item_body_speed_info_tv

@@ -2,12 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-	<TextView android:id="@+id/left_listview_item_name"
-	    android:layout_width="fill_parent"
-	    android:layout_height="55dip"
-	    android:textSize="20sp"
-	    android:textColor="@android:color/white"
-	    android:gravity="center"
-	    android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/left_listview_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="55dip"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="item name"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/left_listview_item_delete_icon"
+        android:layout_width="45dip"
+        android:layout_height="45dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/upanddown_delete_mini_icon"
+        android:textColor="@android:color/white" />
+
 </RelativeLayout>

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.tianlong.rna.activity.R.string;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
@@ -53,6 +54,8 @@ public class RunExperimentActivity extends Activity {
 	private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
 	private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
+	private final String TAG = "TimeInfo";
+	
 	private TextView experiment_run_body_left_top_name_tv;
 	private TableLayout experiment_run_body_right_body_tl;
 	private Button experiment_run_body_right_bottom_back_btn;
@@ -638,16 +641,13 @@ public class RunExperimentActivity extends Activity {
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();
 		fluxNum = 1;
-		
-		
+
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
 		sbuilder.setTitle(getString(R.string.waitting));
 		Dialog waitDialog = sbuilder.show();
 
 		initView();
-
-		
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -865,8 +865,7 @@ public class RunExperimentActivity extends Activity {
 		}
 	}
 
-	public void initView(){
-
+	public void initView() {
 
 		selectInfoThread = new SelectInfoThread();
 		stepDao = new StepDao();
@@ -908,17 +907,15 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_body_t7_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t7_info_tv);
 		experiment_run_body_left_body_t8_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t8_info_tv);
 
-		experiment_run_body_left_temp_body = (LinearLayout)findViewById(R.id.experiment_run_body_left_temp_body);
+		experiment_run_body_left_temp_body = (LinearLayout) findViewById(R.id.experiment_run_body_left_temp_body);
 		hideTempBody();
-		getTime(0);	
+		getTime(0);
 	}
-	
+
 	/**
 	 * 
-	*  Title: hideTempBody 
-	*  Description: 
-	*  Modified By£º  Domon                                        
-	*  Modified Date: 2014-9-18
+	 * Title: hideTempBody Description: Modified By£º Domon Modified Date:
+	 * 2014-9-18
 	 */
 	private void hideTempBody() {
 		if (fluxNum == 1 || fluxNum == 3) {
@@ -1021,6 +1018,17 @@ public class RunExperimentActivity extends Activity {
 				holder.experiment_run_item_head_wait_pb.setProgress(0);
 			} else {
 				try {
+					//TODO
+					Log.w(TAG,"total:" +Utlis.timeFormat.parse(
+									steps.get(i).getSwait()).getHours()
+									* 3600
+									+ Utlis.timeFormat.parse(
+											steps.get(i).getSwait())
+											.getMinutes()
+									* 60
+									+ Utlis.timeFormat.parse(
+											steps.get(i).getSwait())
+											.getSeconds());
 					holder.experiment_run_item_head_wait_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSwait()).getHours()
@@ -1043,6 +1051,16 @@ public class RunExperimentActivity extends Activity {
 									+ Utlis.timeFormat.parse(
 											steps.get(i).getSwait())
 											.getSeconds());
+					Log.w(TAG," progress:" +Utlis.timeFormat.parse(
+							steps.get(i).getSwait()).getHours()
+							* 3600
+							+ Utlis.timeFormat.parse(
+									steps.get(i).getSwait())
+									.getMinutes()
+							* 60
+							+ Utlis.timeFormat.parse(
+									steps.get(i).getSwait())
+									.getSeconds());
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -1053,6 +1071,17 @@ public class RunExperimentActivity extends Activity {
 				holder.experiment_run_item_head_blend_pb.setProgress(0);
 			} else {
 				try {
+					//TODO
+					Log.w(TAG,"total:" +Utlis.timeFormat.parse(
+									steps.get(i).getSblend()).getHours()
+									* 3600
+									+ Utlis.timeFormat.parse(
+											steps.get(i).getSblend())
+											.getMinutes()
+									* 60
+									+ Utlis.timeFormat.parse(
+											steps.get(i).getSblend())
+											.getSeconds());
 					holder.experiment_run_item_head_blend_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSblend()).getHours()

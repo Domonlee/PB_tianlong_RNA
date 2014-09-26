@@ -7,11 +7,11 @@
     <RelativeLayout
         android:id="@+id/about_body"
         android:layout_width="fill_parent"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dip" >
+        android:layout_marginTop="50dip"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp" >
 
         <ImageView
             android:id="@+id/about_iv"
@@ -63,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
             android:background="@drawable/btn_selector"
             android:clickable="true"
             android:text="@string/back"

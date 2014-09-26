@@ -54,6 +54,7 @@
     <string name="system_language">语言设置</string>
     <string name="system_net">网络设置</string>
     <string name="system_clean">消毒设置</string>
+    <string name="system_qr">二维码</string>
     <string name="system_user">用户设置</string>
     <string name="system_update">仪器升级</string>
     <string name="system_temp">系统温度</string>

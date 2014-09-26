@@ -498,7 +498,7 @@ public class CreatExperimentActivity extends Activity {
 							.setBackgroundResource(R.drawable.zero);
 				}
 
-				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
+				holder.experiment_new_main_item_top_name_tv.setText("No."
 						+ (i + 1));
 				if (defaultSteps.get(i).getDStemplet() == 1) {
 					holder.experiment_new_main_item_head_wait_info_tv
@@ -1389,6 +1389,7 @@ public class CreatExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
+												//TODO
 												step.setSspeed(speed);
 												holder.experiment_new_main_item_body_speed_info_tv
 														.setText(speed
@@ -2304,8 +2305,7 @@ public class CreatExperimentActivity extends Activity {
 							}
 						});
 
-				holder.experiment_new_main_item_body_speed_info_tv
-						.setOnClickListener(new OnClickListener() {
+				holder.experiment_new_main_item_body_speed_info_tv.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
 								View view = LayoutInflater
 										.from(CreatExperimentActivity.this)
@@ -2406,6 +2406,7 @@ public class CreatExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
+												//TODO
 												steps.get(p).setSspeed(speed);
 												holder.experiment_new_main_item_body_speed_info_tv
 														.setText(speed

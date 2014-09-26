@@ -62,9 +62,9 @@
                 android:id="@+id/help_right_rl"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginBottom="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
-                android:layout_marginBottom="5dip"
                 android:background="#505E8D" >
 
                 <RelativeLayout
@@ -77,6 +77,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginRight="6dp"
                         android:background="@drawable/btn_selector"
                         android:clickable="true"
                         android:text="@string/back"

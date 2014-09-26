@@ -10,14 +10,14 @@
         android:layout_marginRight="10dip"
         android:background="@anim/anim_view" >
 
-        <TextView
+         <TextView
             android:id="@+id/experiment_run_item_top_name_tv"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="40dip"
             android:gravity="center"
             android:text="步骤一"
             android:textColor="@android:color/white"
-            android:textSize="25sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/experiment_run_item_top_iv"
@@ -25,11 +25,28 @@
             android:layout_height="1dip"
             android:layout_below="@+id/experiment_run_item_top_name_tv"
             android:background="#778899" />
+        
+        <RelativeLayout
+            android:id="@+id/experiment_run_item_bottom_rl"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/experiment_run_item_top_name_tv"
+            android:layout_height="48dip" >
+
+            <TextView
+                android:id="@+id/experiment_run_item_bottom_name_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="裂     解"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/experiment_run_item_top_name_tv"
+            android:layout_below="@id/experiment_run_item_bottom_rl"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -314,6 +331,47 @@
                     android:text="TextView" />
 
                 <RelativeLayout
+                    android:id="@+id/experiment_run_item_body_switch_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dip"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/experiment_run_item_body_switch_tv"
+                        android:layout_width="194dip"
+                        android:layout_height="fill_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="@string/exp_temp_type"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/experiment_run_item_body_switch_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_toRightOf="@id/experiment_run_item_body_switch_tv"
+                        android:background="@drawable/shu" />
+
+                    <TextView
+                        android:id="@+id/experiment_run_item_body_switch_info_tv"
+                        android:layout_width="194dip"
+                        android:layout_height="fill_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/experiment_run_item_body_switch_iv"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/experiment_run_item_switch_iv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#778899"
+                    android:text="TextView" />
+
+                <RelativeLayout
                     android:id="@+id/experiment_run_item_body_temp_rl"
                     android:layout_width="wrap_content"
                     android:layout_height="0dip" 
@@ -357,67 +415,8 @@
                     android:layout_height="1dip"
                     android:background="#778899"
                     android:text="TextView" />
-
-                <RelativeLayout
-                    android:id="@+id/experiment_run_item_body_switch_rl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dip" 
-                    android:layout_weight="1"
-                    >
-                    
-
-                    <TextView
-                        android:id="@+id/experiment_run_item_body_switch_tv"
-                        android:layout_width="194dip"
-                        android:layout_height="fill_parent"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="@string/exp_temp_type"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:id="@+id/experiment_run_item_body_switch_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_toRightOf="@id/experiment_run_item_body_switch_tv"
-                        android:background="@drawable/shu" />
-
-                    <TextView
-                        android:id="@+id/experiment_run_item_body_switch_info_tv"
-                        android:layout_width="194dip"
-                        android:layout_height="fill_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/experiment_run_item_body_switch_iv"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/experiment_run_item_switch_iv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#778899"
-                    android:text="TextView" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/experiment_run_item_bottom_rl"
-                android:layout_width="fill_parent"
-                android:layout_height="48dip"
-                android:layout_alignParentBottom="true" >
-
-                <TextView
-                    android:id="@+id/experiment_run_item_bottom_name_et"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:text="裂     解"
-                    android:textColor="@android:color/white"
-                    android:textSize="25sp" />
-            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 

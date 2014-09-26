@@ -12,8 +12,8 @@
     <RadioGroup
         android:id="@+id/machine_language_body_rg"
         style="@style/right_body_rl"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/machine_language_iv"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical" >
 
         <RadioButton
@@ -34,63 +34,43 @@
             android:paddingLeft="232dip"
             android:text="@string/language_english" />
     </RadioGroup>
-    
-    <LinearLayout 
-        android:layout_alignTop="@+id/machine_language_body_rg"
-        android:layout_toRightOf="@+id/machine_language_body_rg"
+
+    <LinearLayout
         android:layout_width="100dip"
         android:layout_height="160dip"
-        android:orientation="vertical"
-        >
+        android:layout_alignTop="@+id/machine_language_body_rg"
+        android:layout_toRightOf="@+id/machine_language_body_rg"
+        android:orientation="vertical" >
 
         <TextView
-        android:id="@+id/textView1"
-        android:layout_width="100dip"
-        android:layout_height="wrap_content"
-        android:text="@string/language_chinese"
-        android:layout_marginTop="24dp"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
-        
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/language_chinese"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
         <TextView
-        android:layout_width="100dip"
-        android:layout_height="wrap_content"
-        android:text="@string/language_english"
-        android:textColor="@color/white"
-        android:layout_marginTop="54dp"
-        android:textSize="25sp" />
-</LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"
+            android:text="@string/language_english"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/machine_language_bottom_btn_rl"
         style="@style/right_bottom_rl"
-        android:layout_alignRight="@id/machine_language_iv" >
+        android:layout_alignRight="@id/machine_language_iv"
+        android:layout_marginRight="6dp" >
 
         <Button
             android:id="@+id/machine_language_bottom_btn_save"
             style="@style/right_btn"
+        android:layout_marginBottom="6dp"
             android:text="@string/sure" />
     </RelativeLayout>
 
-    <!--  
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="100dip"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/machine_language_body_rg"
-        android:layout_marginTop="24dp"
-        android:layout_toRightOf="@+id/machine_language_body_rg"
-        android:text="@string/language_chinese"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
-
-    <TextView
-        android:layout_width="100dip"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/machine_language_body_rg"
-        android:layout_toRightOf="@+id/machine_language_body_rg"
-        android:text="@string/language_english"
-        android:textColor="@color/white"
-        android:paddingBottom="25dp"
-        android:textSize="25sp" />
--->
 </RelativeLayout>
