@@ -13,20 +13,21 @@
         android:textColor="@android:color/white"
         android:textSize="30sp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/experiment_new_prepare_body_rl"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/experiment_new_prepare_top_name_tv"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="30dp" >
+        android:layout_marginRight="30dp"
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/experiment_new_prepare_body_name_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
+            android:layout_weight="1"
             android:layout_marginRight="30dp" >
 
             <TextView
@@ -65,8 +66,7 @@
             android:id="@+id/experiment_new_prepare_body_quick_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/experiment_new_prepare_body_name_rl"
-            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" >
 
@@ -99,8 +99,7 @@
             android:id="@+id/experiment_new_prepare_body_template_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/experiment_new_prepare_body_quick_rl"
-            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" >
 
@@ -132,8 +131,7 @@
             android:id="@+id/experiment_new_prepare_body_remark_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/experiment_new_prepare_body_template_rl"
-            android:layout_centerHorizontal="true"
+            android:layout_weight="3.5"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" >
 
@@ -172,10 +170,9 @@
             android:id="@+id/experiment_new_prepare_body_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@id/experiment_new_prepare_body_remark_rl"
+            android:layout_gravity="right"
             android:layout_marginBottom="6dp"
-            android:layout_marginRight="10dp" >
+            android:layout_marginRight="54dp" >
 
             <Button
                 android:id="@+id/experiment_new_prepare_body_btn_next"
@@ -188,6 +185,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

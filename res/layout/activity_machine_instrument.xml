@@ -20,7 +20,7 @@
                 android:layout_width="500dip"
                 android:layout_height="60dip"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dip" >
+                android:layout_marginTop="5dip" >
 
                 <TextView
                     android:id="@+id/machine_instrument_body_flux_tv"
@@ -62,11 +62,12 @@
                     android:layout_alignParentTop="true"
                     android:background="@drawable/instrument" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/machine_instrument_body_parameter_info_rl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" >
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/machine_instrument_body_run_parameter_tv"
@@ -80,14 +81,13 @@
                     <RelativeLayout
                         android:id="@+id/machine_instrument_body_run_parameter_info_rl"
                         android:layout_width="wrap_content"
-                        android:layout_height="240dip"
-                        android:layout_below="@id/machine_instrument_body_run_parameter_tv"
+                        android:layout_height="210dip"
                         android:background="@android:color/white" >
 
                         <RelativeLayout
                             android:id="@+id/machine_instrument_body_run_parameter_hole_rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="80dip" >
+                            android:layout_height="70dip" >
 
                             <TextView
                                 android:id="@+id/machine_instrument_body_run_parameter_hole_tv"
@@ -167,7 +167,7 @@
                         <RelativeLayout
                             android:id="@+id/machine_instrument_body_run_parameter_magnetic_rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="80dip"
+                            android:layout_height="70dip"
                             android:layout_below="@id/machine_instrument_body_run_parameter_hole_rl" >
 
                             <TextView
@@ -248,7 +248,7 @@
                         <RelativeLayout
                             android:id="@+id/machine_instrument_body_run_parameter_blend_rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="80dip"
+                            android:layout_height="70dip"
                             android:layout_below="@id/machine_instrument_body_run_parameter_magnetic_rl" >
 
                             <TextView
@@ -326,20 +326,21 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </RelativeLayout>
-                </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/machine_instrument_bottom_btn_rl"
             style="@style/right_bottom_rl"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="6dp"
             android:layout_marginRight="106dip" >
 
             <Button
                 android:id="@+id/machine_instrument_bottom_btn_save"
                 style="@style/right_btn"
-            android:layout_marginBottom="6dp"
                 android:text="@string/system_reset" />
         </RelativeLayout>
     </RelativeLayout>

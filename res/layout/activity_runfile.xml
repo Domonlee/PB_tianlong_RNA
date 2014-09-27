@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@id/runfile_top_rl"
         android:orientation="horizontal" >
 
@@ -67,14 +67,14 @@
             <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:fillViewport="true"
                 android:minHeight="300dp" >
 
                 <TextView
                     android:id="@+id/runfile_right_tv"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:layout_marginLeft="10dip"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />

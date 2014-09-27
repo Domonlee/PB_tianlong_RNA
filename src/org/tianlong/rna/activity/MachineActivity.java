@@ -21,7 +21,7 @@ import org.tianlong.rna.utlis.TimeWheelView;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
-
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -97,9 +97,6 @@ public class MachineActivity extends Activity {
 	private TimeWheelView time_hour_hour;
 	private TimeWheelView time_hour_minutes;
 	private TimeWheelView time_hour_seconds;
-	private String hours;
-	private String mins;
-	private String secs;
 	private String disinfectStr;
 
 	// 用户设置
@@ -112,6 +109,8 @@ public class MachineActivity extends Activity {
 	private TextView machine_admin_body_head_name_tv;
 	private TextView machine_admin_body_head_admin_tv;
 	private TextView machine_admin_body_head_login_tv;
+	private TextView machine_admin_body_head_modify_psw_tv;
+	private boolean modifyFlag = false;
 
 	byte[] b = new byte[1];
 
@@ -375,7 +374,7 @@ public class MachineActivity extends Activity {
 		machine_user_right_btn_pass.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				machine_right_rl.removeView(view);
-				showView(6);
+				showView(7);
 			}
 		});
 
@@ -395,22 +394,14 @@ public class MachineActivity extends Activity {
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
-						List<User> list = new ArrayList<User>();
-						list = userDao.getAllUser(MachineActivity.this);
-
-						for (int i = 0; i < list.size(); i++) {
-							if (!(list.get(i).getUname().equals("admin"))
-									&& !(list.get(i).getUname().equals("guest"))) {
-								list.get(i).setUpass("123456");
-								userDao.updatePassword(list.get(i),
-										MachineActivity.this);
-							}
+						if (modifyFlag == true) {
+							modifyFlag = false;
+						} else {
+							modifyFlag = true;
 						}
-						Toast.makeText(
-								MachineActivity.this,
-								getString(R.string.user_pass_default_modify_successful),
-								Toast.LENGTH_LONG).show();
+						MachineAdminAdapter machineAdminAdapter = new MachineAdminAdapter(
+								MachineActivity.this, users, modifyFlag);
+						machine_admin_body_lv.setAdapter(machineAdminAdapter);
 					}
 				});
 	}
@@ -564,6 +555,7 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
 
+			// TODO 消毒时间error
 			if (machine.getMDtime().equals("null:null:null")
 					|| machine.getMDtime().equals("null")) {
 				machine.setMDtime("01:00:00");
@@ -668,11 +660,12 @@ public class MachineActivity extends Activity {
 					});
 			break;
 
-			//二维码
+		// 二维码
 		case 4:
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_qr, null);
-			TextView machine_qr_name_tv = (TextView)view.findViewById(R.id.machine_qr_name_tv);
+			TextView machine_qr_name_tv = (TextView) view
+					.findViewById(R.id.machine_qr_name_tv);
 			break;
 		// 仪器设置
 		case 5:
@@ -720,7 +713,8 @@ public class MachineActivity extends Activity {
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_tv);
 
 			fluxNum = machine.getMflux();
-			machine_instrument_body_flux_info_tv.setText("");
+			machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
+
 			machine_instrument_body_run_parameter_blend_info_et.setText(machine
 					.getMblend() + "");
 			machine_instrument_body_run_parameter_magnetic_info_et
@@ -949,10 +943,17 @@ public class MachineActivity extends Activity {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
+											try {
+												wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
 											machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
 											Utlis.sendSettingflux(getNum(fluxNum));
+											Toast.makeText(MachineActivity.this, getString(R.string.instrument_success), Toast.LENGTH_SHORT).show();
 										}
 									});
 							builder.setNegativeButton(
@@ -1295,11 +1296,14 @@ public class MachineActivity extends Activity {
 	}
 
 	private void defaultLogin() {
+		machine_user_right_btn_default.setVisibility(View.GONE);
+		machine_user_right_btn_pass_default.setVisibility(View.GONE);
 		userViewControNum = 3;
 		view = LayoutInflater.from(MachineActivity.this).inflate(
 				R.layout.activity_machine_user_default, null);
 		machine_user_body_default_btn = (Button) view
 				.findViewById(R.id.machine_user_body_default_btn);
+
 		if (user.getUdefault() == 1) {
 			machine_user_body_default_btn
 					.setBackgroundResource(R.drawable.setting_on);
@@ -1308,6 +1312,7 @@ public class MachineActivity extends Activity {
 			machine_user_body_default_btn
 					.setBackgroundResource(R.drawable.setting_off);
 		}
+
 		machine_user_body_default_btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				defaultControNum++;
@@ -1338,6 +1343,8 @@ public class MachineActivity extends Activity {
 				.findViewById(R.id.machine_admin_body_head_admin_tv);
 		machine_admin_body_head_login_tv = (TextView) view
 				.findViewById(R.id.machine_admin_body_head_login_tv);
+		machine_admin_body_head_modify_psw_tv = (TextView) view
+				.findViewById(R.id.machine_admin_body_head_modify_psw_tv);
 
 		machine_admin_body_head_name_tv
 				.setText(getString(R.string.user_admin_name));
@@ -1345,10 +1352,51 @@ public class MachineActivity extends Activity {
 				.setText(getString(R.string.user_admin_permissions));
 		machine_admin_body_head_login_tv
 				.setText(getString(R.string.user_admin_login));
+		machine_admin_body_head_modify_psw_tv
+				.setText(getString(R.string.user_admin_modify_psw));
 
 		users = userDao.getAllUser(MachineActivity.this);
 		machine_admin_body_lv.setAdapter(new MachineAdminAdapter(
-				MachineActivity.this, users));
+				MachineActivity.this, users, modifyFlag));
+
+		machine_admin_body_lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				// TODO
+				if (modifyFlag) {
+					if (!(users.get(position).getUname().equals("admin"))
+							&& !(users.get(position).getUname().equals("guest"))) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								MachineActivity.this);
+						builder.setTitle(getString(R.string.user_pass_default_sure));
+						builder.setPositiveButton(getString(R.string.sure),
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										users.get(position).setUpass("123456");
+										userDao.updatePassword(
+												users.get(position),
+												MachineActivity.this);
+										Toast.makeText(
+												MachineActivity.this,
+												getString(R.string.user_pass_default_modify_successful),
+												Toast.LENGTH_LONG).show();
+									}
+								});
+						builder.setNegativeButton(getString(R.string.cancle),
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.cancel();
+									}
+								});
+						builder.show();
+					}
+				}
+
+			}
+		});
 		if (view != null) {
 			machine_right_rl.addView(view);
 		}
@@ -1505,15 +1553,20 @@ public class MachineActivity extends Activity {
 			wifi_SignalStrenth_tv.setText(String.valueOf(Math
 					.abs(scanResult.level)) + "%");
 			if (Math.abs(scanResult.level) > 100) {
-				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_0));
+				wifi_Iv.setImageDrawable(getResources().getDrawable(
+						R.drawable.net_wifi_signal_0));
 			} else if (Math.abs(scanResult.level) > 75) {
-				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_1));
+				wifi_Iv.setImageDrawable(getResources().getDrawable(
+						R.drawable.net_wifi_signal_1));
 			} else if (Math.abs(scanResult.level) > 50) {
-				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_2));
+				wifi_Iv.setImageDrawable(getResources().getDrawable(
+						R.drawable.net_wifi_signal_2));
 			} else if (Math.abs(scanResult.level) > 25) {
-				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_3));
+				wifi_Iv.setImageDrawable(getResources().getDrawable(
+						R.drawable.net_wifi_signal_3));
 			} else {
-				wifi_Iv.setImageDrawable(getResources().getDrawable(R.drawable.net_wifi_signal_4));
+				wifi_Iv.setImageDrawable(getResources().getDrawable(
+						R.drawable.net_wifi_signal_4));
 			}
 			return view;
 		}
@@ -1614,6 +1667,7 @@ public class MachineActivity extends Activity {
 	// 仪器自检接受线程
 	private Handler detectionInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
+			//TODO
 			byte[] info = (byte[]) msg.obj;
 			if (info.length != 0) {
 				machine_detection_body_bottom_right_sv.scrollTo(0, 364);
@@ -1645,12 +1699,12 @@ public class MachineActivity extends Activity {
 									} else if ((Integer.parseInt(
 											receiveMeg.substring(33, 35), 16) * 256 + Integer
 											.parseInt(receiveMeg.substring(36,
-													38), 16)) < 325
+													38), 16)) < 265
 											|| (Integer.parseInt(receiveMeg
 													.substring(33, 35), 16) * 256 + Integer
 													.parseInt(receiveMeg
 															.substring(36, 38),
-															16)) > 335) {
+															16)) > 275) {
 										machine_detection_body_bottom_right_tv
 												.setText(getString(R.string.detection_thirty_three));
 										detection_item_left_info_power_iv
@@ -1798,6 +1852,7 @@ public class MachineActivity extends Activity {
 							}
 							break;
 						case 5:
+							//TODO 加热传感器
 							if (checkNum == 2) {
 								boolean t1 = false, t2 = false, t3 = false, t4 = false, t5 = false, t6 = false, t7 = false, t8 = false;
 								if (receiveMeg.substring(21, 26).indexOf(
@@ -1948,6 +2003,7 @@ public class MachineActivity extends Activity {
 							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 							break;
 						case 10:
+							//TODO 加热条升降温
 							if (checkNum == 3) {
 								if (!receiveMeg.substring(21, 23).equals("00")) {
 									machine_detection_body_bottom_right_tv

@@ -44,6 +44,8 @@
     <RelativeLayout
         android:id="@+id/machine_dismdect_bottom_btn_rl"
         style="@style/right_bottom_rl"
+        android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
         android:layout_alignRight="@id/machine_dismdect_iv" >
 
         <Button

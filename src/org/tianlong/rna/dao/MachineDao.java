@@ -78,6 +78,7 @@ public class MachineDao {
 		return flag;
 	}
 	
+	//TODO 更新消毒时间
 	public boolean upDateDisinfectTime(String time,Context context){
 		boolean flag = false;
 		RnaOpenHelper helper = getDatebase(context);

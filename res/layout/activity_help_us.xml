@@ -3,305 +3,307 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
-        android:id="@+id/info_sv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fillViewport="true" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/info_sv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="60dp"
+            android:layout_weight="9.5"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:id="@+id/dasdffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/help_right_new_item_head_rl"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/help_right_new_item_head_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/about_us"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/help_right_new_item_head_iv"
+                        android:layout_width="600dip"
+                        android:layout_height="1dip"
+                        android:layout_below="@id/help_right_new_item_head_tv"
+                        android:layout_centerHorizontal="true"
+                        android:background="#626980" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/help_main_right_body_rl"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip" >
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_name"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_name_tv"
+                            style="@style/textStyle"
+                            android:text="@string/company_name" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_name_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_name_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_name_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_name" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_edittime"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_name"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_edittime_tv"
+                            style="@style/textStyle"
+                            android:text="@string/company_address" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_edittime_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_address_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_edittime_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_edittime" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_controlmode"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_edittime_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_controlmode_tv"
+                            style="@style/textStyle"
+                            android:layout_centerVertical="true"
+                            android:text="@string/company_phone" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_controlmode_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_phone_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_controlmode_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_controlmode" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_upspeed"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_controlmode_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_upspeed_tv"
+                            style="@style/textStyle"
+                            android:text="@string/company_net" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_upspeed_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_net_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_upspeed_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_upspeed" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_downspeed"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_upspeed_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_downspeed_tv"
+                            style="@style/textStyle"
+                            android:text="@string/company_postcode" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_downspeed_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_postcode_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_downspeed_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_downspeed" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_template"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_downspeed_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_template_tv"
+                            style="@style/textStyle"
+                            android:text="@string/company_business" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_template_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_business_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_template_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_template" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_gradient"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_template_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_gradient_tv"
+                            style="@style/textStyle"
+                            android:layout_centerVertical="true"
+                            android:text="@string/company_sell" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_gradient_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_sell_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_gradient_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_gradient" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_touchdown"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_gradient_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_touchdown_tv"
+                            style="@style/textStyle"
+                            android:layout_centerVertical="true"
+                            android:text="@string/company_service" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_touchdown_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_service_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_touchdown_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_touchdown" />
+
+                    <RelativeLayout
+                        android:id="@+id/help_main_right_body_long"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_touchdown_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_long_tv"
+                            style="@style/textStyle"
+                            android:layout_centerVertical="true"
+                            android:text="@string/company_technical" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_long_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_technical_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_long_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_long" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
-            android:id="@+id/dasdffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dip" >
-
-            <RelativeLayout
-                android:id="@+id/help_right_new_item_head_rl"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/help_right_new_item_head_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/about_us"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/help_right_new_item_head_iv"
-                    android:layout_width="600dip"
-                    android:layout_height="1dip"
-                    android:layout_below="@id/help_right_new_item_head_tv"
-                    android:layout_centerHorizontal="true"
-                    android:background="#626980" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/help_main_right_body_rl"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/help_right_new_item_head_rl"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="5dip" >
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_name"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_name_tv"
-                        style="@style/textStyle"
-                        android:text="@string/company_name" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_name_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_name_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_name_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_name" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_edittime"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_name"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_edittime_tv"
-                        style="@style/textStyle"
-                        android:text="@string/company_address" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_edittime_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_address_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_edittime_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_edittime" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_controlmode"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_edittime_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_controlmode_tv"
-                        style="@style/textStyle"
-                        android:layout_centerVertical="true"
-                        android:text="@string/company_phone" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_controlmode_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_phone_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_controlmode_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_controlmode" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_upspeed"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_controlmode_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_upspeed_tv"
-                        style="@style/textStyle"
-                        android:text="@string/company_net" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_upspeed_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_net_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_upspeed_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_upspeed" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_downspeed"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_upspeed_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_downspeed_tv"
-                        style="@style/textStyle"
-                        android:text="@string/company_postcode" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_downspeed_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_postcode_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_downspeed_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_downspeed" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_template"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_downspeed_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_template_tv"
-                        style="@style/textStyle"
-                        android:text="@string/company_business" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_template_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_business_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_template_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_template" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_gradient"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_template_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_gradient_tv"
-                        style="@style/textStyle"
-                        android:layout_centerVertical="true"
-                        android:text="@string/company_sell" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_gradient_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_sell_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_gradient_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_gradient" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_touchdown"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_gradient_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_touchdown_tv"
-                        style="@style/textStyle"
-                        android:layout_centerVertical="true"
-                        android:text="@string/company_service" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_touchdown_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_service_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_touchdown_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_touchdown" />
-
-                <RelativeLayout
-                    android:id="@+id/help_main_right_body_long"
-                    android:layout_width="600dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/help_main_right_body_touchdown_iv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip" >
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_long_tv"
-                        style="@style/textStyle"
-                        android:layout_centerVertical="true"
-                        android:text="@string/company_technical" />
-
-                    <TextView
-                        android:id="@+id/help_main_right_body_long_info_tv"
-                        style="@style/textStyle"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/company_technical_info" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/help_main_right_body_long_iv"
-                    style="@style/imageStyle"
-                    android:layout_below="@id/help_main_right_body_long" />
-            </RelativeLayout>
-        </RelativeLayout>
-    </ScrollView>
-
-    <!--
-        <TextView
-            android:layout_below="@id/info_sv"
-            android:layout_above="@+id/help_right_about_bottom_btn_rl"
+            android:id="@+id/help_right_about_bottom_btn_rl"
+            style="@style/right_bottom_rl"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            />
-    -->
-
-    <RelativeLayout
-        android:id="@+id/help_right_about_bottom_btn_rl"
-        style="@style/right_bottom_rl"
-        android:layout_width="fill_parent" >
-
-        <Button
-            android:id="@+id/help_right_about_back_btn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/btn_selector"
-            android:clickable="true"
-            android:text="@string/back"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
-    </RelativeLayout>
+             >
+
+            <Button
+                android:id="@+id/help_right_about_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/btn_selector"
+                android:clickable="true"
+                android:text="@string/back"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

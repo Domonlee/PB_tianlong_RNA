@@ -27,6 +27,8 @@
         android:id="@+id/machine_net_bottom_btn_rl"
         style="@style/right_bottom_rl"
         android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
         android:layout_marginRight="80dip" >
 
         <Button

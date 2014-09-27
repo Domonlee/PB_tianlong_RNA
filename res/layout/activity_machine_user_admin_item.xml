@@ -41,5 +41,21 @@
             android:layout_height="40dip"
             android:layout_centerInParent="true" />
     </RelativeLayout>
+    
+        <RelativeLayout
+        android:id="@+id/user_admin_item_modify_psw_rl"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="50dip"
+        android:layout_margin="1dip"
+        android:background="#314F66" >
+
+        <ImageView
+            android:id="@+id/user_admin_item_modify_psw_iv"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:background="#314F66"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </LinearLayout>

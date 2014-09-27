@@ -94,8 +94,9 @@
     <string name="dismdect_failure">消毒时间设置失败</string>
     <!-- 系统设置_用户设置 -->
     <string name="user_default">默认登录</string>
-    <string name="user_pass_default">重置密码</string>
-    <string name="user_pass_default_modify_successful">重置成功，初始密码为：123456</string>
+    <string name="user_pass_default">打开重置</string>
+    <string name="user_pass_default_sure">是否重置，重置后密码为：123456</string>
+    <string name="user_pass_default_modify_successful">重置成功，重置密码为：123456</string>
     <string name="user_pass_default_modify_error">重置失败</string>
     <string name="user_pass">修改密码</string>
     <string name="user_original_pass">用户密码</string>
@@ -115,9 +116,10 @@
     <string name="user_pass_failure">用户密码修改失败</string>
     <string name="user_admin_admin">管理员</string>
     <string name="user_admin_user">用户</string>
-    <string name="user_admin_name">姓\u0020\u0020名</string>
+    <string name="user_admin_name">用户名</string>
     <string name="user_admin_permissions">权\u0020\u0020限</string>
     <string name="user_admin_login">默认登录</string>
+    <string name="user_admin_modify_psw">重置密码</string>
     <!-- 系统设置_仪器设置 -->
     <string name="instrument_flux_name">通\u0020量\u0020设\u0020置</string>
     <string name="instrument_parameter_run">运行参数设置(单位: mm)</string>
@@ -146,7 +148,7 @@
     <string name="detection_level">水平运动电机</string>
     <string name="detection_five">•5伏电压错误</string>
     <string name="detection_twelve">•12伏电压错误</string>
-    <string name="detection_thirty_three">•33伏电压错误</string>
+    <string name="detection_thirty_three">•27伏电压错误</string>
     <string name="detection_power_sucess">•供电电压检测正常</string>
     <string name="detection_sensor_t1">•加热条1传感器错误</string>
     <string name="detection_sensor_t2">•加热条2传感器错误</string>

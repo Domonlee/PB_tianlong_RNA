@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@id/machine_top_rl"
         android:orientation="horizontal" >
 
@@ -62,7 +62,7 @@
             <RelativeLayout
                 android:id="@+id/machine_right_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_marginBottom="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
@@ -72,6 +72,8 @@
                     android:id="@+id/machine_right_bottom_btn_rl"
                     style="@style/right_bottom_rl"
                     android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
                     android:layout_marginRight="6dp" >
 
                     <Button

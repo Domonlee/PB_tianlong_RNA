@@ -4,28 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+        
     <RelativeLayout
         android:id="@+id/machine_detection_body_rl"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:layout_centerHorizontal="true" >
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/machine_detection_body_lv_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray" >
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:id="@+id/machine_detection_body_power_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_power_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -41,7 +50,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_power_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -49,7 +58,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_power_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_power_rl"
                     android:background="#314F67" >
 
@@ -67,14 +76,14 @@
             <RelativeLayout
                 android:id="@+id/machine_detection_body_sensor_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/machine_detection_body_power_rl"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_sensor_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -90,7 +99,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_sensor_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -98,7 +107,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_sensor_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_sensor_rl"
                     android:background="#314F67" >
 
@@ -116,14 +125,14 @@
             <RelativeLayout
                 android:id="@+id/machine_detection_body_heating_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/machine_detection_body_sensor_rl"
+               android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_heating_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -139,7 +148,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_heating_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -147,7 +156,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_heating_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_heating_rl"
                     android:background="#314F67" >
 
@@ -165,14 +174,14 @@
             <RelativeLayout
                 android:id="@+id/machine_detection_body_shock_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/machine_detection_body_heating_rl"
+              android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_shock_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -188,7 +197,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_shock_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -196,7 +205,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_shock_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_shock_rl"
                     android:background="#314F67" >
 
@@ -214,14 +223,14 @@
             <RelativeLayout
                 android:id="@+id/machine_detection_body_magnet_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/machine_detection_body_shock_rl"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_magnet_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -237,7 +246,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_magnet_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -245,7 +254,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_magnet_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_magnet_rl"
                     android:background="#314F67" >
 
@@ -263,15 +272,15 @@
             <RelativeLayout
                 android:id="@+id/machine_detection_body_level_rl"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/machine_detection_body_magnet_rl"
+               android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginBottom="1dip"
                 android:layout_marginTop="1dip" >
 
                 <RelativeLayout
                     android:id="@+id/detection_item_left_level_rl"
                     android:layout_width="170dip"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_marginLeft="1dip"
                     android:layout_marginRight="1dip"
                     android:background="#314F67" >
@@ -287,7 +296,7 @@
                     <ImageView
                         android:id="@+id/detection_item_left_info_level_iv"
                         android:layout_width="50dip"
-                        android:layout_height="50dip"
+                        android:layout_height="45dip"
                         android:layout_centerInParent="true"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -295,7 +304,7 @@
                 <RelativeLayout
                     android:id="@+id/detection_item_right_level_rl"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:layout_toRightOf="@id/detection_item_left_level_rl"
                     android:background="#314F67" >
 
@@ -314,15 +323,15 @@
                 android:id="@+id/machine_detection_body_top_bottom_rl"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
-                android:layout_below="@id/machine_detection_body_level_rl"
                 android:background="@android:color/darker_gray" />
-        </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/machine_detection_body_bottom_rl"
         android:layout_width="fill_parent"
-        android:layout_height="150dip"
+        android:layout_height="0dip"
+        android:layout_weight="3"
         android:layout_below="@id/machine_detection_body_rl" >
 
         <RelativeLayout
@@ -362,7 +371,7 @@
         <RelativeLayout
             android:id="@+id/machine_detection_body_bottom_right_rl"
             android:layout_width="wrap_content"
-            android:layout_height="150dip"
+            android:layout_height="130dip"
             android:layout_marginLeft="30dip"
             android:layout_toRightOf="@id/machine_detection_body_bottom_left_rl" >
 
@@ -384,14 +393,16 @@
     <RelativeLayout
         android:id="@+id/machine_detection_bottom_btn_rl"
         style="@style/right_bottom_rl"
-        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="6dp"
         android:layout_marginRight="106dip" >
 
         <Button
             android:id="@+id/machine_detection_bottom_btn_check"
             style="@style/right_btn"
-        android:layout_marginBottom="6dip"
             android:text="@string/detection_check" />
     </RelativeLayout>
 
+    </LinearLayout>
 </RelativeLayout>

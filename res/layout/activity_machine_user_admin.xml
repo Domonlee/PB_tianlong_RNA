@@ -60,6 +60,19 @@
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/machine_admin_body_head_modify_psw_tv"
+                android:layout_width="0dip"
+                android:layout_height="50dip"
+                android:layout_marginLeft="1dip"
+                android:layout_marginRight="1dip"
+                android:layout_marginTop="1dip"
+                android:layout_weight="1"
+                android:background="#314F66"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="25sp" />
         </LinearLayout>
 
         <ListView
@@ -82,7 +95,6 @@
             android:layout_below="@id/machine_admin_body_lv"
             android:background="@android:color/white" >
         </RelativeLayout>
-        
     </RelativeLayout>
 
 </RelativeLayout>

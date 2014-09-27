@@ -14,21 +14,22 @@
         android:textColor="@android:color/white"
         android:textSize="30sp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/experiment_info_body_rl"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/experiment_info_top_ename_tv"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="30dp" >
+        android:layout_marginRight="30dp"
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/experiment_info_body_cdate"
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" >
+            android:layout_marginRight="30dp"
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/experiment_info_body_cdate_tv"
@@ -63,10 +64,9 @@
             android:id="@+id/experiment_info_body_rdate"
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_below="@id/experiment_info_body_cdate"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" >
+            android:layout_marginRight="30dp"
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/experiment_info_body_rdate_tv"
@@ -101,10 +101,9 @@
             android:id="@+id/experiment_info_body_quick"
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_below="@id/experiment_info_body_rdate"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" >
+            android:layout_marginRight="30dp"
+            android:layout_weight="1" >
 
             <TextView
                 android:id="@+id/experiment_info_body_quick_tv"
@@ -134,11 +133,10 @@
         <RelativeLayout
             android:id="@+id/experiment_info_body_remark"
             android:layout_width="fill_parent"
-            android:layout_height="170dip"
-            android:layout_below="@id/experiment_info_body_quick"
-            android:layout_centerHorizontal="true"
+            android:layout_height="170dip "
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" >
+            android:layout_marginRight="30dp"
+            android:layout_weight="3.5" >
 
             <TextView
                 android:id="@+id/experiment_info_body_remark_tv"
@@ -187,10 +185,9 @@
             android:id="@+id/experiment_info_bottom_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@id/experiment_info_body_remark"
+            android:layout_gravity="right"
             android:layout_marginBottom="6dp"
-            android:layout_marginRight="10dp" >
+            android:layout_marginRight="54dp" >
 
             <Button
                 android:id="@+id/experiment_info_bottom_run_btn"
@@ -215,7 +212,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
 
-
             <Button
                 android:id="@+id/experiment_info_body_remark_info_btn"
                 android:layout_width="wrap_content"
@@ -229,14 +225,14 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:visibility="gone" />
-            
+
             <Button
                 android:id="@+id/experiment_info_body_remark_info_cancle_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dip"
-                android:layout_toRightOf="@id/experiment_info_body_remark_info_btn"
                 android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/experiment_info_body_remark_info_btn"
                 android:background="@drawable/btn_selector"
                 android:clickable="true"
                 android:text="@string/cancle"
@@ -244,6 +240,6 @@
                 android:textSize="15sp"
                 android:visibility="gone" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

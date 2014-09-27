@@ -209,20 +209,49 @@ public class Utlis {
 		return byteList;
 	}
 
+	// TODO
 	// ·¢ËÍÍ¨Á¿ÉèÖÃÃüÁî
-	// --Ô¤Áô×Ö¶Î  ÃüÁî´íÎó
+	// --Ô¤Áô×Ö¶Î ÃüÁî´íÎó
 	// -------->>>>>ĞèÒªÌí¼Ó£¬15Í¨ºÍ48Í¨ ×Ö·û´®
-	public static byte[] sendSettingflux(String num) {
+	public static byte[] sendSettingflux(String fluxNum) {
 		byte[] byteList = new byte[9];
-		byteList[0] = (byte) Integer.parseInt("FF", 16);
-		byteList[1] = (byte) Integer.parseInt("FF", 16);
-		byteList[2] = (byte) Integer.parseInt("09", 16);
-		byteList[3] = (byte) Integer.parseInt("8A", 16);
-		byteList[4] = (byte) Integer.parseInt("00", 16);
-		byteList[5] = (byte) Integer.parseInt("0C", 16);
-		byteList[6] = (byte) Integer.parseInt("FF", 16);
-		byteList[7] = (byte) Integer.parseInt("9C", 16);
-		byteList[8] = (byte) Integer.parseInt("FE", 16);
+		switch (fluxNum) {
+		case "15":
+			byteList[0] = (byte) Integer.parseInt("FF", 16);
+			byteList[1] = (byte) Integer.parseInt("FF", 16);
+			byteList[2] = (byte) Integer.parseInt("09", 16);
+			byteList[3] = (byte) Integer.parseInt("8A", 16);
+			byteList[4] = (byte) Integer.parseInt("00", 16);
+			byteList[5] = (byte) Integer.parseInt("0C", 16);
+			byteList[6] = (byte) Integer.parseInt("FF", 16);
+			byteList[7] = (byte) Integer.parseInt("9C", 16);
+			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			break;
+		case "32":
+			byteList[0] = (byte) Integer.parseInt("FF", 16);
+			byteList[1] = (byte) Integer.parseInt("FF", 16);
+			byteList[2] = (byte) Integer.parseInt("09", 16);
+			byteList[3] = (byte) Integer.parseInt("8A", 16);
+			byteList[4] = (byte) Integer.parseInt("00", 16);
+			byteList[5] = (byte) Integer.parseInt("0C", 16);
+			byteList[6] = (byte) Integer.parseInt("FF", 16);
+			byteList[7] = (byte) Integer.parseInt("9C", 16);
+			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			break;
+
+		case "48":
+			byteList[0] = (byte) Integer.parseInt("FF", 16);
+			byteList[1] = (byte) Integer.parseInt("FF", 16);
+			byteList[2] = (byte) Integer.parseInt("09", 16);
+			byteList[3] = (byte) Integer.parseInt("8A", 16);
+			byteList[4] = (byte) Integer.parseInt("00", 16);
+			byteList[5] = (byte) Integer.parseInt("0C", 16);
+			byteList[6] = (byte) Integer.parseInt("FF", 16);
+			byteList[7] = (byte) Integer.parseInt("9C", 16);
+			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			break;
+		}
+
 		return byteList;
 	}
 
@@ -367,6 +396,7 @@ public class Utlis {
 	}
 
 	// ËùÓĞ²éÑ¯ÃüÁî
+	//TODO
 	public static byte[] getseleteMessage(int num) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
