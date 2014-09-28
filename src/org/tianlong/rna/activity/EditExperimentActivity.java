@@ -425,8 +425,6 @@ public class EditExperimentActivity extends Activity {
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(EditExperimentActivity.this);
 		fluxNum = machine.getMflux();
-		fluxNum = 1;
-
 	}
 
 	private void createTable() {

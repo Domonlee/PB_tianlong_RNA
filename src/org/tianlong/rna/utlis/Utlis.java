@@ -211,47 +211,36 @@ public class Utlis {
 
 	// TODO
 	// 发送通量设置命令
-	// --预留字段 命令错误
-	// -------->>>>>需要添加，15通和48通 字符串
+	// FF FF 09 8A 00 12 (0F 20 30) CRC FE
 	public static byte[] sendSettingflux(String fluxNum) {
+		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
+		byteList[0] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[0]);
+		byteList[1] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[1]);
+		byteList[2] = (byte) Integer.parseInt("09", 16);
+		bytes.add(byteList[2]);
+		byteList[3] = (byte) Integer.parseInt("8A", 16);
+		bytes.add(byteList[3]);
+		byteList[4] = (byte) Integer.parseInt("00", 16);
+		bytes.add(byteList[4]);
+		byteList[5] = (byte) Integer.parseInt("12", 16);
+		bytes.add(byteList[5]);
 		switch (fluxNum) {
 		case "15":
-			byteList[0] = (byte) Integer.parseInt("FF", 16);
-			byteList[1] = (byte) Integer.parseInt("FF", 16);
-			byteList[2] = (byte) Integer.parseInt("09", 16);
-			byteList[3] = (byte) Integer.parseInt("8A", 16);
-			byteList[4] = (byte) Integer.parseInt("00", 16);
-			byteList[5] = (byte) Integer.parseInt("0C", 16);
-			byteList[6] = (byte) Integer.parseInt("FF", 16);
-			byteList[7] = (byte) Integer.parseInt("9C", 16);
-			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			byteList[6] = (byte) Integer.parseInt("0F", 16);
 			break;
 		case "32":
-			byteList[0] = (byte) Integer.parseInt("FF", 16);
-			byteList[1] = (byte) Integer.parseInt("FF", 16);
-			byteList[2] = (byte) Integer.parseInt("09", 16);
-			byteList[3] = (byte) Integer.parseInt("8A", 16);
-			byteList[4] = (byte) Integer.parseInt("00", 16);
-			byteList[5] = (byte) Integer.parseInt("0C", 16);
-			byteList[6] = (byte) Integer.parseInt("FF", 16);
-			byteList[7] = (byte) Integer.parseInt("9C", 16);
-			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			byteList[6] = (byte) Integer.parseInt("20", 16);
 			break;
-
 		case "48":
-			byteList[0] = (byte) Integer.parseInt("FF", 16);
-			byteList[1] = (byte) Integer.parseInt("FF", 16);
-			byteList[2] = (byte) Integer.parseInt("09", 16);
-			byteList[3] = (byte) Integer.parseInt("8A", 16);
-			byteList[4] = (byte) Integer.parseInt("00", 16);
-			byteList[5] = (byte) Integer.parseInt("0C", 16);
-			byteList[6] = (byte) Integer.parseInt("FF", 16);
-			byteList[7] = (byte) Integer.parseInt("9C", 16);
-			byteList[8] = (byte) Integer.parseInt("FE", 16);
+			byteList[6] = (byte) Integer.parseInt("30", 16);
 			break;
 		}
-
+		bytes.add(byteList[6]);
+		byteList[7] = getCheckCode(bytes);
+		byteList[8] = (byte) Integer.parseInt("FE", 16);
 		return byteList;
 	}
 
@@ -396,7 +385,7 @@ public class Utlis {
 	}
 
 	// 所有查询命令
-	//TODO
+	// TODO
 	public static byte[] getseleteMessage(int num) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
@@ -704,6 +693,7 @@ public class Utlis {
 	 * @param receive
 	 * @return
 	 */
+	// TODO
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);

@@ -1,6 +1,7 @@
 package org.tianlong.rna.dao;
 
 import org.tianlong.rna.db.RnaOpenHelper;
+import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Instrument;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Net;
@@ -59,6 +60,18 @@ public class MachineDao {
 		values.put("Mmask", machine.getMmask());
 		values.put("MDtime", machine.getMDtime());
 		database.insert("machine", null, values);
+		database.close();
+		helper.close();
+	}
+	
+	public void updateMachineFlux(Machine machine,Context context,int fluxNum){
+		RnaOpenHelper helper = getDatebase(context);
+		SQLiteDatabase database = helper.getReadableDatabase();
+		ContentValues values = new ContentValues();
+		machine.setMflux(fluxNum);
+		values.put("Mflux",machine.getMflux());
+		database.update("machine", values,
+				"M_id = 1", null);
 		database.close();
 		helper.close();
 	}

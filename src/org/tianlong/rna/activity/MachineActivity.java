@@ -669,6 +669,17 @@ public class MachineActivity extends Activity {
 			break;
 		// 仪器设置
 		case 5:
+			try {
+				if (wifiUtlis == null) {
+					wifiUtlis = new WifiUtlis(
+							MachineActivity.this);
+				}
+				selectInfoFlag = true;
+				new Thread(selectInfoThread).start();
+				wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -943,17 +954,30 @@ public class MachineActivity extends Activity {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											try {
-												wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-											} catch (Exception e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
 											machine.setMflux(fluxNum);
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
-											Utlis.sendSettingflux(getNum(fluxNum));
-											Toast.makeText(MachineActivity.this, getString(R.string.instrument_success), Toast.LENGTH_SHORT).show();
+											byte[] byteList = new byte[9];
+											byteList = Utlis.sendSettingflux(getNum(fluxNum));
+											try {
+												if (wifiUtlis == null) {
+													wifiUtlis = new WifiUtlis(
+															MachineActivity.this);
+												}
+												wifiUtlis.sendMessage(byteList);
+												selectInfoFlag = true;
+												new Thread(selectInfoThread).start();
+												wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+												String string = wifiUtlis.getMessage();
+												Log.w("getMessage string--",string);
+												Toast.makeText(MachineActivity.this, getString(R.string.instrument_success),Toast.LENGTH_SHORT).show();
+											} catch (Exception e) {
+												Toast.makeText(
+														MachineActivity.this,
+														getString(R.string.wifi_error),
+														Toast.LENGTH_SHORT)
+														.show();
+											}
 										}
 									});
 							builder.setNegativeButton(
@@ -969,9 +993,6 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			// --->不可点击
-			// machine_instrument_body_flux_info_tv.setClickable(false);
-
 			// 系统复位
 			machine_instrument_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
@@ -983,9 +1004,11 @@ public class MachineActivity extends Activity {
 								}
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
+								byte[] byteList = new byte[9];
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
-								wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-
+								String string = wifiUtlis.getMessage();
+								Toast.makeText(getApplicationContext(), string,
+										1000).show();
 							} catch (Exception e) {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1363,7 +1386,6 @@ public class MachineActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-				// TODO
 				if (modifyFlag) {
 					if (!(users.get(position).getUname().equals("admin"))
 							&& !(users.get(position).getUname().equals("guest"))) {
@@ -1416,6 +1438,7 @@ public class MachineActivity extends Activity {
 			break;
 		case 4:
 			info = "64";
+			break;
 		default:
 			break;
 		}
@@ -1525,7 +1548,6 @@ public class MachineActivity extends Activity {
 
 		@Override
 		public int getCount() {
-			Log.w("getview-----", list.size() + "");
 			return list.size();
 		}
 
@@ -1581,6 +1603,7 @@ public class MachineActivity extends Activity {
 				receive = Utlis.getReceive(info);
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
+					// 系统复位成功
 					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
 						machine_instrument_body_run_parameter_hole_info_btn_rl
 								.setVisibility(View.VISIBLE);
@@ -1642,6 +1665,7 @@ public class MachineActivity extends Activity {
 									Toast.LENGTH_SHORT).show();
 						}
 					} else if (receiveMeg.substring(15, 17).equals("07")) {
+						Log.w("receiveMeg", fluxNum + "->>>>>" + receiveMeg);
 						switch (Integer.parseInt(receiveMeg.substring(21, 23),
 								16)) {
 						case 15:
@@ -1656,7 +1680,12 @@ public class MachineActivity extends Activity {
 						default:
 							break;
 						}
-						Log.i("info", fluxNum + "");
+//						machineDao = new MachineDao();
+//						machine = machineDao.getMachine(MachineActivity.this);
+//						machine.setMflux(fluxNum);
+//						machineDao.insertMachine(MachineActivity.this, machine);
+						machineDao.updateMachineFlux(machine,MachineActivity.this, fluxNum);
+						Log.w("info", fluxNum + "--");
 						machine_instrument_body_flux_info_tv
 								.setText(getNum(fluxNum));
 					}
@@ -1667,7 +1696,6 @@ public class MachineActivity extends Activity {
 	// 仪器自检接受线程
 	private Handler detectionInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			//TODO
 			byte[] info = (byte[]) msg.obj;
 			if (info.length != 0) {
 				machine_detection_body_bottom_right_sv.scrollTo(0, 364);
@@ -1852,7 +1880,7 @@ public class MachineActivity extends Activity {
 							}
 							break;
 						case 5:
-							//TODO 加热传感器
+							// TODO 加热传感器
 							if (checkNum == 2) {
 								boolean t1 = false, t2 = false, t3 = false, t4 = false, t5 = false, t6 = false, t7 = false, t8 = false;
 								if (receiveMeg.substring(21, 26).indexOf(
@@ -2003,7 +2031,7 @@ public class MachineActivity extends Activity {
 							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 							break;
 						case 10:
-							//TODO 加热条升降温
+							// TODO 加热条升降温
 							if (checkNum == 3) {
 								if (!receiveMeg.substring(21, 23).equals("00")) {
 									machine_detection_body_bottom_right_tv
@@ -2055,4 +2083,18 @@ public class MachineActivity extends Activity {
 			}
 		};
 	};
+
+	// 将指定byte数组以16进制的形式打印到控制台
+	public static void printHexString(byte[] b) {
+		String hexString = null;
+		for (int i = 0; i < b.length; i++) {
+			String hex = Integer.toHexString(b[i] & 0xFF);
+			if (hex.length() == 1) {
+				hex = '0' + hex;
+			}
+			hexString = hex + " " + hexString;
+		}
+		Log.w("HexString--", hexString.toUpperCase());
+
+	}
 }

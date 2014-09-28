@@ -105,7 +105,6 @@ public class CreatExperimentActivity extends Activity {
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(CreatExperimentActivity.this);
 		fluxNum = machine.getMflux();
-		fluxNum = 1;
 
 		stepDao = new StepDao();
 		Intent intent = getIntent();

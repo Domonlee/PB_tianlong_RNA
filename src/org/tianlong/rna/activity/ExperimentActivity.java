@@ -12,6 +12,7 @@ import org.tianlong.rna.dao.StepDao;
 import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Step;
+import org.tianlong.rna.utlis.DBTempletManager;
 import org.tianlong.rna.utlis.Utlis;
 
 import android.app.Activity;
@@ -66,6 +67,7 @@ public class ExperimentActivity extends Activity {
 	private Dialog dialog;
 	private View view;
 
+	public DBTempletManager dbTempletManager;
 	private int chooseE_id = -1;
 	public static int listChooseId = 0;
 
@@ -98,6 +100,9 @@ public class ExperimentActivity extends Activity {
 		setContentView(R.layout.activity_experiment);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		dbTempletManager = new DBTempletManager(ExperimentActivity.this);
+		dbTempletManager.openDatabase();
+		dbTempletManager.closeDatabase();
 		initView();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(

@@ -129,22 +129,6 @@ public class RunExperimentActivity extends Activity {
 	final IntentFilter homeFilter = new IntentFilter(
 			Intent.ACTION_CLOSE_SYSTEM_DIALOGS);// home键监听
 
-	// private final BroadcastReceiver homePressReceiver = new
-	// BroadcastReceiver() {
-	// final String SYSTEM_DIALOG_REASON_KEY = "reason";
-	// final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
-	// @Override
-	// public void onReceive(Context context, Intent intent) {
-	// String action = intent.getAction();
-	// if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
-	// String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
-	// if (reason != null && reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
-	//
-	// }
-	// }
-	// }
-	// };
-
 	private Handler sendFileHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			Log.i("info", "发文件");
@@ -636,11 +620,9 @@ public class RunExperimentActivity extends Activity {
 		// registerReceiver(homePressReceiver, homeFilter);
 
 		// 设置通量
-		// fluxNum 默认为 32,1 for 15,2 for 32,3 for 48
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();
-		fluxNum = 1;
 
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
