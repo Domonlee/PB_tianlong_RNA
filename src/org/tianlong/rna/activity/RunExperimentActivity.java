@@ -587,6 +587,7 @@ public class RunExperimentActivity extends Activity {
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 						Thread.sleep(100);
+						//查询温度
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
@@ -611,13 +612,8 @@ public class RunExperimentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
-		// View lock = View.inflate(this, R.layout.activity_experiment_run,
-		// null);
-		// LockLayer lockLayer = LockLayer.getInstance(this);
-		// lockLayer.setLockView(lock);
-		// lockLayer.lock();
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 屏幕不关闭
-		// registerReceiver(homePressReceiver, homeFilter);
+
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 
 		// 设置通量
 		machineDao = new MachineDao();
@@ -702,12 +698,12 @@ public class RunExperimentActivity extends Activity {
 									case 1:
 										try {
 											selectInfoFlag = true;
-											// Log.i("info",
-											// "waitTimeControl:"+waitTimeControl);
-											// Log.i("info",
-											// "blendTimeControl:"+blendTimeControl);
-											// Log.i("info",
-											// "magnetTimeControl:"+magnetTimeControl);
+											 Log.i("info",
+											 "waitTimeControl:"+waitTimeControl);
+											 Log.i("info",
+											 "blendTimeControl:"+blendTimeControl);
+											 Log.i("info",
+											 "magnetTimeControl:"+magnetTimeControl);
 											if (waitTimeControl != 0
 													|| blendTimeControl != 0
 													|| magnetTimeControl != 0) {

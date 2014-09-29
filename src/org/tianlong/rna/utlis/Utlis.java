@@ -117,17 +117,7 @@ public class Utlis {
 
 	// 发送开始命令
 	public static byte[] sendRunMessage(int num) {
-		// byte[] byteList = new byte[10];
-		// byteList[0] = (byte)Integer.parseInt("FF", 16);
-		// byteList[1] = (byte)Integer.parseInt("FF", 16);
-		// byteList[2] = (byte)Integer.parseInt("0A", 16);
-		// byteList[3] = (byte)Integer.parseInt("8A", 16);
-		// byteList[4] = (byte)Integer.parseInt("01", 16);
-		// byteList[5] = (byte)Integer.parseInt("0A", 16);
-		// byteList[6] = (byte)Integer.parseInt("FF", 16);
-		// byteList[7] = (byte)Integer.parseInt("01", 16);
-		// byteList[8] = (byte)Integer.parseInt("9D", 16);
-		// byteList[9] = (byte)Integer.parseInt("FE", 16);
+	
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
 		byteList[0] = (byte) Integer.parseInt("FF", 16);
@@ -209,9 +199,7 @@ public class Utlis {
 		return byteList;
 	}
 
-	// TODO
 	// 发送通量设置命令
-	// FF FF 09 8A 00 12 (0F 20 30) CRC FE
 	public static byte[] sendSettingflux(String fluxNum) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
@@ -648,7 +636,6 @@ public class Utlis {
 		return info;
 	}
 
-	// --
 	/**
 	 * 得到模板
 	 */
@@ -718,6 +705,7 @@ public class Utlis {
 					.get(i)
 					.replace(" ", "")
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
+//			String infos = receive .get(i) .replace(" ", "") .substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", Integer.valueOf(infos.substring(0, 1)));

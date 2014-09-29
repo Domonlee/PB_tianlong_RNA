@@ -671,13 +671,12 @@ public class MachineActivity extends Activity {
 		case 5:
 			try {
 				if (wifiUtlis == null) {
-					wifiUtlis = new WifiUtlis(
-							MachineActivity.this);
+					wifiUtlis = new WifiUtlis(MachineActivity.this);
 				}
 				selectInfoFlag = true;
 				new Thread(selectInfoThread).start();
 				wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-			}catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			view = LayoutInflater.from(MachineActivity.this).inflate(
@@ -958,7 +957,8 @@ public class MachineActivity extends Activity {
 											machine_instrument_body_flux_info_tv
 													.setText(getNum(fluxNum));
 											byte[] byteList = new byte[9];
-											byteList = Utlis.sendSettingflux(getNum(fluxNum));
+											byteList = Utlis
+													.sendSettingflux(getNum(fluxNum));
 											try {
 												if (wifiUtlis == null) {
 													wifiUtlis = new WifiUtlis(
@@ -966,11 +966,19 @@ public class MachineActivity extends Activity {
 												}
 												wifiUtlis.sendMessage(byteList);
 												selectInfoFlag = true;
-												new Thread(selectInfoThread).start();
-												wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-												String string = wifiUtlis.getMessage();
-												Log.w("getMessage string--",string);
-												Toast.makeText(MachineActivity.this, getString(R.string.instrument_success),Toast.LENGTH_SHORT).show();
+												new Thread(selectInfoThread)
+														.start();
+												wifiUtlis.sendMessage(Utlis
+														.getseleteMessage(7));
+												String string = wifiUtlis
+														.getMessage();
+												Log.w("getMessage string--",
+														string);
+												Toast.makeText(
+														MachineActivity.this,
+														getString(R.string.instrument_success),
+														Toast.LENGTH_SHORT)
+														.show();
 											} catch (Exception e) {
 												Toast.makeText(
 														MachineActivity.this,
@@ -1192,6 +1200,7 @@ public class MachineActivity extends Activity {
 			rotateAnimation.setInterpolator(interpolator);
 			rotateAnimation.setRepeatCount(-1);
 			rotateAnimation.setDuration(2000);
+
 			machine_detection_bottom_btn_check
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
@@ -1680,11 +1689,8 @@ public class MachineActivity extends Activity {
 						default:
 							break;
 						}
-//						machineDao = new MachineDao();
-//						machine = machineDao.getMachine(MachineActivity.this);
-//						machine.setMflux(fluxNum);
-//						machineDao.insertMachine(MachineActivity.this, machine);
-						machineDao.updateMachineFlux(machine,MachineActivity.this, fluxNum);
+						machineDao.updateMachineFlux(machine,
+								MachineActivity.this, fluxNum);
 						Log.w("info", fluxNum + "--");
 						machine_instrument_body_flux_info_tv
 								.setText(getNum(fluxNum));
@@ -1703,10 +1709,13 @@ public class MachineActivity extends Activity {
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
 					index = Integer.valueOf(receiveMeg.substring(15, 17));
+					Log.w("Handler---",i+ "="+index);
 					try {
 						switch (index) {
 						case 1:
+							//一起查询
 							if (receiveMeg.substring(9, 11).equals("51")) {
+									//供电电压查询
 								if (checkNum == 1) {
 									if (Integer.parseInt(
 											receiveMeg.substring(24, 26), 16) < 48
@@ -1743,7 +1752,10 @@ public class MachineActivity extends Activity {
 										detection_item_left_info_power_iv
 												.setBackgroundResource(R.drawable.yes);
 									}
-									detection_item_left_power_iv
+									//供电电压正常
+									
+									if (fluxInfoNum ==32) {
+										detection_item_left_power_iv
 											.setVisibility(View.GONE);
 									detection_item_left_info_power_iv
 											.setVisibility(View.VISIBLE);
@@ -1755,10 +1767,36 @@ public class MachineActivity extends Activity {
 									animationDrawable.start();
 									wifiUtlis.sendMessage(Utlis
 											.sendDetectionMessage(2));
+									
+									Log.w("Test", "供电电压32");
+									printHexString(Utlis.sendDetectionMessage(2));
 									checkNum++;
+									}
+									else {
+										detection_item_left_power_iv
+										.setVisibility(View.GONE);
+										detection_item_left_info_power_iv
+										.setVisibility(View.VISIBLE);
+										
+										
+										detection_item_left_shock_iv
+										.setVisibility(View.VISIBLE);
+										animationDrawable.stop();
+										animationDrawable = (AnimationDrawable) detection_item_left_shock_iv
+												.getBackground();
+										animationDrawable.start();
+										wifiUtlis.sendMessage(Utlis
+												.sendDetectionMessage(4));
+								
+										Log.w("Test", "供电电压15 48");
+										printHexString(Utlis.sendDetectionMessage(4));
+										checkNum = checkNum +3;
+									}
+									
 								}
 							} else if (receiveMeg.substring(9, 11).equals("d1")) {
 								if (receiveMeg.substring(18, 20).equals("00")) {
+								//混合电机测试
 									if (checkNum == 4) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -1780,6 +1818,7 @@ public class MachineActivity extends Activity {
 															+ "\n"
 															+ getString(R.string.detection_shock_error));
 										}
+
 										detection_item_left_shock_iv
 												.setVisibility(View.GONE);
 										detection_item_left_info_shock_iv
@@ -1790,12 +1829,15 @@ public class MachineActivity extends Activity {
 										animationDrawable = (AnimationDrawable) detection_item_left_magnet_iv
 												.getBackground();
 										animationDrawable.start();
-										wifiUtlis.sendMessage(Utlis
-												.sendDetectionMessage(5));
+										wifiUtlis.sendMessage(Utlis.sendDetectionMessage(5));
+
+										Log.w("Test", "混合");
+										printHexString(Utlis.sendDetectionMessage(5));
 										checkNum++;
 									}
 								} else if (receiveMeg.substring(18, 20).equals(
 										"01")) {
+									//磁吸电机测试
 									if (checkNum == 5) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -1829,10 +1871,13 @@ public class MachineActivity extends Activity {
 										animationDrawable.start();
 										wifiUtlis.sendMessage(Utlis
 												.sendDetectionMessage(6));
+										Log.w("Test", "磁吸");
+										printHexString(Utlis.sendDetectionMessage(6));
 										checkNum++;
 									}
 								} else if (receiveMeg.substring(18, 20).equals(
 										"02")) {
+									//水平运动电机
 									if (checkNum == 6) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -1861,6 +1906,8 @@ public class MachineActivity extends Activity {
 										detection_item_left_level_iv
 												.setVisibility(View.VISIBLE);
 										animationDrawable.stop();
+										detection_item_left_level_iv
+												.setVisibility(View.GONE);
 										detectionNum = 0;
 										machine_detection_body_bottom_left_info_iv
 												.setVisibility(View.GONE);
@@ -1875,6 +1922,7 @@ public class MachineActivity extends Activity {
 										checkNum = 0;
 										machine_detection_body_bottom_right_sv
 												.scrollTo(0, 364);
+										Log.w("Test", "水平");
 									}
 								}
 							}
@@ -2001,6 +2049,9 @@ public class MachineActivity extends Activity {
 								animationDrawable.start();
 								wifiUtlis.sendMessage(Utlis
 										.sendDetectionMessage(3));
+
+								Log.w("Test", "温度");
+								printHexString(Utlis.sendDetectionMessage(3));
 								checkNum++;
 							}
 							break;
@@ -2013,6 +2064,9 @@ public class MachineActivity extends Activity {
 												16) != 4) {
 									wifiUtlis.sendMessage(Utlis
 											.sendDetectionMessage(1));
+									
+									Log.w("Test", "checkNum =0");
+									printHexString(Utlis.sendDetectionMessage(1));
 									checkNum++;
 								}
 							}
@@ -2029,9 +2083,11 @@ public class MachineActivity extends Activity {
 												R.color.black));
 							}
 							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+							
+							Log.w("Test", "fluxNum !=32");
+							printHexString(Utlis.getseleteMessage(6));
 							break;
 						case 10:
-							// TODO 加热条升降温
 							if (checkNum == 3) {
 								if (!receiveMeg.substring(21, 23).equals("00")) {
 									machine_detection_body_bottom_right_tv
@@ -2069,6 +2125,9 @@ public class MachineActivity extends Activity {
 								animationDrawable.start();
 								wifiUtlis.sendMessage(Utlis
 										.sendDetectionMessage(4));
+								
+								Log.w("Test", "加热条");
+								printHexString(Utlis.sendDetectionMessage(4));
 								checkNum++;
 
 							}

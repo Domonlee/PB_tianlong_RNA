@@ -109,6 +109,7 @@ public class MainApplyActivity extends Activity {
 							UpAndDownActivity.class);
 					break;
 				case 4:
+					//TODO¡¡Ïû¶¾App
 					if (utlis != null) {
 						try {
 							utlis.sendMessage(Utlis.ultravioletOpenMessage());

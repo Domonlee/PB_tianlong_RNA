@@ -219,62 +219,6 @@ public class UpAndDownActivity extends Activity {
 						}
 					}
 				});
-		activity_upanddown_down_top_lv
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							View arg1, final int arg2, long arg3) {
-
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								UpAndDownActivity.this);
-						builder.setTitle(getString(R.string.delete_file));
-						builder.setPositiveButton(getString(R.string.sure),
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int which) {
-										if (!readListFlag) {
-											readListFlag = true;
-										}
-										try {
-											if (arg2 == 0) {
-												Toast.makeText(
-														UpAndDownActivity.this,
-														getString(R.string.up_delete_forbid),
-														Toast.LENGTH_SHORT)
-														.show();
-											} else {
-												wifiUtlis.sendMessage(Utlis
-														.sendDeleteExperiment((Integer) experimentsList
-																.get(arg2).get(
-																		"id")));
-												wifiUtlis.sendMessage(Utlis
-														.getseleteMessage(10));
-												Toast.makeText(
-														UpAndDownActivity.this,
-														getString(R.string.up_delete_successful),
-														Toast.LENGTH_SHORT)
-														.show();
-												new Thread(listThread).start();
-											}
-										} catch (Exception e) {
-											Toast.makeText(
-													UpAndDownActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-										}
-									}
-								});
-						builder.setNegativeButton(getString(R.string.cancle),
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.cancel();
-									}
-								});
-						builder.show();
-						return false;
-					}
-				});
-
 		// É¾³ý°´Å¥Õ¹Ê¾
 		activity_upanddown_down_top_delete_btn
 				.setOnClickListener(new OnClickListener() {

@@ -13,7 +13,9 @@ import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.DBTempletManager;
+import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
+import org.tianlong.rna.utlis.WifiUtlis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -103,7 +106,21 @@ public class ExperimentActivity extends Activity {
 		dbTempletManager = new DBTempletManager(ExperimentActivity.this);
 		dbTempletManager.openDatabase();
 		dbTempletManager.closeDatabase();
+
+		
+		
 		initView();
+		
+		
+		/**
+		 * 通过返回值来 控制控件显示 运行状态
+		 */
+//		MachineStateInfo machineStateInfo = new MachineStateInfo(ExperimentActivity.this,expetiment_left_new_btn);
+//		String s = machineStateInfo.queryState();
+//		Log.w("1111", "22");
+//		Log.w("1111", s + " 1");
+
+
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
 				ExperimentActivity.this, experiments);
@@ -580,4 +597,6 @@ public class ExperimentActivity extends Activity {
 		}
 		return super.onTouchEvent(event);
 	}
+	
+	
 }
