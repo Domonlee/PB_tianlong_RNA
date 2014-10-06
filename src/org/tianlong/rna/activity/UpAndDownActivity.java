@@ -227,8 +227,10 @@ public class UpAndDownActivity extends Activity {
 						num++;
 						if (num % 2 == 0) {
 							deleteFlag = false;
+							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_mini_icon);
 						} else {
 							deleteFlag = true;
+							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_mini_cancel_icon);
 						}
 						DownAdapter downAdapter = new DownAdapter(
 								UpAndDownActivity.this, experimentsList,
@@ -672,11 +674,8 @@ public class UpAndDownActivity extends Activity {
 						.setVisibility(View.VISIBLE);
 				holder.left_listview_item_delete_icon
 						.setOnClickListener(new OnClickListener() {
-
 							@Override
 							public void onClick(View v) {
-
-								
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										UpAndDownActivity.this);
 								builder.setTitle(getString(R.string.delete_file));

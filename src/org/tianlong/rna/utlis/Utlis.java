@@ -701,11 +701,7 @@ public class Utlis {
 			List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < receive.size(); i++) {
-			String infos = receive
-					.get(i)
-					.replace(" ", "")
-					.substring(14, receive.get(i).replace(" ", "").length() - 4);
-//			String infos = receive .get(i) .replace(" ", "") .substring(14, receive.get(i).replace(" ", "").length() - 4);
+			String infos = receive.get(i).replace(" ", "").substring(14, receive.get(i).replace(" ", "").length() - 4); 
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", Integer.valueOf(infos.substring(0, 1)));

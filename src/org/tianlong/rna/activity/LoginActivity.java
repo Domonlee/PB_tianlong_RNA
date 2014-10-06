@@ -1,6 +1,5 @@
 package org.tianlong.rna.activity;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.tianlong.rna.adapter.LoginAdapter;
@@ -9,7 +8,6 @@ import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
 import org.tianlong.rna.dao.UserDao;
 import org.tianlong.rna.pojo.DefaultExperiment;
-import org.tianlong.rna.pojo.DefaultStep;
 import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
@@ -24,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -88,10 +85,10 @@ public class LoginActivity extends Activity {
 		 logout = intent.getIntExtra("logout", 9999);
 		 U_id = intent.getIntExtra("U_id", 9999);
 
-		//--always flase
-		if (defaultExperiments.size() == 0) {
-			initExperiment();
-		}
+//		//--always flase
+//		if (defaultExperiments.size() == 0) {
+//			initExperiment();
+//		}
 
 		initial();
 		language = machineDao.getMachine(LoginActivity.this).getMlanguage();

@@ -22,6 +22,7 @@
     <string name="system_reset">系统复位</string>
     <string name="ultraviolet">紫外灯正在消毒</string>
     <string name="wifi_error">Wifi连接错误或未连接</string>
+    <string name="wifi_error_run">Wifi连接错误或未连接,无法开始运行</string>
     <string name="template_null">不使用模板</string>
     <string name="template_one">模板一</string>
     <string name="template_two">模板二</string>
@@ -95,6 +96,7 @@
     <!-- 系统设置_用户设置 -->
     <string name="user_default">默认登录</string>
     <string name="user_pass_default">打开重置</string>
+    <string name="user_pass_default_close">关闭重置</string>
     <string name="user_pass_default_sure">是否重置，重置后密码为：123456</string>
     <string name="user_pass_default_modify_successful">重置成功，重置密码为：123456</string>
     <string name="user_pass_default_modify_error">重置失败</string>

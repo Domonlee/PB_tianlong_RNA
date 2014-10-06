@@ -55,7 +55,7 @@ public class RunExperimentActivity extends Activity {
 	private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
 	private final String TAG = "TimeInfo";
-	
+
 	private TextView experiment_run_body_left_top_name_tv;
 	private TableLayout experiment_run_body_right_body_tl;
 	private Button experiment_run_body_right_bottom_back_btn;
@@ -144,6 +144,8 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
+
+							
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -158,6 +160,8 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
+							
+							
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -469,13 +473,14 @@ public class RunExperimentActivity extends Activity {
 										.setText(t8 + "°C");
 								break;
 							// 如果是6号查询就是运行位置查询
+							// TODO 跳转下一个步骤
 							case 6:
 								if (Integer.parseInt(
 										receiveMeg.substring(24, 26), 16) != 5) {
 									// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 									if ((controlNum + 1) != Integer.parseInt(
 											receiveMeg.substring(21, 23), 16)) {
-										// Log.i("info", "该跳了");
+										Log.i("info", "该跳了");
 										continueControl = 0;
 										if (viewDrawable != null) {
 											viewDrawable.stop();
@@ -492,6 +497,7 @@ public class RunExperimentActivity extends Activity {
 										// "位置代码："+receiveMeg.substring(21,
 										// 23));
 										// Log.i("info", "运行位置："+controlNum);
+										getCurrentTime(controlNum);
 										// 当总步骤索引小于总步骤数时开始下一步
 										if (controlNum < holders.size()) {
 											experiment_run_body_right_body_hsv
@@ -512,7 +518,6 @@ public class RunExperimentActivity extends Activity {
 													.get(controlNum)
 													.getBackground();
 											viewDrawable.start();
-											getTime(controlNum);
 										}
 									}
 
@@ -587,7 +592,7 @@ public class RunExperimentActivity extends Activity {
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 						Thread.sleep(100);
-						//查询温度
+						// 查询温度
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
@@ -599,7 +604,6 @@ public class RunExperimentActivity extends Activity {
 					}
 				}
 			} else {
-				// Log.i("info", "空");
 			}
 		};
 	};
@@ -613,7 +617,7 @@ public class RunExperimentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
 
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		// 设置通量
 		machineDao = new MachineDao();
@@ -638,10 +642,9 @@ public class RunExperimentActivity extends Activity {
 					public void onClick(View v) {
 						if (wifiUtlis == null) {
 							Toast.makeText(RunExperimentActivity.this,
-									getString(R.string.wifi_error) + ",无法开始运行",
+									getString(R.string.wifi_error_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
-
 							if (changeBg.size() != 0) {
 								((View) changeBg.get(0).get("view"))
 										.setBackgroundResource(R.anim.anim_view);
@@ -670,12 +673,12 @@ public class RunExperimentActivity extends Activity {
 									Toast.makeText(RunExperimentActivity.this,
 											getString(R.string.wifi_error),
 											Toast.LENGTH_SHORT).show();
-									// inn();
 								}
 							} else {
 								experiment_run_body_right_bottom_run_btn
 										.setText(getString(R.string.pause));
 								if (wifiUtlis != null) {
+									// 控制流程
 									switch (runNum) {
 									case 0:
 										try {
@@ -692,18 +695,17 @@ public class RunExperimentActivity extends Activity {
 													RunExperimentActivity.this,
 													getString(R.string.wifi_error),
 													Toast.LENGTH_SHORT).show();
-											// inn();
 										}
 										break;
 									case 1:
 										try {
 											selectInfoFlag = true;
-											 Log.i("info",
-											 "waitTimeControl:"+waitTimeControl);
-											 Log.i("info",
-											 "blendTimeControl:"+blendTimeControl);
-											 Log.i("info",
-											 "magnetTimeControl:"+magnetTimeControl);
+											Log.i("info", "waitTimeControl:"
+													+ waitTimeControl);
+											Log.i("info", "blendTimeControl:"
+													+ blendTimeControl);
+											Log.i("info", "magnetTimeControl:"
+													+ magnetTimeControl);
 											if (waitTimeControl != 0
 													|| blendTimeControl != 0
 													|| magnetTimeControl != 0) {
@@ -848,18 +850,23 @@ public class RunExperimentActivity extends Activity {
 		selectInfoThread = new SelectInfoThread();
 		stepDao = new StepDao();
 		experimentDao = new ExperimentDao();
+
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
 		jump = intent.getStringExtra("jump");
 		E_id = intent.getIntExtra("E_id", 9999);
+
 		steps = stepDao.getAllStep(RunExperimentActivity.this, E_id);
+
 		views = new ArrayList<View>();
 		changeBg = new ArrayList<Map<String, Object>>();
 		holders = new ArrayList<RunViewHolder>();
+
 		waitTimeList = new ArrayList<WaitTimeCount>();
 		blendTimeList = new ArrayList<BlendTimeCount>();
 		magnetTimeList = new ArrayList<MagnetTimeCount>();
+
 		builder = new AlertDialog.Builder(RunExperimentActivity.this);
 		stepRow = new TableRow(this);
 
@@ -996,17 +1003,19 @@ public class RunExperimentActivity extends Activity {
 				holder.experiment_run_item_head_wait_pb.setProgress(0);
 			} else {
 				try {
-					//TODO
-					Log.w(TAG,"total:" +Utlis.timeFormat.parse(
-									steps.get(i).getSwait()).getHours()
-									* 3600
-									+ Utlis.timeFormat.parse(
-											steps.get(i).getSwait())
-											.getMinutes()
-									* 60
-									+ Utlis.timeFormat.parse(
-											steps.get(i).getSwait())
-											.getSeconds());
+					// TODO 设置进度条时间
+					// Log.w(TAG,
+					// "Stotal:"
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait()).getHours()
+					// * 3600
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait())
+					// .getMinutes()
+					// * 60
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait())
+					// .getSeconds());
 					holder.experiment_run_item_head_wait_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSwait()).getHours()
@@ -1029,37 +1038,43 @@ public class RunExperimentActivity extends Activity {
 									+ Utlis.timeFormat.parse(
 											steps.get(i).getSwait())
 											.getSeconds());
-					Log.w(TAG," progress:" +Utlis.timeFormat.parse(
-							steps.get(i).getSwait()).getHours()
-							* 3600
-							+ Utlis.timeFormat.parse(
-									steps.get(i).getSwait())
-									.getMinutes()
-							* 60
-							+ Utlis.timeFormat.parse(
-									steps.get(i).getSwait())
-									.getSeconds());
+					// Log.w(TAG,
+					// "Sprogress:"
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait()).getHours()
+					// * 3600
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait())
+					// .getMinutes()
+					// * 60
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSwait())
+					// .getSeconds());
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 			}
 			holder.experiment_run_item_head_wait_info_tv.setText(steps.get(i)
 					.getSwait());
+
 			if (steps.get(i).getSblend().equals("00:00:00")) {
 				holder.experiment_run_item_head_blend_pb.setProgress(0);
 			} else {
 				try {
-					//TODO
-					Log.w(TAG,"total:" +Utlis.timeFormat.parse(
-									steps.get(i).getSblend()).getHours()
-									* 3600
-									+ Utlis.timeFormat.parse(
-											steps.get(i).getSblend())
-											.getMinutes()
-									* 60
-									+ Utlis.timeFormat.parse(
-											steps.get(i).getSblend())
-											.getSeconds());
+					// TODO
+					// Log.w(TAG,
+					// "Btotal:"
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSblend())
+					// .getHours()
+					// * 3600
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSblend())
+					// .getMinutes()
+					// * 60
+					// + Utlis.timeFormat.parse(
+					// steps.get(i).getSblend())
+					// .getSeconds());
 					holder.experiment_run_item_head_blend_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSblend()).getHours()
@@ -1088,6 +1103,7 @@ public class RunExperimentActivity extends Activity {
 			}
 			holder.experiment_run_item_head_blend_info_tv.setText(steps.get(i)
 					.getSblend());
+
 			if ((i + 1) == steps.size()) {
 				holder.experiment_run_item_head_magnet_pb.setProgress(0);
 				holder.experiment_run_item_head_magnet_info_tv
@@ -1096,6 +1112,7 @@ public class RunExperimentActivity extends Activity {
 				if (steps.get(i).getSmagnet().equals("00:00:00")) {
 					holder.experiment_run_item_head_magnet_pb.setProgress(0);
 				} else {
+					// TODO 磁吸进度条
 					try {
 						holder.experiment_run_item_head_magnet_pb
 								.setMax(Utlis.timeFormat.parse(
@@ -1142,9 +1159,11 @@ public class RunExperimentActivity extends Activity {
 			holders.add(holder);
 			stepRow.addView(view);
 		}
+
 		experiment_run_body_right_body_tl.addView(stepRow,
 				new TableLayout.LayoutParams(FP, WC));
 		for (int i = 0; i < holders.size(); i++) {
+			// 设置混合时间
 			try {
 				date = Utlis.timeFormat
 						.parse(holders.get(i).experiment_run_item_head_blend_info_tv
@@ -1155,6 +1174,8 @@ public class RunExperimentActivity extends Activity {
 			blendTimeCount = new BlendTimeCount(date.getHours() * 3600000
 					+ date.getMinutes() * 60000 + (date.getSeconds() - 2)
 					* 1000, 1000);
+
+			// 设置磁吸时间
 			try {
 				date = Utlis.timeFormat
 						.parse(holders.get(i).experiment_run_item_head_magnet_info_tv
@@ -1165,6 +1186,7 @@ public class RunExperimentActivity extends Activity {
 			magnetTimeCount = new MagnetTimeCount(date.getHours() * 3600000
 					+ date.getMinutes() * 60000 + (date.getSeconds() - 2)
 					* 1000, 1000);
+			// 设置等待时间
 			try {
 				date = Utlis.timeFormat
 						.parse(holders.get(i).experiment_run_item_head_wait_info_tv
@@ -1175,6 +1197,7 @@ public class RunExperimentActivity extends Activity {
 			waitTimeCount = new WaitTimeCount(date.getHours() * 3600000
 					+ date.getMinutes() * 60000 + (date.getSeconds() - 2)
 					* 1000, 1000);
+
 			waitTimeList.add(waitTimeCount);
 			blendTimeList.add(blendTimeCount);
 			magnetTimeList.add(magnetTimeCount);
@@ -1614,6 +1637,99 @@ public class RunExperimentActivity extends Activity {
 		} else {
 			time = time + sec;
 		}
+		experiment_run_body_left_body_time_info_tv.setText(time);
+	}
+
+	private void getCurrentTime(int colNum) {
+		hour = 0;
+		min = 0;
+		sec = 0;
+		for (int j = colNum; j < steps.size(); j++) {
+			try {
+				sec = sec
+						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+								.getSeconds();
+				if (sec >= 60) {
+					min++;
+					if (min >= 60) {
+						hour++;
+						min = 0;
+					}
+					sec = sec - 60;
+				}
+				min = min
+						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+								.getMinutes();
+				if (min >= 60) {
+					hour++;
+					min = min - 60;
+				}
+				hour = hour
+						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+								.getHours();
+				sec = sec
+						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+								.getSeconds();
+				if (sec >= 60) {
+					min++;
+					if (min >= 60) {
+						hour++;
+						min = 0;
+					}
+					sec = sec - 60;
+				}
+				min = min
+						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+								.getMinutes();
+				if (min >= 60) {
+					hour++;
+					min = min - 60;
+				}
+				hour = hour
+						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+								.getHours();
+
+				sec = sec
+						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+								.getSeconds();
+				if (sec >= 60) {
+					min++;
+					if (min >= 60) {
+						hour++;
+						min = 0;
+					}
+					sec = sec - 60;
+				}
+				min = min
+						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+								.getMinutes();
+				if (min >= 60) {
+					hour++;
+					min = min - 60;
+				}
+				hour = hour
+						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+								.getHours();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if (hour <= 9) {
+			time = "0" + hour + ":";
+		} else {
+			time = hour + ":";
+		}
+		if (min <= 9) {
+			time = time + "0" + min + ":";
+		} else {
+			time = time + min + ":";
+		}
+		if (sec <= 9) {
+			time = time + "0" + sec;
+		} else {
+			time = time + sec;
+		}
+		Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 }

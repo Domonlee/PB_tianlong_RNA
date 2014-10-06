@@ -396,8 +396,10 @@ public class MachineActivity extends Activity {
 					public void onClick(View v) {
 						if (modifyFlag == true) {
 							modifyFlag = false;
+							machine_user_right_btn_pass_default.setText(getString(R.string.user_pass_default));
 						} else {
 							modifyFlag = true;
+							machine_user_right_btn_pass_default.setText(getString(R.string.user_pass_default_close));
 						}
 						MachineAdminAdapter machineAdminAdapter = new MachineAdminAdapter(
 								MachineActivity.this, users, modifyFlag);
@@ -499,12 +501,12 @@ public class MachineActivity extends Activity {
 					R.layout.activity_machine_net, null);
 			machine_net_wifi_lv = (ListView) view
 					.findViewById(R.id.machine_net_wifi_lv);
-			// machine_net_bottom_btn_save = (Button) view
-			// .findViewById(R.id.machine_net_bottom_btn_save);
 			if (!wifiManager.isWifiEnabled()) {
 				Intent intent = new Intent("android.settings.WIFI_SETTINGS");
 				startActivity(intent);
 			}
+			else {
+				
 			// machine_net_bottom_btn_save.setVisibility(View.GONE);
 			if (list == null) {
 				Toast.makeText(this, getString(R.string.net_wifi_unopen),
@@ -534,6 +536,7 @@ public class MachineActivity extends Activity {
 							startActivity(intent);
 						}
 					});
+			}
 			break;
 
 		// ”√ªß…Ë÷√
@@ -1363,8 +1366,12 @@ public class MachineActivity extends Activity {
 			machine_right_rl.addView(view);
 		}
 	}
+	//TODO
 
 	private void showAdamin() {
+
+		machine_user_right_btn_pass.setVisibility(View.GONE);
+//		machine_user_right_btn_pass_default.setVisibility(View.GONE);
 		view = LayoutInflater.from(MachineActivity.this).inflate(
 				R.layout.activity_machine_user_admin, null);
 		machine_admin_body_lv = (ListView) view
