@@ -1,26 +1,14 @@
 package org.tianlong.rna.utlis;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import org.tianlong.rna.activity.MachineActivity;
-import org.tianlong.rna.activity.R;
-import org.tianlong.rna.activity.UpAndDownActivity;
-import org.tianlong.rna.activity.UpAndDownActivity.DownAdapter;
+import org.tianlong.rna.activity.RunExperimentActivity;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,28 +25,31 @@ public class MachineStateInfo {
 	private WifiUtlis wifiUtlis;
 	private List<String> receive;
 	private String receiveMeg; // 接收信息
+	private String stateString = "1";
 	private static String TAG = "MACHINE";
-	int j = 0;
+	private static String STATE_STOP = "stop";
+	private static String STATE_RUN = "run";
+	private static String STATE_PAUSE = "pause";
+
 	public boolean flag = true;
 	TextView expetiment_left_new_btn;
 
-	private SelectInfoThread selectInfoThread = new SelectInfoThread();
+	private SelectStateThread selectInfoThread;
 
 	public MachineStateInfo(Context context) {
-		Log.w(TAG, "Machine State Info");
 		this.context = context;
 	}
 
-	public MachineStateInfo(Context context,TextView expetiment_left_new_btn) {
-		Log.w(TAG, "Machine State Info");
+	public MachineStateInfo(Context context, TextView expetiment_left_new_btn) {
 		this.context = context;
 		this.expetiment_left_new_btn = expetiment_left_new_btn;
 	}
 
 	public String queryState() {
 		String str = null;
+		selectInfoThread = new SelectStateThread();
 		try {
-			Log.w(TAG, "Machine queryState");
+			// Log.w(TAG, "Machine queryState");
 			wifiUtlis = new WifiUtlis(context);
 			wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 			printHexString(Utlis.getseleteMessage(6));
@@ -67,11 +58,19 @@ public class MachineStateInfo {
 			Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
 		}
 		str = wifiUtlis.getMessage();
-		Log.w("getMessage string--", str);
-		return str;
+		// str = stateString;
+		if (flag == false) {
+			return stateString;
+		}
+		return stateString + "true";
 	}
 
-	class SelectInfoThread implements Runnable {
+	public String getState() {
+
+		return stateString;
+	}
+
+	class SelectStateThread implements Runnable {
 		public void run() {
 			while (flag) {
 				try {
@@ -79,7 +78,7 @@ public class MachineStateInfo {
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					selectInfoHandler.sendMessage(message);
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -99,27 +98,47 @@ public class MachineStateInfo {
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
 					// 00 00 为关闭
-						 Log.w("receiveSubString--", receiveMeg.substring(21, 23));
-					 if (receiveMeg.substring(21, 23).equals("00")) {
-						 Log.w("receiveSubString--", receiveMeg.substring(24, 26));
-						 if (receiveMeg.substring(24, 26).equals("00")) {
-							 j = 1;
-							 expetiment_left_new_btn.setText(""+j);
+					Log.w("receiveSubString--", receiveMeg.substring(21, 23));
+					if (receiveMeg.substring(21, 23).equals("00")) {
+						Log.w("receiveSubString--",
+								receiveMeg.substring(24, 26));
+						if (receiveMeg.substring(24, 26).equals("00")) {
+							stateString = STATE_STOP;
+
 						}
-						 //01 00 为运行一次后 关闭
-					 }else if (receiveMeg.substring(21, 23).equals("01")) {
-						 if (receiveMeg.substring(24, 26).equals("00")) {
-							 j = 1;
-							 expetiment_left_new_btn.setText(""+j);
+						if (receiveMeg.substring(24, 26).equals("03")) {
+							stateString = STATE_RUN;
+						}
+						if (receiveMeg.substring(24, 26).equals("04")) {
+							stateString = STATE_PAUSE;
+						}
+						if (receiveMeg.substring(24, 26).equals("05")) {
+							stateString = STATE_STOP;
+						}
+						// 01 00 为运行一次后 关闭
+					} else if (receiveMeg.substring(21, 23).equals("01")) {
+						if (receiveMeg.substring(24, 26).equals("00")) {
+							stateString = STATE_STOP;
+						}
+						if (receiveMeg.substring(24, 26).equals("03")) {
+							stateString = STATE_RUN;
+						}
+						if (receiveMeg.substring(24, 26).equals("04")) {
+							stateString = STATE_PAUSE;
+						}
+						if (receiveMeg.substring(24, 26).equals("05")) {
+							stateString = STATE_STOP;
 						}
 					}
-					Log.w("receiveString--", receiveMeg + "");
 				}
-				flag =false;
+//				RunExperimentActivity runExperimentActivity = new RunExperimentActivity();
+//				runExperimentActivity.setStateString(stateString);
+				expetiment_left_new_btn.setText(stateString);
+				flag = false;
 			}
 		};
 	};
-	
+
 	public static void printHexString(byte[] b) {
 		String hexString = null;
 		for (int i = 0; i < b.length; i++) {

@@ -9,8 +9,6 @@ import org.tianlong.rna.adapter.MainApplyAdapter;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
-import org.tianlong.rna.activity.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,8 +23,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
 @SuppressLint("HandlerLeak")
@@ -255,6 +253,13 @@ public class MainApplyActivity extends Activity {
 		super.onDestroy();
 	}
 
+    @Override
+	protected void onPause() 
+	{
+		super.onPause();
+        //¹Ø±Õ¶Ô»°¿ò
+//		AlertDialog.dismiss();
+	}
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(

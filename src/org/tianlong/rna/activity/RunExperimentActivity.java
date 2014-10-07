@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.tianlong.rna.activity.R.string;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
@@ -15,6 +14,7 @@ import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.AdvancedCountdownTimer;
+import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
@@ -105,6 +105,8 @@ public class RunExperimentActivity extends Activity {
 	private int min;
 	private int sec;
 	private String time;
+	
+	private String stateString = null;
 
 	private boolean sendFileFlag = true, // 接收发送数据线程控制
 			selectInfoFlag = true; // 接收查询线程控制
@@ -145,7 +147,6 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
 
-							
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -160,8 +161,7 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
-							
-							
+
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -348,6 +348,7 @@ public class RunExperimentActivity extends Activity {
 																	+ (date.getSeconds() - 2)
 																	* 1000,
 															1000);
+
 													// waitTimeCount.start();
 													// Log.i("info",
 													// "电机停止状态启动等待");
@@ -367,8 +368,8 @@ public class RunExperimentActivity extends Activity {
 									break;
 								// 如果是1,电机在等待状态
 								case 1:
-									// Log.i("info",
-									// "等待中:"+waitTimeControl+" 继续控制:"+continueControl);
+									Log.i("info", "等待中:" + waitTimeControl
+											+ " 继续控制:" + continueControl);
 									if (controlNum < holders.size()) {
 										if (waitTimeControl == 0) {
 											waitTimeControl = 1;
@@ -387,8 +388,8 @@ public class RunExperimentActivity extends Activity {
 									break;
 								// 如果是2,电机在混合状态
 								case 2:
-									// Log.i("info",
-									// "混合中:"+blendTimeControl+" 继续控制:"+continueControl);
+									Log.i("info", "混合中:" + blendTimeControl
+											+ " 继续控制:" + continueControl);
 									if (blendTimeControl == 0) {
 										blendTimeControl = 1;
 										if (continueControl != 1) {
@@ -402,8 +403,8 @@ public class RunExperimentActivity extends Activity {
 									break;
 								// 如果是3,电机在磁吸状态
 								case 3:
-									// Log.i("info",
-									// "磁吸中:"+magnetTimeControl+" 继续控制:"+continueControl);
+									Log.i("info", "磁吸中:" + magnetTimeControl
+											+ " 继续控制:" + continueControl);
 									if (magnetTimeControl == 0) {
 										magnetTimeControl = 1;
 										if (continueControl != 1) {
@@ -480,6 +481,7 @@ public class RunExperimentActivity extends Activity {
 									// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 									if ((controlNum + 1) != Integer.parseInt(
 											receiveMeg.substring(21, 23), 16)) {
+										Log.i("info", controlNum + "控制列");
 										Log.i("info", "该跳了");
 										continueControl = 0;
 										if (viewDrawable != null) {
@@ -630,6 +632,15 @@ public class RunExperimentActivity extends Activity {
 		Dialog waitDialog = sbuilder.show();
 
 		initView();
+
+		selectMachineStateInfo();
+		// TODO
+		// MachineStateInfo machineStateInfo = new
+		// MachineStateInfo(RunExperimentActivity.this);
+		// machineStateInfo.queryState();
+		// // Log.i("info  state", s);
+		// String s = machineStateInfo.getState();
+		// Log.i("info  state", s);
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -1731,6 +1742,26 @@ public class RunExperimentActivity extends Activity {
 		}
 		Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
+	}
+
+	//TODO
+	public String selectMachineStateInfo() {
+		String stateString = null;
+		MachineStateInfo machineStateInfo = new MachineStateInfo(
+				RunExperimentActivity.this,experiment_run_body_right_bottom_stop_btn);
+		 String s = machineStateInfo.queryState();
+//		s = machineStateInfo.getState();
+		s = getStateString(s);
+		Log.i("info  state",s);
+		return stateString;
+	}
+
+	public void setStateString(String s){
+		stateString = s;
+	}
+	
+	public String getStateString(String stateString){
+		return stateString;
 	}
 }
 
