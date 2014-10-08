@@ -167,7 +167,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="6dp"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/upanddown_delete_mini_icon"
+                            android:background="@drawable/upanddown_delete_ctrl_icon"
                             android:textColor="@android:color/white"
                             android:visibility="visible" />
 

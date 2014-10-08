@@ -25,15 +25,15 @@ public class MachineStateInfo {
 	private WifiUtlis wifiUtlis;
 	private List<String> receive;
 	private String receiveMeg; // 接收信息
-	private String stateString = "1";
+	private int stateNo;
+	private String perfixString;
 	private static String TAG = "MACHINE";
-	private static String STATE_STOP = "stop";
-	private static String STATE_RUN = "run";
-	private static String STATE_PAUSE = "pause";
+	private static int STATE_STOP = 5;
+	private static int STATE_RUN = 3;
+	private static int STATE_PAUSE = 4;
 
 	public boolean flag = true;
-	TextView expetiment_left_new_btn;
-
+	public TextView experiment_run_top_mstate_tv;
 	private SelectStateThread selectInfoThread;
 
 	public MachineStateInfo(Context context) {
@@ -42,32 +42,23 @@ public class MachineStateInfo {
 
 	public MachineStateInfo(Context context, TextView expetiment_left_new_btn) {
 		this.context = context;
-		this.expetiment_left_new_btn = expetiment_left_new_btn;
+		this.experiment_run_top_mstate_tv = expetiment_left_new_btn;
 	}
 
-	public String queryState() {
-		String str = null;
+	public void init() {
+		// perfixString = experiment_run_top_mstate_tv.getText().toString();
+		perfixString = "仪器当前状态：";
 		selectInfoThread = new SelectStateThread();
 		try {
-			// Log.w(TAG, "Machine queryState");
 			wifiUtlis = new WifiUtlis(context);
-			wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-			printHexString(Utlis.getseleteMessage(6));
-			new Thread(selectInfoThread).start();
 		} catch (Exception e) {
 			Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
 		}
-		str = wifiUtlis.getMessage();
-		// str = stateString;
-		if (flag == false) {
-			return stateString;
-		}
-		return stateString + "true";
+		new Thread(selectInfoThread).start();
 	}
 
-	public String getState() {
-
-		return stateString;
+	public void queryState() {
+		init();
 	}
 
 	class SelectStateThread implements Runnable {
@@ -78,8 +69,12 @@ public class MachineStateInfo {
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					selectInfoHandler.sendMessage(message);
-					Thread.sleep(2000);
+					Log.w(TAG, "handler.sendMessage--"+message);
+					Thread.sleep(9000);
+					wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -97,57 +92,48 @@ public class MachineStateInfo {
 				receive = Utlis.getReceive(info);
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
-					// 00 00 为关闭
-					Log.w("receiveSubString--", receiveMeg.substring(21, 23));
-					if (receiveMeg.substring(21, 23).equals("00")) {
-						Log.w("receiveSubString--",
-								receiveMeg.substring(24, 26));
-						if (receiveMeg.substring(24, 26).equals("00")) {
-							stateString = STATE_STOP;
-
-						}
-						if (receiveMeg.substring(24, 26).equals("03")) {
-							stateString = STATE_RUN;
-						}
-						if (receiveMeg.substring(24, 26).equals("04")) {
-							stateString = STATE_PAUSE;
-						}
-						if (receiveMeg.substring(24, 26).equals("05")) {
-							stateString = STATE_STOP;
-						}
-						// 01 00 为运行一次后 关闭
-					} else if (receiveMeg.substring(21, 23).equals("01")) {
-						if (receiveMeg.substring(24, 26).equals("00")) {
-							stateString = STATE_STOP;
-						}
-						if (receiveMeg.substring(24, 26).equals("03")) {
-							stateString = STATE_RUN;
-						}
-						if (receiveMeg.substring(24, 26).equals("04")) {
-							stateString = STATE_PAUSE;
-						}
-						if (receiveMeg.substring(24, 26).equals("05")) {
-							stateString = STATE_STOP;
-						}
+					// Log.w("receiveSubString00", receiveMeg.substring(21,
+					// 23));
+					// Log.w("receiveSubString00-->", receiveMeg.substring(24,
+					// 26));
+					if (receiveMeg.substring(24, 26).equals("00")) {
+						stateNo = STATE_STOP;
+						experiment_run_top_mstate_tv.setText(perfixString
+								+ getStateString(stateNo));
+					}
+					if (receiveMeg.substring(24, 26).equals("03")) {
+						stateNo = STATE_RUN;
+						experiment_run_top_mstate_tv.setText(perfixString
+								+ getStateString(stateNo));
+					}
+					if (receiveMeg.substring(24, 26).equals("04")) {
+						stateNo = STATE_PAUSE;
+						experiment_run_top_mstate_tv.setText(perfixString
+								+ getStateString(stateNo));
+					}
+					if (receiveMeg.substring(24, 26).equals("05")) {
+						stateNo = STATE_STOP;
+						experiment_run_top_mstate_tv.setText(perfixString
+								+ getStateString(stateNo));
 					}
 				}
-//				RunExperimentActivity runExperimentActivity = new RunExperimentActivity();
-//				runExperimentActivity.setStateString(stateString);
-				expetiment_left_new_btn.setText(stateString);
-				flag = false;
 			}
 		};
 	};
 
-	public static void printHexString(byte[] b) {
-		String hexString = null;
-		for (int i = 0; i < b.length; i++) {
-			String hex = Integer.toHexString(b[i] & 0xFF);
-			if (hex.length() == 1) {
-				hex = '0' + hex;
-			}
-			hexString = hex + " " + hexString;
+	public String getStateString(int stateNo) {
+		String str = null;
+		switch (stateNo) {
+		case 3:
+			str = "Run";
+			break;
+		case 4:
+			str = "Pause";
+			break;
+		case 5:
+			str = "Stop";
+			break;
 		}
-		Log.w("HexString--", hexString);
+		return str;
 	}
 }

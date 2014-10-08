@@ -57,6 +57,7 @@ public class RunExperimentActivity extends Activity {
 	private final String TAG = "TimeInfo";
 
 	private TextView experiment_run_body_left_top_name_tv;
+	private TextView experiment_run_top_mstate_tv;
 	private TableLayout experiment_run_body_right_body_tl;
 	private Button experiment_run_body_right_bottom_back_btn;
 	private TextView experiment_run_top_uname_tv;
@@ -74,6 +75,7 @@ public class RunExperimentActivity extends Activity {
 	private TextView experiment_run_body_left_body_t8_info_tv;
 	private LinearLayout experiment_run_body_left_temp_body;
 
+	private MachineStateInfo machineStateInfo;
 	private TableRow stepRow;
 	private StepDao stepDao;
 	private WaitTimeCount waitTimeCount;
@@ -106,8 +108,6 @@ public class RunExperimentActivity extends Activity {
 	private int sec;
 	private String time;
 	
-	private String stateString = null;
-
 	private boolean sendFileFlag = true, // 接收发送数据线程控制
 			selectInfoFlag = true; // 接收查询线程控制
 	private int startTimeControl, //
@@ -635,12 +635,6 @@ public class RunExperimentActivity extends Activity {
 
 		selectMachineStateInfo();
 		// TODO
-		// MachineStateInfo machineStateInfo = new
-		// MachineStateInfo(RunExperimentActivity.this);
-		// machineStateInfo.queryState();
-		// // Log.i("info  state", s);
-		// String s = machineStateInfo.getState();
-		// Log.i("info  state", s);
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -648,9 +642,11 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_top_uname_tv.setText(Uname);
 		experiment_run_body_left_top_name_tv.setText(experiment.getEname());
 
+		//TODO runBtn
 		experiment_run_body_right_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+//						machineStateInfo.flag = false;
 						if (wifiUtlis == null) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error_run),
@@ -696,7 +692,8 @@ public class RunExperimentActivity extends Activity {
 											wifiUtlis.sendMessage(Utlis
 													.getbyteList(
 															sendInfo.get(0), 0));
-											sendFileThread.start();
+											new Thread(sendFileThread).start();
+//											sendFileThread.start();
 											builder.setMessage(getString(R.string.run_exp_send_info));
 											builder.setCancelable(false);
 											dialog = builder.show();
@@ -710,6 +707,7 @@ public class RunExperimentActivity extends Activity {
 										break;
 									case 1:
 										try {
+//											selectMachineStateInfo();
 											selectInfoFlag = true;
 											Log.i("info", "waitTimeControl:"
 													+ waitTimeControl);
@@ -787,6 +785,7 @@ public class RunExperimentActivity extends Activity {
 					}
 				});
 
+		//TODO stopBtn
 		experiment_run_body_right_bottom_stop_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -795,6 +794,7 @@ public class RunExperimentActivity extends Activity {
 									getString(R.string.run_exp_not_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
+						selectMachineStateInfo();
 							try {
 								stopBtn = 1;
 								startTimeControl = 0;
@@ -889,6 +889,7 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
 		experiment_run_top_uname_tv = (TextView) findViewById(R.id.experiment_run_top_uname_tv);
 		experiment_run_body_left_top_name_tv = (TextView) findViewById(R.id.experiment_run_body_left_top_name_tv);
+		experiment_run_top_mstate_tv = (TextView) findViewById(R.id.experiment_run_top_mstate_tv);
 		experiment_run_body_right_body_tl = (TableLayout) findViewById(R.id.experiment_run_body_righr_body_tl);
 		experiment_run_body_right_bottom_back_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_back_btn);
 		experiment_run_body_right_bottom_run_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_run_btn);
@@ -1745,24 +1746,12 @@ public class RunExperimentActivity extends Activity {
 	}
 
 	//TODO
-	public String selectMachineStateInfo() {
-		String stateString = null;
+	public void selectMachineStateInfo() {
 		MachineStateInfo machineStateInfo = new MachineStateInfo(
-				RunExperimentActivity.this,experiment_run_body_right_bottom_stop_btn);
-		 String s = machineStateInfo.queryState();
-//		s = machineStateInfo.getState();
-		s = getStateString(s);
-		Log.i("info  state",s);
-		return stateString;
+				RunExperimentActivity.this, experiment_run_top_mstate_tv);
+		machineStateInfo.queryState();
 	}
 
-	public void setStateString(String s){
-		stateString = s;
-	}
-	
-	public String getStateString(String stateString){
-		return stateString;
-	}
 }
 
 class RunViewHolder {

@@ -227,10 +227,10 @@ public class UpAndDownActivity extends Activity {
 						num++;
 						if (num % 2 == 0) {
 							deleteFlag = false;
-							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_mini_icon);
+							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_ctrl_icon);
 						} else {
 							deleteFlag = true;
-							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_mini_cancel_icon);
+							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
 						}
 						DownAdapter downAdapter = new DownAdapter(
 								UpAndDownActivity.this, experimentsList,

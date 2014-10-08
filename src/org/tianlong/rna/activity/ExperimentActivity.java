@@ -15,7 +15,6 @@ import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.DBTempletManager;
 import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
-import org.tianlong.rna.utlis.WifiUtlis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -58,10 +57,12 @@ public class ExperimentActivity extends Activity {
 	private TextView expetiment_left_new_btn;
 	private Button experiment_right_back_btn;
 	private ImageView expetiment_left_new_btn_iv;
+	private TextView experiment_run_top_mstate_tv;
 
 	private int U_id;
 	private String Uname;
 
+	private MachineStateInfo machineStateInfo;
 	private ExperimentDao experimentDao;
 	private StepDao stepDao;
 	private List<Experiment> experiments;
@@ -112,11 +113,9 @@ public class ExperimentActivity extends Activity {
 		/**
 		 * 通过返回值来 控制控件显示 运行状态
 		 */
-		// MachineStateInfo machineStateInfo = new
-		// MachineStateInfo(ExperimentActivity.this,expetiment_left_new_btn);
-		// String s = machineStateInfo.queryState();
-		// Log.w("1111", "22");
-		// Log.w("1111", s + " 1");
+		// TODO
+			
+		selectMachineStateInfo();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
 				ExperimentActivity.this, experiments);
@@ -257,6 +256,7 @@ public class ExperimentActivity extends Activity {
 				intent.putExtra("U_id", U_id);
 				intent.putExtra("Uname", Uname);
 				listChooseId = 0;
+				machineStateInfo.flag = false;
 				startActivity(intent);
 				finish();
 			}
@@ -264,6 +264,7 @@ public class ExperimentActivity extends Activity {
 	}
 
 	public void initView() {
+		experiment_run_top_mstate_tv = (TextView) findViewById(R.id.experiment_run_top_mstate_tv);
 		experiment_right_back_btn = (Button) findViewById(R.id.experiment_right_back_btn);
 		expetiment_left_new_btn = (TextView) findViewById(R.id.expetiment_left_new_btn);
 		experiment_top_uname_tv = (TextView) findViewById(R.id.experiment_top_uname_tv);
@@ -517,19 +518,31 @@ public class ExperimentActivity extends Activity {
 		experiment_info_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								ExperimentActivity.this);
-						builder.setMessage(getString(R.string.exp_prepareing));
-						builder.setCancelable(false);
-						dialog = builder.show();
-						Intent intent = new Intent(ExperimentActivity.this,
-								RunExperimentActivity.class);
-						intent.putExtra("U_id", U_id);
-						intent.putExtra("Uname", Uname);
-						intent.putExtra("jump", "experiment");
-						intent.putExtra("E_id", experiment.getE_id());
-						startActivity(intent);
-						finish();
+						//TODO 字符串 String 输入
+						if (experiment_run_top_mstate_tv.getText().toString()
+								.equals("仪器当前状态：Run")
+								|| experiment_run_top_mstate_tv.getText()
+										.toString().equals("仪器当前状态：Pause")) {
+							Toast.makeText(ExperimentActivity.this,
+									"当前仪器有实验正在运行", 2000).show();
+
+						} else {
+
+							AlertDialog.Builder builder = new AlertDialog.Builder(
+									ExperimentActivity.this);
+							builder.setMessage(getString(R.string.exp_prepareing));
+							builder.setCancelable(false);
+							dialog = builder.show();
+							Intent intent = new Intent(ExperimentActivity.this,
+									RunExperimentActivity.class);
+							intent.putExtra("U_id", U_id);
+							intent.putExtra("Uname", Uname);
+							intent.putExtra("jump", "experiment");
+							intent.putExtra("E_id", experiment.getE_id());
+							machineStateInfo.flag = false;
+							startActivity(intent);
+							finish();
+						}
 					}
 				});
 
@@ -598,4 +611,14 @@ public class ExperimentActivity extends Activity {
 		return super.onTouchEvent(event);
 	}
 
+	// TODO
+	public void selectMachineStateInfo() {
+		if (machineStateInfo == null) {
+			machineStateInfo = new MachineStateInfo(
+					ExperimentActivity.this, experiment_run_top_mstate_tv);
+		} 
+//		MachineStateInfo machineStateInfo = new MachineStateInfo(
+//				ExperimentActivity.this, experiment_run_top_mstate_tv);
+		machineStateInfo.queryState();
+	}
 }
