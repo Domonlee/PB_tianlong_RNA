@@ -256,7 +256,7 @@ public class ExperimentActivity extends Activity {
 				intent.putExtra("U_id", U_id);
 				intent.putExtra("Uname", Uname);
 				listChooseId = 0;
-				machineStateInfo.flag = false;
+				machineStateInfo.runflag = false;
 				startActivity(intent);
 				finish();
 			}
@@ -539,7 +539,7 @@ public class ExperimentActivity extends Activity {
 							intent.putExtra("Uname", Uname);
 							intent.putExtra("jump", "experiment");
 							intent.putExtra("E_id", experiment.getE_id());
-							machineStateInfo.flag = false;
+							machineStateInfo.runflag = false;
 							startActivity(intent);
 							finish();
 						}

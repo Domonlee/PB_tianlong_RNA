@@ -86,6 +86,21 @@ public class WifiUtlis {
 		return info;
 	}
 	
+	//addd
+	public static String getMessageSyn(){
+		String info = "";
+		InputStream stream = null;
+		try {
+			stream = socket.getInputStream();
+			byte[] buffer = new byte[stream.available()];
+			stream.read(buffer);
+			info = CHexConver.bytes2HexStr(buffer, buffer.length);
+		} catch (Exception e) {
+			info = e.toString();
+		}
+		return info;
+	}
+	
 	public byte[] getByteMessage(){
 		InputStream stream = null;
 		byte[] buffer = null;

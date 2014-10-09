@@ -3,6 +3,7 @@ package org.tianlong.rna.utlis;
 import java.util.List;
 
 import org.tianlong.rna.activity.RunExperimentActivity;
+import org.tianlong.rna.activity.R.string;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 public class MachineStateInfo {
 
 	private Context context;
-	private WifiUtlis wifiUtlis;
+	private static WifiUtlis wifiUtlis;
 	private List<String> receive;
 	private String receiveMeg; // 接收信息
 	private int stateNo;
@@ -32,7 +33,8 @@ public class MachineStateInfo {
 	private static int STATE_RUN = 3;
 	private static int STATE_PAUSE = 4;
 
-	public boolean flag = true;
+	public boolean runflag = true;
+	public boolean pauseflag = true;
 	public TextView experiment_run_top_mstate_tv;
 	private SelectStateThread selectInfoThread;
 
@@ -45,6 +47,9 @@ public class MachineStateInfo {
 		this.experiment_run_top_mstate_tv = expetiment_left_new_btn;
 	}
 
+	public static synchronized String sendMessageSyn(){
+		return wifiUtlis.getMessage();	
+	}
 	public void init() {
 		// perfixString = experiment_run_top_mstate_tv.getText().toString();
 		perfixString = "仪器当前状态：";
@@ -61,20 +66,46 @@ public class MachineStateInfo {
 		init();
 	}
 
+	// class SelectStateThread implements Runnable {
+	// public void run() {
+	// while (flag) {
+	// try {
+	// Log.w(TAG, "Machine query Thread");
+	// Message message = selectInfoHandler.obtainMessage();
+	// message.obj = wifiUtlis.getByteMessage();
+	// selectInfoHandler.sendMessage(message);
+	// Thread.sleep(1000);
+	// wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+	// } catch (InterruptedException e) {
+	// e.printStackTrace();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// }
+
 	class SelectStateThread implements Runnable {
 		public void run() {
-			while (flag) {
+			while (runflag) {
+				while (pauseflag) {
+					try {
+						Log.w(TAG, "Machine query Thread");
+						Message message = selectInfoHandler.obtainMessage();
+						message.obj = wifiUtlis.getByteMessage();
+						selectInfoHandler.sendMessage(message);
+						Thread.sleep(1000);
+						wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				try {
-					Log.w(TAG, "Machine query Thread");
-					Message message = selectInfoHandler.obtainMessage();
-					message.obj = wifiUtlis.getByteMessage();
-					selectInfoHandler.sendMessage(message);
-					Log.w(TAG, "handler.sendMessage--"+message);
-					Thread.sleep(9000);
-					wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+					Thread.sleep(1000);
+						Log.w(TAG+"---", "Machine query run Thread");
 				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -92,10 +123,6 @@ public class MachineStateInfo {
 				receive = Utlis.getReceive(info);
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
-					// Log.w("receiveSubString00", receiveMeg.substring(21,
-					// 23));
-					// Log.w("receiveSubString00-->", receiveMeg.substring(24,
-					// 26));
 					if (receiveMeg.substring(24, 26).equals("00")) {
 						stateNo = STATE_STOP;
 						experiment_run_top_mstate_tv.setText(perfixString

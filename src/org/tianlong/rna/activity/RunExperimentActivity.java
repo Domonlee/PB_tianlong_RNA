@@ -107,7 +107,7 @@ public class RunExperimentActivity extends Activity {
 	private int min;
 	private int sec;
 	private String time;
-	
+
 	private boolean sendFileFlag = true, // 接收发送数据线程控制
 			selectInfoFlag = true; // 接收查询线程控制
 	private int startTimeControl, //
@@ -131,15 +131,18 @@ public class RunExperimentActivity extends Activity {
 	final IntentFilter homeFilter = new IntentFilter(
 			Intent.ACTION_CLOSE_SYSTEM_DIALOGS);// home键监听
 
+	// log Tag
+	private String TAGINFO = "INFO";
+
 	private Handler sendFileHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			Log.i("info", "发文件");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
-				// Log.i("info", "发送数据回复:"+info);
+				Log.i("info", "发送数据回复:" + info);
 				sendControlNum++;
-				if (sendControlNum >= 3
-						&& sendControlNum <= (sendInfo.size() - 3)) {
+				Log.i("info", "发送数据控制NUM:" + sendControlNum);
+				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
 						try {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
@@ -214,6 +217,8 @@ public class RunExperimentActivity extends Activity {
 						}
 					}
 				}
+				// TODO 发送文件线程
+				// machineStateInfo.pauseflag =true;
 			}
 		};
 	};
@@ -221,12 +226,23 @@ public class RunExperimentActivity extends Activity {
 	private Thread sendFileThread = new Thread() {
 		public void run() {
 			while (sendFileFlag) {
+
 				Message message = sendFileHandler.obtainMessage();
 				try {
 					receiveMeg = wifiUtlis.getMessage();
+//					receiveMeg = MachineStateInfo.sendMessageSyn();
+
+					Log.w(TAGINFO, receiveMeg);
 					if (receiveMeg.length() != 0) {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
+						Thread.sleep(1000);
+					}
+					else {
+						sendFileFlag = false;
+						if (dialog != null) {
+							dialog.cancel();
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -621,7 +637,6 @@ public class RunExperimentActivity extends Activity {
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		// 设置通量
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();
@@ -633,8 +648,8 @@ public class RunExperimentActivity extends Activity {
 
 		initView();
 
-		selectMachineStateInfo();
 		// TODO
+		selectMachineStateInfo();
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -642,150 +657,175 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_top_uname_tv.setText(Uname);
 		experiment_run_body_left_top_name_tv.setText(experiment.getEname());
 
-		//TODO runBtn
+		// TODO runBtn
 		experiment_run_body_right_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-//						machineStateInfo.flag = false;
 						if (wifiUtlis == null) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
-							if (changeBg.size() != 0) {
-								((View) changeBg.get(0).get("view"))
-										.setBackgroundResource(R.anim.anim_view);
-								changeBg.removeAll(changeBg);
-							}
-							runBtnControl++;
-							if (runBtnControl % 2 == 0) {
-								try {
-									wifiUtlis.sendMessage(Utlis
-											.sendPauseMessage());
-									experiment_run_body_right_bottom_run_btn
-											.setText(getString(R.string.run));
-									viewDrawable.stop();
-									selectInfoFlag = false;
-									if (waitTimeControl == 1) {
-										waitTimeCount.pause();
-									}
-									if (blendTimeControl == 1) {
-										blendTimeCount.pause();
-									}
-									if (magnetTimeControl == 1) {
-										magnetTimeCount.pause();
-									}
-									timeHandler.removeCallbacks(timeRunnable);
-								} catch (Exception e) {
-									Toast.makeText(RunExperimentActivity.this,
-											getString(R.string.wifi_error),
-											Toast.LENGTH_SHORT).show();
-								}
+							if (experiment_run_top_mstate_tv.getText()
+									.toString().equals("仪器当前状态：Run")
+									|| experiment_run_top_mstate_tv.getText()
+											.toString().equals("仪器当前状态：Pause")) {
+								Toast.makeText(RunExperimentActivity.this,
+										"当前仪器有实验正在运行", 2000).show();
 							} else {
-								experiment_run_body_right_bottom_run_btn
-										.setText(getString(R.string.pause));
-								if (wifiUtlis != null) {
-									// 控制流程
-									switch (runNum) {
-									case 0:
-										try {
-											wifiUtlis.sendMessage(Utlis
-													.getbyteList(
-															sendInfo.get(0), 0));
-											new Thread(sendFileThread).start();
-//											sendFileThread.start();
-											builder.setMessage(getString(R.string.run_exp_send_info));
-											builder.setCancelable(false);
-											dialog = builder.show();
-											runNum = 1;
-										} catch (Exception e1) {
-											Toast.makeText(
-													RunExperimentActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
+								machineStateInfo.pauseflag = false;
+								if (changeBg.size() != 0) {
+									((View) changeBg.get(0).get("view"))
+											.setBackgroundResource(R.anim.anim_view);
+									changeBg.removeAll(changeBg);
+								}
+								runBtnControl++;
+								if (runBtnControl % 2 == 0) {
+									try {
+
+//										machineStateInfo.pauseflag = true;
+										wifiUtlis.sendMessage(Utlis
+												.sendPauseMessage());
+										experiment_run_body_right_bottom_run_btn
+												.setText(getString(R.string.run));
+										viewDrawable.stop();
+										selectInfoFlag = false;
+										if (waitTimeControl == 1) {
+											waitTimeCount.pause();
 										}
-										break;
-									case 1:
-										try {
-//											selectMachineStateInfo();
-											selectInfoFlag = true;
-											Log.i("info", "waitTimeControl:"
-													+ waitTimeControl);
-											Log.i("info", "blendTimeControl:"
-													+ blendTimeControl);
-											Log.i("info", "magnetTimeControl:"
-													+ magnetTimeControl);
-											if (waitTimeControl != 0
-													|| blendTimeControl != 0
-													|| magnetTimeControl != 0) {
-												continueControl = 1;
-											} else {
-												continueControl = 0;
-											}
-											if (waitTimeControl == 1) {
-												waitTimeCount.resume();
-												waitTimeControl = 0;
-											}
-											if (blendTimeControl == 1) {
-												blendTimeCount.resume();
-												blendTimeControl = 0;
-											}
-											if (magnetTimeControl == 1) {
-												magnetTimeCount.resume();
-												magnetTimeControl = 0;
-											}
-											new Thread(selectInfoThread)
-													.start();
-											viewDrawable.start();
-											try {
-												Thread.sleep(50);
-											} catch (InterruptedException e) {
-												// block
-												e.printStackTrace();
-											}
-											timeHandler.post(timeRunnable);
-											wifiUtlis.sendMessage(Utlis
-													.sendContinueMessage());
-										} catch (Exception e) {
-											Toast.makeText(
-													RunExperimentActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-											// inn();
-											selectInfoFlag = false;
+										if (blendTimeControl == 1) {
+											blendTimeCount.pause();
 										}
-										break;
-									case 2:
-										try {
-											selectInfoFlag = true;
-											new Thread(selectInfoThread)
-													.start();
-											wifiUtlis.sendMessage(Utlis
-													.sendRunMessage(controlNum));
-										} catch (Exception e) {
-											Toast.makeText(
-													RunExperimentActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-											// inn();
-											selectInfoFlag = false;
+										if (magnetTimeControl == 1) {
+											magnetTimeCount.pause();
 										}
-										runNum = 1;
-										break;
-									default:
-										break;
+										timeHandler
+												.removeCallbacks(timeRunnable);
+//										machineStateInfo.pauseflag = false;
+									} catch (Exception e) {
+										Toast.makeText(
+												RunExperimentActivity.this,
+												getString(R.string.wifi_error),
+												Toast.LENGTH_SHORT).show();
 									}
 								} else {
-									Toast.makeText(RunExperimentActivity.this,
-											getString(R.string.wifi_error),
-											Toast.LENGTH_SHORT).show();
+									experiment_run_body_right_bottom_run_btn
+											.setText(getString(R.string.pause));
+									if (wifiUtlis != null) {
+										// 控制流程
+										// TODO
+										switch (runNum) {
+										case 0:
+											try {
+												wifiUtlis.sendMessage(Utlis.getbyteList(
+														sendInfo.get(0), 0));
+												new Thread(sendFileThread)
+														.start();
+												// sendFileThread.start();
+												builder.setMessage(getString(R.string.run_exp_send_info));
+												builder.setCancelable(false);
+												dialog = builder.show();
+												runNum = 1;
+											} catch (Exception e1) {
+												Toast.makeText(
+														RunExperimentActivity.this,
+														getString(R.string.wifi_error),
+														Toast.LENGTH_SHORT)
+														.show();
+											}
+											break;
+										case 1:
+											try {
+												selectInfoFlag = true;
+												Log.i("info",
+														"waitTimeControl:"
+																+ waitTimeControl);
+												Log.i("info",
+														"blendTimeControl:"
+																+ blendTimeControl);
+												Log.i("info",
+														"magnetTimeControl:"
+																+ magnetTimeControl);
+												if (waitTimeControl != 0
+														|| blendTimeControl != 0
+														|| magnetTimeControl != 0) {
+													continueControl = 1;
+												} else {
+													continueControl = 0;
+												}
+												if (waitTimeControl == 1) {
+													waitTimeCount.resume();
+													waitTimeControl = 0;
+												}
+												if (blendTimeControl == 1) {
+													blendTimeCount.resume();
+													blendTimeControl = 0;
+												}
+												if (magnetTimeControl == 1) {
+													magnetTimeCount.resume();
+													magnetTimeControl = 0;
+												}
+												new Thread(selectInfoThread) .start();
+												viewDrawable.start();
+												try {
+													Thread.sleep(50);
+												} catch (InterruptedException e) {
+													// block
+													e.printStackTrace();
+												}
+
+												timeHandler.post(timeRunnable);
+//												machineStateInfo.pauseflag = false;
+												wifiUtlis.sendMessage(Utlis
+														.sendContinueMessage());
+
+											} catch (Exception e) {
+												Toast.makeText(
+														RunExperimentActivity.this,
+														getString(R.string.wifi_error),
+														Toast.LENGTH_SHORT)
+														.show();
+												// inn();
+												selectInfoFlag = false;
+											}
+											break;
+										case 2:
+											try {
+//												machineStateInfo.pauseflag = true;
+												selectInfoFlag = true;
+												new Thread(selectInfoThread)
+														.start();
+												wifiUtlis.sendMessage(Utlis
+														.sendRunMessage(controlNum));
+//												machineStateInfo.pauseflag = false;
+											} catch (Exception e) {
+												Toast.makeText(
+														RunExperimentActivity.this,
+														getString(R.string.wifi_error),
+														Toast.LENGTH_SHORT)
+														.show();
+												// inn();
+												selectInfoFlag = false;
+//												machineStateInfo.pauseflag = false;
+											}
+											runNum = 1;
+											break;
+										default:
+											break;
+										}
+									} else {
+										Toast.makeText(
+												RunExperimentActivity.this,
+												getString(R.string.wifi_error),
+												Toast.LENGTH_SHORT).show();
+									}
 								}
 							}
 						}
 					}
 				});
 
-		//TODO stopBtn
+		// TODO stopBtn
 		experiment_run_body_right_bottom_stop_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -794,7 +834,6 @@ public class RunExperimentActivity extends Activity {
 									getString(R.string.run_exp_not_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
-						selectMachineStateInfo();
 							try {
 								stopBtn = 1;
 								startTimeControl = 0;
@@ -1745,10 +1784,14 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 
-	//TODO
+	// TODO
 	public void selectMachineStateInfo() {
-		MachineStateInfo machineStateInfo = new MachineStateInfo(
-				RunExperimentActivity.this, experiment_run_top_mstate_tv);
+		if (machineStateInfo == null) {
+			machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
+					experiment_run_top_mstate_tv);
+		}
+		// MachineStateInfo machineStateInfo = new MachineStateInfo(
+		// ExperimentActivity.this, experiment_run_top_mstate_tv);
 		machineStateInfo.queryState();
 	}
 
