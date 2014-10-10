@@ -396,10 +396,12 @@ public class MachineActivity extends Activity {
 					public void onClick(View v) {
 						if (modifyFlag == true) {
 							modifyFlag = false;
-							machine_user_right_btn_pass_default.setText(getString(R.string.user_pass_default));
+							machine_user_right_btn_pass_default
+									.setText(getString(R.string.user_pass_default));
 						} else {
 							modifyFlag = true;
-							machine_user_right_btn_pass_default.setText(getString(R.string.user_pass_default_close));
+							machine_user_right_btn_pass_default
+									.setText(getString(R.string.user_pass_default_close));
 						}
 						MachineAdminAdapter machineAdminAdapter = new MachineAdminAdapter(
 								MachineActivity.this, users, modifyFlag);
@@ -504,38 +506,37 @@ public class MachineActivity extends Activity {
 			if (!wifiManager.isWifiEnabled()) {
 				Intent intent = new Intent("android.settings.WIFI_SETTINGS");
 				startActivity(intent);
-			}
-			else {
-				
-			// machine_net_bottom_btn_save.setVisibility(View.GONE);
-			if (list == null) {
-				Toast.makeText(this, getString(R.string.net_wifi_unopen),
-						Toast.LENGTH_LONG).show();
 			} else {
-				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).SSID.length() <= 6) {
-						list.remove(i);
-						--i;
-					} else if (!list.get(i).SSID.substring(0, 6).equals(
-							"NP968_")) {
-						list.remove(i);
-						--i;
+
+				// machine_net_bottom_btn_save.setVisibility(View.GONE);
+				if (list == null) {
+					Toast.makeText(this, getString(R.string.net_wifi_unopen),
+							Toast.LENGTH_LONG).show();
+				} else {
+					for (int i = 0; i < list.size(); i++) {
+						if (list.get(i).SSID.length() <= 6) {
+							list.remove(i);
+							--i;
+						} else if (!list.get(i).SSID.substring(0, 6).equals(
+								"NP968_")) {
+							list.remove(i);
+							--i;
+						}
 					}
 				}
-			}
-			machine_net_wifi_lv.setAdapter(new WifiListAdapter(
-					MachineActivity.this, list));
-			// --跳转系统wifi设置。
-			machine_net_wifi_lv
-					.setOnItemClickListener(new OnItemClickListener() {
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							Intent intent = new Intent(
-									"android.settings.WIFI_SETTINGS");
-							startActivity(intent);
-						}
-					});
+				machine_net_wifi_lv.setAdapter(new WifiListAdapter(
+						MachineActivity.this, list));
+				// --跳转系统wifi设置。
+				machine_net_wifi_lv
+						.setOnItemClickListener(new OnItemClickListener() {
+							@Override
+							public void onItemClick(AdapterView<?> parent,
+									View view, int position, long id) {
+								Intent intent = new Intent(
+										"android.settings.WIFI_SETTINGS");
+								startActivity(intent);
+							}
+						});
 			}
 			break;
 
@@ -1366,12 +1367,12 @@ public class MachineActivity extends Activity {
 			machine_right_rl.addView(view);
 		}
 	}
-	//TODO
 
 	private void showAdamin() {
 
 		machine_user_right_btn_pass.setVisibility(View.GONE);
-//		machine_user_right_btn_pass_default.setVisibility(View.GONE);
+		machine_user_right_btn_default.setVisibility(View.GONE);
+		// machine_user_right_btn_pass_default.setVisibility(View.GONE);
 		view = LayoutInflater.from(MachineActivity.this).inflate(
 				R.layout.activity_machine_user_admin, null);
 		machine_admin_body_lv = (ListView) view
@@ -1716,13 +1717,13 @@ public class MachineActivity extends Activity {
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
 					index = Integer.valueOf(receiveMeg.substring(15, 17));
-					Log.w("Handler---",i+ "="+index);
+					Log.w("Handler---", i + "=" + index);
 					try {
 						switch (index) {
 						case 1:
-							//一起查询
+							// 一起查询
 							if (receiveMeg.substring(9, 11).equals("51")) {
-									//供电电压查询
+								// 供电电压查询
 								if (checkNum == 1) {
 									if (Integer.parseInt(
 											receiveMeg.substring(24, 26), 16) < 48
@@ -1759,51 +1760,51 @@ public class MachineActivity extends Activity {
 										detection_item_left_info_power_iv
 												.setBackgroundResource(R.drawable.yes);
 									}
-									//供电电压正常
-									
-									if (fluxInfoNum ==32) {
+									// 供电电压正常
+
+									if (fluxInfoNum == 32) {
 										detection_item_left_power_iv
-											.setVisibility(View.GONE);
-									detection_item_left_info_power_iv
-											.setVisibility(View.VISIBLE);
-									detection_item_left_sensor_iv
-											.setVisibility(View.VISIBLE);
-									animationDrawable.stop();
-									animationDrawable = (AnimationDrawable) detection_item_left_sensor_iv
-											.getBackground();
-									animationDrawable.start();
-									wifiUtlis.sendMessage(Utlis
-											.sendDetectionMessage(2));
-									
-									Log.w("Test", "供电电压32");
-									printHexString(Utlis.sendDetectionMessage(2));
-									checkNum++;
-									}
-									else {
-										detection_item_left_power_iv
-										.setVisibility(View.GONE);
+												.setVisibility(View.GONE);
 										detection_item_left_info_power_iv
-										.setVisibility(View.VISIBLE);
-										
-										
+												.setVisibility(View.VISIBLE);
+										detection_item_left_sensor_iv
+												.setVisibility(View.VISIBLE);
+										animationDrawable.stop();
+										animationDrawable = (AnimationDrawable) detection_item_left_sensor_iv
+												.getBackground();
+										animationDrawable.start();
+										wifiUtlis.sendMessage(Utlis
+												.sendDetectionMessage(2));
+
+										Log.w("Test", "供电电压32");
+										printHexString(Utlis
+												.sendDetectionMessage(2));
+										checkNum++;
+									} else {
+										detection_item_left_power_iv
+												.setVisibility(View.GONE);
+										detection_item_left_info_power_iv
+												.setVisibility(View.VISIBLE);
+
 										detection_item_left_shock_iv
-										.setVisibility(View.VISIBLE);
+												.setVisibility(View.VISIBLE);
 										animationDrawable.stop();
 										animationDrawable = (AnimationDrawable) detection_item_left_shock_iv
 												.getBackground();
 										animationDrawable.start();
 										wifiUtlis.sendMessage(Utlis
 												.sendDetectionMessage(4));
-								
+
 										Log.w("Test", "供电电压15 48");
-										printHexString(Utlis.sendDetectionMessage(4));
-										checkNum = checkNum +3;
+										printHexString(Utlis
+												.sendDetectionMessage(4));
+										checkNum = checkNum + 3;
 									}
-									
+
 								}
 							} else if (receiveMeg.substring(9, 11).equals("d1")) {
 								if (receiveMeg.substring(18, 20).equals("00")) {
-								//混合电机测试
+									// 混合电机测试
 									if (checkNum == 4) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -1836,15 +1837,17 @@ public class MachineActivity extends Activity {
 										animationDrawable = (AnimationDrawable) detection_item_left_magnet_iv
 												.getBackground();
 										animationDrawable.start();
-										wifiUtlis.sendMessage(Utlis.sendDetectionMessage(5));
+										wifiUtlis.sendMessage(Utlis
+												.sendDetectionMessage(5));
 
 										Log.w("Test", "混合");
-										printHexString(Utlis.sendDetectionMessage(5));
+										printHexString(Utlis
+												.sendDetectionMessage(5));
 										checkNum++;
 									}
 								} else if (receiveMeg.substring(18, 20).equals(
 										"01")) {
-									//磁吸电机测试
+									// 磁吸电机测试
 									if (checkNum == 5) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -1879,12 +1882,13 @@ public class MachineActivity extends Activity {
 										wifiUtlis.sendMessage(Utlis
 												.sendDetectionMessage(6));
 										Log.w("Test", "磁吸");
-										printHexString(Utlis.sendDetectionMessage(6));
+										printHexString(Utlis
+												.sendDetectionMessage(6));
 										checkNum++;
 									}
 								} else if (receiveMeg.substring(18, 20).equals(
 										"02")) {
-									//水平运动电机
+									// 水平运动电机
 									if (checkNum == 6) {
 										if (receiveMeg.substring(21, 23)
 												.equals("01")) {
@@ -2071,9 +2075,10 @@ public class MachineActivity extends Activity {
 												16) != 4) {
 									wifiUtlis.sendMessage(Utlis
 											.sendDetectionMessage(1));
-									
+
 									Log.w("Test", "checkNum =0");
-									printHexString(Utlis.sendDetectionMessage(1));
+									printHexString(Utlis
+											.sendDetectionMessage(1));
 									checkNum++;
 								}
 							}
@@ -2090,7 +2095,7 @@ public class MachineActivity extends Activity {
 												R.color.black));
 							}
 							wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-							
+
 							Log.w("Test", "fluxNum !=32");
 							printHexString(Utlis.getseleteMessage(6));
 							break;
@@ -2132,7 +2137,7 @@ public class MachineActivity extends Activity {
 								animationDrawable.start();
 								wifiUtlis.sendMessage(Utlis
 										.sendDetectionMessage(4));
-								
+
 								Log.w("Test", "加热条");
 								printHexString(Utlis.sendDetectionMessage(4));
 								checkNum++;

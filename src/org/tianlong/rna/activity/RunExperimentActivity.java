@@ -140,6 +140,9 @@ public class RunExperimentActivity extends Activity {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				Log.i("info", "发送数据回复:" + info);
+				
+				
+				//
 				sendControlNum++;
 				Log.i("info", "发送数据控制NUM:" + sendControlNum);
 				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
@@ -218,7 +221,8 @@ public class RunExperimentActivity extends Activity {
 					}
 				}
 				// TODO 发送文件线程
-				// machineStateInfo.pauseflag =true;
+				//error
+//				 machineStateInfo.pauseflag =true;
 			}
 		};
 	};
@@ -232,7 +236,7 @@ public class RunExperimentActivity extends Activity {
 					receiveMeg = wifiUtlis.getMessage();
 //					receiveMeg = MachineStateInfo.sendMessageSyn();
 
-					Log.w(TAGINFO, receiveMeg);
+					Log.w(TAGINFO, "receiveMes="+receiveMeg);
 					if (receiveMeg.length() != 0) {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
@@ -648,7 +652,6 @@ public class RunExperimentActivity extends Activity {
 
 		initView();
 
-		// TODO
 		selectMachineStateInfo();
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
@@ -683,7 +686,7 @@ public class RunExperimentActivity extends Activity {
 								if (runBtnControl % 2 == 0) {
 									try {
 
-//										machineStateInfo.pauseflag = true;
+										machineStateInfo.pauseflag = true;
 										wifiUtlis.sendMessage(Utlis
 												.sendPauseMessage());
 										experiment_run_body_right_bottom_run_btn
@@ -806,7 +809,6 @@ public class RunExperimentActivity extends Activity {
 														.show();
 												// inn();
 												selectInfoFlag = false;
-//												machineStateInfo.pauseflag = false;
 											}
 											runNum = 1;
 											break;
@@ -820,6 +822,7 @@ public class RunExperimentActivity extends Activity {
 												Toast.LENGTH_SHORT).show();
 									}
 								}
+												machineStateInfo.pauseflag = false;
 							}
 						}
 					}
@@ -1007,7 +1010,7 @@ public class RunExperimentActivity extends Activity {
 						.setVisibility(View.GONE);
 			}
 
-			holder.experiment_run_item_top_name_tv.setText("Number" + (i + 1));
+			holder.experiment_run_item_top_name_tv.setText("Number   " + (i + 1));
 
 			holder.experiment_run_item_rl
 					.setOnClickListener(new OnClickListener() {

@@ -44,7 +44,7 @@
     <string name="register">注\u0020\u0020\u0020\u0020\u0020册</string>
     <string name="user_pass_delete">请输入此用户密码</string>
     <string name="user_pass_error">密码 错误</string>
-    <string name="user_pass_delete_successful">刪除密码成功</string>
+    <string name="user_delete_successful">刪除用户成功</string>
     <!-- 注册页面 -->
     <string name="user_rpass_null">确认密码不能为空</string>
     <string name="user_name_ture">用户名已被注册</string>
@@ -59,7 +59,7 @@
     <string name="system_user">用户设置</string>
     <string name="system_update">仪器升级</string>
     <string name="system_temp">系统温度</string>
-    <string name="system_machine">位置校准</string>
+    <string name="system_machine">位置设置</string>
     <string name="system_detection">仪器检测</string>
     <!-- 系统设置_语言设置 -->
     <string name="language_english">English</string>
@@ -124,10 +124,12 @@
     <string name="user_admin_modify_psw">重置密码</string>
     <!-- 系统设置_仪器设置 -->
     <string name="instrument_flux_name">通\u0020量\u0020设\u0020置</string>
-    <string name="instrument_parameter_run">运行参数设置(单位: mm)</string>
+    <string name="instrument_parameter_run">运行参数设置</string>
     <string name="instrument_blend">混合电机控制</string>
     <string name="instrument_magnetic">磁吸电机控制</string>
-    <string name="instrument_hole">水平运动电机控制</string>
+    <string name="instrument_hole">水平电机控制</string>
+    <string name="instrument_hole_space">孔间距校正</string>
+    <string name="instrument_hole_space_step">(步)</string>
     <string name="instrument_blend_null">混合电机控制值不能为空</string>
     <string name="instrument_magnetic_null">磁吸电机控制值不能为空</string>
     <string name="instrument_hole_null">水平运动电机控制值不能为空</string>
@@ -273,13 +275,16 @@
     <!-- 帮助 -->
     <string name="information">Copyright 2010 by Xi‘an tianlong\nscience﹠Technology Corporation.</string>
     <string name="systemnum">	系统版本号:</string>
+    <string name="machinenum">	仪器版本号:</string>
     <string name="about_us">联系我们</string>
     <string name="company_name">公司名称:</string>
     <string name="company_name_info">西安天隆科技有限公司</string>
     <string name="company_address">公司地址:</string>
     <string name="company_address_info">西安市朱宏路389号</string>
-    <string name="company_phone">电话传真:</string>
-    <string name="company_phone_info">029\-82218051 83204255 传真:029\-82216680</string>
+    <string name="company_phone">电话:</string>
+    <string name="company_fax">传真:</string>
+    <string name="company_phone_info">029-82218051 83204255</string>
+    <string name="company_fax_info">029-82216680</string>
     <string name="company_net">公司网址:</string>
     <string name="company_net_info">http://www.medtl.com</string>
     <string name="company_postcode">邮政编码:</string>

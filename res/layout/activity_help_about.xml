@@ -20,12 +20,13 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/sysmessage" />
 
+        <!-- 系统版本号 -->
         <TextView
             android:id="@+id/about_system_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/about_iv"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:text="@string/systemnum"
             android:textColor="@android:color/white"
             android:textSize="25sp" />
@@ -35,17 +36,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/about_iv"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/about_system_num"
+            android:textColor="@android:color/white"
+            android:text="1.0.0.1"
+            android:textSize="25sp" />
+        
+        <!-- 软件版本号 -->
+        
+<TextView
+            android:id="@+id/about_machine_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_system_num"
+            android:layout_marginTop="15dp"
+            android:text="@string/machinenum"
             android:textColor="@android:color/white"
             android:textSize="25sp" />
 
+        <TextView
+            android:id="@+id/about_machine_num_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_system_num_info"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/about_machine_num"
+            android:textColor="@android:color/white"
+            android:text="1.0.0.1"
+            android:textSize="25sp" />
+        
         <EditText
             android:id="@+id/about_info"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/about_system_num"
-            android:layout_marginTop="40dp"
+            android:layout_below="@id/about_machine_num"
+            android:layout_marginTop="20dp"
             android:enabled="false"
             android:gravity="center"
             android:text="@string/information"

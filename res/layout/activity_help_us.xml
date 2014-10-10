@@ -101,6 +101,8 @@
                         style="@style/imageStyle"
                         android:layout_below="@id/help_main_right_body_edittime" />
 
+                    <!-- 电话传真 -->
+
                     <RelativeLayout
                         android:id="@+id/help_main_right_body_controlmode"
                         android:layout_width="600dip"
@@ -128,10 +130,36 @@
                         android:layout_below="@id/help_main_right_body_controlmode" />
 
                     <RelativeLayout
+                        android:id="@+id/help_main_right_body_controlmode2"
+                        android:layout_width="600dip"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/help_main_right_body_controlmode"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dip" >
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_controlmode2_tv"
+                            style="@style/textStyle"
+                            android:layout_centerVertical="true"
+                            android:text="@string/company_fax" />
+
+                        <TextView
+                            android:id="@+id/help_main_right_body_controlmode2_info_tv"
+                            style="@style/textStyle"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/company_fax_info" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/help_main_right_body_controlmode2_iv"
+                        style="@style/imageStyle"
+                        android:layout_below="@id/help_main_right_body_controlmode2" />
+
+                    <RelativeLayout
                         android:id="@+id/help_main_right_body_upspeed"
                         android:layout_width="600dip"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/help_main_right_body_controlmode_iv"
+                        android:layout_below="@id/help_main_right_body_controlmode2_iv"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dip" >
 
@@ -289,8 +317,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-             >
+            android:layout_marginBottom="6dp" >
 
             <Button
                 android:id="@+id/help_right_about_back_btn"

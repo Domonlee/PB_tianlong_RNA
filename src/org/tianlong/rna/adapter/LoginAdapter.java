@@ -151,7 +151,7 @@ public class LoginAdapter extends BaseAdapter {
 											editText.setText("");
 											Toast.makeText(
 													context,
-													context.getString(R.string.user_pass_delete_successful),
+													context.getString(R.string.user_delete_successful),
 													Toast.LENGTH_SHORT).show();
 											try {
 												Field field = dialog

@@ -3,6 +3,7 @@ package org.tianlong.rna.adapter;
 import java.util.List;
 import java.util.Map;
 
+import org.tianlong.rna.activity.HelpActivity;
 import org.tianlong.rna.activity.R;
 
 import android.content.Context;
@@ -48,6 +49,7 @@ public class HelpAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.activity_help_left_item,
 					null);
+
 			holder.help_left_item_iv = (ImageView) convertView
 					.findViewById(R.id.help_left_item_iv);
 			holder.help_left_item_tv = (TextView) convertView
@@ -60,10 +62,13 @@ public class HelpAdapter extends BaseAdapter {
 				position).get("image"));
 		holder.help_left_item_tv.setText(context.getString((Integer) lists.get(
 				position).get("name")));
-		if (position == 0) {
+
+		if (lists.size() != 0 && position == HelpActivity.listChooseId) {
 			convertView.setBackgroundResource(R.drawable.list_select);
+		} 
+		else {
+			convertView.setBackgroundResource(R.drawable.list_bg);
 		}
-		convertView.setBackgroundResource(R.drawable.list_bg);
 		return convertView;
 	}
 

@@ -51,7 +51,6 @@ public class MachineStateInfo {
 		return wifiUtlis.getMessage();	
 	}
 	public void init() {
-		// perfixString = experiment_run_top_mstate_tv.getText().toString();
 		perfixString = "ÒÇÆ÷µ±Ç°×´Ì¬£º";
 		selectInfoThread = new SelectStateThread();
 		try {

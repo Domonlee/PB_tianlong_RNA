@@ -227,10 +227,12 @@ public class UpAndDownActivity extends Activity {
 						num++;
 						if (num % 2 == 0) {
 							deleteFlag = false;
-							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_ctrl_icon);
+							activity_upanddown_down_top_delete_btn
+									.setBackgroundResource(R.drawable.upanddown_delete_ctrl_icon);
 						} else {
 							deleteFlag = true;
-							activity_upanddown_down_top_delete_btn.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
+							activity_upanddown_down_top_delete_btn
+									.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
 						}
 						DownAdapter downAdapter = new DownAdapter(
 								UpAndDownActivity.this, experimentsList,
@@ -483,7 +485,7 @@ public class UpAndDownActivity extends Activity {
 				receive = Utlis.getReceive(info);
 				experimentsList = Utlis.getExperimentList(receive);
 				activity_upanddown_down_top_lv.setAdapter(new DownAdapter(
-						UpAndDownActivity.this, experimentsList,deleteFlag));
+						UpAndDownActivity.this, experimentsList, deleteFlag));
 				readListFlag = false;
 			}
 		};
@@ -573,6 +575,9 @@ public class UpAndDownActivity extends Activity {
 						getInfoListFlag = false;
 					}
 				}
+
+				//同名检测标志
+				sameNameFlag = false;
 			}
 		};
 	};
@@ -679,9 +684,11 @@ public class UpAndDownActivity extends Activity {
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										UpAndDownActivity.this);
 								builder.setTitle(getString(R.string.delete_file));
-								builder.setPositiveButton(getString(R.string.sure),
+								builder.setPositiveButton(
+										getString(R.string.sure),
 										new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface dialog,
+											public void onClick(
+													DialogInterface dialog,
 													int which) {
 												if (!readListFlag) {
 													readListFlag = true;
@@ -694,37 +701,43 @@ public class UpAndDownActivity extends Activity {
 																Toast.LENGTH_SHORT)
 																.show();
 													} else {
-														wifiUtlis.sendMessage(Utlis
-																.sendDeleteExperiment((Integer) experimentsList
-																		.get(arg0).get(
-																				"id")));
-														wifiUtlis.sendMessage(Utlis
-																.getseleteMessage(10));
+														wifiUtlis
+																.sendMessage(Utlis
+																		.sendDeleteExperiment((Integer) experimentsList
+																				.get(arg0)
+																				.get("id")));
+														wifiUtlis
+																.sendMessage(Utlis
+																		.getseleteMessage(10));
 														strings.remove(arg0);
 														Toast.makeText(
 																UpAndDownActivity.this,
 																getString(R.string.up_delete_successful),
 																Toast.LENGTH_SHORT)
 																.show();
-														new Thread(listThread).start();
+														new Thread(listThread)
+																.start();
 													}
 												} catch (Exception e) {
 													Toast.makeText(
 															UpAndDownActivity.this,
 															getString(R.string.wifi_error),
-															Toast.LENGTH_SHORT).show();
+															Toast.LENGTH_SHORT)
+															.show();
 												}
 											}
 										});
-								builder.setNegativeButton(getString(R.string.cancle),
+								builder.setNegativeButton(
+										getString(R.string.cancle),
 										new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface dialog,
+											public void onClick(
+													DialogInterface dialog,
 													int which) {
 												dialog.cancel();
 											}
 										});
 								builder.show();
-								
+
 								DownAdapter.this.notifyDataSetChanged();
 							}
 						});

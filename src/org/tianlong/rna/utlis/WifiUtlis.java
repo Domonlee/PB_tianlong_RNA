@@ -87,19 +87,32 @@ public class WifiUtlis {
 	}
 	
 	//addd
-	public static String getMessageSyn(){
-		String info = "";
-		InputStream stream = null;
-		try {
-			stream = socket.getInputStream();
-			byte[] buffer = new byte[stream.available()];
-			stream.read(buffer);
-			info = CHexConver.bytes2HexStr(buffer, buffer.length);
-		} catch (Exception e) {
-			info = e.toString();
-		}
-		return info;
-	}
+//	public static String getMessageSyn(){
+//		String info = "";
+//		InputStream stream = null;
+//		try {
+//			stream = socket1.getInputStream();
+//			byte[] buffer = new byte[stream.available()];
+//			stream.read(buffer);
+//			info = CHexConver.bytes2HexStr(buffer, buffer.length);
+//		} catch (Exception e) {
+//			info = e.toString();
+//		}
+//		return info;
+//	}
+	
+//	public byte[] getByteMessage1(){
+//		InputStream stream = null;
+//		byte[] buffer = null;
+//		try {
+//			stream = socket.getInputStream();
+//			buffer = new byte[stream.available()];
+//			stream.read(buffer);
+//		} catch (Exception e) {
+//		}
+//		return buffer;
+//	}
+	
 	
 	public byte[] getByteMessage(){
 		InputStream stream = null;
@@ -120,4 +133,7 @@ public class WifiUtlis {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	//同步接发
 }

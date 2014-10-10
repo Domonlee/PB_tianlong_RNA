@@ -37,6 +37,9 @@ public class HelpActivity extends Activity {
 	private Button help_back_btn;
 	private View view;
 	private TextView about_system_num_info;
+	private TextView about_machine_num_info;
+	
+	public static int listChooseId = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,24 +50,25 @@ public class HelpActivity extends Activity {
 		help_logo_uname = (TextView) findViewById(R.id.help_top_uname_tv);
 		help_body_left_body_lv = (ListView) findViewById(R.id.help_left_lv);
 		help_body_right_rl = (RelativeLayout) findViewById(R.id.help_right_rl);
+		
 		showAbout();
 		help_logo_uname.setText(uName);
-		help_body_left_body_lv.setAdapter(new HelpAdapter(getList(),
-				HelpActivity.this));
+		final HelpAdapter helpAdapter = new HelpAdapter(getList(),
+				HelpActivity.this);
+		help_body_left_body_lv.setAdapter(helpAdapter);
 		help_body_left_body_lv
 				.setOnItemClickListener(new OnItemClickListener() {
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						help_body_right_rl.removeAllViews();
-						switch (arg2) {
-						case 0:
+						listChooseId = arg2;
+						if (arg2 == 0) {
 							showAbout();
-							break;
-						case 1:
+							helpAdapter.notifyDataSetChanged();
+						}
+						else if (arg2 == 1) {
 							showAboutUs();
-							break;
-						default:
-							break;
+							helpAdapter.notifyDataSetChanged();
 						}
 					}
 				});
@@ -72,6 +76,8 @@ public class HelpActivity extends Activity {
 
 	private void showAbout() {
 
+		//系统版本号 获取
+		//仪器版本号 未获取
 		String systemNum = "";
 		try {
 			systemNum = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -83,6 +89,8 @@ public class HelpActivity extends Activity {
 				R.layout.activity_help_about, null);
 		about_system_num_info = (TextView) view
 				.findViewById(R.id.about_system_num_info);
+		about_machine_num_info = (TextView) view
+				.findViewById(R.id.about_machine_num_info);
 
 		help_back_btn = (Button) view.findViewById(R.id.help_back_btn);
 		help_back_btn.setOnClickListener(new OnClickListener() {
