@@ -3,13 +3,16 @@ package org.tianlong.rna.adapter;
 import java.util.List;
 import java.util.Map;
 
+import org.tianlong.rna.activity.HelpActivity;
 import org.tianlong.rna.activity.R;
+import org.tianlong.rna.activity.RunFileActivity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RunFileAdapert extends BaseAdapter {
@@ -47,6 +50,7 @@ public class RunFileAdapert extends BaseAdapter {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.activity_runfile_item, null);
 			holder.textView = (TextView) convertView.findViewById(R.id.activity_runfile_item_tv);
+			holder.newItemImage = (ImageView)convertView.findViewById(R.id.activity_runfile_item_new_iv);
 			convertView.setTag(holder);
 		}
 		else{
@@ -54,11 +58,23 @@ public class RunFileAdapert extends BaseAdapter {
 		}
 		
 		holder.textView.setText((String)strings.get(position).get("info"));
+		//设置背景
+		if (position == RunFileActivity.listChooseId) {
+			convertView.setBackgroundResource(R.drawable.list_select);
+		} 
+		else {
+			convertView.setBackgroundResource(R.drawable.list_bg);
+		}
+		//设置标志位
+		if (strings.get(position).get("id").equals(1)) {
+			holder.newItemImage.setVisibility(View.VISIBLE);
+		}
 		
 		return convertView;
 	}
 	
 	class ViewHolder{
 		TextView textView;
+		ImageView newItemImage;
 	}
 }

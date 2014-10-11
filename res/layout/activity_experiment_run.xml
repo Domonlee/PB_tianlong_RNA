@@ -10,7 +10,7 @@
         android:layout_height="50dip"
         android:layout_alignParentTop="true"
         android:background="@drawable/head" >
-        
+
         <TextView
             android:id="@+id/experiment_run_top_mstate_tv"
             android:layout_width="wrap_content"
@@ -76,9 +76,17 @@
                 <LinearLayout
                     android:id="@+id/experiment_run_body_left_temp_body"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="vertical"
                     android:weightSum="8" >
+
+                    <ImageView
+                        android:id="@+id/experiment_run_body_left_temp_body_bg"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/run_temp_bg"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/experiment_run_body_left_body_t1_rl"
@@ -387,9 +395,9 @@
                 android:id="@+id/experiment_run_body_righr_bottom_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="60dip"
-                android:layout_marginRight="6dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true" >
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp" >
 
                 <Button
                     android:id="@+id/experiment_run_body_righr_bottom_reset_btn"

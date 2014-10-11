@@ -115,7 +115,7 @@ public class ExperimentActivity extends Activity {
 		 */
 		// TODO
 			
-		selectMachineStateInfo();
+//		selectMachineStateInfo();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
 				ExperimentActivity.this, experiments);

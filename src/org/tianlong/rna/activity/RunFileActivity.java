@@ -56,6 +56,8 @@ public class RunFileActivity extends Activity {
 	private int U_id;
 	private String Uname;
 	private String experNameString;
+	public static int listChooseId = 0;
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +91,8 @@ public class RunFileActivity extends Activity {
 				if (!readInfoFlag) {
 					readInfoFlag = true;
 				}
+				//choose ±³¾°
+				listChooseId = arg2;
 				if (wifiUtlis == null) {
 					try {
 						wifiUtlis = new WifiUtlis(RunFileActivity.this);

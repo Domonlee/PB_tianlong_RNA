@@ -131,7 +131,7 @@ public class EditExperimentActivity extends Activity {
 					public void onClick(View v) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								EditExperimentActivity.this);
-						deleteFlag= hasTemplet();
+						deleteFlag = hasTemplet();
 						if (!deleteFlag) {
 							builder.setTitle("当前没有步骤!");
 							builder.setPositiveButton(getString(R.string.sure),
@@ -236,11 +236,12 @@ public class EditExperimentActivity extends Activity {
 					}
 				});
 
+		// TODO
 		experiment_new_main_bottom_save_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						saveFlag = hasTemplet();
-						if (!saveFlag) {
+						if (!saveFlag || (steps.size() == 0)) {
 							Toast.makeText(EditExperimentActivity.this,
 									getString(R.string.exp_save_null),
 									Toast.LENGTH_SHORT).show();
@@ -374,14 +375,12 @@ public class EditExperimentActivity extends Activity {
 		dialog.cancel();
 	};
 
-	
 	/**
 	 * 
-	*  Title: hasTemplet 
-	*  Description: 
-	*  Modified By：  Domon                                        
-	*  Modified Date: 2014-9-18 
-	*  @return
+	 * Title: hasTemplet Description: Modified By： Domon Modified Date:
+	 * 2014-9-18
+	 * 
+	 * @return
 	 */
 	public boolean hasTemplet() {
 		ExperimentDao experimentDao = new ExperimentDao();
@@ -392,6 +391,7 @@ public class EditExperimentActivity extends Activity {
 		}
 		return true;
 	}
+
 	public void initView() {
 		experimentDao = new ExperimentDao();
 		stepDao = new StepDao();
@@ -491,7 +491,7 @@ public class EditExperimentActivity extends Activity {
 					holder.experiment_new_main_item_head_magnet_info_tv
 							.setBackgroundResource(R.drawable.zero);
 				}
-				holder.experiment_new_main_item_top_name_tv.setText("Number   "
+				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
 				holder.experiment_new_main_item_head_wait_info_tv.setText(step
 						.getSwait());
@@ -970,7 +970,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -1087,7 +1087,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -1193,7 +1193,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -1276,7 +1276,7 @@ public class EditExperimentActivity extends Activity {
 										.findViewById(R.id.experiment_new_main_item_hole_rb_five);
 								RadioButton experiment_new_main_item_hole_rb_six = (RadioButton) view
 										.findViewById(R.id.experiment_new_main_item_hole_rb_six);
-								
+
 								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
 								switch (fluxNum) {
 								case 1:
@@ -1289,7 +1289,7 @@ public class EditExperimentActivity extends Activity {
 									experiment_new_main_item_hole_rb_five
 											.setVisibility(View.GONE);
 									break;
-								}	
+								}
 
 								switch (Integer
 										.valueOf(holder.experiment_new_main_item_body_hole_info_tv
@@ -1498,7 +1498,7 @@ public class EditExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
-												//TODO
+												// TODO
 												editSteps.get(p).setSspeed(
 														speed);
 												holder.experiment_new_main_item_body_speed_info_tv
@@ -2100,7 +2100,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2191,7 +2191,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2271,7 +2271,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
@@ -2338,7 +2338,7 @@ public class EditExperimentActivity extends Activity {
 										.findViewById(R.id.experiment_new_main_item_hole_rb_five);
 								RadioButton experiment_new_main_item_hole_rb_six = (RadioButton) view
 										.findViewById(R.id.experiment_new_main_item_hole_rb_six);
-								
+
 								// 通量设置孔位属性 1-->15(1~5) 2-->48(1~4)
 								switch (fluxNum) {
 								case 1:
@@ -2352,7 +2352,7 @@ public class EditExperimentActivity extends Activity {
 											.setVisibility(View.GONE);
 									break;
 								}
-								
+
 								switch (Integer
 										.valueOf(holder.experiment_new_main_item_body_hole_info_tv
 												.getText().toString())) {
@@ -2560,7 +2560,7 @@ public class EditExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
-												//TODO
+												// TODO
 												editSteps.get(p).setSspeed(
 														speed);
 												holder.experiment_new_main_item_body_speed_info_tv

@@ -57,6 +57,7 @@ public class CreatExperimentActivity extends Activity {
 	private Button experiment_new_main_bottom_save_btn;
 	private Button experiment_new_main_bottom_back_btn;
 	private TextView experiment_new_main_bottom_ename_info_tv;
+	private EditText experiment_new_main_bottom_ename_info_et;
 	private TextView experiment_new_main_top_uname_tv;
 	private TableLayout experiment_new_main_body_tl;
 	private TableRow stepRow;
@@ -128,9 +129,15 @@ public class CreatExperimentActivity extends Activity {
 		experiment_new_main_bottom_save_btn = (Button) findViewById(R.id.experiment_new_main_bottom_save_btn);
 		experiment_new_main_bottom_insert_btn = (Button) findViewById(R.id.experiment_new_main_bottom_insert_btn);
 		experiment_new_main_bottom_delete_btn = (Button) findViewById(R.id.experiment_new_main_bottom_delete_btn);
+		experiment_new_main_bottom_ename_info_et = (EditText) findViewById(R.id.experiment_new_main_bottom_ename_info_et);
 
 		experiment_new_main_top_uname_tv.setText(Uname);
-		experiment_new_main_bottom_ename_info_tv.setText(Ename);
+		// experiment_new_main_bottom_ename_info_tv.setText(Ename);
+
+		experiment_new_main_bottom_ename_info_tv.setVisibility(View.GONE);
+		experiment_new_main_bottom_ename_info_et.setVisibility(View.VISIBLE);
+		experiment_new_main_bottom_ename_info_et.setText(Ename);
+
 		experiment_new_main_body_tl.setStretchAllColumns(true);
 
 		/**
@@ -144,7 +151,7 @@ public class CreatExperimentActivity extends Activity {
 						Step step = new Step();
 						switch (fluxNum) {
 						case 1:
-							step.setSname("Step___15");
+							step.setSname("Step15");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);
@@ -175,9 +182,7 @@ public class CreatExperimentActivity extends Activity {
 						}
 
 						steps.add(step);
-						Toast.makeText(CreatExperimentActivity.this,
-								getString(R.string.exp_inset_success),
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(CreatExperimentActivity.this, getString(R.string.exp_inset_success),2000).show();
 						deleteFlag = true;
 						saveFlag = true;
 						createTable();
@@ -289,104 +294,121 @@ public class CreatExperimentActivity extends Activity {
 					}
 				});
 
+		//TODO save btn
 		experiment_new_main_bottom_save_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						saveFlag = hasTemplet();
-						if (!saveFlag ) {
+						if (!saveFlag || (steps.size() == 0)) {
 							Toast.makeText(CreatExperimentActivity.this,
 									getString(R.string.exp_save_null),
 									Toast.LENGTH_SHORT).show();
 						} else {
-							String systemTime = Utlis.systemFormat
-									.format(new Date(System.currentTimeMillis()));
-							experiment.setCdate(systemTime);
-							experiment.setRdate(systemTime);
-							experiment.setEname(Ename);
-							experiment.setEDE_id(Enum);
-							experiment.setEquick(Equick);
-							experiment.setEremark(Eremark);
-							experiment.setU_id(U_id);
-							experimentDao.insertExperiment(experiment,
-									CreatExperimentActivity.this);
-							experiment = experimentDao.getExperimentByCdate(
-									systemTime, CreatExperimentActivity.this,
-									U_id);
-
-							boolean flag = false;
-							for (int i = 0; i < steps.size(); i++) {
-								if (steps.get(i).getSname().equals("")) {
-									flag = true;
-									break;
-								}
-							}
-							if (flag) {
+							if (experiment_new_main_bottom_ename_info_et
+									.getText().toString().equals("")) {
 								Toast.makeText(CreatExperimentActivity.this,
-										getString(R.string.exp_step_name_null),
+										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
 							} else {
-								if (getVolIsNull()) {
-									if (getVolIsBig()) {
-										if (getTempIsNull()) {
-											if (getTempIsBig()) {
-												for (int i = 0; i < steps
-														.size(); i++) {
-													steps.get(i).setE_id(
-															experiment
-																	.getE_id());
-													steps.get(i)
-															.setSvol(
-																	Integer.valueOf(holders
-																			.get(i).experiment_new_main_item_body_vol_info_et
-																			.getText()
-																			.toString()));
-													steps.get(i)
-															.setStemp(
-																	Integer.valueOf(holders
-																			.get(i).experiment_new_main_item_body_temp_info_et
-																			.getText()
-																			.toString()));
-													stepDao.insertStep(
-															steps.get(i),
-															CreatExperimentActivity.this);
+								String systemTime = Utlis.systemFormat
+										.format(new Date(System
+												.currentTimeMillis()));
+								experiment.setCdate(systemTime);
+								experiment.setRdate(systemTime);
+								experiment
+										.setEname(experiment_new_main_bottom_ename_info_et
+												.getText().toString());
+								experiment.setEDE_id(Enum);
+								experiment.setEquick(Equick);
+								experiment.setEremark(Eremark);
+								experiment.setU_id(U_id);
+								experimentDao.insertExperiment(experiment,
+										CreatExperimentActivity.this);
+								experiment = experimentDao
+										.getExperimentByCdate(systemTime,
+												CreatExperimentActivity.this,
+												U_id);
+
+								boolean flag = false;
+								for (int i = 0; i < steps.size(); i++) {
+									if (steps.get(i).getSname().equals("")) {
+										flag = true;
+										break;
+									}
+								}
+								if (flag) {
+									Toast.makeText(
+											CreatExperimentActivity.this,
+											getString(R.string.exp_step_name_null),
+											Toast.LENGTH_SHORT).show();
+								} else {
+									if (getVolIsNull()) {
+										if (getVolIsBig()) {
+											if (getTempIsNull()) {
+												if (getTempIsBig()) {
+													for (int i = 0; i < steps
+															.size(); i++) {
+														steps.get(i)
+																.setE_id(
+																		experiment
+																				.getE_id());
+														steps.get(i)
+																.setSvol(
+																		Integer.valueOf(holders
+																				.get(i).experiment_new_main_item_body_vol_info_et
+																				.getText()
+																				.toString()));
+														steps.get(i)
+																.setStemp(
+																		Integer.valueOf(holders
+																				.get(i).experiment_new_main_item_body_temp_info_et
+																				.getText()
+																				.toString()));
+														stepDao.insertStep(
+																steps.get(i),
+																CreatExperimentActivity.this);
+													}
+													Intent intent = new Intent(
+															CreatExperimentActivity.this,
+															ExperimentActivity.class);
+													intent.putExtra("U_id",
+															U_id);
+													intent.putExtra("Uname",
+															Uname);
+													startActivity(intent);
+													finish();
+													Toast.makeText(
+															CreatExperimentActivity.this,
+															getString(R.string.exp_save_success),
+															Toast.LENGTH_SHORT)
+															.show();
+												} else {
+													Toast.makeText(
+															CreatExperimentActivity.this,
+															getString(R.string.exp_temp_big),
+															Toast.LENGTH_SHORT)
+															.show();
 												}
-												Intent intent = new Intent(
-														CreatExperimentActivity.this,
-														ExperimentActivity.class);
-												intent.putExtra("U_id", U_id);
-												intent.putExtra("Uname", Uname);
-												startActivity(intent);
-												finish();
-												Toast.makeText(
-														CreatExperimentActivity.this,
-														getString(R.string.exp_save_success),
-														Toast.LENGTH_SHORT)
-														.show();
 											} else {
 												Toast.makeText(
 														CreatExperimentActivity.this,
-														getString(R.string.exp_temp_big),
+														getString(R.string.exp_temp_empty),
 														Toast.LENGTH_SHORT)
 														.show();
 											}
 										} else {
 											Toast.makeText(
 													CreatExperimentActivity.this,
-													getString(R.string.exp_temp_empty),
+													getString(R.string.exp_vol_big),
 													Toast.LENGTH_SHORT).show();
 										}
+
 									} else {
 										Toast.makeText(
 												CreatExperimentActivity.this,
-												getString(R.string.exp_vol_big),
+												getString(R.string.exp_vol_empty),
 												Toast.LENGTH_SHORT).show();
 									}
-
-								} else {
-									Toast.makeText(
-											CreatExperimentActivity.this,
-											getString(R.string.exp_vol_empty),
-											Toast.LENGTH_SHORT).show();
 								}
 							}
 						}
@@ -413,14 +435,13 @@ public class CreatExperimentActivity extends Activity {
 		createTable();
 		dialog.cancel();
 	};
-	
+
 	/**
 	 * 
-	*  Title: hasTemplet 
-	*  Description: 
-	*  Modified By：  Domon                                        
-	*  Modified Date: 2014-9-18 
-	*  @return
+	 * Title: hasTemplet Description: Modified By： Domon Modified Date:
+	 * 2014-9-18
+	 * 
+	 * @return
 	 */
 	public boolean hasTemplet() {
 		ExperimentDao experimentDao = new ExperimentDao();
@@ -429,7 +450,10 @@ public class CreatExperimentActivity extends Activity {
 		if (defaultExperiments.size() == 0) {
 			return false;
 		}
+		else {
+			
 		return true;
+		}
 	}
 
 	private void createTable() {
@@ -941,7 +965,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1031,7 +1055,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1122,8 +1146,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
-
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -1137,7 +1160,7 @@ public class CreatExperimentActivity extends Activity {
 													int which) {
 												String timeFromatStr = timeFormat(
 														experiment_new_main_item_time_hour_hour
-														.getCurrentItem(),
+																.getCurrentItem(),
 														experiment_new_main_item_time_hour_minutes
 																.getCurrentItem(),
 														experiment_new_main_item_time_hour_seconds
@@ -1388,7 +1411,7 @@ public class CreatExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
-												//TODO
+												// TODO
 												step.setSspeed(speed);
 												holder.experiment_new_main_item_body_speed_info_tv
 														.setText(speed
@@ -1934,7 +1957,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2025,7 +2048,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2070,8 +2093,8 @@ public class CreatExperimentActivity extends Activity {
 								builder.show();
 							}
 						});
-				
-				//--磁吸时间 fixed
+
+				// --磁吸时间 fixed
 				holder.experiment_new_main_item_head_magnet_info_tv
 						.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
@@ -2118,7 +2141,7 @@ public class CreatExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_minutes
 										.setCurrentItem(date.getMinutes());
 								experiment_new_main_item_time_hour_seconds
-										.setCurrentItem(date.getSeconds()/5);
+										.setCurrentItem(date.getSeconds() / 5);
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										CreatExperimentActivity.this);
@@ -2131,7 +2154,8 @@ public class CreatExperimentActivity extends Activity {
 													DialogInterface dialog,
 													int which) {
 												String timeFromatStr = timeFormat(
-														experiment_new_main_item_time_hour_hour.getCurrentItem(),
+														experiment_new_main_item_time_hour_hour
+																.getCurrentItem(),
 														experiment_new_main_item_time_hour_minutes
 																.getCurrentItem(),
 														experiment_new_main_item_time_hour_seconds
@@ -2304,7 +2328,8 @@ public class CreatExperimentActivity extends Activity {
 							}
 						});
 
-				holder.experiment_new_main_item_body_speed_info_tv.setOnClickListener(new OnClickListener() {
+				holder.experiment_new_main_item_body_speed_info_tv
+						.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
 								View view = LayoutInflater
 										.from(CreatExperimentActivity.this)
@@ -2405,7 +2430,7 @@ public class CreatExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
-												//TODO
+												// TODO  频率设置
 												steps.get(p).setSspeed(speed);
 												holder.experiment_new_main_item_body_speed_info_tv
 														.setText(speed
@@ -2642,7 +2667,7 @@ public class CreatExperimentActivity extends Activity {
 		} else {
 			minStr = "" + min;
 		}
-		sec = sec *5;
+		sec = sec * 5;
 		if (sec < 10) {
 			secStr = "0" + sec;
 		} else {

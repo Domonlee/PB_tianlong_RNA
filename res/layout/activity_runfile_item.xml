@@ -8,6 +8,18 @@
 	    android:layout_height="40dip"
 	    android:textColor="@android:color/white"
 	    android:textSize="20sp"
+	    android:text="Demo"
 	    android:layout_centerInParent="true"
 	    android:gravity="center"/>
+	
+	<ImageView 
+	    android:id="@+id/activity_runfile_item_new_iv"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:layout_marginLeft="2dp"
+	    android:visibility="gone"
+	    android:src="@drawable/runfile_left_new_icon"
+	    android:layout_toRightOf="@id/activity_runfile_item_tv"
+	    />
 </RelativeLayout>

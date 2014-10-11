@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -74,6 +75,17 @@ public class RunExperimentActivity extends Activity {
 	private TextView experiment_run_body_left_body_t7_info_tv;
 	private TextView experiment_run_body_left_body_t8_info_tv;
 	private LinearLayout experiment_run_body_left_temp_body;
+	
+	//Œ¬∂»œ‘ æ
+	private ImageView experiment_run_body_left_temp_body_bg;
+	private RelativeLayout experiment_run_body_left_body_t1_rl;
+	private RelativeLayout experiment_run_body_left_body_t2_rl;
+	private RelativeLayout experiment_run_body_left_body_t3_rl;
+	private RelativeLayout experiment_run_body_left_body_t4_rl;
+	private RelativeLayout experiment_run_body_left_body_t5_rl;
+	private RelativeLayout experiment_run_body_left_body_t6_rl;
+	private RelativeLayout experiment_run_body_left_body_t7_rl;
+	private RelativeLayout experiment_run_body_left_body_t8_rl;
 
 	private MachineStateInfo machineStateInfo;
 	private TableRow stepRow;
@@ -643,7 +655,8 @@ public class RunExperimentActivity extends Activity {
 
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
-		fluxNum = machine.getMflux();
+//		fluxNum = machine.getMflux();
+		fluxNum = 1;
 
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
@@ -947,6 +960,16 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_body_t8_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t8_info_tv);
 
 		experiment_run_body_left_temp_body = (LinearLayout) findViewById(R.id.experiment_run_body_left_temp_body);
+		
+		experiment_run_body_left_temp_body_bg = (ImageView)findViewById(R.id.experiment_run_body_left_temp_body_bg);
+		experiment_run_body_left_body_t1_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t1_rl);
+		experiment_run_body_left_body_t2_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t2_rl);
+		experiment_run_body_left_body_t3_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t3_rl);
+		experiment_run_body_left_body_t4_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t4_rl);
+		experiment_run_body_left_body_t5_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t5_rl);
+		experiment_run_body_left_body_t6_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t6_rl);
+		experiment_run_body_left_body_t7_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t7_rl);
+		experiment_run_body_left_body_t8_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t8_rl);
 		hideTempBody();
 		getTime(0);
 	}
@@ -958,7 +981,15 @@ public class RunExperimentActivity extends Activity {
 	 */
 	private void hideTempBody() {
 		if (fluxNum == 1 || fluxNum == 3) {
-			experiment_run_body_left_temp_body.setVisibility(View.GONE);
+			experiment_run_body_left_body_t1_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t2_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t3_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t4_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t5_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t6_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t7_rl.setVisibility(View.GONE);
+			experiment_run_body_left_body_t8_rl.setVisibility(View.GONE);
+			experiment_run_body_left_temp_body_bg.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -1010,7 +1041,7 @@ public class RunExperimentActivity extends Activity {
 						.setVisibility(View.GONE);
 			}
 
-			holder.experiment_run_item_top_name_tv.setText("Number   " + (i + 1));
+			holder.experiment_run_item_top_name_tv.setText("No.  " + (i + 1));
 
 			holder.experiment_run_item_rl
 					.setOnClickListener(new OnClickListener() {

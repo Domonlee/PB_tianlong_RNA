@@ -980,13 +980,9 @@ public class Utlis {
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("num",
-					Integer.valueOf(infos.substring(infos.length() - 2,
-							infos.length() - 1)));
+			map.put("num", Integer.valueOf(infos.substring(infos.length() - 2, infos.length() - 1)));
 			map.put("info", infos.substring(0, infos.indexOf(",", 0)));
-			map.put("id",
-					Integer.valueOf(infos.substring(infos.length() - 5,
-							infos.length() - 3)));
+			map.put("id", Integer.valueOf(infos.substring(infos.length() - 5, infos.length() - 3)));
 			maps.add(map);
 		}
 		return maps;
