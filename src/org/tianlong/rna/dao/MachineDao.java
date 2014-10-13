@@ -37,6 +37,7 @@ public class MachineDao {
 			machine.setMgateway(cursor.getString(cursor.getColumnIndex("Mgateway")));
 			machine.setMmask(cursor.getString(cursor.getColumnIndex("Mmask")));
 			machine.setMDtime(cursor.getString(cursor.getColumnIndex("MDtime")));
+			machine.setMholeSpace(cursor.getInt(cursor.getColumnIndex("MholeSpace")));
 		}
 		cursor.close();
 		database.close();
@@ -59,6 +60,7 @@ public class MachineDao {
 		values.put("Mgateway", machine.getMgateway());
 		values.put("Mmask", machine.getMmask());
 		values.put("MDtime", machine.getMDtime());
+		values.put("MholeSpace", machine.getMholeSpace());
 		database.insert("machine", null, values);
 		database.close();
 		helper.close();

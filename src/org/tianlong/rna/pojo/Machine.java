@@ -7,6 +7,8 @@ public class Machine {
 	private float Mblend;
 	private float Mmagnet;
 	private float Mhole;
+	private int MholeSpace;
+
 	private String Mname;
 	private String Mip;
 	private String Mmac;
@@ -131,4 +133,13 @@ public class Machine {
 	public void setMDtime(String mDtime) {
 		MDtime = mDtime;
 	}
+	
+	public int getMholeSpace() {
+		return MholeSpace;
+	}
+
+	public void setMholeSpace(int mholeSpace) {
+		MholeSpace = mholeSpace;
+	}
+
 }

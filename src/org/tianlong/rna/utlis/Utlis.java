@@ -262,7 +262,48 @@ public class Utlis {
 			break;
 		}
 		bytes.add(byteList[6]);
+		//设置 数值 需要*100
 		String str = Integer.toHexString((int) (info * 10));
+		if (str.length() == 1) {
+			byteList[7] = (byte) Integer.parseInt("00", 16);
+			byteList[8] = (byte) Integer.parseInt("0" + str, 16);
+		}
+		if (str.length() == 2) {
+			byteList[7] = (byte) Integer.parseInt("00", 16);
+			byteList[8] = (byte) Integer.parseInt(str, 16);
+		} else if (str.length() == 3) {
+			byteList[7] = (byte) Integer.parseInt(str.substring(0, 1), 16);
+			byteList[8] = (byte) Integer.parseInt(str.substring(1, 3), 16);
+		} else {
+			byteList[7] = (byte) Integer.parseInt(str.substring(0, 2), 16);
+			byteList[8] = (byte) Integer.parseInt(str.substring(2, 4), 16);
+		}
+		bytes.add(byteList[7]);
+		bytes.add(byteList[8]);
+		byteList[9] = getCheckCode(bytes);
+		byteList[10] = (byte) Integer.parseInt("FE", 16);
+		return byteList;
+	}
+
+	//孔间距设置命令
+	public static byte[] saveHoldSpaceMessage(int info) {
+		bytes.removeAll(bytes);
+		byte[] byteList = new byte[11];
+		byteList[0] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[0]);
+		byteList[1] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[1]);
+		byteList[2] = (byte) (byteList.length);
+		bytes.add(byteList[2]);
+		byteList[3] = (byte) Integer.parseInt("8A", 16);
+		bytes.add(byteList[3]);
+		byteList[4] = (byte) Integer.parseInt("02", 16);
+		bytes.add(byteList[4]);
+		byteList[5] = (byte) Integer.parseInt("09", 16);
+		bytes.add(byteList[5]);
+		byteList[6] = (byte) Integer.parseInt("03", 16);
+		bytes.add(byteList[6]);
+		String str = Integer.toHexString(info);
 		if (str.length() == 1) {
 			byteList[7] = (byte) Integer.parseInt("00", 16);
 			byteList[8] = (byte) Integer.parseInt("0" + str, 16);

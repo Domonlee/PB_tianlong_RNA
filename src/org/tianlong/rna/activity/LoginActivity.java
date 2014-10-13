@@ -336,6 +336,7 @@ public class LoginActivity extends Activity {
 			machine.setMblend(0);
 			machine.setMmagnet(0);
 			machine.setMhole(0);
+			machine.setMholeSpace(0);
 			machine.setMname("NP968-IV");
 			machine.setMip("192.168.1.200");
 			machine.setMmac("00:00:00:00:00:00");

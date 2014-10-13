@@ -15,6 +15,7 @@ import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.DBTempletManager;
 import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
+import org.tianlong.rna.utlis.WifiUtlis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -613,6 +614,9 @@ public class ExperimentActivity extends Activity {
 
 	// TODO
 	public void selectMachineStateInfo() {
+//		if (WifiUtlis ) {
+//			
+//		}
 		if (machineStateInfo == null) {
 			machineStateInfo = new MachineStateInfo(
 					ExperimentActivity.this, experiment_run_top_mstate_tv);
