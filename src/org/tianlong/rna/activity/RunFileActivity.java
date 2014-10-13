@@ -17,16 +17,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaMuxer.OutputFormat;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -52,6 +53,8 @@ public class RunFileActivity extends Activity {
 	private WifiUtlis wifiUtlis;
 	private readListThread listThread;
 	private readInfoThread infoThread;
+	
+	private RunFileAdapert logListAdapert;
 
 	private int U_id;
 	private String Uname;
@@ -88,11 +91,12 @@ public class RunFileActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				runfile_right_tv.setText("");
+				listChooseId = arg2;
+				logListAdapert.notifyDataSetChanged();
+
 				if (!readInfoFlag) {
 					readInfoFlag = true;
 				}
-				//choose ±³¾°
-				listChooseId = arg2;
 				if (wifiUtlis == null) {
 					try {
 						wifiUtlis = new WifiUtlis(RunFileActivity.this);
@@ -128,6 +132,7 @@ public class RunFileActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(RunFileActivity.this,
 						MainActivity.class);
+				listChooseId = 0;
 				intent.putExtra("U_id", U_id);
 				intent.putExtra("Uname", Uname);
 				startActivity(intent);
@@ -186,8 +191,9 @@ public class RunFileActivity extends Activity {
 				}
 				receive = Utlis.getReceive(info);
 				strings = Utlis.getRunFileList(receive);
-				runfile_left_lv.setAdapter(new RunFileAdapert(strings,
-						RunFileActivity.this));
+				logListAdapert = new RunFileAdapert(strings,
+						RunFileActivity.this);
+				runfile_left_lv.setAdapter(logListAdapert);
 				readListFlag = false;
 			}
 		};

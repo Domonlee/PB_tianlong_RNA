@@ -115,7 +115,7 @@ public class ExperimentActivity extends Activity {
 		 */
 		// TODO
 			
-//		selectMachineStateInfo();
+		selectMachineStateInfo();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
 				ExperimentActivity.this, experiments);
@@ -617,8 +617,6 @@ public class ExperimentActivity extends Activity {
 			machineStateInfo = new MachineStateInfo(
 					ExperimentActivity.this, experiment_run_top_mstate_tv);
 		} 
-//		MachineStateInfo machineStateInfo = new MachineStateInfo(
-//				ExperimentActivity.this, experiment_run_top_mstate_tv);
 		machineStateInfo.queryState();
 	}
 }
