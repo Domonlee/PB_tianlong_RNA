@@ -111,11 +111,10 @@ public class ExperimentActivity extends Activity {
 
 		initView();
 
-		/**
-		 * 通过返回值来 控制控件显示 运行状态
-		 */
+		// 通过返回值来 控制控件显示 运行状态
+
 		// TODO
-			
+
 		selectMachineStateInfo();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
@@ -340,6 +339,7 @@ public class ExperimentActivity extends Activity {
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+						machineStateInfo.runflag = false;
 						if (experiment_new_prepare_body_name_et.getText()
 								.toString().equals("")) {
 							Toast.makeText(ExperimentActivity.this,
@@ -519,7 +519,7 @@ public class ExperimentActivity extends Activity {
 		experiment_info_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						//TODO 字符串 String 输入
+						// TODO 字符串 String 输入
 						if (experiment_run_top_mstate_tv.getText().toString()
 								.equals("仪器当前状态：Run")
 								|| experiment_run_top_mstate_tv.getText()
@@ -550,6 +550,7 @@ public class ExperimentActivity extends Activity {
 		experiment_info_bottom_edit_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+							machineStateInfo.runflag = false;
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								ExperimentActivity.this);
 						builder.setMessage(getString(R.string.exp_creating));
@@ -612,15 +613,15 @@ public class ExperimentActivity extends Activity {
 		return super.onTouchEvent(event);
 	}
 
-	// TODO
+	// TODO 没有网络连接时候，错误处理
 	public void selectMachineStateInfo() {
-//		if (WifiUtlis ) {
-//			
-//		}
+		// if (WifiUtlis ) {
+		//
+		// }
 		if (machineStateInfo == null) {
-			machineStateInfo = new MachineStateInfo(
-					ExperimentActivity.this, experiment_run_top_mstate_tv);
-		} 
+			machineStateInfo = new MachineStateInfo(ExperimentActivity.this,
+					experiment_run_top_mstate_tv);
+		}
 		machineStateInfo.queryState();
 	}
 }

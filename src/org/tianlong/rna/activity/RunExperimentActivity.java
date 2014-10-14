@@ -254,12 +254,12 @@ public class RunExperimentActivity extends Activity {
 						sendFileHandler.sendMessage(message);
 						Thread.sleep(1000);
 					}
-					else {
-						sendFileFlag = false;
-						if (dialog != null) {
-							dialog.cancel();
-						}
-					}
+//					else {
+//						sendFileFlag = false;
+//						if (dialog != null) {
+//							dialog.cancel();
+//						}
+//					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -664,7 +664,7 @@ public class RunExperimentActivity extends Activity {
 
 		initView();
 
-		selectMachineStateInfo();
+//		selectMachineStateInfo();
 
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
@@ -681,14 +681,14 @@ public class RunExperimentActivity extends Activity {
 									getString(R.string.wifi_error_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
-							if (experiment_run_top_mstate_tv.getText()
-									.toString().equals("仪器当前状态：Run")
-									|| experiment_run_top_mstate_tv.getText()
-											.toString().equals("仪器当前状态：Pause")) {
-								Toast.makeText(RunExperimentActivity.this,
-										"当前仪器有实验正在运行", 2000).show();
-							} else {
-								machineStateInfo.pauseflag = false;
+//							if (experiment_run_top_mstate_tv.getText()
+//									.toString().equals("仪器当前状态：Run")
+//									|| experiment_run_top_mstate_tv.getText()
+//											.toString().equals("仪器当前状态：Pause")) {
+//								Toast.makeText(RunExperimentActivity.this,
+//										"当前仪器有实验正在运行", 2000).show();
+//							} else {
+//								machineStateInfo.runflag = false;
 								if (changeBg.size() != 0) {
 									((View) changeBg.get(0).get("view"))
 											.setBackgroundResource(R.anim.anim_view);
@@ -698,7 +698,7 @@ public class RunExperimentActivity extends Activity {
 								if (runBtnControl % 2 == 0) {
 									try {
 
-										machineStateInfo.pauseflag = true;
+//										machineStateInfo.pauseflag = true;
 										wifiUtlis.sendMessage(Utlis
 												.sendPauseMessage());
 										experiment_run_body_right_bottom_run_btn
@@ -834,10 +834,10 @@ public class RunExperimentActivity extends Activity {
 												Toast.LENGTH_SHORT).show();
 									}
 								}
-												machineStateInfo.pauseflag = false;
+//												machineStateInfo.pauseflag = false;
 							}
 						}
-					}
+//					}
 				});
 
 		// TODO stopBtn
@@ -1818,15 +1818,15 @@ public class RunExperimentActivity extends Activity {
 	}
 
 	// TODO
-	public void selectMachineStateInfo() {
-		if (machineStateInfo == null) {
-			machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
-					experiment_run_top_mstate_tv);
-		}
-		// MachineStateInfo machineStateInfo = new MachineStateInfo(
-		// ExperimentActivity.this, experiment_run_top_mstate_tv);
-		machineStateInfo.queryState();
-	}
+//	public void selectMachineStateInfo() {
+//		if (machineStateInfo == null) {
+//			machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
+//					experiment_run_top_mstate_tv);
+//		}
+//		// MachineStateInfo machineStateInfo = new MachineStateInfo(
+//		// ExperimentActivity.this, experiment_run_top_mstate_tv);
+//		machineStateInfo.queryState();
+//	}
 
 }
 

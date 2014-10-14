@@ -65,25 +65,6 @@ public class MachineStateInfo {
 		init();
 	}
 
-	// class SelectStateThread implements Runnable {
-	// public void run() {
-	// while (flag) {
-	// try {
-	// Log.w(TAG, "Machine query Thread");
-	// Message message = selectInfoHandler.obtainMessage();
-	// message.obj = wifiUtlis.getByteMessage();
-	// selectInfoHandler.sendMessage(message);
-	// Thread.sleep(1000);
-	// wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	// }
-
 	class SelectStateThread implements Runnable {
 		public void run() {
 			while (runflag) {
