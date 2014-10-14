@@ -263,7 +263,7 @@ public class Utlis {
 		}
 		bytes.add(byteList[6]);
 		//设置 数值 需要*100
-		String str = Integer.toHexString((int) (info * 10));
+		String str = Integer.toHexString((int) (info * 100));
 		if (str.length() == 1) {
 			byteList[7] = (byte) Integer.parseInt("00", 16);
 			byteList[8] = (byte) Integer.parseInt("0" + str, 16);

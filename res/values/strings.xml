@@ -126,6 +126,7 @@
     <string name="instrument_flux_name">通\u0020量\u0020设\u0020置</string>
     <string name="instrument_parameter_run">运行参数设置</string>
     <string name="instrument_blend">混合电机控制</string>
+    <string name="instrument_reboot">系统复位中，请稍后</string>
     <string name="instrument_magnetic">磁吸电机控制</string>
     <string name="instrument_hole">水平电机控制</string>
     <string name="instrument_hole_space">孔间距校正</string>

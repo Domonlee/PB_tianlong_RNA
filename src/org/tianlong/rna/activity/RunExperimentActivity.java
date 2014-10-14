@@ -655,8 +655,7 @@ public class RunExperimentActivity extends Activity {
 
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
-//		fluxNum = machine.getMflux();
-		fluxNum = 1;
+		fluxNum = machine.getMflux();
 
 		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
 				RunExperimentActivity.this);
