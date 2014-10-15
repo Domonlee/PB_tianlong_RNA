@@ -701,8 +701,8 @@ public class MachineActivity extends Activity {
 //					.findViewById(R.id.machine_instrument_body_run_parameter_blend_info_et);
 //			machine_instrument_body_run_parameter_magnetic_info_et = (EditText) view
 //					.findViewById(R.id.machine_instrument_body_run_parameter_magnetic_info_et);
-//			machine_instrument_body_run_parameter_hole_info_et = (EditText) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_et);
+			machine_instrument_body_run_parameter_hole_info_et = (EditText) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_et);
 			machine_instrument_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_instrument_bottom_btn_save);
 			machine_instrument_body_run_parameter_blend_info_reset_btn = (Button) view
@@ -736,46 +736,27 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_hole_info_tv = (TextView) view
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_tv);
 
-			machine_instrument_body_run_parameter_hole_space_info_et = (EditText) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_et);
-			machine_instrument_body_run_parameter_hole_space_info_reset_btn = (Button) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_reset_btn);
-			machine_instrument_body_run_parameter_hole_space_info_send_btn = (Button) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_send_btn);
-			machine_instrument_body_run_parameter_hole_space_info_tv = (TextView) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_tv);
-			machine_instrument_body_run_parameter_hole_space_btn_rl = (RelativeLayout) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_btn_rl);
-			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
+//			machine_instrument_body_run_parameter_hole_space_info_et = (EditText) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_et);
+//			machine_instrument_body_run_parameter_hole_space_info_reset_btn = (Button) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_reset_btn);
+//			machine_instrument_body_run_parameter_hole_space_info_send_btn = (Button) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_send_btn);
+//			machine_instrument_body_run_parameter_hole_space_info_tv = (TextView) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_tv);
+//			machine_instrument_body_run_parameter_hole_space_btn_rl = (RelativeLayout) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_btn_rl);
+//			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
 
 			fluxNum = machine.getMflux();
 			machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
-			/**
-
-//			machine_instrument_body_run_parameter_blend_info_et.setText(machine
-//					.getMblend() + "");
-//			machine_instrument_body_run_parameter_magnetic_info_et
-//					.setText(machine.getMmagnet() + "");
-//			machine_instrument_body_run_parameter_hole_info_et.setText(machine
-//					.getMhole() + "");
-//			machine_instrument_body_run_parameter_hole_space_info_et
-//					.setText(machine.getMholeSpace() + "");
-//			machine_instrument_body_run_parameter_blend_info_tv.setText(machine
-//					.getMblend() + "");
-//			machine_instrument_body_run_parameter_magnetic_info_tv
-//					.setText(machine.getMmagnet() + "");
-//			machine_instrument_body_run_parameter_hole_info_tv.setText(machine
-//					.getMhole() + "");
-//			machine_instrument_body_run_parameter_hole_space_info_tv
-//					.setText(machine.getMholeSpace() + "");
 
 			// 混合电机控制输入框监听
 			// 磁吸电机控制输入框监听
 			// 孔位电机控制输入框监听
 			// 孔间距输入框监听
- * 
- */
+
 			/*
 			 * 通量设置 Modified By： Domon Modified Date: 2014-9-11
 			 */
@@ -886,15 +867,67 @@ public class MachineActivity extends Activity {
 					});
 
 			//TODO
-			machine_instrument_body_run_parameter_hole_info_tv.setOnClickListener(new OnClickListener() {
+			
+			machine_instrument_body_run_parameter_hole_info_et.setVisibility(View.VISIBLE);
+			machine_instrument_body_run_parameter_hole_info_et.addTextChangedListener(new TextWatcher() {
 				
 				@Override
-				public void onClick(View v) {
-					String i =		inputParaString(machine_instrument_body_run_parameter_hole_info_tv.getText().toString());
-			Log.w("WWWWW", i);
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					Toast.makeText(getApplicationContext(), "1111", 1000).show();	
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
 					
 				}
 			});
+			
+			machine_instrument_body_run_parameter_hole_info_tv.setVisibility(View.GONE);
+//			machine_instrument_body_run_parameter_hole_info_tv.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					String i =		inputParaString(machine_instrument_body_run_parameter_hole_info_tv.getText().toString());
+//			Log.w("WWWWW", i);
+//					
+//				}
+//			});
+			
+//			machine_instrument_body_run_parameter_magnetic_info_tv.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					String i =		inputParaString(machine_instrument_body_run_parameter_magnetic_info_tv.getText().toString());
+//			Log.w("WWWWW", i);
+//					
+//				}
+//			});
+//			machine_instrument_body_run_parameter_hole_space_info_tv.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					String i =		inputParaString(machine_instrument_body_run_parameter_hole_space_info_tv.getText().toString());
+//			Log.w("WWWWW", i);
+//					
+//				}
+//			});			
+//			machine_instrument_body_run_parameter_blend_info_tv.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					String i =		inputParaString(machine_instrument_body_run_parameter_blend_info_tv.getText().toString());
+//			Log.w("WWWWW", i);
+//					
+//				}
+//			});
 			
 			// 系统复位
 			machine_instrument_bottom_btn_save
@@ -955,7 +988,7 @@ public class MachineActivity extends Activity {
 							}
 						}
 					});
-			// 孔位电机复位 水平电机
+			// 水平电机
 			machine_instrument_body_run_parameter_hole_info_reset_btn
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
@@ -975,24 +1008,24 @@ public class MachineActivity extends Activity {
 					});
 
 			// 孔间距电机
-			machine_instrument_body_run_parameter_hole_space_info_reset_btn
-					.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							if (wifiUtlis != null) {
-								try {
-									wifiUtlis.sendMessage(Utlis
-											.sendSystemResetMessage());
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-								
-							} else {
-								Toast.makeText(MachineActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
+//			machine_instrument_body_run_parameter_hole_space_info_reset_btn
+//					.setOnClickListener(new OnClickListener() {
+//						public void onClick(View v) {
+//							if (wifiUtlis != null) {
+//								try {
+//									wifiUtlis.sendMessage(Utlis
+//											.sendSystemResetMessage());
+//								} catch (Exception e) {
+//									e.printStackTrace();
+//								}
+//								
+//							} else {
+//								Toast.makeText(MachineActivity.this,
+//										getString(R.string.wifi_error),
+//										Toast.LENGTH_SHORT).show();
+//							}
+//						}
+//					});
 			// 混合电机移动
 //			machine_instrument_body_run_parameter_blend_info_send_btn
 //					.setOnClickListener(new OnClickListener() {
@@ -1042,8 +1075,8 @@ public class MachineActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-									selectInfoFlag = true;
-									new Thread(selectInfoThread).start();
+//									selectInfoFlag = true;
+//									new Thread(selectInfoThread).start();
 //								if(isLegalNum(machine_instrument_body_run_parameter_hole_info_et.getText().toString()))
 //								{
 //								try {
@@ -1070,28 +1103,28 @@ public class MachineActivity extends Activity {
 					});
 
 			// 孔间距 步数
-			machine_instrument_body_run_parameter_hole_space_info_send_btn
-					.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							if (wifiUtlis != null) {
-								try {
-									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
-											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
-													.getText().toString())));
-									int i  = Integer .valueOf(machine_instrument_body_run_parameter_hole_space_info_et .getText().toString());
-									Log.w("孔间距", i+"");
-								} catch (Exception e) {
-									Toast.makeText(MachineActivity.this,
-											getString(R.string.wifi_error),
-											Toast.LENGTH_SHORT).show();
-								}
-							} else {
-								Toast.makeText(MachineActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
+//			machine_instrument_body_run_parameter_hole_space_info_send_btn
+//					.setOnClickListener(new OnClickListener() {
+//						public void onClick(View v) {
+//							if (wifiUtlis != null) {
+//								try {
+//									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
+//											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
+//													.getText().toString())));
+//									int i  = Integer .valueOf(machine_instrument_body_run_parameter_hole_space_info_et .getText().toString());
+//									Log.w("孔间距", i+"");
+//								} catch (Exception e) {
+//									Toast.makeText(MachineActivity.this,
+//											getString(R.string.wifi_error),
+//											Toast.LENGTH_SHORT).show();
+//								}
+//							} else {
+//								Toast.makeText(MachineActivity.this,
+//										getString(R.string.wifi_error),
+//										Toast.LENGTH_SHORT).show();
+//							}
+//						}
+//					});
 			break;
 		// 仪器检测
 		case 6:
@@ -1585,14 +1618,14 @@ public class MachineActivity extends Activity {
 								.setVisibility(View.VISIBLE);
 						machine_instrument_body_run_parameter_hole_space_btn_rl
 								.setVisibility(View.VISIBLE);
-							selectInfoFlag = false;
+//							selectInfoFlag = false;
 							Log.w("selectInfoHandler", "system reboot successful");
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 02 01 e6 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_hole_success),
 								Toast.LENGTH_SHORT).show();
-							selectInfoFlag = false;
+//							selectInfoFlag = false;
 							Log.w("selectInfoHandler", "hole successful");
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 01 01 e5 fe ")) {
@@ -1601,22 +1634,21 @@ public class MachineActivity extends Activity {
 								getString(R.string.instrument_magnetic_success),
 								Toast.LENGTH_SHORT).show();
 							Log.w("selectInfoHandler", "magnetic successful");
-							selectInfoFlag = false;
+//							selectInfoFlag = false;
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 00 01 e4 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_blend_success),
 								Toast.LENGTH_SHORT).show();
-							selectInfoFlag = false;
+//							selectInfoFlag = false;
 							Log.w("selectInfoHandler", "blend successful");
-							
 					}
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 03 01 e3 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_blend_success),
 								Toast.LENGTH_SHORT).show();
-						selectInfoFlag = false;
+//						selectInfoFlag = false;
 						Log.w("selectInfoHandler", "hole successful");
 					} else if (receiveMeg.substring(15, 17).equals("09")) {
 						try {
@@ -1645,11 +1677,10 @@ public class MachineActivity extends Activity {
 									.setText(String.format("%.2f", magnetic));
 							machine_instrument_body_run_parameter_hole_info_tv
 									.setText(String.format("%.2f", hole));
-							Log.w("thread", hole+"");
-							machine_instrument_body_run_parameter_hole_space_info_tv
-									.setText(holeSpace + "");
-							machine_instrument_body_run_parameter_hole_space_info_et
-									.setText(holeSpace + "");
+//							machine_instrument_body_run_parameter_hole_space_info_tv
+//									.setText(holeSpace + "");
+//							machine_instrument_body_run_parameter_hole_space_info_et
+//									.setText(holeSpace + "");
 							wifiUtlis.sendMessage(Utlis
 									.sendSystemResetMessage());
 						} catch (Exception e) {
@@ -1658,7 +1689,6 @@ public class MachineActivity extends Activity {
 									Toast.LENGTH_SHORT).show();
 						}
 					} else if (receiveMeg.substring(15, 17).equals("07")) {
-						Log.w("receiveMeg", fluxNum + "->>>>>" + receiveMeg);
 						switch (Integer.parseInt(receiveMeg.substring(21, 23),
 								16)) {
 						case 15:
