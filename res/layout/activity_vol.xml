@@ -16,6 +16,9 @@
 	        android:layout_height="220dip"
 	        android:layout_marginLeft="30dip"
 	        android:layout_toRightOf="@id/vol_thousand"/>
+
+        
+       
         <org.tianlong.rna.utlis.TimeWheelView
 	        android:id="@+id/vol_ten"
 	        android:layout_width="70dip"

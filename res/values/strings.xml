@@ -131,6 +131,10 @@
     <string name="instrument_magnetic">磁吸电机控制</string>
     <string name="instrument_hole">水平电机控制</string>
     <string name="instrument_hole_space">孔间距校正</string>
+    <string name="instrument_hole_space_info">孔间距校正</string>
+    <string name="instrument_hole_info">水平电机校正</string>
+    <string name="instrument_blend_info">混合电机校正</string>
+    <string name="instrument_magnetic_info">磁吸电机校正</string>
     <string name="instrument_hole_space_step">步</string>
     <string name="instrument_blend_null">混合电机控制值不能为空</string>
     <string name="instrument_magnetic_null">磁吸电机控制值不能为空</string>

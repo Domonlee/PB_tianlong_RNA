@@ -39,6 +39,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -569,7 +570,6 @@ public class MachineActivity extends Activity {
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
 
-			
 			if (machine.getMDtime().equals("null:null:null")
 					|| machine.getMDtime().equals("null")) {
 				machine.setMDtime("01:00:00");
@@ -683,16 +683,16 @@ public class MachineActivity extends Activity {
 			break;
 		// 仪器设置
 		case 5:
-			try {
-				if (wifiUtlis == null) {
-					wifiUtlis = new WifiUtlis(MachineActivity.this);
-				}
-//				selectInfoFlag = true;
-//				new Thread(selectInfoThread).start();
-				wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			// try {
+			// if (wifiUtlis == null) {
+			// wifiUtlis = new WifiUtlis(MachineActivity.this);
+			// }
+			// selectInfoFlag = true;
+			// new Thread(selectInfoThread).start();
+			// wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// }
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -701,8 +701,8 @@ public class MachineActivity extends Activity {
 //					.findViewById(R.id.machine_instrument_body_run_parameter_blend_info_et);
 //			machine_instrument_body_run_parameter_magnetic_info_et = (EditText) view
 //					.findViewById(R.id.machine_instrument_body_run_parameter_magnetic_info_et);
-			machine_instrument_body_run_parameter_hole_info_et = (EditText) view
-					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_et);
+//			machine_instrument_body_run_parameter_hole_info_et = (EditText) view
+//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_et);
 			machine_instrument_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_instrument_bottom_btn_save);
 			machine_instrument_body_run_parameter_blend_info_reset_btn = (Button) view
@@ -738,24 +738,143 @@ public class MachineActivity extends Activity {
 
 //			machine_instrument_body_run_parameter_hole_space_info_et = (EditText) view
 //					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_et);
-//			machine_instrument_body_run_parameter_hole_space_info_reset_btn = (Button) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_reset_btn);
-//			machine_instrument_body_run_parameter_hole_space_info_send_btn = (Button) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_send_btn);
-//			machine_instrument_body_run_parameter_hole_space_info_tv = (TextView) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_tv);
-//			machine_instrument_body_run_parameter_hole_space_btn_rl = (RelativeLayout) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_btn_rl);
-//			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
+			machine_instrument_body_run_parameter_hole_space_info_reset_btn = (Button) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_reset_btn);
+			machine_instrument_body_run_parameter_hole_space_info_send_btn = (Button) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_send_btn);
+			machine_instrument_body_run_parameter_hole_space_info_tv = (TextView) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_tv);
+			machine_instrument_body_run_parameter_hole_space_btn_rl = (RelativeLayout) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_btn_rl);
+			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
+					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
 
-			fluxNum = machine.getMflux();
-			machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
+			 fluxNum = machine.getMflux();
+			 machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
+//			machine_instrument_body_flux_info_tv.setText("32");
+			 
+//				machine_instrument_body_run_parameter_blend_info_et.setText(machine.getMblend()+"");
+//				machine_instrument_body_run_parameter_magnetic_info_et.setText(machine.getMmagnet()+"");
+//				machine_instrument_body_run_parameter_hole_info_et.setText(machine.getMhole()+"");
+				machine_instrument_body_run_parameter_blend_info_tv.setText(machine.getMblend()+"");
+				machine_instrument_body_run_parameter_magnetic_info_tv.setText(machine.getMmagnet()+"");
+				machine_instrument_body_run_parameter_hole_info_tv.setText(machine.getMhole()+"");
 
 			// 混合电机控制输入框监听
 			// 磁吸电机控制输入框监听
 			// 孔位电机控制输入框监听
 			// 孔间距输入框监听
+//				machine_instrument_body_run_parameter_hole_info_et.setInputType(InputType.TYPE_NULL); 
+				
+				//TODO 水平电机 滑轮
+				machine_instrument_body_run_parameter_hole_info_tv.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								MachineActivity.this);
+						builder.setTitle(getString(R.string.exp_vol_setting));
+						View view = LayoutInflater.from(
+								MachineActivity.this).inflate(
+								R.layout.activity_ins, null);
+						builder.setView(view);
+						builder.setCancelable(false);
+						final TimeWheelView vol_thousand = (TimeWheelView) view
+								.findViewById(R.id.vol_thousand);
+						final TimeWheelView vol_hundred = (TimeWheelView) view
+								.findViewById(R.id.vol_hundred);
+						final TimeWheelView vol_ten = (TimeWheelView) view
+								.findViewById(R.id.vol_ten);
+						final TimeWheelView vol_bits = (TimeWheelView) view
+								.findViewById(R.id.vol_bits);
+						String[] thousand = getResources()
+								.getStringArray(R.array.ctrlNum);
+						String[] num = getResources().getStringArray(
+								R.array.num_array);
+
+						vol_thousand
+								.setAdapter(new ArrayWheelAdapter<String>(
+										thousand));
+						vol_hundred
+								.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+						vol_ten.setAdapter(new ArrayWheelAdapter<String>(
+								num));
+						vol_bits.setAdapter(new ArrayWheelAdapter<String>(
+								num));
+
+						vol_thousand.setCyclic(true);
+						vol_hundred.setCyclic(true);
+						vol_ten.setCyclic(true);
+						vol_bits.setCyclic(true);
+
+						builder.setPositiveButton(
+								getString(R.string.sure),
+								new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialog,
+											int which) {
+										String total = vol_thousand
+												.getCurrentItem()
+												* 10
+												+ vol_hundred
+														.getCurrentItem()
+												* 1
+												+ "."+vol_ten
+														.getCurrentItem()
+												+ vol_bits
+														.getCurrentItem()
+												;
+//										if (isLegalNum(total)) {
+//
+//											Toast.makeText(
+//													MachineActivity.this,
+//													getString(R.string.exp_vol_big) + total,
+//													Toast.LENGTH_SHORT)
+//													.show();
+//										}
+//										else {
+										
+											machine_instrument_body_run_parameter_hole_info_tv.setText(total);
+//											try {
+//												Field field = dialog
+//														.getClass()
+//														.getSuperclass()
+//														.getDeclaredField(
+//																"mShowing");
+//												field.setAccessible(true);
+//												field.set(dialog, true);
+//											} catch (Exception e) {
+//												e.printStackTrace();
+//											}
+										}
+								});
+
+						builder.setNegativeButton(
+								getString(R.string.cancle),
+								new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialog,
+											int which) {
+										dialog.cancel();
+										try {
+											Field field = dialog
+													.getClass()
+													.getSuperclass()
+													.getDeclaredField(
+															"mShowing");
+											field.setAccessible(true);
+											field.set(dialog, true);
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+									}
+								});
+						builder.show();
+					}
+				
+				});
 
 			/*
 			 * 通量设置 Modified By： Domon Modified Date: 2014-9-11
@@ -835,10 +954,8 @@ public class MachineActivity extends Activity {
 												selectInfoFlag = true;
 												new Thread(selectInfoThread)
 														.start();
-												wifiUtlis.sendMessage(Utlis
-														.getseleteMessage(7));
-												String string = wifiUtlis
-														.getMessage();
+//												wifiUtlis.sendMessage(Utlis
+//														.getseleteMessage(7));
 												Toast.makeText(
 														MachineActivity.this,
 														getString(R.string.instrument_success),
@@ -866,69 +983,16 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			//TODO
-			
-			machine_instrument_body_run_parameter_hole_info_et.setVisibility(View.VISIBLE);
-			machine_instrument_body_run_parameter_hole_info_et.addTextChangedListener(new TextWatcher() {
-				
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					Toast.makeText(getApplicationContext(), "1111", 1000).show();	
-				}
-				
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void afterTextChanged(Editable s) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-			machine_instrument_body_run_parameter_hole_info_tv.setVisibility(View.GONE);
-//			machine_instrument_body_run_parameter_hole_info_tv.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					String i =		inputParaString(machine_instrument_body_run_parameter_hole_info_tv.getText().toString());
-//			Log.w("WWWWW", i);
-//					
-//				}
-//			});
-			
-//			machine_instrument_body_run_parameter_magnetic_info_tv.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					String i =		inputParaString(machine_instrument_body_run_parameter_magnetic_info_tv.getText().toString());
-//			Log.w("WWWWW", i);
-//					
-//				}
-//			});
-//			machine_instrument_body_run_parameter_hole_space_info_tv.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					String i =		inputParaString(machine_instrument_body_run_parameter_hole_space_info_tv.getText().toString());
-//			Log.w("WWWWW", i);
-//					
-//				}
-//			});			
-//			machine_instrument_body_run_parameter_blend_info_tv.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					String i =		inputParaString(machine_instrument_body_run_parameter_blend_info_tv.getText().toString());
-//			Log.w("WWWWW", i);
-//					
-//				}
-//			});
-			
+			// TODO
+			// machine_instrument_body_run_parameter_hole_info_et
+			// .setVisibility(View.VISIBLE);
+			// machine_instrument_body_run_parameter_magnetic_info_et
+			// .setVisibility(View.VISIBLE);
+			// machine_instrument_body_run_parameter_blend_info_et
+			// .setVisibility(View.VISIBLE);
+			// machine_instrument_body_run_parameter_hole_space_info_et
+			// .setVisibility(View.VISIBLE);
+
 			// 系统复位
 			machine_instrument_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
@@ -941,6 +1005,7 @@ public class MachineActivity extends Activity {
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
+								wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
 								Toast.makeText(getApplicationContext(),
 										getString(R.string.instrument_reboot),
 										1000).show();
@@ -958,10 +1023,11 @@ public class MachineActivity extends Activity {
 							if (wifiUtlis != null) {
 								machine_instrument_body_run_parameter_magnetic_info_btn_rl
 										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_magnetic_info_et
-//										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_magnetic_info_tv
-//										.setVisibility(View.GONE);
+								Log.w("blend", "blend reset btn");
+								machine_instrument_body_run_parameter_magnetic_info_et
+										.setVisibility(View.VISIBLE);
+								machine_instrument_body_run_parameter_magnetic_info_tv
+										.setVisibility(View.GONE);
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -976,10 +1042,11 @@ public class MachineActivity extends Activity {
 							if (wifiUtlis != null) {
 								machine_instrument_body_run_parameter_hole_space_info_btn_rl
 										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_hole_space_info_et
-//										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_hole_space_info_tv
-//										.setVisibility(View.GONE);
+								Log.w("magnetic", "magnetic reset btn");
+								machine_instrument_body_run_parameter_hole_space_info_et
+										.setVisibility(View.VISIBLE);
+								machine_instrument_body_run_parameter_hole_space_info_tv
+										.setVisibility(View.GONE);
 
 							} else {
 								Toast.makeText(MachineActivity.this,
@@ -995,10 +1062,11 @@ public class MachineActivity extends Activity {
 							if (wifiUtlis != null) {
 								machine_instrument_body_run_parameter_blend_info_btn_rl
 										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_blend_info_et
-//										.setVisibility(View.VISIBLE);
-//								machine_instrument_body_run_parameter_blend_info_tv
-//										.setVisibility(View.GONE);
+								Log.w("hole", "hole reset btn");
+								machine_instrument_body_run_parameter_blend_info_et
+										.setVisibility(View.VISIBLE);
+								machine_instrument_body_run_parameter_blend_info_tv
+										.setVisibility(View.GONE);
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1008,28 +1076,30 @@ public class MachineActivity extends Activity {
 					});
 
 			// 孔间距电机
-//			machine_instrument_body_run_parameter_hole_space_info_reset_btn
-//					.setOnClickListener(new OnClickListener() {
-//						public void onClick(View v) {
-//							if (wifiUtlis != null) {
-//								try {
-//									wifiUtlis.sendMessage(Utlis
-//											.sendSystemResetMessage());
-//								} catch (Exception e) {
-//									e.printStackTrace();
-//								}
-//								
-//							} else {
-//								Toast.makeText(MachineActivity.this,
-//										getString(R.string.wifi_error),
-//										Toast.LENGTH_SHORT).show();
-//							}
-//						}
-//					});
+			machine_instrument_body_run_parameter_hole_space_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								try {
+									Log.w("hole space", "hold space reset btn");
+									wifiUtlis.sendMessage(Utlis
+											.sendSystemResetMessage());
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 			// 混合电机移动
-//			machine_instrument_body_run_parameter_blend_info_send_btn
-//					.setOnClickListener(new OnClickListener() {
-//						public void onClick(View v) {
+			machine_instrument_body_run_parameter_blend_info_send_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							Toast.makeText(getApplicationContext(), machine_instrument_body_run_parameter_blend_info_et.getText().toString(), 2000).show();
 //							if (wifiUtlis != null) {
 //								try {
 //									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
@@ -1037,8 +1107,9 @@ public class MachineActivity extends Activity {
 //											Float.valueOf(machine_instrument_body_run_parameter_blend_info_et
 //													.getText().toString())));
 //								} catch (Exception e) {
-//									Toast.makeText(MachineActivity.this,
-//											getString(R.string.wifi_error)+"",
+//									Toast.makeText(
+//											MachineActivity.this,
+//											getString(R.string.wifi_error) + "",
 //											Toast.LENGTH_SHORT).show();
 //								}
 //							} else {
@@ -1046,54 +1117,53 @@ public class MachineActivity extends Activity {
 //										getString(R.string.wifi_error),
 //										Toast.LENGTH_SHORT).show();
 //							}
-//						}
-//					});
+						}
+					});
 			// 磁吸电机移动
-//			machine_instrument_body_run_parameter_magnetic_info_send_btn
-//					.setOnClickListener(new OnClickListener() {
-//						public void onClick(View v) {
-//							if (wifiUtlis != null) {
-//								try {
-//									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
-//											1,
-//											Float.valueOf(machine_instrument_body_run_parameter_magnetic_info_et
-//													.getText().toString())));
-//								} catch (Exception e) {
-//									Toast.makeText(MachineActivity.this,
-//											getString(R.string.wifi_error),
-//											Toast.LENGTH_SHORT).show();
-//								}
-//							} else {
-//								Toast.makeText(MachineActivity.this,
-//										getString(R.string.wifi_error),
-//										Toast.LENGTH_SHORT).show();
-//							}
-//						}
-//					});
+			machine_instrument_body_run_parameter_magnetic_info_send_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								try {
+									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
+											1,
+											Float.valueOf(machine_instrument_body_run_parameter_magnetic_info_et
+													.getText().toString())));
+								} catch (Exception e) {
+									Toast.makeText(MachineActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 			// 孔位电机移动
 			machine_instrument_body_run_parameter_hole_info_send_btn
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-//									selectInfoFlag = true;
-//									new Thread(selectInfoThread).start();
-//								if(isLegalNum(machine_instrument_body_run_parameter_hole_info_et.getText().toString()))
-//								{
-//								try {
-//									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
-//											2,
-//											Float.valueOf(machine_instrument_body_run_parameter_hole_info_et
-//													.getText().toString())));
-//								} catch (Exception e) {
-//									Toast.makeText(MachineActivity.this,
-//											getString(R.string.wifi_error),
-//											Toast.LENGTH_SHORT).show();
-//								}
-//								}else {
-//									Toast.makeText(MachineActivity.this,
-//										"数据错误",
-//										Toast.LENGTH_SHORT).show();
-//								}
+//								selectInfoFlag = true;
+//								new Thread(selectInfoThread).start();
+								if (isLegalNum(machine_instrument_body_run_parameter_hole_info_tv
+										.getText().toString())) {
+									try {
+										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
+												2,
+												Float.valueOf(machine_instrument_body_run_parameter_hole_info_tv
+														.getText().toString())));
+									} catch (Exception e) {
+										Toast.makeText(MachineActivity.this,
+												getString(R.string.wifi_error) + "发送失败",
+												Toast.LENGTH_SHORT).show();
+									}
+								} else {
+									Toast.makeText(MachineActivity.this,
+											"数据错误", Toast.LENGTH_SHORT).show();
+								}
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1103,28 +1173,30 @@ public class MachineActivity extends Activity {
 					});
 
 			// 孔间距 步数
-//			machine_instrument_body_run_parameter_hole_space_info_send_btn
-//					.setOnClickListener(new OnClickListener() {
-//						public void onClick(View v) {
-//							if (wifiUtlis != null) {
-//								try {
-//									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
-//											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
-//													.getText().toString())));
-//									int i  = Integer .valueOf(machine_instrument_body_run_parameter_hole_space_info_et .getText().toString());
-//									Log.w("孔间距", i+"");
-//								} catch (Exception e) {
-//									Toast.makeText(MachineActivity.this,
-//											getString(R.string.wifi_error),
-//											Toast.LENGTH_SHORT).show();
-//								}
-//							} else {
-//								Toast.makeText(MachineActivity.this,
-//										getString(R.string.wifi_error),
-//										Toast.LENGTH_SHORT).show();
-//							}
-//						}
-//					});
+			machine_instrument_body_run_parameter_hole_space_info_send_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								try {
+									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
+											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
+													.getText().toString())));
+									int i = Integer
+											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
+													.getText().toString());
+									Log.w("孔间距", i + "");
+								} catch (Exception e) {
+									Toast.makeText(MachineActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 			break;
 		// 仪器检测
 		case 6:
@@ -1473,7 +1545,7 @@ public class MachineActivity extends Activity {
 		return super.onTouchEvent(event);
 	}
 
-	//TODO
+	// TODO
 	// 电机位置校准线程
 	class SelectInfoThread implements Runnable {
 		public void run() {
@@ -1482,6 +1554,7 @@ public class MachineActivity extends Activity {
 					Log.w("selectInfoThread", "Thread");
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
+					Log.w("selectInfoThread  message", "Thread---->	" + message);
 					selectInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
 				} catch (Exception e) {
@@ -1590,7 +1663,7 @@ public class MachineActivity extends Activity {
 
 	}
 
-	//TODO
+	// TODO
 	// 电机位置校准接受线程
 	private Handler selectInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -1605,10 +1678,10 @@ public class MachineActivity extends Activity {
 					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
 						machine_instrument_body_run_parameter_hole_info_btn_rl
 								.setVisibility(View.VISIBLE);
-//						machine_instrument_body_run_parameter_hole_info_et
-//								.setVisibility(View.VISIBLE);
-						machine_instrument_body_run_parameter_hole_info_tv
-								.setVisibility(View.VISIBLE);
+						// machine_instrument_body_run_parameter_hole_info_et
+						// .setVisibility(View.VISIBLE);
+						// machine_instrument_body_run_parameter_hole_info_tv
+						// .setVisibility(View.GONE);
 						machine_instrument_body_flux_info_tv.setClickable(true);
 						machine_instrument_body_run_parameter_blend_btn_rl
 								.setVisibility(View.VISIBLE);
@@ -1618,41 +1691,41 @@ public class MachineActivity extends Activity {
 								.setVisibility(View.VISIBLE);
 						machine_instrument_body_run_parameter_hole_space_btn_rl
 								.setVisibility(View.VISIBLE);
-//							selectInfoFlag = false;
-							Log.w("selectInfoHandler", "system reboot successful");
+						// selectInfoFlag = false;
+						Log.w("selectInfoHandler", "system reboot successful");
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 02 01 e6 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_hole_success),
 								Toast.LENGTH_SHORT).show();
-//							selectInfoFlag = false;
-							Log.w("selectInfoHandler", "hole successful");
+						// selectInfoFlag = false;
+						Log.w("selectInfoHandler", "hole successful");
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 01 01 e5 fe ")) {
 						Toast.makeText(
 								MachineActivity.this,
 								getString(R.string.instrument_magnetic_success),
 								Toast.LENGTH_SHORT).show();
-							Log.w("selectInfoHandler", "magnetic successful");
-//							selectInfoFlag = false;
+						Log.w("selectInfoHandler", "magnetic successful");
+						// selectInfoFlag = false;
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 00 01 e4 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_blend_success),
 								Toast.LENGTH_SHORT).show();
-//							selectInfoFlag = false;
-							Log.w("selectInfoHandler", "blend successful");
-					}
-					else if (receiveMeg
+						// selectInfoFlag = false;
+						Log.w("selectInfoHandler", "blend successful");
+					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 03 01 e3 fe ")) {
 						Toast.makeText(MachineActivity.this,
 								getString(R.string.instrument_blend_success),
 								Toast.LENGTH_SHORT).show();
-//						selectInfoFlag = false;
+						// selectInfoFlag = false;
 						Log.w("selectInfoHandler", "hole successful");
 					} else if (receiveMeg.substring(15, 17).equals("09")) {
 						try {
 							// TODO 得到
+							Log.w("gethole", "gethole");
 							hole = (Integer.parseInt(
 									receiveMeg.substring(21, 23), 16) * 256 + Integer
 									.parseInt(receiveMeg.substring(24, 26), 16)) / 100.00f;
@@ -1665,22 +1738,14 @@ public class MachineActivity extends Activity {
 							holeSpace = (int) ((Integer.parseInt(
 									receiveMeg.substring(39, 41), 16) * 256 + Integer
 									.parseInt(receiveMeg.substring(42, 44), 16)));
-//							machine_instrument_body_run_parameter_blend_info_et
-//									.setText(String.format("%.2f", blend));
-//							machine_instrument_body_run_parameter_magnetic_info_et
-//									.setText(String.format("%.2f", magnetic));
-//							machine_instrument_body_run_parameter_hole_info_et
-//									.setText(String.format("%.2f", hole));
 							machine_instrument_body_run_parameter_blend_info_tv
 									.setText(String.format("%.2f", blend));
 							machine_instrument_body_run_parameter_magnetic_info_tv
 									.setText(String.format("%.2f", magnetic));
 							machine_instrument_body_run_parameter_hole_info_tv
 									.setText(String.format("%.2f", hole));
-//							machine_instrument_body_run_parameter_hole_space_info_tv
-//									.setText(holeSpace + "");
-//							machine_instrument_body_run_parameter_hole_space_info_et
-//									.setText(holeSpace + "");
+							machine_instrument_body_run_parameter_hole_space_info_tv
+									.setText(holeSpace + "");
 							wifiUtlis.sendMessage(Utlis
 									.sendSystemResetMessage());
 						} catch (Exception e) {
@@ -1689,6 +1754,7 @@ public class MachineActivity extends Activity {
 									Toast.LENGTH_SHORT).show();
 						}
 					} else if (receiveMeg.substring(15, 17).equals("07")) {
+						Log.w("fluxnum", "fluxnum");
 						switch (Integer.parseInt(receiveMeg.substring(21, 23),
 								16)) {
 						case 15:
@@ -2162,8 +2228,8 @@ public class MachineActivity extends Activity {
 		};
 	};
 
-	//判断字符串合法值
-	private boolean isLegalNum(String numString){
+	// 判断字符串合法值
+	private boolean isLegalNum(String numString) {
 		boolean tag = true;
 		final String pattern1 = "^[1-9][0-9][.][0-9]{2}$";
 		Pattern pattern = null;
@@ -2174,7 +2240,7 @@ public class MachineActivity extends Activity {
 		}
 		return tag;
 	}
-	
+
 	// 将指定byte数组以16进制的形式打印到控制台
 	public static void printHexString(byte[] b) {
 		String hexString = null;
@@ -2188,31 +2254,32 @@ public class MachineActivity extends Activity {
 		Log.w("HexString--", hexString.toUpperCase());
 
 	}
-	
-	public String inputParaString(String s){
+
+	public String inputParaString(String s) {
 		Context context = MachineActivity.this;
 		final String inputString = s;
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				MachineActivity.this);
 
 		final EditText inputServer = new EditText(this);
-						inputServer.setText(inputString);
-		builder.setTitle(context
-				.getString(R.string.instrument_parameter_input));
+		inputServer.setText(inputString);
+		builder.setTitle(context.getString(R.string.instrument_parameter_input));
 		builder.setView(inputServer);
-		builder.setPositiveButton(
-				context.getString(R.string.sure),
+		builder.setPositiveButton(context.getString(R.string.sure),
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,
-							int which) {
-						inputServer.getText().toString();
+					public void onClick(DialogInterface dialog, int which) {
+						// inputServer.getText().toString();
+						if (isLegalNum(inputServer.getText().toString())) {
+
+						} else {
+							Toast.makeText(getApplicationContext(),
+									"input error", 2000).show();
+						}
 					}
 				});
-		builder.setNegativeButton(
-				context.getString(R.string.cancle),
+		builder.setNegativeButton(context.getString(R.string.cancle),
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,
-							int which) {
+					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
 				});

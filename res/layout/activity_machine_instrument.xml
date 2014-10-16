@@ -55,6 +55,7 @@
                 android:layout_below="@id/machine_instrument_body_flux_rl"
                 android:layout_marginBottom="100dip" >
 
+                <!--  
                 <ImageView
                     android:id="@+id/machine_instrument_body_iv"
                     android:layout_width="wrap_content"
@@ -62,6 +63,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/instrument" />
+                -->
                 <ScrollView 
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
@@ -375,7 +377,6 @@
                             </RelativeLayout>
                         </LinearLayout>
                         
-                        <!--  
                         <LinearLayout
                             android:id="@+id/machine_instrument_body_run_parameter_hole_space_rl"
                             android:layout_width="wrap_content"
@@ -469,7 +470,6 @@
                                 </RelativeLayout>
                             </RelativeLayout>
                         </LinearLayout>
-                       -->
                     </RelativeLayout>
                 </LinearLayout>
                 </ScrollView>
