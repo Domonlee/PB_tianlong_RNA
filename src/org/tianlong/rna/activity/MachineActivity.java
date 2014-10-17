@@ -151,6 +151,7 @@ public class MachineActivity extends Activity {
 	private RelativeLayout machine_instrument_body_run_parameter_hole_space_info_btn_rl;
 	private int fluxNum;
 	private boolean selectInfoFlag, tempInfoFlag, detectionInfoFlag = true;
+	private boolean tvClickFlag = false;
 
 	// 仪器检测
 	private ImageView machine_detection_body_bottom_left_info_iv;
@@ -697,12 +698,6 @@ public class MachineActivity extends Activity {
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
 					.findViewById(R.id.machine_instrument_body_flux_info_tv);
-//			machine_instrument_body_run_parameter_blend_info_et = (EditText) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_blend_info_et);
-//			machine_instrument_body_run_parameter_magnetic_info_et = (EditText) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_magnetic_info_et);
-//			machine_instrument_body_run_parameter_hole_info_et = (EditText) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_et);
 			machine_instrument_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_instrument_bottom_btn_save);
 			machine_instrument_body_run_parameter_blend_info_reset_btn = (Button) view
@@ -736,8 +731,6 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_hole_info_tv = (TextView) view
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_info_tv);
 
-//			machine_instrument_body_run_parameter_hole_space_info_et = (EditText) view
-//					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_et);
 			machine_instrument_body_run_parameter_hole_space_info_reset_btn = (Button) view
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_reset_btn);
 			machine_instrument_body_run_parameter_hole_space_info_send_btn = (Button) view
@@ -749,132 +742,379 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
 
-			 fluxNum = machine.getMflux();
-			 machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
-//			machine_instrument_body_flux_info_tv.setText("32");
-			 
-//				machine_instrument_body_run_parameter_blend_info_et.setText(machine.getMblend()+"");
-//				machine_instrument_body_run_parameter_magnetic_info_et.setText(machine.getMmagnet()+"");
-//				machine_instrument_body_run_parameter_hole_info_et.setText(machine.getMhole()+"");
-				machine_instrument_body_run_parameter_blend_info_tv.setText(machine.getMblend()+"");
-				machine_instrument_body_run_parameter_magnetic_info_tv.setText(machine.getMmagnet()+"");
-				machine_instrument_body_run_parameter_hole_info_tv.setText(machine.getMhole()+"");
+			fluxNum = machine.getMflux();
+			machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
+
+			machine_instrument_body_run_parameter_blend_info_tv.setText(machine
+					.getMblend() + "");
+			machine_instrument_body_run_parameter_magnetic_info_tv
+					.setText(machine.getMmagnet() + "");
+			machine_instrument_body_run_parameter_hole_info_tv.setText(machine
+					.getMhole() + "");
 
 			// 混合电机控制输入框监听
 			// 磁吸电机控制输入框监听
 			// 孔位电机控制输入框监听
 			// 孔间距输入框监听
-//				machine_instrument_body_run_parameter_hole_info_et.setInputType(InputType.TYPE_NULL); 
-				
-				//TODO 水平电机 滑轮
-				machine_instrument_body_run_parameter_hole_info_tv.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								MachineActivity.this);
-						builder.setTitle(getString(R.string.exp_vol_setting));
-						View view = LayoutInflater.from(
-								MachineActivity.this).inflate(
-								R.layout.activity_ins, null);
-						builder.setView(view);
-						builder.setCancelable(false);
-						final TimeWheelView vol_thousand = (TimeWheelView) view
-								.findViewById(R.id.vol_thousand);
-						final TimeWheelView vol_hundred = (TimeWheelView) view
-								.findViewById(R.id.vol_hundred);
-						final TimeWheelView vol_ten = (TimeWheelView) view
-								.findViewById(R.id.vol_ten);
-						final TimeWheelView vol_bits = (TimeWheelView) view
-								.findViewById(R.id.vol_bits);
-						String[] thousand = getResources()
-								.getStringArray(R.array.ctrlNum);
-						String[] num = getResources().getStringArray(
-								R.array.num_array);
+			// machine_instrument_body_run_parameter_hole_info_et.setInputType(InputType.TYPE_NULL);
 
-						vol_thousand
-								.setAdapter(new ArrayWheelAdapter<String>(
-										thousand));
-						vol_hundred
-								.setAdapter(new ArrayWheelAdapter<String>(
+			// TODO 水平电机 滑轮
+			machine_instrument_body_run_parameter_hole_info_tv
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (tvClickFlag) {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										MachineActivity.this);
+								builder.setTitle(getString(R.string.instrument_hole_info));
+								View view = LayoutInflater.from(
+										MachineActivity.this).inflate(
+										R.layout.activity_ins, null);
+								builder.setView(view);
+								builder.setCancelable(false);
+								final TimeWheelView vol_thousand = (TimeWheelView) view
+										.findViewById(R.id.vol_thousand);
+								final TimeWheelView vol_hundred = (TimeWheelView) view
+										.findViewById(R.id.vol_hundred);
+								final TimeWheelView vol_ten = (TimeWheelView) view
+										.findViewById(R.id.vol_ten);
+								final TimeWheelView vol_bits = (TimeWheelView) view
+										.findViewById(R.id.vol_bits);
+								String[] thousand = getResources()
+										.getStringArray(R.array.ctrlNum);
+								String[] num = getResources().getStringArray(
+										R.array.num_array);
+
+								vol_thousand
+										.setAdapter(new ArrayWheelAdapter<String>(
+												thousand));
+								vol_hundred
+										.setAdapter(new ArrayWheelAdapter<String>(
+												num));
+								vol_ten.setAdapter(new ArrayWheelAdapter<String>(
 										num));
-						vol_ten.setAdapter(new ArrayWheelAdapter<String>(
-								num));
-						vol_bits.setAdapter(new ArrayWheelAdapter<String>(
-								num));
+								vol_bits.setAdapter(new ArrayWheelAdapter<String>(
+										num));
 
-						vol_thousand.setCyclic(true);
-						vol_hundred.setCyclic(true);
-						vol_ten.setCyclic(true);
-						vol_bits.setCyclic(true);
+								vol_thousand.setCyclic(true);
+								vol_hundred.setCyclic(true);
+								vol_ten.setCyclic(true);
+								vol_bits.setCyclic(true);
 
-						builder.setPositiveButton(
-								getString(R.string.sure),
-								new DialogInterface.OnClickListener() {
-									public void onClick(
-											DialogInterface dialog,
-											int which) {
-										String total = vol_thousand
-												.getCurrentItem()
-												* 10
-												+ vol_hundred
+								builder.setPositiveButton(
+										getString(R.string.sure),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												String total = vol_thousand
 														.getCurrentItem()
-												* 1
-												+ "."+vol_ten
-														.getCurrentItem()
-												+ vol_bits
-														.getCurrentItem()
-												;
-//										if (isLegalNum(total)) {
-//
-//											Toast.makeText(
-//													MachineActivity.this,
-//													getString(R.string.exp_vol_big) + total,
-//													Toast.LENGTH_SHORT)
-//													.show();
-//										}
-//										else {
-										
-											machine_instrument_body_run_parameter_hole_info_tv.setText(total);
-//											try {
-//												Field field = dialog
-//														.getClass()
-//														.getSuperclass()
-//														.getDeclaredField(
-//																"mShowing");
-//												field.setAccessible(true);
-//												field.set(dialog, true);
-//											} catch (Exception e) {
-//												e.printStackTrace();
-//											}
-										}
-								});
+														* 10
+														+ vol_hundred
+																.getCurrentItem()
+														* 1
+														+ "."
+														+ vol_ten
+																.getCurrentItem()
+														+ vol_bits
+																.getCurrentItem();
+												machine_instrument_body_run_parameter_hole_info_tv
+														.setText(total);
+											}
+										});
 
-						builder.setNegativeButton(
-								getString(R.string.cancle),
-								new DialogInterface.OnClickListener() {
-									public void onClick(
-											DialogInterface dialog,
-											int which) {
-										dialog.cancel();
-										try {
-											Field field = dialog
-													.getClass()
-													.getSuperclass()
-													.getDeclaredField(
-															"mShowing");
-											field.setAccessible(true);
-											field.set(dialog, true);
-										} catch (Exception e) {
-											e.printStackTrace();
-										}
-									}
-								});
-						builder.show();
-					}
-				
-				});
+								builder.setNegativeButton(
+										getString(R.string.cancle),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												dialog.cancel();
+												try {
+													Field field = dialog
+															.getClass()
+															.getSuperclass()
+															.getDeclaredField(
+																	"mShowing");
+													field.setAccessible(true);
+													field.set(dialog, true);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+											}
+										});
+								builder.show();
+							}
+						}
+					});
+
+			machine_instrument_body_run_parameter_blend_info_tv
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (tvClickFlag) {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										MachineActivity.this);
+								builder.setTitle(getString(R.string.instrument_blend_info));
+								View view = LayoutInflater.from(
+										MachineActivity.this).inflate(
+										R.layout.activity_ins, null);
+								builder.setView(view);
+								builder.setCancelable(false);
+								final TimeWheelView vol_thousand = (TimeWheelView) view
+										.findViewById(R.id.vol_thousand);
+								final TimeWheelView vol_hundred = (TimeWheelView) view
+										.findViewById(R.id.vol_hundred);
+								final TimeWheelView vol_ten = (TimeWheelView) view
+										.findViewById(R.id.vol_ten);
+								final TimeWheelView vol_bits = (TimeWheelView) view
+										.findViewById(R.id.vol_bits);
+								String[] thousand = getResources()
+										.getStringArray(R.array.ctrlNum);
+								String[] num = getResources().getStringArray(
+										R.array.num_array);
+
+								vol_thousand
+										.setAdapter(new ArrayWheelAdapter<String>(
+												thousand));
+								vol_hundred
+										.setAdapter(new ArrayWheelAdapter<String>(
+												num));
+								vol_ten.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+								vol_bits.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+
+								vol_thousand.setCyclic(true);
+								vol_hundred.setCyclic(true);
+								vol_ten.setCyclic(true);
+								vol_bits.setCyclic(true);
+
+								builder.setPositiveButton(
+										getString(R.string.sure),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												String total = vol_thousand
+														.getCurrentItem()
+														* 10
+														+ vol_hundred
+																.getCurrentItem()
+														* 1
+														+ "."
+														+ vol_ten
+																.getCurrentItem()
+														+ vol_bits
+																.getCurrentItem();
+												machine_instrument_body_run_parameter_blend_info_tv
+														.setText(total);
+											}
+										});
+
+								builder.setNegativeButton(
+										getString(R.string.cancle),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												dialog.cancel();
+												try {
+													Field field = dialog
+															.getClass()
+															.getSuperclass()
+															.getDeclaredField(
+																	"mShowing");
+													field.setAccessible(true);
+													field.set(dialog, true);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+											}
+										});
+								builder.show();
+							}
+						}
+					});
+
+			machine_instrument_body_run_parameter_magnetic_info_tv
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (tvClickFlag) {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										MachineActivity.this);
+								builder.setTitle(getString(R.string.instrument_magnetic_info));
+								View view = LayoutInflater.from(
+										MachineActivity.this).inflate(
+										R.layout.activity_ins, null);
+								builder.setView(view);
+								builder.setCancelable(false);
+								final TimeWheelView vol_thousand = (TimeWheelView) view
+										.findViewById(R.id.vol_thousand);
+								final TimeWheelView vol_hundred = (TimeWheelView) view
+										.findViewById(R.id.vol_hundred);
+								final TimeWheelView vol_ten = (TimeWheelView) view
+										.findViewById(R.id.vol_ten);
+								final TimeWheelView vol_bits = (TimeWheelView) view
+										.findViewById(R.id.vol_bits);
+								String[] thousand = getResources()
+										.getStringArray(R.array.ctrlNum);
+								String[] num = getResources().getStringArray(
+										R.array.num_array);
+
+								vol_thousand
+										.setAdapter(new ArrayWheelAdapter<String>(
+												thousand));
+								vol_hundred
+										.setAdapter(new ArrayWheelAdapter<String>(
+												num));
+								vol_ten.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+								vol_bits.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+
+								vol_thousand.setCyclic(true);
+								vol_hundred.setCyclic(true);
+								vol_ten.setCyclic(true);
+								vol_bits.setCyclic(true);
+
+								builder.setPositiveButton(
+										getString(R.string.sure),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												String total = vol_thousand
+														.getCurrentItem()
+														* 10
+														+ vol_hundred
+																.getCurrentItem()
+														* 1
+														+ "."
+														+ vol_ten
+																.getCurrentItem()
+														+ vol_bits
+																.getCurrentItem();
+												machine_instrument_body_run_parameter_magnetic_info_tv
+														.setText(total);
+											}
+										});
+
+								builder.setNegativeButton(
+										getString(R.string.cancle),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												dialog.cancel();
+												try {
+													Field field = dialog
+															.getClass()
+															.getSuperclass()
+															.getDeclaredField(
+																	"mShowing");
+													field.setAccessible(true);
+													field.set(dialog, true);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+											}
+										});
+								builder.show();
+							}
+						}
+					});
+
+			machine_instrument_body_run_parameter_hole_space_info_tv
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (tvClickFlag) {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										MachineActivity.this);
+								builder.setTitle(getString(R.string.instrument_hole_space_info));
+								View view = LayoutInflater.from(
+										MachineActivity.this).inflate(
+										R.layout.activity_vol, null);
+								builder.setView(view);
+								builder.setCancelable(false);
+								final TimeWheelView vol_thousand = (TimeWheelView) view
+										.findViewById(R.id.vol_thousand);
+								final TimeWheelView vol_hundred = (TimeWheelView) view
+										.findViewById(R.id.vol_hundred);
+								final TimeWheelView vol_ten = (TimeWheelView) view
+										.findViewById(R.id.vol_ten);
+								final TimeWheelView vol_bits = (TimeWheelView) view
+										.findViewById(R.id.vol_bits);
+								String[] thousand = getResources()
+										.getStringArray(R.array.ctrlNum);
+								String[] num = getResources().getStringArray(
+										R.array.num_array);
+
+								vol_thousand
+										.setAdapter(new ArrayWheelAdapter<String>(
+												thousand));
+								vol_hundred
+										.setAdapter(new ArrayWheelAdapter<String>(
+												num));
+								vol_ten.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+								vol_bits.setAdapter(new ArrayWheelAdapter<String>(
+										num));
+
+								vol_thousand.setCyclic(true);
+								vol_hundred.setCyclic(true);
+								vol_ten.setCyclic(true);
+								vol_bits.setCyclic(true);
+
+								builder.setPositiveButton(
+										getString(R.string.sure),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												String total = vol_thousand
+														.getCurrentItem()
+														* 1000
+														+ vol_hundred
+																.getCurrentItem()
+														* 100
+														+ vol_ten
+																.getCurrentItem()
+														* 10
+														+ vol_bits
+																.getCurrentItem()
+														+ "";
+												machine_instrument_body_run_parameter_hole_space_info_tv
+														.setText(total);
+											}
+										});
+
+								builder.setNegativeButton(
+										getString(R.string.cancle),
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												dialog.cancel();
+												try {
+													Field field = dialog
+															.getClass()
+															.getSuperclass()
+															.getDeclaredField(
+																	"mShowing");
+													field.setAccessible(true);
+													field.set(dialog, true);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+											}
+										});
+								builder.show();
+							}
+						}
+					});
 
 			/*
 			 * 通量设置 Modified By： Domon Modified Date: 2014-9-11
@@ -954,8 +1194,8 @@ public class MachineActivity extends Activity {
 												selectInfoFlag = true;
 												new Thread(selectInfoThread)
 														.start();
-//												wifiUtlis.sendMessage(Utlis
-//														.getseleteMessage(7));
+												// wifiUtlis.sendMessage(Utlis
+												// .getseleteMessage(7));
 												Toast.makeText(
 														MachineActivity.this,
 														getString(R.string.instrument_success),
@@ -983,16 +1223,6 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			// TODO
-			// machine_instrument_body_run_parameter_hole_info_et
-			// .setVisibility(View.VISIBLE);
-			// machine_instrument_body_run_parameter_magnetic_info_et
-			// .setVisibility(View.VISIBLE);
-			// machine_instrument_body_run_parameter_blend_info_et
-			// .setVisibility(View.VISIBLE);
-			// machine_instrument_body_run_parameter_hole_space_info_et
-			// .setVisibility(View.VISIBLE);
-
 			// 系统复位
 			machine_instrument_bottom_btn_save
 					.setOnClickListener(new OnClickListener() {
@@ -1005,10 +1235,11 @@ public class MachineActivity extends Activity {
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
-								wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+//								wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
 								Toast.makeText(getApplicationContext(),
 										getString(R.string.instrument_reboot),
 										1000).show();
+								tvClickFlag = true;
 							} catch (Exception e) {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1024,10 +1255,6 @@ public class MachineActivity extends Activity {
 								machine_instrument_body_run_parameter_magnetic_info_btn_rl
 										.setVisibility(View.VISIBLE);
 								Log.w("blend", "blend reset btn");
-								machine_instrument_body_run_parameter_magnetic_info_et
-										.setVisibility(View.VISIBLE);
-								machine_instrument_body_run_parameter_magnetic_info_tv
-										.setVisibility(View.GONE);
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1043,30 +1270,6 @@ public class MachineActivity extends Activity {
 								machine_instrument_body_run_parameter_hole_space_info_btn_rl
 										.setVisibility(View.VISIBLE);
 								Log.w("magnetic", "magnetic reset btn");
-								machine_instrument_body_run_parameter_hole_space_info_et
-										.setVisibility(View.VISIBLE);
-								machine_instrument_body_run_parameter_hole_space_info_tv
-										.setVisibility(View.GONE);
-
-							} else {
-								Toast.makeText(MachineActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
-			// 水平电机
-			machine_instrument_body_run_parameter_hole_info_reset_btn
-					.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							if (wifiUtlis != null) {
-								machine_instrument_body_run_parameter_blend_info_btn_rl
-										.setVisibility(View.VISIBLE);
-								Log.w("hole", "hole reset btn");
-								machine_instrument_body_run_parameter_blend_info_et
-										.setVisibility(View.VISIBLE);
-								machine_instrument_body_run_parameter_blend_info_tv
-										.setVisibility(View.GONE);
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -1099,24 +1302,28 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_blend_info_send_btn
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
-							Toast.makeText(getApplicationContext(), machine_instrument_body_run_parameter_blend_info_et.getText().toString(), 2000).show();
-//							if (wifiUtlis != null) {
-//								try {
-//									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
-//											0,
-//											Float.valueOf(machine_instrument_body_run_parameter_blend_info_et
-//													.getText().toString())));
-//								} catch (Exception e) {
-//									Toast.makeText(
-//											MachineActivity.this,
-//											getString(R.string.wifi_error) + "",
-//											Toast.LENGTH_SHORT).show();
-//								}
-//							} else {
-//								Toast.makeText(MachineActivity.this,
-//										getString(R.string.wifi_error),
-//										Toast.LENGTH_SHORT).show();
-//							}
+
+							if (wifiUtlis != null) {
+								if (isLegalNum(machine_instrument_body_run_parameter_blend_info_tv
+										.getText().toString())) {
+									try {
+										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
+												0,
+												Float.valueOf(machine_instrument_body_run_parameter_blend_info_tv
+														.getText().toString())));
+									} catch (Exception e) {
+										Toast.makeText(
+												MachineActivity.this,
+												getString(R.string.wifi_error)
+														+ "",
+												Toast.LENGTH_SHORT).show();
+									}
+								}
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
 						}
 					});
 			// 磁吸电机移动
@@ -1124,15 +1331,18 @@ public class MachineActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-								try {
-									wifiUtlis.sendMessage(Utlis.moveMotorMessage(
-											1,
-											Float.valueOf(machine_instrument_body_run_parameter_magnetic_info_et
-													.getText().toString())));
-								} catch (Exception e) {
-									Toast.makeText(MachineActivity.this,
-											getString(R.string.wifi_error),
-											Toast.LENGTH_SHORT).show();
+								if (isLegalNum(machine_instrument_body_run_parameter_magnetic_info_tv
+										.getText().toString())) {
+									try {
+										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
+												1,
+												Float.valueOf(machine_instrument_body_run_parameter_magnetic_info_tv
+														.getText().toString())));
+									} catch (Exception e) {
+										Toast.makeText(MachineActivity.this,
+												getString(R.string.wifi_error),
+												Toast.LENGTH_SHORT).show();
+									}
 								}
 							} else {
 								Toast.makeText(MachineActivity.this,
@@ -1146,8 +1356,6 @@ public class MachineActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-//								selectInfoFlag = true;
-//								new Thread(selectInfoThread).start();
 								if (isLegalNum(machine_instrument_body_run_parameter_hole_info_tv
 										.getText().toString())) {
 									try {
@@ -1156,8 +1364,10 @@ public class MachineActivity extends Activity {
 												Float.valueOf(machine_instrument_body_run_parameter_hole_info_tv
 														.getText().toString())));
 									} catch (Exception e) {
-										Toast.makeText(MachineActivity.this,
-												getString(R.string.wifi_error) + "发送失败",
+										Toast.makeText(
+												MachineActivity.this,
+												getString(R.string.wifi_error)
+														+ "发送失败",
 												Toast.LENGTH_SHORT).show();
 									}
 								} else {
@@ -1172,19 +1382,36 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			// 孔间距 步数
+			// 水平电机
+			machine_instrument_body_run_parameter_hole_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								machine_instrument_body_run_parameter_blend_info_btn_rl
+										.setVisibility(View.VISIBLE);
+								Log.w("hole", "hole reset btn");
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+
+			// 孔间距 步数 
 			machine_instrument_body_run_parameter_hole_space_info_send_btn
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-								try {
-									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
-											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
-													.getText().toString())));
-									int i = Integer
-											.valueOf(machine_instrument_body_run_parameter_hole_space_info_et
+								int i = Integer
+											.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
 													.getText().toString());
-									Log.w("孔间距", i + "");
+								try {
+									if (i>0 && i < 9999) {
+									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
+											.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
+													.getText().toString())));
+									}
 								} catch (Exception e) {
 									Toast.makeText(MachineActivity.this,
 											getString(R.string.wifi_error),
@@ -1554,7 +1781,7 @@ public class MachineActivity extends Activity {
 					Log.w("selectInfoThread", "Thread");
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
-					Log.w("selectInfoThread  message", "Thread---->	" + message);
+//					Log.w("selectInfoThread  message", "Thread---->	" + message);
 					selectInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
 				} catch (Exception e) {
@@ -1674,6 +1901,7 @@ public class MachineActivity extends Activity {
 				for (int i = 0; i < receive.size(); i++) {
 					Log.w("Handler", "info");
 					receiveMeg = receive.get(i);
+					Log.w("Handler", receiveMeg);
 					// 系统复位成功
 					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
 						machine_instrument_body_run_parameter_hole_info_btn_rl
@@ -1716,12 +1944,12 @@ public class MachineActivity extends Activity {
 						// selectInfoFlag = false;
 						Log.w("selectInfoHandler", "blend successful");
 					} else if (receiveMeg
-							.equals("ff ff 0a d1 01 09 03 01 e3 fe ")) {
+							.equals("ff ff 0a d1 01 09 03 01 e7 fe ")) {
 						Toast.makeText(MachineActivity.this,
-								getString(R.string.instrument_blend_success),
+								getString(R.string.instrument_hole_space_success),
 								Toast.LENGTH_SHORT).show();
 						// selectInfoFlag = false;
-						Log.w("selectInfoHandler", "hole successful");
+						Log.w("selectInfoHandler", "hole space successful");
 					} else if (receiveMeg.substring(15, 17).equals("09")) {
 						try {
 							// TODO 得到

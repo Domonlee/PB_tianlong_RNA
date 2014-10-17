@@ -1659,7 +1659,7 @@ public class EditExperimentActivity extends Activity {
 					holder.experiment_new_main_item_head_magnet_info_tv
 							.setBackgroundResource(R.drawable.zero);
 				}
-				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
+				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
 				holder.experiment_new_main_item_head_wait_info_tv.setText(step
 						.getSwait());

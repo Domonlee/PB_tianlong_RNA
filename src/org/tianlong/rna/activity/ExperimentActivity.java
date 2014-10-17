@@ -112,9 +112,6 @@ public class ExperimentActivity extends Activity {
 		initView();
 
 		// 通过返回值来 控制控件显示 运行状态
-
-		// TODO
-
 		selectMachineStateInfo();
 
 		final ExperimentAdapter experimentAdapter = new ExperimentAdapter(
@@ -126,10 +123,6 @@ public class ExperimentActivity extends Activity {
 			showView();
 		}
 
-		/**
-		 * 
-		 * Bugs: Open
-		 */
 		// Bug:删除上一项，下一项自动选中
 		experiment_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -257,6 +250,7 @@ public class ExperimentActivity extends Activity {
 				intent.putExtra("Uname", Uname);
 				listChooseId = 0;
 				machineStateInfo.runflag = false;
+				machineStateInfo.pauseflag = false;
 				startActivity(intent);
 				finish();
 			}
@@ -324,6 +318,7 @@ public class ExperimentActivity extends Activity {
 					}
 				});
 
+		//模板弹出框 展示
 		experiment_new_prepare_body_template_sp
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -345,7 +340,6 @@ public class ExperimentActivity extends Activity {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.exp_name_null),
 									Toast.LENGTH_SHORT).show();
-							// experiment_new_prepare_body_name_et.setText("Experiment 1");
 						} else {
 							if (experimentDao.hasEname(ExperimentActivity.this,
 									experiment_new_prepare_body_name_et
@@ -355,7 +349,6 @@ public class ExperimentActivity extends Activity {
 										getString(R.string.exp_name_already_exist),
 										Toast.LENGTH_SHORT).show();
 							} else {
-
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										ExperimentActivity.this);
 								builder.setMessage(getString(R.string.exp_creating));
@@ -528,7 +521,6 @@ public class ExperimentActivity extends Activity {
 									"当前仪器有实验正在运行", 2000).show();
 
 						} else {
-
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									ExperimentActivity.this);
 							builder.setMessage(getString(R.string.exp_prepareing));
@@ -541,6 +533,7 @@ public class ExperimentActivity extends Activity {
 							intent.putExtra("jump", "experiment");
 							intent.putExtra("E_id", experiment.getE_id());
 							machineStateInfo.runflag = false;
+							machineStateInfo.pauseflag = false;
 							startActivity(intent);
 							finish();
 						}
@@ -561,6 +554,8 @@ public class ExperimentActivity extends Activity {
 						intent.putExtra("U_id", U_id);
 						intent.putExtra("Uname", Uname);
 						intent.putExtra("E_id", experiment.getE_id());
+						machineStateInfo.runflag = false;
+						machineStateInfo.pauseflag = false;
 						startActivity(intent);
 						finish();
 					}
@@ -615,9 +610,11 @@ public class ExperimentActivity extends Activity {
 
 	// TODO 没有网络连接时候，错误处理
 	public void selectMachineStateInfo() {
-		// if (WifiUtlis ) {
-		//
-		// }
+		try {
+			WifiUtlis wifiUtlis = new WifiUtlis(ExperimentActivity.this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (machineStateInfo == null) {
 			machineStateInfo = new MachineStateInfo(ExperimentActivity.this,
 					experiment_run_top_mstate_tv);

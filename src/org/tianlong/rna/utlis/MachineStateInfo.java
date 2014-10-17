@@ -47,9 +47,10 @@ public class MachineStateInfo {
 		this.experiment_run_top_mstate_tv = expetiment_left_new_btn;
 	}
 
-	public static synchronized String sendMessageSyn(){
-		return wifiUtlis.getMessage();	
+	public static synchronized String sendMessageSyn() {
+		return wifiUtlis.getMessage();
 	}
+
 	public void init() {
 		perfixString = "ÒÇÆ÷µ±Ç°×´Ì¬£º";
 		selectInfoThread = new SelectStateThread();
@@ -84,7 +85,7 @@ public class MachineStateInfo {
 				}
 				try {
 					Thread.sleep(1000);
-						Log.w(TAG+"---", "Machine query run Thread");
+					Log.w(TAG + "---", "Machine query run Thread");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -96,33 +97,38 @@ public class MachineStateInfo {
 		public void handleMessage(Message msg) {
 			byte[] info = (byte[]) msg.obj;
 			Log.w(TAG, "Machine query Handler");
-			if (info.length != 0) {
-				if (receive != null) {
-					receive.removeAll(receive);
-				}
-				receive = Utlis.getReceive(info);
-				for (int i = 0; i < receive.size(); i++) {
-					receiveMeg = receive.get(i);
-					if (receiveMeg.substring(24, 26).equals("00")) {
-						stateNo = STATE_STOP;
-						experiment_run_top_mstate_tv.setText(perfixString
-								+ getStateString(stateNo));
+			if (info != null) {
+
+				if (info.length != 0) {
+					if (receive != null) {
+						receive.removeAll(receive);
 					}
-					if (receiveMeg.substring(24, 26).equals("03")) {
-						stateNo = STATE_RUN;
-						experiment_run_top_mstate_tv.setText(perfixString
-								+ getStateString(stateNo));
+					receive = Utlis.getReceive(info);
+					for (int i = 0; i < receive.size(); i++) {
+						receiveMeg = receive.get(i);
+						if (receiveMeg.substring(24, 26).equals("00")) {
+							stateNo = STATE_STOP;
+							experiment_run_top_mstate_tv.setText(perfixString
+									+ getStateString(stateNo));
+						}
+						if (receiveMeg.substring(24, 26).equals("03")) {
+							stateNo = STATE_RUN;
+							experiment_run_top_mstate_tv.setText(perfixString
+									+ getStateString(stateNo));
+						}
+						if (receiveMeg.substring(24, 26).equals("04")) {
+							stateNo = STATE_PAUSE;
+							experiment_run_top_mstate_tv.setText(perfixString
+									+ getStateString(stateNo));
+						}
+						if (receiveMeg.substring(24, 26).equals("05")) {
+							stateNo = STATE_STOP;
+							experiment_run_top_mstate_tv.setText(perfixString
+									+ getStateString(stateNo));
+						}
 					}
-					if (receiveMeg.substring(24, 26).equals("04")) {
-						stateNo = STATE_PAUSE;
-						experiment_run_top_mstate_tv.setText(perfixString
-								+ getStateString(stateNo));
-					}
-					if (receiveMeg.substring(24, 26).equals("05")) {
-						stateNo = STATE_STOP;
-						experiment_run_top_mstate_tv.setText(perfixString
-								+ getStateString(stateNo));
-					}
+				} else {
+
 				}
 			}
 		};

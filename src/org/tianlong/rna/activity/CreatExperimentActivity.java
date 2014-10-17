@@ -102,7 +102,6 @@ public class CreatExperimentActivity extends Activity {
 		experimentDao = new ExperimentDao();
 
 		// 设置通量
-		// fluxNum 默认为 32
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(CreatExperimentActivity.this);
 		fluxNum = machine.getMflux();
@@ -452,7 +451,7 @@ public class CreatExperimentActivity extends Activity {
 		}
 		else {
 			
-		return true;
+			return true;
 		}
 	}
 
@@ -521,7 +520,7 @@ public class CreatExperimentActivity extends Activity {
 							.setBackgroundResource(R.drawable.zero);
 				}
 
-				holder.experiment_new_main_item_top_name_tv.setText("No."
+				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
 				if (defaultSteps.get(i).getDStemplet() == 1) {
 					holder.experiment_new_main_item_head_wait_info_tv

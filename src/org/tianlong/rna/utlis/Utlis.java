@@ -325,6 +325,29 @@ public class Utlis {
 		return byteList;
 	}
 
+	//ÒÇÆ÷¹Ì¼ş²éÑ¯
+	public static byte[] queryMachineInfo() {
+		bytes.removeAll(bytes);
+		byte[] byteList = new byte[9];
+		byteList[0] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[0]);
+		byteList[1] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[1]);
+		byteList[2] = (byte) (byteList.length);
+		bytes.add(byteList[2]);
+		byteList[3] = (byte) Integer.parseInt("0A", 16);
+		bytes.add(byteList[3]);
+		byteList[4] = (byte) Integer.parseInt("00", 16);
+		bytes.add(byteList[4]);
+		byteList[5] = (byte) Integer.parseInt("00", 16);
+		bytes.add(byteList[5]);
+		byteList[6] = (byte) Integer.parseInt("00", 16);
+		bytes.add(byteList[6]);
+		byteList[7] = getCheckCode(bytes);
+		byteList[8] = (byte) Integer.parseInt("FE", 16);
+		return byteList;
+	}
+
 	// µç»ú¸´Î»ÃüÁî
 	public static byte[] resetMotorMessage(int num) {
 		bytes.removeAll(bytes);
@@ -359,7 +382,7 @@ public class Utlis {
 		byteList[8] = (byte) Integer.parseInt("FE", 16);
 		return byteList;
 	}
-
+	
 	// ·¢ËÍ¼ì²âÃüÁî
 	public static byte[] sendDetectionMessage(int num) {
 		bytes.removeAll(bytes);

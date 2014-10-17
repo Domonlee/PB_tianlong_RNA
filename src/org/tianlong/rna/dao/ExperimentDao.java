@@ -125,9 +125,7 @@ public class ExperimentDao {
 		RnaOpenHelper helper = getDatebase(context);
 		SQLiteDatabase database = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		// if (experiment.getEname().equals("")) {
-		// experiment.setEname("Experiment 1");
-		// }
+		
 		values.put("Ename", experiment.getEname());
 		values.put("Cdate", experiment.getCdate());
 		values.put("Rdate", experiment.getRdate());

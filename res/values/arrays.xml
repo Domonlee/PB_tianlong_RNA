@@ -3,19 +3,29 @@
 
     <string-array name="Templet">
         <item>不使用模板</item>
-        <item>模板一</item>
-        <item>模板二</item>
-        <item>模板三</item>
-        <item>模板四</item>
-        <item>模板五</item>
-        <item>模板六</item>
-        <item>模板七</item>
-        <item>模板八</item>
-        <item>模板九</item>
-        <item>模板十</item>
+        <item>Virus DNA/RNA</item>
+        <item>FMD virus RNA</item>
+        <item>Whole blood DNA_II</item>
+        <item>Bacterial DNA_II</item>
+        <item>Animal tissue DNA</item>
+        <item>FFPE tissue DNA</item>
+        <item>Botanic tissue DNA</item>
+        <item>PCR product purification</item>
+        <item>Police specialized</item>
+        <item>Ex_Add_Reagent_1</item>
+        <item>Ex_Add_Reagent_2</item>
     </string-array>
     
+    <string-array name="Templet15">
+        <item>不使用模板</item>
+        <item>Virus DNA/RNA</item>
+    </string-array>
     
+    <string-array name="Templet48">
+        <item>不使用模板</item>
+        <item>Virus DNA</item>
+    </string-array>
+
     <string-array name="ctrlNum">
         <item>1</item>
         <item>2</item>
