@@ -18,13 +18,11 @@ import android.widget.TextView;
 public class RunFileAdapert extends BaseAdapter {
 
 	private List<Map<String, Object>> strings;
-	// private Context context;
 	private LayoutInflater inflater;
 
 	public RunFileAdapert(List<Map<String, Object>> strings, Context context) {
 		super();
 		this.strings = strings;
-		// this.context = context;
 		this.inflater = LayoutInflater.from(context);
 	}
 
@@ -64,11 +62,10 @@ public class RunFileAdapert extends BaseAdapter {
 		if ( position == RunFileActivity.listChooseId) {
 			convertView.setBackgroundResource(R.drawable.list_select);
 		} else {
-			Log.w("RunAdapert", "else position=" + position);
 			convertView.setBackgroundResource(R.drawable.list_bg);
 		}
 		// 设置标志位
-		if (strings.get(position).get("id").equals(1)) {
+		if (strings.get(position).get("num").equals(1)) {
 			holder.newItemImage.setVisibility(View.VISIBLE);
 		} else {
 			holder.newItemImage.setVisibility(View.GONE);

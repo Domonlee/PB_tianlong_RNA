@@ -222,9 +222,7 @@ public class HelpActivity extends Activity {
 						hole = receiveMeg.substring(36, 38);
 						machineVersionString = machineVersionString + convertHexToString(hole);
 						hole = receiveMeg.substring(39, 41);
-
 						machineVersionString = machineVersionString + convertHexToString(hole);
-						
 						about_machine_num_info.setText(machineVersionString);
 					}
 				}
@@ -234,9 +232,8 @@ public class HelpActivity extends Activity {
 		}
 	};
 
-	// };
 
-	// TODO ²éÑ¯ÒÇÆ÷°æ±¾ºÅ
+	// ²éÑ¯ÒÇÆ÷°æ±¾ºÅ
 	class QueryMachineInfoThread implements Runnable {
 		public void run() {
 			while (queryFlag) {

@@ -232,9 +232,6 @@ public class RunExperimentActivity extends Activity {
 						}
 					}
 				}
-				// TODO 发送文件线程
-				//error
-//				 machineStateInfo.pauseflag =true;
 			}
 		};
 	};
@@ -822,7 +819,7 @@ public class RunExperimentActivity extends Activity {
 						}
 				});
 
-		// TODO stopBtn
+		// stopBtn
 		experiment_run_body_right_bottom_stop_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -870,11 +867,6 @@ public class RunExperimentActivity extends Activity {
 							} else {
 								intent = new Intent(RunExperimentActivity.this,
 										ExperimentActivity.class);
-								//返回bug
-								//TODO
-//								machineStateInfo = new MachineStateInfo(ExperimentActivity.this,
-//													experiment_run_top_mstate_tv);
-//								machineStateInfo.queryState();
 							}
 							intent.putExtra("U_id", U_id);
 							intent.putExtra("Uname", Uname);
@@ -1034,16 +1026,12 @@ public class RunExperimentActivity extends Activity {
 			holder.experiment_run_item_rl
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
-							controlNum = Integer
-									.valueOf(holder.experiment_run_item_top_name_tv
-											.getText()
-											.toString()
-											.substring(
-													6,
-													holder.experiment_run_item_top_name_tv
-															.getText()
-															.toString()
-															.length())) - 1;
+							//TODO 控制位置
+							try {
+								controlNum = Integer .valueOf(holder.experiment_run_item_top_name_tv.getText().toString().substring(5,holder.experiment_run_item_top_name_tv.getText().toString().length())) - 1; 
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 							if (changeBg.size() == 0) {
 								Map<String, Object> map = new HashMap<String, Object>();
 								holder.experiment_run_item_rl
@@ -1110,7 +1098,6 @@ public class RunExperimentActivity extends Activity {
 				holder.experiment_run_item_head_blend_pb.setProgress(0);
 			} else {
 				try {
-					// TODO
 					holder.experiment_run_item_head_blend_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSblend()).getHours()
@@ -1484,9 +1471,7 @@ public class RunExperimentActivity extends Activity {
 
 	class SelectInfoThread implements Runnable {
 		public void run() {
-			// Log.i("info", "selectInfoFlag"+selectInfoFlag);
 			while (selectInfoFlag) {
-				// Log.i("info", Thread.currentThread().getName());
 				try {
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
@@ -1768,17 +1753,6 @@ public class RunExperimentActivity extends Activity {
 		Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
-
-	// TODO
-//	public void selectMachineStateInfo() {
-//		if (machineStateInfo == null) {
-//			machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
-//					experiment_run_top_mstate_tv);
-//		}
-//		// MachineStateInfo machineStateInfo = new MachineStateInfo(
-//		// ExperimentActivity.this, experiment_run_top_mstate_tv);
-//		machineStateInfo.queryState();
-//	}
 
 }
 

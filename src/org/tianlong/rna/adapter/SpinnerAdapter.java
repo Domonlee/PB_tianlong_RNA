@@ -13,13 +13,11 @@ import android.widget.TextView;
 
 public class SpinnerAdapter extends BaseAdapter {
 
-	// private Context context;
 	private List<String> list;
 	private LayoutInflater inflater;
 
 	public SpinnerAdapter(Context context, List<String> list) {
 		super();
-		// this.context = context;
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
 	}

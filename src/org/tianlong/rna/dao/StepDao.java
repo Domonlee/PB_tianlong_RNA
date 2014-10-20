@@ -116,12 +116,12 @@ public class StepDao {
 	}
 
 	// 查询所有模板步骤
-	public List<DefaultStep> getAllDStep(Context context, int DE_id) {
+	public List<DefaultStep> getAllDStep(Context context, int DE_id,int fluxNum) {
 		List<DefaultStep> dsteps = new ArrayList<DefaultStep>();
 		sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(DBTempletManager.DB_PATH
 				+ "/" + DBTempletManager.DB_NAME, null);
 		Cursor cursor = sqLiteDatabase.rawQuery(
-				"select * from defaultstep where DE_id=" + DE_id, null);
+				"select * from defaultstep3 where DE_id=" + DE_id + " and DStemplet =" + fluxNum, null);
 		while (cursor.moveToNext()) {
 			DefaultStep step = new DefaultStep();
 			step.setDS_id(cursor.getInt(cursor.getColumnIndex("DS_id")));

@@ -90,14 +90,13 @@ public class MachineAdminAdapter extends BaseAdapter {
 					.getString(R.string.user_admin_user));
 		}
 
-		if (lists.get(arg0).getUdefault() == 1 && arg0 != 0 && arg0!= 1) {
+		if (lists.get(arg0).getUdefault() == 1 && (arg0 != 0) && (arg0!= 1) ) {
 			holder.user_admin_item_login_iv
 					.setBackgroundResource(R.drawable.yes);
 		} 
-//		else {
-//			holder.user_admin_item_login_iv
-//					.setBackgroundResource(R.drawable.error);
-//		}
+		else {
+			holder.user_admin_item_login_iv.setVisibility(View.GONE);
+		}
 		
 		return arg1;
 	}

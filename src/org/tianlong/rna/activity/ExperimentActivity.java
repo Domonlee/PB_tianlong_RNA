@@ -8,9 +8,11 @@ import java.util.Map;
 import org.tianlong.rna.adapter.ExperimentAdapter;
 import org.tianlong.rna.adapter.SpinnerAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
+import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
 import org.tianlong.rna.pojo.DefaultExperiment;
 import org.tianlong.rna.pojo.Experiment;
+import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.DBTempletManager;
 import org.tianlong.rna.utlis.MachineStateInfo;
@@ -25,7 +27,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -298,9 +299,14 @@ public class ExperimentActivity extends Activity {
 		experiment_new_prepare_body_template_sp = (Spinner) view
 				.findViewById(R.id.experiment_new_prepare_body_template_sp);
 
+		//TODO 按照通量来设置 模板载入
+		
+		MachineDao machineDao = new MachineDao();
+		Machine machine = machineDao.getMachine(ExperimentActivity.this);
+		int fluxNum = machine.getMflux();
 		experiment_new_prepare_body_template_sp.setAdapter(new SpinnerAdapter(
 				ExperimentActivity.this, Utlis
-						.getTemplate(ExperimentActivity.this)));
+						.getTemplate(ExperimentActivity.this,fluxNum)));
 
 		experiment_new_prepare_body_quick_cb
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -325,12 +331,12 @@ public class ExperimentActivity extends Activity {
 							int arg2, long arg3) {
 						DE_id = defaultExperiments.get(arg2).getE_id();
 					}
-
 					public void onNothingSelected(AdapterView<?> arg0) {
 					}
 				});
 
-		// --Next Btn实现同名检测 未实现默认命名
+		//TODO
+		// --Next Btn实现同名检测 
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {

@@ -117,7 +117,7 @@ public class Utlis {
 
 	// 发送开始命令
 	public static byte[] sendRunMessage(int num) {
-	
+
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
 		byteList[0] = (byte) Integer.parseInt("FF", 16);
@@ -262,7 +262,7 @@ public class Utlis {
 			break;
 		}
 		bytes.add(byteList[6]);
-		//设置 数值 需要*100
+		// 设置 数值 需要*100
 		String str = Integer.toHexString((int) (info * 100));
 		if (str.length() == 1) {
 			byteList[7] = (byte) Integer.parseInt("00", 16);
@@ -285,7 +285,7 @@ public class Utlis {
 		return byteList;
 	}
 
-	//孔间距设置命令
+	// 孔间距设置命令
 	public static byte[] saveHoldSpaceMessage(int info) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[11];
@@ -325,7 +325,7 @@ public class Utlis {
 		return byteList;
 	}
 
-	//仪器固件查询
+	// 仪器固件查询
 	public static byte[] queryMachineInfo() {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
@@ -382,7 +382,7 @@ public class Utlis {
 		byteList[8] = (byte) Integer.parseInt("FE", 16);
 		return byteList;
 	}
-	
+
 	// 发送检测命令
 	public static byte[] sendDetectionMessage(int num) {
 		bytes.removeAll(bytes);
@@ -700,15 +700,32 @@ public class Utlis {
 		return info;
 	}
 
-	/**
-	 * 得到模板
-	 */
-	public static List<String> getTemplate(Context context) {
+	// 得到模板名称
+	public static List<String> getTemplate(Context context, int fluxNum) {
 		List<String> list = new ArrayList<String>();
 		String string[] = context.getResources().getStringArray(
 				org.tianlong.rna.activity.R.array.Templet);
-		for (int i = 0; i < string.length; i++) {
-			list.add(string[i]);
+		String string15[] = context.getResources().getStringArray(
+				org.tianlong.rna.activity.R.array.Templet15);
+		String string48[] = context.getResources().getStringArray(
+				org.tianlong.rna.activity.R.array.Templet48);
+		switch (fluxNum) {
+		case 1:
+			for (int i = 0; i < string15.length; i++) {
+				list.add(string15[i]);
+			}
+			break;
+		case 2:
+			for (int i = 0; i < string.length; i++) {
+				list.add(string[i]);
+			}
+
+			break;
+		case 3:
+			for (int i = 0; i < string48.length; i++) {
+				list.add(string48[i]);
+			}
+			break;
 		}
 		return list;
 	}
@@ -765,7 +782,10 @@ public class Utlis {
 			List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < receive.size(); i++) {
-			String infos = receive.get(i).replace(" ", "").substring(14, receive.get(i).replace(" ", "").length() - 4); 
+			String infos = receive
+					.get(i)
+					.replace(" ", "")
+					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", Integer.valueOf(infos.substring(0, 1)));
@@ -1044,9 +1064,13 @@ public class Utlis {
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("num", Integer.valueOf(infos.substring(infos.length() - 2, infos.length() - 1)));
+			map.put("num",
+					Integer.valueOf(infos.substring(infos.length() - 2,
+							infos.length() - 1)));
 			map.put("info", infos.substring(0, infos.indexOf(",", 0)));
-			map.put("id", Integer.valueOf(infos.substring(infos.length() - 5, infos.length() - 3)));
+			map.put("id",
+					Integer.valueOf(infos.substring(infos.length() - 5,
+							infos.length() - 3)));
 			maps.add(map);
 		}
 		return maps;

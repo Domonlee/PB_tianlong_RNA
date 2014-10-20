@@ -421,17 +421,16 @@ public class EditExperimentActivity extends Activity {
 		experiment_new_main_bottom_ename_info_et.setText(experiment.getEname());
 		experiment_new_main_body_tl.setStretchAllColumns(true);
 
-		// --setting the flux
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(EditExperimentActivity.this);
 		fluxNum = machine.getMflux();
 	}
 
 	private void createTable() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				EditExperimentActivity.this);
-		builder.setTitle(getString(R.string.waitting));
-		Dialog waitDialog = builder.show();
+//		AlertDialog.Builder builder = new AlertDialog.Builder(
+//				EditExperimentActivity.this);
+//		builder.setTitle(getString(R.string.waitting));
+//		Dialog waitDialog = builder.show();
 		stepRow = new TableRow(this);
 		if (holders.size() != 0) {
 			holders.removeAll(holders);
@@ -2629,7 +2628,7 @@ public class EditExperimentActivity extends Activity {
 		}
 		experiment_new_main_body_tl.addView(stepRow,
 				new TableLayout.LayoutParams(FP, WC));
-		waitDialog.cancel();
+//		waitDialog.cancel();
 	}
 
 	/**

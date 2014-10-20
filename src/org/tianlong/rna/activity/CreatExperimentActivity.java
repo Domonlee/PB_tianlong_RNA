@@ -115,7 +115,7 @@ public class CreatExperimentActivity extends Activity {
 		Ename = intent.getStringExtra("Ename");
 		Eremark = intent.getStringExtra("Eremark");
 		DE_id = intent.getIntExtra("DE_id", 9999);
-		defaultSteps = stepDao.getAllDStep(CreatExperimentActivity.this, DE_id);
+		defaultSteps = stepDao.getAllDStep(CreatExperimentActivity.this, DE_id,fluxNum);
 		experiment = new Experiment();
 		steps = new ArrayList<Step>();
 		holders = new ArrayList<CViewHolder>();
@@ -159,7 +159,7 @@ public class CreatExperimentActivity extends Activity {
 							step.setSmagnet("00:00:00");
 							break;
 						case 2:
-							step.setSname("Step");
+							step.setSname("Step32");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);
@@ -170,7 +170,7 @@ public class CreatExperimentActivity extends Activity {
 							step.setStemp(0);
 							break;
 						case 3:
-							step.setSname("Step");
+							step.setSname("Step48");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);
@@ -522,7 +522,8 @@ public class CreatExperimentActivity extends Activity {
 
 				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
-				if (defaultSteps.get(i).getDStemplet() == 1) {
+				// 通量选择 模板
+//				if (defaultSteps.get(i).getDStemplet() == 2) {
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setText(defaultSteps.get(i).getDSwait());
 					holder.experiment_new_main_item_head_blend_info_tv
@@ -545,7 +546,7 @@ public class CreatExperimentActivity extends Activity {
 									.getDSswitch()));
 					holder.experiment_new_main_item_bottom_name_et
 							.setText(defaultSteps.get(i).getDSname());
-				}
+//				}
 
 				holder.experiment_new_main_item_body_temp_info_et
 						.setOnClickListener(new OnClickListener() {

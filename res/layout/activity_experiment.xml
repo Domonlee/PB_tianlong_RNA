@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:paddingLeft="10dp"
-            android:text="机器当前状态："
+            android:text="仪器当前状态：未连接"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
           

@@ -24,7 +24,6 @@ import org.tianlong.rna.utlis.TimeWheelView;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,9 +37,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -752,12 +748,6 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_hole_info_tv.setText(machine
 					.getMhole() + "");
 
-			// 混合电机控制输入框监听
-			// 磁吸电机控制输入框监听
-			// 孔位电机控制输入框监听
-			// 孔间距输入框监听
-			// machine_instrument_body_run_parameter_hole_info_et.setInputType(InputType.TYPE_NULL);
-
 			// TODO 水平电机 滑轮
 			machine_instrument_body_run_parameter_hole_info_tv
 					.setOnClickListener(new OnClickListener() {
@@ -800,6 +790,21 @@ public class MachineActivity extends Activity {
 								vol_hundred.setCyclic(true);
 								vol_ten.setCyclic(true);
 								vol_bits.setCyclic(true);
+
+								vol_thousand
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_hole_info_tv,
+												1));
+								vol_hundred
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_hole_info_tv,
+												2));
+								vol_ten.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_hole_info_tv,
+										3));
+								vol_bits.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_hole_info_tv,
+										4));
 
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -890,6 +895,21 @@ public class MachineActivity extends Activity {
 								vol_ten.setCyclic(true);
 								vol_bits.setCyclic(true);
 
+								vol_thousand
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_blend_info_tv,
+												1));
+								vol_hundred
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_blend_info_tv,
+												2));
+								vol_ten.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_blend_info_tv,
+										3));
+								vol_bits.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_blend_info_tv,
+										4));
+
 								builder.setPositiveButton(
 										getString(R.string.sure),
 										new DialogInterface.OnClickListener() {
@@ -979,6 +999,21 @@ public class MachineActivity extends Activity {
 								vol_ten.setCyclic(true);
 								vol_bits.setCyclic(true);
 
+								vol_thousand
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_magnetic_info_tv,
+												1));
+								vol_hundred
+										.setCurrentItem(wheelNum(
+												machine_instrument_body_run_parameter_magnetic_info_tv,
+												2));
+								vol_ten.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_magnetic_info_tv,
+										3));
+								vol_bits.setCurrentItem(wheelNum(
+										machine_instrument_body_run_parameter_magnetic_info_tv,
+										4));
+
 								builder.setPositiveButton(
 										getString(R.string.sure),
 										new DialogInterface.OnClickListener() {
@@ -1067,6 +1102,26 @@ public class MachineActivity extends Activity {
 								vol_hundred.setCyclic(true);
 								vol_ten.setCyclic(true);
 								vol_bits.setCyclic(true);
+
+								String numStr = machine_instrument_body_run_parameter_hole_space_info_tv
+										.getText().toString();
+								int numSplite = Integer.parseInt(numStr);
+								int a,b,c,d;
+								if (numStr.length() == 4) {
+									a = (numSplite / 1000);
+									b = ((numSplite % 1000) / 100);
+									c = (((numSplite % 1000) % 100) / 10);
+									d = (((numSplite % 1000) % 100) % 10);
+								} else {
+									a = 0;
+									b = numSplite / 100;
+									c = (numSplite % 100) / 10;
+									d = (numSplite % 100) % 10;
+								}
+								vol_thousand.setCurrentItem(a);
+								vol_hundred.setCurrentItem(b);
+								vol_ten.setCurrentItem(c);
+								vol_bits.setCurrentItem(d);
 
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -1235,7 +1290,7 @@ public class MachineActivity extends Activity {
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
-//								wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+								// wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
 								Toast.makeText(getApplicationContext(),
 										getString(R.string.instrument_reboot),
 										1000).show();
@@ -1398,19 +1453,19 @@ public class MachineActivity extends Activity {
 						}
 					});
 
-			// 孔间距 步数 
+			// 孔间距 步数
 			machine_instrument_body_run_parameter_hole_space_info_send_btn
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
 								int i = Integer
-											.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
-													.getText().toString());
+										.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
+												.getText().toString());
 								try {
-									if (i>0 && i < 9999) {
-									wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
-											.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
-													.getText().toString())));
+									if (i > 0 && i < 9999) {
+										wifiUtlis.sendMessage(Utlis.saveHoldSpaceMessage(Integer
+												.valueOf(machine_instrument_body_run_parameter_hole_space_info_tv
+														.getText().toString())));
 									}
 								} catch (Exception e) {
 									Toast.makeText(MachineActivity.this,
@@ -1781,7 +1836,8 @@ public class MachineActivity extends Activity {
 					Log.w("selectInfoThread", "Thread");
 					Message message = selectInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
-//					Log.w("selectInfoThread  message", "Thread---->	" + message);
+					// Log.w("selectInfoThread  message", "Thread---->	" +
+					// message);
 					selectInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
 				} catch (Exception e) {
@@ -1945,7 +2001,8 @@ public class MachineActivity extends Activity {
 						Log.w("selectInfoHandler", "blend successful");
 					} else if (receiveMeg
 							.equals("ff ff 0a d1 01 09 03 01 e7 fe ")) {
-						Toast.makeText(MachineActivity.this,
+						Toast.makeText(
+								MachineActivity.this,
 								getString(R.string.instrument_hole_space_success),
 								Toast.LENGTH_SHORT).show();
 						// selectInfoFlag = false;
@@ -2513,5 +2570,37 @@ public class MachineActivity extends Activity {
 				});
 		builder.show();
 		return inputServer.getText().toString();
+	}
+
+	private int wheelNum(TextView tv, int numInfo) {
+		String numStr = tv.getText().toString();
+		int num = 0;
+		float numSplite = Float.parseFloat(numStr);
+		numSplite = numSplite * 100;
+		Log.w("num", numSplite + "");
+		int a = (int) (numSplite / 1000);
+		Log.w("num", a + "");
+		int b = (int) ((numSplite % 1000) / 100);
+		Log.w("num", b + "");
+		int c = (int) (((numSplite % 1000) % 100) / 10);
+		Log.w("num", c + "");
+		int d = (int) (((numSplite % 1000) % 100) % 10);
+		Log.w("num", d + "");
+
+		switch (numInfo) {
+		case 1:
+			num = a;
+			break;
+		case 2:
+			num = b;
+			break;
+		case 3:
+			num = c;
+			break;
+		case 4:
+			num = d;
+			break;
+		}
+		return num;
 	}
 }
