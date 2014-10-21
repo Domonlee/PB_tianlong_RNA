@@ -1359,8 +1359,6 @@ public class MachineActivity extends Activity {
 						public void onClick(View v) {
 
 							if (wifiUtlis != null) {
-								if (isLegalNum(machine_instrument_body_run_parameter_blend_info_tv
-										.getText().toString())) {
 									try {
 										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
 												0,
@@ -1374,11 +1372,6 @@ public class MachineActivity extends Activity {
 												Toast.LENGTH_SHORT).show();
 									}
 								}
-							} else {
-								Toast.makeText(MachineActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-							}
 						}
 					});
 			// 磁吸电机移动
@@ -1386,8 +1379,6 @@ public class MachineActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-								if (isLegalNum(machine_instrument_body_run_parameter_magnetic_info_tv
-										.getText().toString())) {
 									try {
 										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
 												1,
@@ -1399,11 +1390,6 @@ public class MachineActivity extends Activity {
 												Toast.LENGTH_SHORT).show();
 									}
 								}
-							} else {
-								Toast.makeText(MachineActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-							}
 						}
 					});
 			// 孔位电机移动
@@ -1411,8 +1397,6 @@ public class MachineActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							if (wifiUtlis != null) {
-								if (isLegalNum(machine_instrument_body_run_parameter_hole_info_tv
-										.getText().toString())) {
 									try {
 										wifiUtlis.sendMessage(Utlis.moveMotorMessage(
 												2,
@@ -1425,10 +1409,6 @@ public class MachineActivity extends Activity {
 														+ "发送失败",
 												Toast.LENGTH_SHORT).show();
 									}
-								} else {
-									Toast.makeText(MachineActivity.this,
-											"数据错误", Toast.LENGTH_SHORT).show();
-								}
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.wifi_error),
@@ -2540,37 +2520,6 @@ public class MachineActivity extends Activity {
 
 	}
 
-	public String inputParaString(String s) {
-		Context context = MachineActivity.this;
-		final String inputString = s;
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				MachineActivity.this);
-
-		final EditText inputServer = new EditText(this);
-		inputServer.setText(inputString);
-		builder.setTitle(context.getString(R.string.instrument_parameter_input));
-		builder.setView(inputServer);
-		builder.setPositiveButton(context.getString(R.string.sure),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						// inputServer.getText().toString();
-						if (isLegalNum(inputServer.getText().toString())) {
-
-						} else {
-							Toast.makeText(getApplicationContext(),
-									"input error", 2000).show();
-						}
-					}
-				});
-		builder.setNegativeButton(context.getString(R.string.cancle),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
-		return inputServer.getText().toString();
-	}
 
 	private int wheelNum(TextView tv, int numInfo) {
 		String numStr = tv.getText().toString();
@@ -2588,6 +2537,9 @@ public class MachineActivity extends Activity {
 		Log.w("num", d + "");
 
 		switch (numInfo) {
+		case 0: 
+			num = 0;
+			break;
 		case 1:
 			num = a;
 			break;

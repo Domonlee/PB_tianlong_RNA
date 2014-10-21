@@ -75,8 +75,8 @@ public class RunExperimentActivity extends Activity {
 	private TextView experiment_run_body_left_body_t7_info_tv;
 	private TextView experiment_run_body_left_body_t8_info_tv;
 	private LinearLayout experiment_run_body_left_temp_body;
-	
-	//温度显示
+
+	// 温度显示
 	private ImageView experiment_run_body_left_temp_body_bg;
 	private RelativeLayout experiment_run_body_left_body_t1_rl;
 	private RelativeLayout experiment_run_body_left_body_t2_rl;
@@ -87,7 +87,6 @@ public class RunExperimentActivity extends Activity {
 	private RelativeLayout experiment_run_body_left_body_t7_rl;
 	private RelativeLayout experiment_run_body_left_body_t8_rl;
 
-	private MachineStateInfo machineStateInfo;
 	private TableRow stepRow;
 	private StepDao stepDao;
 	private WaitTimeCount waitTimeCount;
@@ -143,7 +142,6 @@ public class RunExperimentActivity extends Activity {
 	final IntentFilter homeFilter = new IntentFilter(
 			Intent.ACTION_CLOSE_SYSTEM_DIALOGS);// home键监听
 
-	// log Tag
 	private String TAGINFO = "INFO";
 
 	private Handler sendFileHandler = new Handler() {
@@ -152,12 +150,10 @@ public class RunExperimentActivity extends Activity {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				Log.i("info", "发送数据回复:" + info);
-				
-				
-				//
 				sendControlNum++;
 				Log.i("info", "发送数据控制NUM:" + sendControlNum);
-				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
+				if (sendControlNum >= 3
+						&& sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
 						try {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
@@ -249,12 +245,6 @@ public class RunExperimentActivity extends Activity {
 						sendFileHandler.sendMessage(message);
 						Thread.sleep(1000);
 					}
-//					else {
-//						sendFileFlag = false;
-//						if (dialog != null) {
-//							dialog.cancel();
-//						}
-//					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -303,6 +293,7 @@ public class RunExperimentActivity extends Activity {
 									timeHandler.post(timeRunnable);
 									waitTimeCount = waitTimeList
 											.get(controlNum);
+									
 									waitTimeCount.start();
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -376,7 +367,7 @@ public class RunExperimentActivity extends Activity {
 																	* 1000,
 															1000);
 
-													// waitTimeCount.start();
+													 waitTimeCount.start();
 													// Log.i("info",
 													// "电机停止状态启动等待");
 												} catch (Exception e) {
@@ -395,8 +386,7 @@ public class RunExperimentActivity extends Activity {
 									break;
 								// 如果是1,电机在等待状态
 								case 1:
-									Log.i("info", "等待中:" + waitTimeControl
-											+ " 继续控制:" + continueControl);
+//									
 									if (controlNum < holders.size()) {
 										if (waitTimeControl == 0) {
 											waitTimeControl = 1;
@@ -415,8 +405,8 @@ public class RunExperimentActivity extends Activity {
 									break;
 								// 如果是2,电机在混合状态
 								case 2:
-									Log.i("info", "混合中:" + blendTimeControl
-											+ " 继续控制:" + continueControl);
+//									Log.i("info", "混合中:" + blendTimeControl
+//											+ " 继续控制:" + continueControl);
 									if (blendTimeControl == 0) {
 										blendTimeControl = 1;
 										if (continueControl != 1) {
@@ -501,15 +491,14 @@ public class RunExperimentActivity extends Activity {
 										.setText(t8 + "°C");
 								break;
 							// 如果是6号查询就是运行位置查询
-							// TODO 跳转下一个步骤
+							// XXX 跳转下一个步骤
 							case 6:
 								if (Integer.parseInt(
 										receiveMeg.substring(24, 26), 16) != 5) {
 									// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 									if ((controlNum + 1) != Integer.parseInt(
 											receiveMeg.substring(21, 23), 16)) {
-										Log.i("info", controlNum + "控制列");
-										Log.i("info", "该跳了");
+										
 										continueControl = 0;
 										if (viewDrawable != null) {
 											viewDrawable.stop();
@@ -520,12 +509,7 @@ public class RunExperimentActivity extends Activity {
 										controlNum = Integer.parseInt(
 												receiveMeg.substring(21, 23),
 												16) - 1;
-										// Log.i("info",
-										// "查询运行位置回复："+receiveMeg);
-										// Log.i("info",
-										// "位置代码："+receiveMeg.substring(21,
-										// 23));
-										// Log.i("info", "运行位置："+controlNum);
+										
 										getCurrentTime(controlNum);
 										// 当总步骤索引小于总步骤数时开始下一步
 										if (controlNum < holders.size()) {
@@ -538,10 +522,10 @@ public class RunExperimentActivity extends Activity {
 												waitTimeCount = waitTimeList
 														.get(controlNum);
 												waitTimeCount.start();
-												// Log.i("info", "下一步启动等待");
 											} else {
 												waitTimeCount = waitTimeList
 														.get(controlNum);
+												waitTimeCount.start();
 											}
 											viewDrawable = (AnimationDrawable) views
 													.get(controlNum)
@@ -621,7 +605,6 @@ public class RunExperimentActivity extends Activity {
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 						Thread.sleep(100);
-						// 查询温度
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
@@ -648,9 +631,8 @@ public class RunExperimentActivity extends Activity {
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		
-
-		machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,experiment_run_top_mstate_tv);
+//		machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
+//				experiment_run_top_mstate_tv);
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();
@@ -676,147 +658,132 @@ public class RunExperimentActivity extends Activity {
 									getString(R.string.wifi_error_run),
 									Toast.LENGTH_SHORT).show();
 						} else {
-								if (changeBg.size() != 0) {
-									((View) changeBg.get(0).get("view"))
-											.setBackgroundResource(R.anim.anim_view);
-									changeBg.removeAll(changeBg);
-								}
-								runBtnControl++;
-								if (runBtnControl % 2 == 0) {
-									try {
+							if (changeBg.size() != 0) {
+								((View) changeBg.get(0).get("view"))
+										.setBackgroundResource(R.anim.anim_view);
+								changeBg.removeAll(changeBg);
+							}
+							runBtnControl++;
+							if (runBtnControl % 2 == 0) {
+								try {
 
-										wifiUtlis.sendMessage(Utlis
-												.sendPauseMessage());
-										experiment_run_body_right_bottom_run_btn
-												.setText(getString(R.string.run));
-										viewDrawable.stop();
-										selectInfoFlag = false;
-										if (waitTimeControl == 1) {
-											waitTimeCount.pause();
+									wifiUtlis.sendMessage(Utlis
+											.sendPauseMessage());
+									experiment_run_body_right_bottom_run_btn
+											.setText(getString(R.string.run));
+									viewDrawable.stop();
+									selectInfoFlag = false;
+									if (waitTimeControl == 1) {
+										waitTimeCount.pause();
+									}
+									if (blendTimeControl == 1) {
+										blendTimeCount.pause();
+									}
+									if (magnetTimeControl == 1) {
+										magnetTimeCount.pause();
+									}
+									timeHandler.removeCallbacks(timeRunnable);
+								} catch (Exception e) {
+									Toast.makeText(RunExperimentActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
+							} else {
+								experiment_run_body_right_bottom_run_btn
+										.setText(getString(R.string.pause));
+								if (wifiUtlis != null) {
+									 // 控制流程
+									switch (runNum) {
+									case 0:
+										try {
+											wifiUtlis.sendMessage(Utlis
+													.getbyteList(
+															sendInfo.get(0), 0));
+											new Thread(sendFileThread).start();
+											builder.setMessage(getString(R.string.run_exp_send_info));
+											builder.setCancelable(false);
+											dialog = builder.show();
+											runNum = 1;
+										} catch (Exception e1) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
 										}
-										if (blendTimeControl == 1) {
-											blendTimeCount.pause();
+										break;
+									case 1:
+										try {
+											selectInfoFlag = true;
+											if (waitTimeControl != 0
+													|| blendTimeControl != 0
+													|| magnetTimeControl != 0) {
+												continueControl = 1;
+											} else {
+												continueControl = 0;
+											}
+											if (waitTimeControl == 1) {
+												waitTimeCount.resume();
+												waitTimeControl = 0;
+											}
+											if (blendTimeControl == 1) {
+												blendTimeCount.resume();
+												blendTimeControl = 0;
+											}
+											if (magnetTimeControl == 1) {
+												magnetTimeCount.resume();
+												magnetTimeControl = 0;
+											}
+											new Thread(selectInfoThread)
+													.start();
+											viewDrawable.start();
+											try {
+												Thread.sleep(50);
+											} catch (InterruptedException e) {
+												// block
+												e.printStackTrace();
+											}
+
+											timeHandler.post(timeRunnable);
+											wifiUtlis.sendMessage(Utlis
+													.sendContinueMessage());
+
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
 										}
-										if (magnetTimeControl == 1) {
-											magnetTimeCount.pause();
+										break;
+									case 2:
+										try {
+											selectInfoFlag = true;
+											new Thread(selectInfoThread)
+													.start();
+											wifiUtlis.sendMessage(Utlis
+													.sendRunMessage(controlNum));
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExperimentActivity.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
 										}
-										timeHandler
-												.removeCallbacks(timeRunnable);
-									} catch (Exception e) {
-										Toast.makeText(
-												RunExperimentActivity.this,
-												getString(R.string.wifi_error),
-												Toast.LENGTH_SHORT).show();
+										runNum = 1;
+										break;
+									default:
+										break;
 									}
 								} else {
-									experiment_run_body_right_bottom_run_btn
-											.setText(getString(R.string.pause));
-									if (wifiUtlis != null) {
-										// 控制流程
-										// TODO
-										switch (runNum) {
-										case 0:
-											try {
-												wifiUtlis.sendMessage(Utlis.getbyteList(
-														sendInfo.get(0), 0));
-												new Thread(sendFileThread)
-														.start();
-												builder.setMessage(getString(R.string.run_exp_send_info));
-												builder.setCancelable(false);
-												dialog = builder.show();
-												runNum = 1;
-											} catch (Exception e1) {
-												Toast.makeText(
-														RunExperimentActivity.this,
-														getString(R.string.wifi_error),
-														Toast.LENGTH_SHORT)
-														.show();
-											}
-											break;
-										case 1:
-											try {
-												selectInfoFlag = true;
-												Log.i("info",
-														"waitTimeControl:"
-																+ waitTimeControl);
-												Log.i("info",
-														"blendTimeControl:"
-																+ blendTimeControl);
-												Log.i("info",
-														"magnetTimeControl:"
-																+ magnetTimeControl);
-												if (waitTimeControl != 0
-														|| blendTimeControl != 0
-														|| magnetTimeControl != 0) {
-													continueControl = 1;
-												} else {
-													continueControl = 0;
-												}
-												if (waitTimeControl == 1) {
-													waitTimeCount.resume();
-													waitTimeControl = 0;
-												}
-												if (blendTimeControl == 1) {
-													blendTimeCount.resume();
-													blendTimeControl = 0;
-												}
-												if (magnetTimeControl == 1) {
-													magnetTimeCount.resume();
-													magnetTimeControl = 0;
-												}
-												new Thread(selectInfoThread) .start();
-												viewDrawable.start();
-												try {
-													Thread.sleep(50);
-												} catch (InterruptedException e) {
-													// block
-													e.printStackTrace();
-												}
-
-												timeHandler.post(timeRunnable);
-												wifiUtlis.sendMessage(Utlis
-														.sendContinueMessage());
-
-											} catch (Exception e) {
-												Toast.makeText(
-														RunExperimentActivity.this,
-														getString(R.string.wifi_error),
-														Toast.LENGTH_SHORT)
-														.show();
-												// inn();
-												selectInfoFlag = false;
-											}
-											break;
-										case 2:
-											try {
-												selectInfoFlag = true;
-												new Thread(selectInfoThread)
-														.start();
-												wifiUtlis.sendMessage(Utlis
-														.sendRunMessage(controlNum));
-											} catch (Exception e) {
-												Toast.makeText(
-														RunExperimentActivity.this,
-														getString(R.string.wifi_error),
-														Toast.LENGTH_SHORT)
-														.show();
-												// inn();
-												selectInfoFlag = false;
-											}
-											runNum = 1;
-											break;
-										default:
-											break;
-										}
-									} else {
-										Toast.makeText(
-												RunExperimentActivity.this,
-												getString(R.string.wifi_error),
-												Toast.LENGTH_SHORT).show();
-									}
+									Toast.makeText(RunExperimentActivity.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
 								}
 							}
 						}
+					}
 				});
 
 		// stopBtn
@@ -938,17 +905,17 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_body_t8_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_t8_info_tv);
 
 		experiment_run_body_left_temp_body = (LinearLayout) findViewById(R.id.experiment_run_body_left_temp_body);
-		
-		experiment_run_body_left_temp_body_bg = (ImageView)findViewById(R.id.experiment_run_body_left_temp_body_bg);
-		experiment_run_body_left_body_t1_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t1_rl);
-		experiment_run_body_left_body_t2_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t2_rl);
-		experiment_run_body_left_body_t3_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t3_rl);
-		experiment_run_body_left_body_t4_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t4_rl);
-		experiment_run_body_left_body_t5_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t5_rl);
-		experiment_run_body_left_body_t6_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t6_rl);
-		experiment_run_body_left_body_t7_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t7_rl);
-		experiment_run_body_left_body_t8_rl = (RelativeLayout)findViewById(R.id.experiment_run_body_left_body_t8_rl);
-		
+
+		experiment_run_body_left_temp_body_bg = (ImageView) findViewById(R.id.experiment_run_body_left_temp_body_bg);
+		experiment_run_body_left_body_t1_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t1_rl);
+		experiment_run_body_left_body_t2_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t2_rl);
+		experiment_run_body_left_body_t3_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t3_rl);
+		experiment_run_body_left_body_t4_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t4_rl);
+		experiment_run_body_left_body_t5_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t5_rl);
+		experiment_run_body_left_body_t6_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t6_rl);
+		experiment_run_body_left_body_t7_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t7_rl);
+		experiment_run_body_left_body_t8_rl = (RelativeLayout) findViewById(R.id.experiment_run_body_left_body_t8_rl);
+
 		experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		hideTempBody();
 		getTime(0);
@@ -1026,9 +993,20 @@ public class RunExperimentActivity extends Activity {
 			holder.experiment_run_item_rl
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
-							//TODO 控制位置
+							// 控制位置 获取
 							try {
-								controlNum = Integer .valueOf(holder.experiment_run_item_top_name_tv.getText().toString().substring(5,holder.experiment_run_item_top_name_tv.getText().toString().length())) - 1; 
+								controlNum = Integer
+										.valueOf(holder.experiment_run_item_top_name_tv
+												.getText()
+												.toString()
+												.substring(
+														5,
+														holder.experiment_run_item_top_name_tv
+																.getText()
+																.toString()
+																.length())) - 1;
+								Toast.makeText(getApplicationContext(),
+									"步骤："	+ controlNum , 1000).show();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -1135,7 +1113,6 @@ public class RunExperimentActivity extends Activity {
 				if (steps.get(i).getSmagnet().equals("00:00:00")) {
 					holder.experiment_run_item_head_magnet_pb.setProgress(0);
 				} else {
-					// TODO 磁吸进度条
 					try {
 						holder.experiment_run_item_head_magnet_pb
 								.setMax(Utlis.timeFormat.parse(
@@ -1194,10 +1171,14 @@ public class RunExperimentActivity extends Activity {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			blendTimeCount = new BlendTimeCount(date.getHours() * 3600000
-					+ date.getMinutes() * 60000 + (date.getSeconds() - 2)
-					* 1000, 1000);
+			String dtime1 = Utlis.timeFormat.format(date);
+//			Log.w("blendTimeCount format", dtime1);
+//			Log.w("blendTimeCount format", date.getHours()*3600000+date.getMinutes()*60000+date.getSeconds()*1000 +"");
 
+			//TODO 设置混合时间
+			blendTimeCount = new BlendTimeCount(date.getHours() * 3600000
+					+ date.getMinutes() * 60000 + date.getSeconds()
+					* 1000, 1000);
 			// 设置磁吸时间
 			try {
 				date = Utlis.timeFormat
@@ -1298,14 +1279,14 @@ public class RunExperimentActivity extends Activity {
 			blendTimeControl = 0;
 			Date date = new Date(millisUntilFinished);
 			date.setHours(date.getHours() - 8);
-			// 用时间格式对象转换成显示需要的String对象
 			String dtime = Utlis.timeFormat.format(date);
-			// 将转换后的信息传给step运行时间的textview
 			holders.get(controlNum).experiment_run_item_head_wait_info_tv
 					.setText(dtime);
 			holders.get(controlNum).experiment_run_item_head_wait_pb
 					.setProgress(date.getHours() * 3600 + date.getMinutes()
 							* 60 + date.getSeconds());
+//			Log.w("WaitTime", date.getHours() * 3600 + date.getMinutes()
+//					* 60 + date.getSeconds() + "");
 		}
 
 		public void onFinish() {
@@ -1319,7 +1300,6 @@ public class RunExperimentActivity extends Activity {
 					.getText().toString().equals("00:00:00")) {
 				blendTimeCount = blendTimeList.get(controlNum);
 				blendTimeCount.start();
-				// Log.i("info", "等待完成启动混合");
 			} else {
 				blendTimeCount = blendTimeList.get(controlNum);
 			}
@@ -1339,7 +1319,12 @@ public class RunExperimentActivity extends Activity {
 			}
 			magnetTimeControl = 0;
 			waitTimeControl = 0;
+			
 			Date date = new Date(millisUntilFinished);
+//			date = Utlis.timeFormat
+//					.parse(holders.get(i).experiment_run_item_head_blend_info_tv
+//							.getText().toString());
+			//TODO 获取时间
 			date.setHours(date.getHours() - 8);
 			String dtime = Utlis.timeFormat.format(date);
 			holders.get(controlNum).experiment_run_item_head_blend_info_tv
@@ -1347,6 +1332,8 @@ public class RunExperimentActivity extends Activity {
 			holders.get(controlNum).experiment_run_item_head_blend_pb
 					.setProgress(date.getHours() * 3600 + date.getMinutes()
 							* 60 + date.getSeconds());
+			Log.w("BlendTime", date.getHours() * 3600 + date.getMinutes()
+					* 60 + date.getSeconds() + "");
 		}
 
 		public void onFinish() {
@@ -1382,7 +1369,6 @@ public class RunExperimentActivity extends Activity {
 			Date date = new Date(millisUntilFinished);
 			date.setHours(date.getHours() - 8);
 			String dtime = Utlis.timeFormat.format(date);
-			// 将转换后的信息传给step运行时间的textview
 			holders.get(controlNum).experiment_run_item_head_magnet_info_tv
 					.setText(dtime);
 			holders.get(controlNum).experiment_run_item_head_magnet_pb

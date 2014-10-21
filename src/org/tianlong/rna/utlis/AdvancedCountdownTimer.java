@@ -3,30 +3,20 @@ package org.tianlong.rna.utlis;
 import android.annotation.SuppressLint;
 import android.os.Handler;   
 import android.os.Message;   
+import android.util.Log;
 
 @SuppressLint({ "HandlerLeak", "UseValueOf" })
 public abstract class AdvancedCountdownTimer {   
-  
     private final long mCountdownInterval;   
-  
     protected long mTotalTime;   
-  
     private long mRemainTime;   
-  
        
     public AdvancedCountdownTimer(long millisInFuture, long countDownInterval) {   
         mTotalTime = millisInFuture;   
         mCountdownInterval = countDownInterval;   
-  
         mRemainTime = millisInFuture;   
+        Log.w("mRemainTime construt",  "mRemainTime="+ mRemainTime);
     }   
-  
-    public final void seek(int value) {   
-        synchronized (AdvancedCountdownTimer.this) {   
-            mRemainTime = ((100 - value) * mTotalTime) / 100;   
-        }   
-    }   
-  
        
     public final void cancel() {   
         mHandler.removeMessages(MSG_RUN);   
@@ -66,27 +56,24 @@ public abstract class AdvancedCountdownTimer {
   
         @Override  
         public void handleMessage(Message msg) {   
-  
             synchronized (AdvancedCountdownTimer.this) {   
                 if (msg.what == MSG_RUN) {   
+                	//mCountdownInterval = 1s;
+                	Log.w("mRemainTime",  "mRemainTime="+ mRemainTime);
                     mRemainTime = mRemainTime - mCountdownInterval;   
-  
                     if (mRemainTime <= 0) {   
                         onFinish();   
                     } else if (mRemainTime < mCountdownInterval) {   
                         sendMessageDelayed(obtainMessage(MSG_RUN), mRemainTime);   
                     } else {   
-  
                         onTick(mRemainTime, new Long(100  
                                 * (mTotalTime - mRemainTime) / mTotalTime)   
                                 .intValue());   
-  
-                       
                         sendMessageDelayed(obtainMessage(MSG_RUN),   
                                 mCountdownInterval);   
                     }   
-                } else if (msg.what == MSG_PAUSE) {   
-  
+                } 
+                else if (msg.what == MSG_PAUSE) {   
                 }   
             }   
         }   
