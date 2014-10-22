@@ -576,7 +576,7 @@ public class UpAndDownActivity extends Activity {
 					}
 				}
 
-				//同名检测标志
+				// 同名检测标志
 				sameNameFlag = false;
 			}
 		};

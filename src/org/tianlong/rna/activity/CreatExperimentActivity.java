@@ -131,7 +131,6 @@ public class CreatExperimentActivity extends Activity {
 		experiment_new_main_bottom_ename_info_et = (EditText) findViewById(R.id.experiment_new_main_bottom_ename_info_et);
 
 		experiment_new_main_top_uname_tv.setText(Uname);
-		// experiment_new_main_bottom_ename_info_tv.setText(Ename);
 
 		experiment_new_main_bottom_ename_info_tv.setVisibility(View.GONE);
 		experiment_new_main_bottom_ename_info_et.setVisibility(View.VISIBLE);

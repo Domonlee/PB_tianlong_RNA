@@ -1498,6 +1498,7 @@ public class EditExperimentActivity extends Activity {
 													break;
 												}
 												// TODO
+												//∆µ¬ …Ë÷√
 												editSteps.get(p).setSspeed(
 														speed);
 												holder.experiment_new_main_item_body_speed_info_tv

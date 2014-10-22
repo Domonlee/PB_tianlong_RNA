@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.util.Log;
 
 @SuppressLint({ "SimpleDateFormat", "HandlerLeak", "DefaultLocale" })
 @SuppressWarnings("deprecation")
@@ -662,6 +663,8 @@ public class Utlis {
 			message = "00" + Integer.toHexString(info);
 		} else if (Integer.toHexString(info).length() == 3) {
 			message = "0" + Integer.toHexString(info);
+		} else if (Integer.toHexString(info).length() == 4) {
+			message = Integer.toHexString(info);
 		}
 		return message;
 	}
@@ -690,10 +693,14 @@ public class Utlis {
 		int info = 0;
 		try {
 			int hour = timeFormat.parse(time).getHours();
+//			Log.w("hour", (hour << 12)+"");
+//			Log.w("hour", ((hour << 12) & 0xF000)+"");
 			int mins = timeFormat.parse(time).getMinutes();
+//			Log.w("mins", (mins << 6)+"");
+//			Log.w("mins", ((mins << 6) & 0x0FC0)+"");
 			int sec = timeFormat.parse(time).getSeconds();
-			info = ((hour << 12) & 0xF000) | ((mins << 6) & 0x0FC0)
-					| (sec & 0x003F);
+//			Log.w("s", (sec  & 0x003F)+"");
+			info = ((hour << 12) & 0xF000) | ((mins << 6) & 0x0FC0) | (sec & 0x003F);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -761,7 +768,6 @@ public class Utlis {
 	 * @param receive
 	 * @return
 	 */
-	// TODO
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);
@@ -788,10 +794,19 @@ public class Utlis {
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", Integer.valueOf(infos.substring(0, 1)));
-			map.put("info", infos.substring(2, infos.indexOf(",", 2)));
-			map.put("user", infos.substring(infos.indexOf(",", 2) + 1,
-					infos.length() - 1));
+			if (i <= 8) {
+				map.put("id", Integer.valueOf(infos.substring(0, 1)));
+				map.put("info", infos.substring(2, infos.indexOf(",", 2)));
+				map.put("user",
+						infos.substring(infos.indexOf(",", 2) + 1,
+								infos.length() - 1));
+			} else {
+				map.put("id", Integer.valueOf(infos.substring(0, 2)));
+				map.put("info", infos.substring(3, infos.indexOf(",", 3)));
+				map.put("user",
+						infos.substring(infos.indexOf(",", 3) + 1,
+								infos.length() - 1));
+			}
 			maps.add(map);
 		}
 		return maps;
@@ -819,6 +834,7 @@ public class Utlis {
 		return strings;
 	}
 
+	//  发送文件实现
 	// 得到上位机实验信息
 	public static List<String> getPadExperimentInfoList(Experiment experiment,
 			List<Step> steps, String userName) {
@@ -854,6 +870,7 @@ public class Utlis {
 								.getTimeinfo(steps.get(i).getSblend())))
 						+ Utlis.getTempAndSwitch(steps.get(i).getStemp(), steps
 								.get(i).getSswitch()));
+								Log.w("blend time", steps.get(i).getSblend()+"");
 			}
 			sendInfo.add(steps.get(i).getSname() + "\r\n");
 		}
