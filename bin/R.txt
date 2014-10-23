@@ -1214,7 +1214,6 @@ int string instrument_success 0x7f0b0093
 int string language_chinese 0x7f0b0046
 int string language_english 0x7f0b0045
 int string language_failure 0x7f0b0048
-int string language_korean 0x7f0b012a
 int string language_success 0x7f0b0047
 int string local_file 0x7f0b00f9
 int string log 0x7f0b0028

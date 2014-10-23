@@ -1996,7 +1996,7 @@ containing a value of this type.
         public static final int complete=0x7f0b001d;
         public static final int delete_file=0x7f0b00fc;
         /**  系统设置_仪器检测 
-系统设置_仪器检测
+ 系统设置_仪器检测 
          */
         public static final int detection_check=0x7f0b0095;
         public static final int detection_checking=0x7f0b0098;
@@ -2032,7 +2032,7 @@ containing a value of this type.
         public static final int detection_twelve=0x7f0b00a0;
         public static final int disinfection=0x7f0b002b;
         /**  系统设置_消毒设置 
-系统设置_消毒设置
+ 系统设置_消毒设置 
          */
         public static final int dismdect=0x7f0b005f;
         public static final int dismdect_failure=0x7f0b0061;
@@ -2040,7 +2040,7 @@ containing a value of this type.
         public static final int down=0x7f0b00f8;
         public static final int down_file=0x7f0b00fd;
         /**  上传下载 
-上传下载
+ 上传下载 
          */
         public static final int down_is_full=0x7f0b0103;
         public static final int downing=0x7f0b0109;
@@ -2074,12 +2074,12 @@ containing a value of this type.
         public static final int exp_name_null=0x7f0b00bb;
         public static final int exp_new_exp=0x7f0b00b7;
         /**  新建实验 
-新建实验
+ 新建实验 
          */
         public static final int exp_new_not_exit=0x7f0b00c6;
         public static final int exp_next=0x7f0b00d7;
         /**  实验管理 
-实验管理
+ 实验管理 
          */
         public static final int exp_no_select=0x7f0b00b5;
         public static final int exp_prepareing=0x7f0b00bf;
@@ -2110,13 +2110,13 @@ containing a value of this type.
         public static final int exp_wait=0x7f0b00cd;
         public static final int exp_wait_time_setting=0x7f0b00e0;
         /**  主页面 
-主页面
+ 主页面 
          */
         public static final int experiment=0x7f0b0027;
         public static final int hello_world=0x7f0b000f;
         public static final int help=0x7f0b002c;
         /**  帮助 
-帮助
+ 帮助 
          */
         public static final int information=0x7f0b010f;
         public static final int instrument_blend=0x7f0b0081;
@@ -2125,7 +2125,7 @@ containing a value of this type.
         public static final int instrument_blend_success=0x7f0b0090;
         public static final int instrument_failure=0x7f0b0094;
         /**  系统设置_仪器设置 
-系统设置_仪器设置
+ 系统设置_仪器设置 
          */
         public static final int instrument_flux_name=0x7f0b007e;
         public static final int instrument_flux_selete=0x7f0b0092;
@@ -2147,11 +2147,10 @@ containing a value of this type.
         public static final int instrument_success=0x7f0b0093;
         public static final int language_chinese=0x7f0b0046;
         /**  系统设置_语言设置 
-系统设置_语言设置
+ 系统设置_语言设置 
          */
         public static final int language_english=0x7f0b0045;
         public static final int language_failure=0x7f0b0048;
-        public static final int language_korean=0x7f0b012a;
         public static final int language_success=0x7f0b0047;
         public static final int local_file=0x7f0b00f9;
         public static final int log=0x7f0b0028;
@@ -2181,7 +2180,7 @@ containing a value of this type.
         public static final int net_mask_input=0x7f0b005a;
         public static final int net_mask_not_null=0x7f0b005c;
         /**  系统设置_网络设置 
-系统设置_网络设置
+ 系统设置_网络设置 
          */
         public static final int net_name=0x7f0b0049;
         public static final int net_name_input=0x7f0b004b;
@@ -2189,7 +2188,7 @@ containing a value of this type.
         public static final int net_success=0x7f0b005d;
         public static final int net_wifi_unopen=0x7f0b004a;
         /**  仪器升级 
-仪器升级
+ 仪器升级 
          */
         public static final int no_down_bin=0x7f0b010d;
         public static final int no_select=0x7f0b00fb;
@@ -2198,7 +2197,7 @@ containing a value of this type.
         public static final int pause=0x7f0b0016;
         public static final int quick_all_cancle=0x7f0b0102;
         /**  快捷实验 
-快捷实验
+ 快捷实验 
          */
         public static final int quick_cancle=0x7f0b0100;
         public static final int quick_now_cancle=0x7f0b0101;
@@ -2209,7 +2208,7 @@ containing a value of this type.
         public static final int run_exp_not_exit=0x7f0b00f3;
         public static final int run_exp_not_run=0x7f0b00f6;
         /**  运行实验 
-运行实验
+ 运行实验 
          */
         public static final int run_exp_remain_time=0x7f0b00ef;
         public static final int run_exp_send_info=0x7f0b00f2;
@@ -2226,7 +2225,7 @@ containing a value of this type.
         public static final int system_clean=0x7f0b003e;
         public static final int system_detection=0x7f0b0044;
         /**  系统设置 
-系统设置
+ 系统设置 
          */
         public static final int system_language=0x7f0b003c;
         public static final int system_machine=0x7f0b0043;
@@ -2244,7 +2243,7 @@ containing a value of this type.
         public static final int two_pass_error=0x7f0b0073;
         public static final int ultraviolet=0x7f0b0020;
         /**  上传下载 
-上传下载
+ 上传下载 
          */
         public static final int up=0x7f0b00f7;
         public static final int up_delete_forbid=0x7f0b0105;
@@ -2266,7 +2265,7 @@ containing a value of this type.
         public static final int user_confirm_pass_input=0x7f0b0071;
         public static final int user_confirm_pass_not_null=0x7f0b0072;
         /**  系统设置_用户设置 
-系统设置_用户设置
+ 系统设置_用户设置 
          */
         public static final int user_default=0x7f0b0062;
         public static final int user_default_failure=0x7f0b0075;
@@ -2275,7 +2274,7 @@ containing a value of this type.
         public static final int user_error=0x7f0b002f;
         public static final int user_name_input=0x7f0b0030;
         /**  登录页面 
-登录页面
+ 登录页面 
          */
         public static final int user_name_null=0x7f0b002d;
         public static final int user_name_ture=0x7f0b0038;
@@ -2303,7 +2302,7 @@ containing a value of this type.
         public static final int user_register_success=0x7f0b0039;
         public static final int user_rpass_input=0x7f0b003b;
         /**  注册页面 
-注册页面
+ 注册页面 
          */
         public static final int user_rpass_null=0x7f0b0037;
         public static final int waitting=0x7f0b0026;
