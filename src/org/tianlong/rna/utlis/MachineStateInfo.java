@@ -35,21 +35,25 @@ public class MachineStateInfo {
 
 	public boolean runflag = true;
 	public boolean pauseflag = true;
-	public TextView experiment_run_top_mstate_tv;
+	public static int stateFlag = 0;
+//	public TextView experiment_run_top_mstate_tv;
+	public String machineStateString;
 	private SelectStateThread selectInfoThread;
 
 	public MachineStateInfo(Context context) {
 		this.context = context;
 	}
 
-	public MachineStateInfo(Context context, TextView expetiment_left_new_btn) {
+	public MachineStateInfo(Context context, String stateString) {
 		this.context = context;
-		this.experiment_run_top_mstate_tv = expetiment_left_new_btn;
+//		this.experiment_run_top_mstate_tv = expetiment_left_new_btn;
+		this.machineStateString = stateString;
 	}
 
 	public static synchronized String sendMessageSyn() {
 		return wifiUtlis.getMessage();
 	}
+	
 
 	public void init() {
 		perfixString = "ÒÇÆ÷µ±Ç°×´Ì¬£º";
@@ -108,23 +112,31 @@ public class MachineStateInfo {
 						receiveMeg = receive.get(i);
 						if (receiveMeg.substring(24, 26).equals("00")) {
 							stateNo = STATE_STOP;
-							experiment_run_top_mstate_tv.setText(perfixString
-									+ getStateString(stateNo));
+//							experiment_run_top_mstate_tv.setText(perfixString
+//									+ getStateString(stateNo));
+							machineStateString = getStateString(stateNo);
+							stateFlag = 0;
 						}
 						if (receiveMeg.substring(24, 26).equals("03")) {
 							stateNo = STATE_RUN;
-							experiment_run_top_mstate_tv.setText(perfixString
-									+ getStateString(stateNo));
+//							experiment_run_top_mstate_tv.setText(perfixString
+//									+ getStateString(stateNo));
+							machineStateString = getStateString(stateNo);
+							stateFlag = 1;
 						}
 						if (receiveMeg.substring(24, 26).equals("04")) {
 							stateNo = STATE_PAUSE;
-							experiment_run_top_mstate_tv.setText(perfixString
-									+ getStateString(stateNo));
+//							experiment_run_top_mstate_tv.setText(perfixString
+//									+ getStateString(stateNo));
+							machineStateString = getStateString(stateNo);
+							stateFlag = 1;
 						}
 						if (receiveMeg.substring(24, 26).equals("05")) {
 							stateNo = STATE_STOP;
-							experiment_run_top_mstate_tv.setText(perfixString
-									+ getStateString(stateNo));
+//							experiment_run_top_mstate_tv.setText(perfixString
+//									+ getStateString(stateNo));
+							machineStateString = getStateString(stateNo);
+							stateFlag = 0;
 						}
 					}
 				} else {

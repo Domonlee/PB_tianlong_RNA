@@ -46,6 +46,7 @@ public class RunFileActivity extends Activity {
 	private Button runfile_right_output_btn;
 	private TextView runfile_right_output_location_tv;
 	private TextView runfile_right_tv;
+	private TextView machine_wifi_name_tv;
 	private ListView runfile_left_lv;
 	private List<Map<String, Object>> strings = new ArrayList<Map<String, Object>>();
 	private List<String> receive = new ArrayList<String>();
@@ -86,6 +87,8 @@ public class RunFileActivity extends Activity {
 		runfile_right_output_btn = (Button) findViewById(R.id.runfile_right_output_btn);
 		runfile_left_lv = (ListView) findViewById(R.id.runfile_left_lv);
 		runfile_right_output_location_tv = (TextView) findViewById(R.id.runfile_right_output_location_tv);
+		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		runfile_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,

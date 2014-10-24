@@ -16,6 +16,8 @@ public class WifiUtlis {
 	private WifiManager mWifiManager;
 	// 定义一个WifiInfo对象
 	private WifiInfo mWifiInfo;
+	
+	private String wifiName;
 
 	public enum WifiCipherType {
 		WIFICIPHER_WEP, WIFICIPHER_WPA, WIFICIPHER_NOPASS, WIFICIPHER_INVALID
@@ -25,12 +27,7 @@ public class WifiUtlis {
 	public WifiUtlis(Context context) throws Exception {
 		super();
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectDiskReads().detectDiskWrites().detectNetwork() // or
-																		// .detectAll()
-																		// for
-																		// all
-																		// detectable
-																		// problems
+				.detectDiskReads().detectDiskWrites().detectNetwork() 
 				.penaltyLog().build());
 		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
@@ -44,6 +41,7 @@ public class WifiUtlis {
 		String wifiName = mWifiInfo.getSSID();
 
 		if (wifiName.substring(0, 6).equals("NP968_")) {
+			setWifiName(wifiName);
 			InetAddress serverAddr = InetAddress.getByName("10.10.100.254");
 			socket = new Socket(serverAddr, 8899);
 		} else {
@@ -107,6 +105,12 @@ public class WifiUtlis {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setWifiName(String name){
+		this.wifiName= name;
+	}
+	public String getWifiName(){
+		return wifiName;
+	}
 
-	// 同步接发
 }

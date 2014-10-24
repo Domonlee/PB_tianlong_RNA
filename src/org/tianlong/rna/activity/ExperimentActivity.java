@@ -60,9 +60,11 @@ public class ExperimentActivity extends Activity {
 	private Button experiment_right_back_btn;
 	private ImageView expetiment_left_new_btn_iv;
 	private TextView experiment_run_top_mstate_tv;
+	private TextView machine_wifi_name_tv;
 
 	private int U_id;
 	private String Uname;
+	private String machineStateString = null;
 
 	private MachineStateInfo machineStateInfo;
 	private ExperimentDao experimentDao;
@@ -110,6 +112,7 @@ public class ExperimentActivity extends Activity {
 		dbTempletManager.openDatabase();
 		dbTempletManager.closeDatabase();
 
+//		experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		initView();
 
 		// 通过返回值来 控制控件显示 运行状态
@@ -268,6 +271,9 @@ public class ExperimentActivity extends Activity {
 		experiment_left_lv = (ListView) findViewById(R.id.experiment_left_lv);
 		experiment_right_rl = (RelativeLayout) findViewById(R.id.experiment_right_rl);
 		expetiment_left_new_btn_iv = (ImageView) findViewById(R.id.expetiment_left_new_btn_iv);
+		
+		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		stepDao = new StepDao();
 		experimentDao = new ExperimentDao();
@@ -519,10 +525,13 @@ public class ExperimentActivity extends Activity {
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// TODO 字符串 String 输入
-						if (experiment_run_top_mstate_tv.getText().toString()
-								.equals("仪器当前状态：Run")
-								|| experiment_run_top_mstate_tv.getText()
-										.toString().equals("仪器当前状态：Pause")) {
+//						if (experiment_run_top_mstate_tv.getText().toString()
+//								.equals("Run")
+//								|| experiment_run_top_mstate_tv.getText()
+//										.toString().equals("Pause")) {
+//						if (machineStateString.equals("Run") || machineStateString.equals("Pause")) {
+						if (MachineStateInfo.stateFlag == 1) {
+							
 							Toast.makeText(ExperimentActivity.this,
 									"当前仪器有实验正在运行", 2000).show();
 
@@ -623,7 +632,7 @@ public class ExperimentActivity extends Activity {
 		}
 		if (machineStateInfo == null) {
 			machineStateInfo = new MachineStateInfo(ExperimentActivity.this,
-					experiment_run_top_mstate_tv);
+					machineStateString);
 		}
 		machineStateInfo.queryState();
 	}

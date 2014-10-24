@@ -1,11 +1,17 @@
 package org.tianlong.rna.activity;
 
+import java.util.List;
+
 import org.tianlong.rna.activity.R;
+import org.tianlong.rna.utlis.WifiUtlis;
 
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.view.GestureDetector;
@@ -31,6 +37,8 @@ public class MainActivity extends ActivityGroup {
 	private String Uname;
 	private GestureDetector gd;
 	public static int id = 1;
+	public static String machine_wifi_name = null;
+	private TextView machine_wifi_name_tv;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,12 +48,17 @@ public class MainActivity extends ActivityGroup {
 		intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
+		
 
 		gd = new GestureDetector(handListener);
 
 		main_top_uname_tv = (TextView) findViewById(R.id.main_top_uname_tv);
 		main_top_logout_rl = (RelativeLayout) findViewById(R.id.main_top_logout_rl);
 		main_body_rl = (RelativeLayout) findViewById(R.id.main_body_rl);
+		machine_wifi_name_tv= (TextView)findViewById(R.id.machine_wifi_name_tv);
+		
+		displayWifiName();
+		machine_wifi_name_tv.setText(machine_wifi_name);
 		SwitchActivity(id);
 
 		main_top_uname_tv.setText(Uname);
@@ -142,6 +155,25 @@ public class MainActivity extends ActivityGroup {
 		return super.dispatchTouchEvent(ev);
 	}
 
+
+	//TODO 返回wifi名称
+	public String displayWifiName(){
+		WifiUtlis wifiUtlis = null;
+		try {
+			wifiUtlis = new WifiUtlis(MainActivity.this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (wifiUtlis == null) {
+			machine_wifi_name= "仪器未连接";
+			machine_wifi_name_tv.setText(machine_wifi_name);
+		}else {
+			machine_wifi_name = wifiUtlis.getWifiName();
+		}
+		
+		return machine_wifi_name;
+	}
+	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(

@@ -1006,7 +1006,7 @@ public class RunExperimentActivity extends Activity {
 																.toString()
 																.length())) - 1;
 								Toast.makeText(getApplicationContext(),
-									"≤Ω÷Ë£∫"	+ controlNum , 1000).show();
+									"≤Ω÷Ë£∫"	+ (controlNum+1) , 1000).show();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

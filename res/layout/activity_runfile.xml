@@ -9,6 +9,13 @@
         style="@style/top_rl" >
 
         <TextView
+            android:id="@+id/machine_wifi_name_tv"
+            style="@style/top_uname"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/runfile_top_uname_tv"
             style="@style/top_uname" />
 
@@ -96,7 +103,6 @@
                     android:background="#00000000"
                     android:textColor="@android:color/white"
                     android:textSize="13sp" />
-
 
                 <Button
                     android:id="@+id/runfile_right_output_btn"

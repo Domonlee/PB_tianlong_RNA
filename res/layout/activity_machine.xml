@@ -8,6 +8,14 @@
         android:id="@+id/machine_top_rl"
         style="@style/top_rl" >
 
+        <TextView 
+            android:id="@+id/machine_wifi_name_tv"
+            style="@style/top_uname" 
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            />
+            
         <TextView
             android:id="@+id/machine_top_uname_tv"
             style="@style/top_uname" />

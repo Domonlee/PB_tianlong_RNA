@@ -8,6 +8,15 @@
     <RelativeLayout
         android:id="@+id/activity_upanddown_top_rl"
         style="@style/top_rl" >
+        
+                <TextView 
+            android:id="@+id/machine_wifi_name_tv"
+            style="@style/top_uname" 
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:hint="ttt"
+            android:textSize="18sp"
+            />
 
         <TextView
             android:id="@+id/activity_upanddown_top_uname_tv"

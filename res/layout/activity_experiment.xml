@@ -16,9 +16,16 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:paddingLeft="10dp"
-            android:text="仪器当前状态：未连接"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="20sp" />
+          <TextView 
+            android:id="@+id/machine_wifi_name_tv"
+            android:layout_toRightOf="@id/experiment_run_top_mstate_tv"
+            style="@style/top_uname" 
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            />
           
         <TextView
             android:id="@+id/experiment_top_uname_tv"

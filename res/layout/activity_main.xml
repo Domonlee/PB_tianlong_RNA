@@ -37,6 +37,14 @@
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
         </RelativeLayout>
+        
+        <TextView 
+            android:id="@+id/machine_wifi_name_tv"
+            android:layout_toRightOf="@id/main_top_logout_rl"
+            style="@style/top_uname" 
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            />
 
         <TextView
             android:id="@+id/main_top_uname_tv"

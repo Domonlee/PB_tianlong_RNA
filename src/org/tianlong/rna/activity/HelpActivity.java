@@ -45,6 +45,7 @@ public class HelpActivity extends Activity {
 	private View view;
 	private TextView about_system_num_info;
 	private TextView about_machine_num_info;
+	private TextView machine_wifi_name_tv;
 
 	private List<String> receive;
 	private String receiveMeg; // 接收信息
@@ -76,6 +77,8 @@ public class HelpActivity extends Activity {
 		help_logo_uname = (TextView) findViewById(R.id.help_top_uname_tv);
 		help_body_left_body_lv = (ListView) findViewById(R.id.help_left_lv);
 		help_body_right_rl = (RelativeLayout) findViewById(R.id.help_right_rl);
+		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		showAbout();
 		help_logo_uname.setText(uName);

@@ -58,6 +58,7 @@ public class UpAndDownActivity extends Activity {
 	private ListView activity_upanddown_down_top_lv;
 	private TextView activity_upanddown_top_uname_tv;
 	private ImageView activity_upanddown_down_top_delete_btn;
+	private TextView machine_wifi_name_tv;
 
 	private boolean sameNameFlag = false;
 	private List<Experiment> experiments;
@@ -116,6 +117,8 @@ public class UpAndDownActivity extends Activity {
 		activity_upanddown_down_top_lv = (ListView) findViewById(R.id.activity_upanddown_down_top_lv);
 		activity_upanddown_top_uname_tv = (TextView) findViewById(R.id.activity_upanddown_top_uname_tv);
 		activity_upanddown_down_top_delete_btn = (ImageView) findViewById(R.id.activity_upanddown_down_top_delete_btn);
+		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		activity_upanddown_top_uname_tv.setText(Uname);
 
