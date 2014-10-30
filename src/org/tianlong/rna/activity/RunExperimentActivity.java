@@ -763,6 +763,8 @@ public class RunExperimentActivity extends Activity {
 													.start();
 											wifiUtlis.sendMessage(Utlis
 													.sendRunMessage(controlNum));
+											
+											getCurrentTime(controlNum);
 										} catch (Exception e) {
 											Toast.makeText(
 													RunExperimentActivity.this,
@@ -1007,6 +1009,7 @@ public class RunExperimentActivity extends Activity {
 																.length())) - 1;
 								Toast.makeText(getApplicationContext(),
 									"步骤："	+ (controlNum+1) , 1000).show();
+								getCurrentTime(controlNum);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -1172,10 +1175,7 @@ public class RunExperimentActivity extends Activity {
 				e.printStackTrace();
 			}
 			String dtime1 = Utlis.timeFormat.format(date);
-//			Log.w("blendTimeCount format", dtime1);
-//			Log.w("blendTimeCount format", date.getHours()*3600000+date.getMinutes()*60000+date.getSeconds()*1000 +"");
 
-			//TODO 设置混合时间
 			blendTimeCount = new BlendTimeCount(date.getHours() * 3600000
 					+ date.getMinutes() * 60000 + date.getSeconds()
 					* 1000, 1000);
@@ -1736,7 +1736,7 @@ public class RunExperimentActivity extends Activity {
 		} else {
 			time = time + sec;
 		}
-		Toast.makeText(RunExperimentActivity.this, time, 2000).show();
+//		Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 

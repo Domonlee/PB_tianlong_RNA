@@ -615,7 +615,34 @@ public class EditExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													} else {
+													} 
+													else if ((temp_thousand
+															.getCurrentItem()
+															* 100
+															+ temp_hundred
+																	.getCurrentItem()
+															* 10 + temp_ten
+															.getCurrentItem()) < 30) {
+														Toast.makeText(
+																EditExperimentActivity.this,
+																getString(R.string.exp_temp_small),
+																Toast.LENGTH_SHORT)
+																.show();
+														try {
+															Field field = dialog
+																	.getClass()
+																	.getSuperclass()
+																	.getDeclaredField(
+																			"mShowing");
+															field.setAccessible(true);
+															field.set(dialog,
+																	false);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}	
+													}
+													
+													else {
 														editSteps
 																.get(p)
 																.setStemp(
@@ -1786,7 +1813,27 @@ public class EditExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													} else {
+													}
+													else if (tempTotal < 30) {
+														Toast.makeText(
+																EditExperimentActivity.this,
+																getString(R.string.exp_temp_small),
+																Toast.LENGTH_SHORT)
+																.show();
+														try {
+															Field field = dialog
+																	.getClass()
+																	.getSuperclass()
+																	.getDeclaredField(
+																			"mShowing");
+															field.setAccessible(true);
+															field.set(dialog,
+																	false);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}	
+													}
+													else {
 														steps.get(p).setStemp(
 																tempTotal);
 														holder.experiment_new_main_item_body_temp_info_et

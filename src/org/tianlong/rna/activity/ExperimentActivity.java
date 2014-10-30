@@ -305,7 +305,7 @@ public class ExperimentActivity extends Activity {
 		experiment_new_prepare_body_template_sp = (Spinner) view
 				.findViewById(R.id.experiment_new_prepare_body_template_sp);
 
-		//TODO 按照通量来设置 模板载入
+		//XXX 按照通量来设置 模板载入
 		
 		MachineDao machineDao = new MachineDao();
 		Machine machine = machineDao.getMachine(ExperimentActivity.this);

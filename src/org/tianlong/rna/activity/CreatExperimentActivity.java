@@ -101,7 +101,6 @@ public class CreatExperimentActivity extends Activity {
 		Dialog dialog = builder.show();
 		experimentDao = new ExperimentDao();
 
-		// 设置通量
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(CreatExperimentActivity.this);
 		fluxNum = machine.getMflux();
@@ -297,11 +296,22 @@ public class CreatExperimentActivity extends Activity {
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						saveFlag = hasTemplet();
+						if (steps.size() >= 50) {
+							Toast.makeText(CreatExperimentActivity.this,
+									"步骤不能超过50步，请检查",
+									Toast.LENGTH_SHORT).show();
+						}
 						if (!saveFlag || (steps.size() == 0)) {
 							Toast.makeText(CreatExperimentActivity.this,
 									getString(R.string.exp_save_null),
 									Toast.LENGTH_SHORT).show();
-						} else {
+						}
+						if (steps.size() >= 50) {
+							Toast.makeText(CreatExperimentActivity.this,
+									"步骤不能超过50步，请检查",
+									Toast.LENGTH_SHORT).show();
+						}
+						else {
 							if (experiment_new_main_bottom_ename_info_et
 									.getText().toString().equals("")) {
 								Toast.makeText(CreatExperimentActivity.this,
@@ -522,7 +532,7 @@ public class CreatExperimentActivity extends Activity {
 				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
 				// 通量选择 模板
-//				if (defaultSteps.get(i).getDStemplet() == 2) {
+				if (defaultSteps.get(i).getDStemplet() == fluxNum) {
 					holder.experiment_new_main_item_head_wait_info_tv
 							.setText(defaultSteps.get(i).getDSwait());
 					holder.experiment_new_main_item_head_blend_info_tv
@@ -533,19 +543,17 @@ public class CreatExperimentActivity extends Activity {
 							.setText(defaultSteps.get(i).getDShole() + "");
 					holder.experiment_new_main_item_body_vol_info_et
 							.setText(defaultSteps.get(i).getDSvol() + "");
-					// speed = defaultSteps.get(i).getDSspeed();
 					holder.experiment_new_main_item_body_speed_info_tv
 							.setText(defaultSteps.get(i).getDSspeed()
 									+ getString(R.string.exp_speed_unit));
 					holder.experiment_new_main_item_body_temp_info_et
 							.setText(defaultSteps.get(i).getDStemp() + "");
-					// switchInfo = defaultSteps.get(i).getDSswitch();
 					holder.experiment_new_main_item_body_switch_info_tv
 							.setText(getSwitch(defaultSteps.get(i)
 									.getDSswitch()));
 					holder.experiment_new_main_item_bottom_name_et
 							.setText(defaultSteps.get(i).getDSname());
-//				}
+				}
 
 				holder.experiment_new_main_item_body_temp_info_et
 						.setOnClickListener(new OnClickListener() {
@@ -651,7 +659,27 @@ public class CreatExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													} else {
+													} 
+													else if (tempTotal < 30) {
+														Toast.makeText(
+																CreatExperimentActivity.this,
+																getString(R.string.exp_temp_small),
+																Toast.LENGTH_SHORT)
+																.show();
+														try {
+															Field field = dialog
+																	.getClass()
+																	.getSuperclass()
+																	.getDeclaredField(
+																			"mShowing");
+															field.setAccessible(true);
+															field.set(dialog,
+																	false);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}	
+													}
+													else {
 														steps.get(p).setStemp(
 																tempTotal);
 														holder.experiment_new_main_item_body_temp_info_et
@@ -1643,7 +1671,28 @@ public class CreatExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													} else {
+													
+													}
+													else if (tempTotal < 30) {
+														Toast.makeText(
+																CreatExperimentActivity.this,
+																getString(R.string.exp_temp_small),
+																Toast.LENGTH_SHORT)
+																.show();
+														try {
+															Field field = dialog
+																	.getClass()
+																	.getSuperclass()
+																	.getDeclaredField(
+																			"mShowing");
+															field.setAccessible(true);
+															field.set(dialog,
+																	false);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}	
+													}
+													else {
 														steps.get(p).setStemp(
 																tempTotal);
 														holder.experiment_new_main_item_body_temp_info_et

@@ -234,6 +234,7 @@
     <string name="exp_vol_setting">体积设定</string>
     <string name="exp_speed_select">混合频率选择</string>
     <string name="exp_temp_big">温度不能大于120°C</string>
+    <string name="exp_temp_small">温度不能小于30°C</string>
     <string name="exp_temp_empty">温度不能为空</string>
     <string name="exp_save_failure">实验为空，保存失败</string>
     <string name="exp_sure_delete_all">确定要删除"全部"的step吗?</string>

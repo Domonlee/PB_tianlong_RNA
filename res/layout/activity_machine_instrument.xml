@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
+       
         <RelativeLayout
             android:id="@+id/machine_instrument_body_rl"
             android:layout_width="wrap_content"
@@ -54,377 +55,445 @@
                 android:layout_below="@id/machine_instrument_body_flux_rl"
                 android:layout_marginBottom="100dip" >
 
-                <ScrollView
+                <!--  
+                <ImageView
+                    android:id="@+id/machine_instrument_body_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/instrument" />
+                -->
+                <ScrollView 
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:paddingBottom="20dp" >
+                    android:paddingBottom="20dp"
+                    >
 
-                    <LinearLayout
-                        android:id="@+id/machine_instrument_body_parameter_info_rl"
+                <LinearLayout
+                    android:id="@+id/machine_instrument_body_parameter_info_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/machine_instrument_body_run_parameter_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical" >
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/instrument_parameter_run"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
 
-                        <TextView
-                            android:id="@+id/machine_instrument_body_run_parameter_tv"
+                    <RelativeLayout
+                        android:id="@+id/machine_instrument_body_run_parameter_info_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="240dip"
+                        android:background="@android:color/white" >
+
+                        <LinearLayout
+                            android:id="@+id/machine_instrument_body_run_parameter_hole_rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center"
-                            android:text="@string/instrument_parameter_run"
-                            android:textColor="@android:color/white"
-                            android:textSize="25sp" />
+                            android:layout_height="60dip"
+                             >
 
-                        <RelativeLayout
-                            android:id="@+id/machine_instrument_body_run_parameter_info_rl"
+                            <TextView
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_tv"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:gravity="center"
+                                android:text="@string/instrument_hole"
+                                android:textColor="@android:color/white"
+                                android:textSize="25sp" />
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_info_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D" >
+
+                                <TextView
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_info_tv"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
+                                    android:gravity="center"
+                                    android:text="0.0"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="25sp" />
+
+                                <TextView
+                                    android:layout_width="40dip"
+                                    android:layout_height="60dip"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_hole_info_tv"
+                                    android:gravity="center"
+                                    android:text="mm"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_info_et"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:text="0.0"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="25sp"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_btn_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:visibility="visible" >
+
+                                <RelativeLayout
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_info_btn_rl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:visibility="gone" >
+
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_hole_info_send_btn"
+                                        style="@style/right_btn"
+                                        android:text="@string/send" />
+
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_hole_info_reset_btn"
+                                        style="@style/right_btn"
+                                        android:layout_marginLeft="10dip"
+                                        android:layout_toRightOf="@id/machine_instrument_body_run_parameter_hole_info_send_btn"
+                                        android:text="@string/complete" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/machine_instrument_body_run_parameter_blend_rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="241dip"
-                            android:background="@android:color/white" >
+                            android:layout_height="60dip"
+                            android:layout_below="@+id/machine_instrument_body_run_parameter_hole_rl" >
 
-                            <LinearLayout
-                                android:id="@+id/machine_instrument_body_run_parameter_hole_rl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dip" >
+                            <TextView
+                                android:id="@+id/machine_instrument_body_run_parameter_blend_tv"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:gravity="center"
+                                android:text="@string/instrument_blend"
+                                android:textColor="@android:color/white"
+                                android:textSize="25sp" />
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_blend_info_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D" >
 
                                 <TextView
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_tv"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:id="@+id/machine_instrument_body_run_parameter_blend_info_tv"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="@string/instrument_hole"
+                                    android:text="0.0"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_info_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D" >
+                                <TextView
+                                    android:layout_width="40dip"
+                                    android:layout_height="60dip"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_blend_info_tv"
+                                    android:gravity="center"
+                                    android:text="mm"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="16sp" />
 
-                                    <TextView
-                                        android:id="@+id/machine_instrument_body_run_parameter_hole_info_tv"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp" />
-
-                                    <TextView
-                                        android:layout_width="40dip"
-                                        android:layout_height="60dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerInParent="true"
-                                        android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_hole_info_tv"
-                                        android:gravity="center"
-                                        android:text="mm"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="16sp" />
-
-                                    <EditText
-                                        android:id="@+id/machine_instrument_body_run_parameter_hole_info_et"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:inputType="numberDecimal"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp"
-                                        android:visibility="gone" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_btn_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                <EditText
+                                    android:id="@+id/machine_instrument_body_run_parameter_blend_info_et"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:text="0.0"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="25sp"
                                     android:visibility="gone" >
 
-                                        <Button
-                                            android:id="@+id/machine_instrument_body_run_parameter_hole_info_send_btn"
-                                            style="@style/right_btn"
-                                            android:layout_centerInParent="true"
-                                            android:text="@string/send" />
-                                </RelativeLayout>
-                            </LinearLayout>
+                                    <requestFocus />
+                                </EditText>
+                            </RelativeLayout>
 
-                            <LinearLayout
-                                android:id="@+id/machine_instrument_body_run_parameter_blend_rl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dip"
-                                android:layout_below="@+id/machine_instrument_body_run_parameter_hole_rl" >
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_blend_btn_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:visibility="visible" >
+
+                                <RelativeLayout
+                                    android:id="@+id/machine_instrument_body_run_parameter_blend_info_btn_rl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:visibility="gone" >
+
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_blend_info_send_btn"
+                                        style="@style/right_btn"
+                                        android:text="@string/send" />
+
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_blend_info_reset_btn"
+                                        style="@style/right_btn"
+                                        android:layout_marginLeft="10dip"
+                                        android:layout_toRightOf="@id/machine_instrument_body_run_parameter_blend_info_send_btn"
+                                        android:text="@string/complete" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/machine_instrument_body_run_parameter_magnetic_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dip"
+                            android:layout_below="@+id/machine_instrument_body_run_parameter_blend_rl" >
+
+                            <TextView
+                                android:id="@+id/machine_instrument_body_run_parameter_magnetic_tv"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:gravity="center"
+                                android:text="@string/instrument_magnetic"
+                                android:textColor="@android:color/white"
+                                android:textSize="25sp" />
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D" >
 
                                 <TextView
-                                    android:id="@+id/machine_instrument_body_run_parameter_blend_tv"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_tv"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="@string/instrument_blend"
+                                    android:text="0.0"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_blend_info_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D" >
+                                <TextView
+                                    android:layout_width="40dip"
+                                    android:layout_height="60dip"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_magnetic_info_tv"
+                                    android:gravity="center"
+                                    android:text="mm"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="16sp" />
 
-                                    <TextView
-                                        android:id="@+id/machine_instrument_body_run_parameter_blend_info_tv"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp" />
+                                <EditText
+                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_et"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:text="0.0"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="25sp"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
 
-                                    <TextView
-                                        android:layout_width="40dip"
-                                        android:layout_height="60dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerInParent="true"
-                                        android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_blend_info_tv"
-                                        android:gravity="center"
-                                        android:text="mm"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="16sp" />
-
-                                    <EditText
-                                        android:id="@+id/machine_instrument_body_run_parameter_blend_info_et"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:inputType="numberDecimal"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp"
-                                        android:visibility="gone" >
-
-                                        <requestFocus />
-                                    </EditText>
-                                </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_magnetic_btn_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:visibility="visible" >
 
                                 <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_blend_btn_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_btn_rl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:visibility="gone" >
 
-                                        <Button
-                                            android:id="@+id/machine_instrument_body_run_parameter_blend_info_send_btn"
-                                            style="@style/right_btn"
-                                            android:layout_centerInParent="true"
-                                            android:text="@string/send" />
-                                </RelativeLayout>
-                            </LinearLayout>
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_send_btn"
+                                        style="@style/right_btn"
+                                        android:text="@string/send" />
 
-                            <LinearLayout
-                                android:id="@+id/machine_instrument_body_run_parameter_magnetic_rl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dip"
-                                android:layout_below="@+id/machine_instrument_body_run_parameter_blend_rl" >
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_reset_btn"
+                                        style="@style/right_btn"
+                                        android:layout_marginLeft="10dip"
+                                        android:layout_toRightOf="@id/machine_instrument_body_run_parameter_magnetic_info_send_btn"
+                                        android:text="@string/complete" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+                        
+                        <LinearLayout
+                            android:id="@+id/machine_instrument_body_run_parameter_hole_space_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dip"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@+id/machine_instrument_body_run_parameter_magnetic_rl" >
+
+                            <TextView
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_space_tv"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:gravity="center"
+                                android:text="@string/instrument_hole_space"
+                                android:textColor="@android:color/white"
+                                android:textSize="25sp" />
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D" >
 
                                 <TextView
-                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_tv"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_tv"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="@string/instrument_magnetic"
+                                    android:text="0"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D" >
-
-                                    <TextView
-                                        android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_tv"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp" />
-
-                                    <TextView
-                                        android:layout_width="40dip"
-                                        android:layout_height="60dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerInParent="true"
-                                        android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_magnetic_info_tv"
-                                        android:gravity="center"
-                                        android:text="mm"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="16sp" />
-
-                                    <EditText
-                                        android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_et"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:inputType="numberDecimal"
-                                        android:text="0.0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp"
-                                        android:visibility="gone" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_magnetic_btn_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
-                                    android:visibility="gone" >
-
-                                        <Button
-                                            android:id="@+id/machine_instrument_body_run_parameter_magnetic_info_send_btn"
-                                            style="@style/right_btn"
-                                            android:layout_centerInParent="true"
-                                            android:text="@string/send" />
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/machine_instrument_body_run_parameter_hole_space_rl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="60dip"
-                                android:layout_marginBottom="1dp"
-                                android:layout_below="@+id/machine_instrument_body_run_parameter_magnetic_rl" >
-
                                 <TextView
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_tv"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:layout_width="40dip"
+                                    android:layout_height="60dip"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_hole_space_info_tv"
                                     android:gravity="center"
-                                    android:text="@string/instrument_hole_space"
+                                    android:text="@string/instrument_hole_space_step"
                                     android:textColor="@android:color/white"
-                                    android:textSize="25sp" />
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_et"
+                                    android:layout_width="90dip"
+                                    android:layout_height="60dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/edittext"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:text="0"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="25sp"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/machine_instrument_body_run_parameter_hole_space_btn_rl"
+                                android:layout_width="0dip"
+                                android:layout_height="fill_parent"
+                                android:layout_margin="1dip"
+                                android:layout_weight="1"
+                                android:background="#505E8D"
+                                android:visibility="visible" >
 
                                 <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D" >
-
-                                    <TextView
-                                        android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_tv"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:text="0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp" />
-
-                                    <TextView
-                                        android:layout_width="40dip"
-                                        android:layout_height="60dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerInParent="true"
-                                        android:layout_toRightOf="@+id/machine_instrument_body_run_parameter_hole_space_info_tv"
-                                        android:gravity="center"
-                                        android:text="@string/instrument_hole_space_step"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="16sp" />
-
-                                    <EditText
-                                        android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_et"
-                                        android:layout_width="90dip"
-                                        android:layout_height="60dip"
-                                        android:layout_centerInParent="true"
-                                        android:background="@drawable/edittext"
-                                        android:gravity="center"
-                                        android:inputType="numberDecimal"
-                                        android:text="0"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="25sp"
-                                        android:visibility="gone" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_btn_rl"
-                                    android:layout_width="0dip"
-                                    android:layout_height="fill_parent"
-                                    android:layout_margin="1dip"
-                                    android:layout_weight="1"
-                                    android:background="#505E8D"
+                                    android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_btn_rl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:visibility="gone" >
 
-                                        <Button
-                                            android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_send_btn"
-                                            style="@style/right_btn"
-                                            android:layout_centerInParent="true"
-                                            android:text="@string/send" />
-                                  
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_send_btn"
+                                        style="@style/right_btn"
+                                        android:text="@string/send" />
+
+                                    <Button
+                                        android:id="@+id/machine_instrument_body_run_parameter_hole_space_info_reset_btn"
+                                        style="@style/right_btn"
+                                        android:layout_marginLeft="10dip"
+                                        android:layout_toRightOf="@id/machine_instrument_body_run_parameter_hole_space_info_send_btn"
+                                        android:text="@string/complete" />
                                 </RelativeLayout>
-                            </LinearLayout>
-                        </RelativeLayout>
-                    </LinearLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
                 </ScrollView>
             </RelativeLayout>
+
+          
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/machine_instrument_bottom_btn_rl"
-            style="@style/right_bottom_rl"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/machine_instrument_body_rl"
-            android:layout_marginBottom="6dp"
-            android:layout_marginRight="106dip"
-            android:layout_marginTop="2dp" >
+    <RelativeLayout
+        android:id="@+id/machine_instrument_bottom_btn_rl"
+        style="@style/right_bottom_rl"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/machine_instrument_body_rl"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="106dip" >
 
-            <Button
-                android:id="@+id/machine_instrument_bottom_btn_save"
-                style="@style/right_btn"
-                android:text="@string/system_reset" />
-        </RelativeLayout>
+        <Button
+            android:id="@+id/machine_instrument_bottom_btn_save"
+            style="@style/right_btn"
+            android:text="@string/system_reset" />
+    </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

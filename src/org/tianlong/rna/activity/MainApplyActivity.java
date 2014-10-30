@@ -34,7 +34,7 @@ public class MainApplyActivity extends Activity {
 	private int uId;
 	private Dialog dialog;
 	private WifiUtlis utlis;
-	// private String info;
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			String info = (String) msg.obj;
