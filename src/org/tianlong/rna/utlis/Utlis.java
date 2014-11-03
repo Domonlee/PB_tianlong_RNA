@@ -15,6 +15,7 @@ import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Step;
 
 import android.R;
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -496,6 +497,10 @@ public class Utlis {
 		// 查询下位机所有试验
 		case 10:
 			byteList[5] = (byte) Integer.parseInt("0A", 16);
+			//11.3增加 同步
+		//查询仪器运行同步信息 
+		case 13:
+			byteList[5] = (byte) Integer.parseInt("0D", 16);
 		default:
 			break;
 		}
@@ -882,6 +887,7 @@ public class Utlis {
 		return sendInfo;
 	}
 
+	//TODO
 	// 从得到的实验命令中获取Step信息
 	public static Step getStepFromInfo(String info, int E_id) {
 		Step step = new Step();
@@ -893,7 +899,10 @@ public class Utlis {
 		// 孔位
 		step.setShole(Integer.parseInt(info.substring(6, 7), 16) >> 1);
 		// 混合速度
-		step.setSspeed((Integer.parseInt(info.substring(6, 8), 16) & 0x1c) >> 2);
+		step.setSspeed((Integer.parseInt(info.substring(6, 8), 16) & 0x1c) >> 2 );
+		int i = step.getSspeed()+1 ;
+		step.setSspeed(i);
+		Log.w("speed", i +"");
 		// 体积
 		step.setSvol((Integer.parseInt(info.substring(6, 8), 16) & 0x03) * 256
 				+ Integer.parseInt(info.substring(4, 6), 16));

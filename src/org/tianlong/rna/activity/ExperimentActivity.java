@@ -107,6 +107,8 @@ public class ExperimentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
+		MainActivity.uvFlag = false;
 
 		dbTempletManager = new DBTempletManager(ExperimentActivity.this);
 		dbTempletManager.openDatabase();

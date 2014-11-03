@@ -88,6 +88,8 @@ public class UpAndDownActivity extends Activity {
 		setContentView(R.layout.activity_upanddown);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+//		MainActivity.uvFlag = false;
+		
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");

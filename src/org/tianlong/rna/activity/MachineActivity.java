@@ -196,6 +196,9 @@ public class MachineActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_machine);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
+		//¿ØÖÆuv×ÏÍâµÆ
+		MainActivity.uvFlag = false;
 
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
@@ -1294,7 +1297,17 @@ public class MachineActivity extends Activity {
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
-								// wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+								if( machine_instrument_body_run_parameter_blend_info_btn_rl.getVisibility() != View.GONE){
+									machine_instrument_body_run_parameter_magnetic_info_btn_rl
+									.setVisibility(View.GONE);
+									machine_instrument_body_run_parameter_blend_info_btn_rl
+									.setVisibility(View.GONE);
+									machine_instrument_body_run_parameter_hole_space_info_btn_rl
+									.setVisibility(View.GONE);
+									machine_instrument_body_run_parameter_hole_space_btn_rl
+									.setVisibility(View.VISIBLE);
+								}
+								
 								Toast.makeText(getApplicationContext(),
 										getString(R.string.instrument_reboot),
 										1000).show();

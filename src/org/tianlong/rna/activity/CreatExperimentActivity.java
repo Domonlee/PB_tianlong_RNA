@@ -192,7 +192,7 @@ public class CreatExperimentActivity extends Activity {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								CreatExperimentActivity.this);
 						deleteFlag = hasTemplet();
-						if (!deleteFlag) {
+						if (steps.size() == 0) {
 							builder.setTitle("当前没有步骤!");
 							builder.setPositiveButton(getString(R.string.sure),
 									new DialogInterface.OnClickListener() {
@@ -206,7 +206,9 @@ public class CreatExperimentActivity extends Activity {
 									});
 							builder.show();
 						} else {
-							if (stepChooseNum == -1 || hasTemplet()) {
+							if (stepChooseNum == -1 || !hasTemplet()) {
+								Log.w("w", !hasTemplet()+ "");
+								Log.w("w", stepChooseNum+ "");
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -303,7 +305,7 @@ public class CreatExperimentActivity extends Activity {
 						}
 						if (!saveFlag || (steps.size() == 0)) {
 							Toast.makeText(CreatExperimentActivity.this,
-									getString(R.string.exp_save_null),
+									getString(R.string.exp_save_failure),
 									Toast.LENGTH_SHORT).show();
 						}
 						if (steps.size() >= 50) {
@@ -350,6 +352,7 @@ public class CreatExperimentActivity extends Activity {
 											getString(R.string.exp_step_name_null),
 											Toast.LENGTH_SHORT).show();
 								} else {
+									if (getEnameIsNull()) {
 									if (getVolIsNull()) {
 										if (getVolIsBig()) {
 											if (getTempIsNull()) {
@@ -415,6 +418,12 @@ public class CreatExperimentActivity extends Activity {
 										Toast.makeText(
 												CreatExperimentActivity.this,
 												getString(R.string.exp_vol_empty),
+												Toast.LENGTH_SHORT).show();
+									}
+									} else {
+										Toast.makeText(
+												CreatExperimentActivity.this,
+												getString(R.string.exp_save_failure),
 												Toast.LENGTH_SHORT).show();
 									}
 								}
@@ -1543,7 +1552,7 @@ public class CreatExperimentActivity extends Activity {
 					holder.experiment_new_main_item_head_magnet_info_tv
 							.setBackgroundResource(R.drawable.zero);
 				}
-				holder.experiment_new_main_item_top_name_tv.setText("Nubmer"
+				holder.experiment_new_main_item_top_name_tv.setText("No.  "
 						+ (i + 1));
 				holder.experiment_new_main_item_head_wait_info_tv.setText(steps
 						.get(i).getSwait());
@@ -2648,6 +2657,22 @@ public class CreatExperimentActivity extends Activity {
 			for (int i = 0; i < holders.size(); i++) {
 				if (!holders.get(i).experiment_new_main_item_body_vol_info_et
 						.getText().toString().equals("")) {
+					flag = true;
+				} else {
+					flag = false;
+					break;
+				}
+			}
+		}
+		return flag;
+	}
+	
+	private boolean getEnameIsNull() {
+		boolean flag = false;
+		if (holders.size() != 0) {
+			for (int i = 0; i < holders.size(); i++) {
+				if (!experiment_new_main_bottom_ename_info_et.getText()
+						.toString().equals("")) {
 					flag = true;
 				} else {
 					flag = false;

@@ -1,34 +1,27 @@
 package org.tianlong.rna.activity;
 
-import java.util.List;
-
-import org.tianlong.rna.activity.R;
-import org.tianlong.rna.activity.RunFileActivity.readListThread;
-import org.tianlong.rna.adapter.MainApplyAdapter;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,11 +43,18 @@ public class MainActivity extends ActivityGroup {
 
 	private WifiUtlis wifiUtlis;
 
+	// 紫外灯标志位
+	public static boolean uvFlag = true;
+	private Dialog dialog;
+	private String TAG = "UV Thread";
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		//开启uv状态获取线程
+		uvFlag =true;
 		intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
@@ -69,15 +69,36 @@ public class MainActivity extends ActivityGroup {
 		displayWifiName();
 		machine_wifi_name_tv.setText(machine_wifi_name);
 		SwitchActivity(id);
+
 		queryUVThread = new QueryUVThread();
 		try {
 			wifiUtlis = new WifiUtlis(MainActivity.this);
-//			wifiUtlis.sendMessage(Utlis.getseleteMessage(8));
 			new Thread(queryUVThread).start();
 		} catch (Exception e) {
 			Toast.makeText(MainActivity.this, getString(R.string.wifi_error),
 					Toast.LENGTH_SHORT).show();
 		}
+		
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setMessage(getString(R.string.ultraviolet));
+		builder.setCancelable(false);
+		// queryUVHandler.postDelayed(queryUVThread, 1000);
+		builder.setNegativeButton(getString(R.string.stop),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						try {
+							wifiUtlis.sendMessage(Utlis
+									.ultravioletCloseMessage());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						dialog.dismiss();
+						// queryUVHandler.removeCallbacks(queryUVThread);
+					}
+				});
+			dialog = builder.show();
+			dialog.dismiss();
 
 		main_top_uname_tv.setText(Uname);
 
@@ -176,20 +197,19 @@ public class MainActivity extends ActivityGroup {
 		} else {
 			machine_wifi_name = wifiUtlis.getWifiName();
 		}
-
 		return machine_wifi_name;
 	}
 
 	class QueryUVThread implements Runnable {
 		@Override
 		public void run() {
-			while (true) {
-				Log.w("da", "thread");
+			while (uvFlag) {
+				Log.w(TAG, "thread");
 				try {
 					Message message = queryUVHandler.obtainMessage();
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
-					Thread.sleep(1000);
+					Thread.sleep(500);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(8));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -202,22 +222,49 @@ public class MainActivity extends ActivityGroup {
 
 	private Handler queryUVHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-				Log.w("da", "handler");
+			Log.w(TAG, "handler");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
-				Log.w("da", info);
-				Log.w("da", info.substring(21,23));
-
+				Log.w(TAG, info);
+				Log.w(TAG, info.substring(21, 23));
+				// TODO 目前值检测了一步，关于紫外灯的检测
 				if (info.substring(21, 23).equals("00")) {
-					// dialog.dismiss();
-					Log.w("da", "close");
+					Log.w(TAG, "close");
+					 dialog.dismiss();
 				} else if (info.substring(21, 23).equals("01")) {
-					Log.w("da", "open");
+					Log.w(TAG, "open");
+					 dialog.show();
 				}
-//					queryUVHandler.removeCallbacks(queryUVThread);
+				else {
+					Log.w(TAG, "error");
+					uvFlag = false;
+				}
+//				uvFlag = true;
+				// queryUVHandler.removeCallbacks(queryUVThread);
 			}
 		};
 	};
+	
+	protected void onStop() {
+		uvFlag = false;
+		Log.w("TAG","onStop");
+		super.onStop();
+	};
+
+	@Override
+	protected void onStart() {
+		new Thread(queryUVThread).start();
+		uvFlag = true;
+		Log.w("TAG","onStart");
+		super.onStart();
+	}
+	
+	@Override
+	protected void onPause() {
+		uvFlag = false;
+		Log.w("TAG","onStop");
+		super.onPause();
+	}
 
 	// 将指定byte数组以16进制的形式打印到控制台
 	public void printHexString(byte[] b) {
