@@ -67,7 +67,7 @@ public class RunFileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
-//		MainActivity.uvFlag = false;
+		MainActivity.uvFlag = false;
 		
 		listThread = new readListThread();
 		infoThread = new readInfoThread();

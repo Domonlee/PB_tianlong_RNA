@@ -629,10 +629,9 @@ public class RunExpActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
 
+		MainActivity.uvFlag= false;
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-//		machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
-//				experiment_run_top_mstate_tv);
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExpActivity.this);
 		fluxNum = machine.getMflux();
@@ -739,7 +738,6 @@ public class RunExpActivity extends Activity {
 											try {
 												Thread.sleep(50);
 											} catch (InterruptedException e) {
-												// block
 												e.printStackTrace();
 											}
 
@@ -752,7 +750,6 @@ public class RunExpActivity extends Activity {
 													RunExpActivity.this,
 													getString(R.string.wifi_error),
 													Toast.LENGTH_SHORT).show();
-											// inn();
 											selectInfoFlag = false;
 										}
 										break;
@@ -770,7 +767,6 @@ public class RunExpActivity extends Activity {
 													RunExpActivity.this,
 													getString(R.string.wifi_error),
 													Toast.LENGTH_SHORT).show();
-											// inn();
 											selectInfoFlag = false;
 										}
 										runNum = 1;
@@ -812,7 +808,6 @@ public class RunExpActivity extends Activity {
 								Toast.makeText(RunExpActivity.this,
 										getString(R.string.wifi_error),
 										Toast.LENGTH_SHORT).show();
-								// inn();
 								selectInfoFlag = false;
 							}
 						}

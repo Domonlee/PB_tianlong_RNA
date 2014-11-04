@@ -631,8 +631,7 @@ public class RunExperimentActivity extends Activity {
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-//		machineStateInfo = new MachineStateInfo(RunExperimentActivity.this,
-//				experiment_run_top_mstate_tv);
+
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
 		fluxNum = machine.getMflux();

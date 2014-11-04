@@ -53,8 +53,8 @@ public class MainActivity extends ActivityGroup {
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		//开启uv状态获取线程
-		uvFlag =true;
+		// 开启uv状态获取线程
+		uvFlag = true;
 		intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
@@ -78,7 +78,6 @@ public class MainActivity extends ActivityGroup {
 			Toast.makeText(MainActivity.this, getString(R.string.wifi_error),
 					Toast.LENGTH_SHORT).show();
 		}
-		
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setMessage(getString(R.string.ultraviolet));
@@ -97,8 +96,8 @@ public class MainActivity extends ActivityGroup {
 						// queryUVHandler.removeCallbacks(queryUVThread);
 					}
 				});
-			dialog = builder.show();
-			dialog.dismiss();
+		dialog = builder.show();
+		dialog.dismiss();
 
 		main_top_uname_tv.setText(Uname);
 
@@ -210,7 +209,7 @@ public class MainActivity extends ActivityGroup {
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
 					Thread.sleep(500);
-					wifiUtlis.sendMessage(Utlis.getseleteMessage(8));
+					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -226,28 +225,44 @@ public class MainActivity extends ActivityGroup {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				Log.w(TAG, info);
-				Log.w(TAG, info.substring(21, 23));
+				// 仪器运行状态
+				// Log.w(TAG, info.substring(21, 23));
+				// 紫外灯运行状态
+				// Log.w(TAG, info.substring(24, 26));
+
 				// TODO 目前值检测了一步，关于紫外灯的检测
-				if (info.substring(21, 23).equals("00")) {
-					Log.w(TAG, "close");
-					 dialog.dismiss();
-				} else if (info.substring(21, 23).equals("01")) {
-					Log.w(TAG, "open");
-					 dialog.show();
+				if (info.substring(24, 26).equals("00")) {
+					Log.w(TAG, "uv close");
+					dialog.dismiss();
+				} else if (info.substring(24, 26).equals("01")) {
+					Log.w(TAG, "uv open");
+					dialog.show();
 				}
-				else {
-					Log.w(TAG, "error");
-					uvFlag = false;
+				// 仪器状态检测
+
+				if (info.substring(21, 23).equals("00")
+						|| info.substring(21, 23).equals("05")) {
+					Log.w(TAG, "machine is stop ");
+				} else if (info.substring(21, 23).equals("03")) {
+					Log.w(TAG, "machine is runing ");
+//					uvFlag= false;
+					Intent intent = new Intent(MainActivity.this,RunExpActivity.class);
+					startActivity(intent);
+				} else if (info.substring(21, 23).equals("04")) {
+					Toast.makeText(getApplicationContext(), "pause", 1000).show();
+					Log.w(TAG, "machine is pause");
 				}
-//				uvFlag = true;
-				// queryUVHandler.removeCallbacks(queryUVThread);
+				// else {
+				// Log.w(TAG, "error");
+				// uvFlag = false;
+				// }
 			}
 		};
 	};
-	
+
 	protected void onStop() {
 		uvFlag = false;
-		Log.w("TAG","onStop");
+		Log.w("TAG", "onStop");
 		super.onStop();
 	};
 
@@ -255,14 +270,14 @@ public class MainActivity extends ActivityGroup {
 	protected void onStart() {
 		new Thread(queryUVThread).start();
 		uvFlag = true;
-		Log.w("TAG","onStart");
+		Log.w("TAG", "onStart");
 		super.onStart();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		uvFlag = false;
-		Log.w("TAG","onStop");
+		Log.w("TAG", "onStop");
 		super.onPause();
 	}
 
