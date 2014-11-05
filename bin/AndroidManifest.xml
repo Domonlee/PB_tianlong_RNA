@@ -110,6 +110,12 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <activity
+            android:name=".RunExpActivity2"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
     </application>
 
 </manifest>

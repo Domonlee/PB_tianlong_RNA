@@ -110,6 +110,7 @@ public class MainApplyActivity extends Activity {
 					//TODO¡¡Ïû¶¾App
 					if (utlis != null) {
 						try {
+//							MainActivity.uvFlag = false;
 							utlis.sendMessage(Utlis.ultravioletOpenMessage());
 							Thread.sleep(50);
 							utlis.sendMessage(Utlis.getseleteMessage(8));

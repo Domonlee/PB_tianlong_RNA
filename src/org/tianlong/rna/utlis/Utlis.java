@@ -497,15 +497,27 @@ public class Utlis {
 		// 查询下位机所有试验
 		case 10:
 			byteList[5] = (byte) Integer.parseInt("0A", 16);
-			//11.3增加 同步
-		//查询仪器运行同步信息 
+			break;
+		// 11.5增加 发送 当前实验数据
+		// 查询仪器当前运行实验信息
+		case 11:
+			byteList[5] = (byte) Integer.parseInt("0B", 16);
+			break;
+		// 11.3增加 同步
+		// 查询仪器运行同步信息
 		case 13:
 			byteList[5] = (byte) Integer.parseInt("0D", 16);
+			break;
 		default:
 			break;
 		}
 		bytes.add(byteList[5]);
-		byteList[6] = (byte) Integer.parseInt("FF", 16);
+		if (num == 11) {
+			byteList[6] = (byte) Integer.parseInt("60", 16);
+		}
+		else {
+		 byteList[6] = (byte) Integer.parseInt("FF", 16);
+		}
 		bytes.add(byteList[6]);
 		byteList[7] = getCheckCode(bytes);
 		byteList[8] = (byte) Integer.parseInt("FE", 16);
@@ -698,14 +710,15 @@ public class Utlis {
 		int info = 0;
 		try {
 			int hour = timeFormat.parse(time).getHours();
-//			Log.w("hour", (hour << 12)+"");
-//			Log.w("hour", ((hour << 12) & 0xF000)+"");
+			// Log.w("hour", (hour << 12)+"");
+			// Log.w("hour", ((hour << 12) & 0xF000)+"");
 			int mins = timeFormat.parse(time).getMinutes();
-//			Log.w("mins", (mins << 6)+"");
-//			Log.w("mins", ((mins << 6) & 0x0FC0)+"");
+			// Log.w("mins", (mins << 6)+"");
+			// Log.w("mins", ((mins << 6) & 0x0FC0)+"");
 			int sec = timeFormat.parse(time).getSeconds();
-//			Log.w("s", (sec  & 0x003F)+"");
-			info = ((hour << 12) & 0xF000) | ((mins << 6) & 0x0FC0) | (sec & 0x003F);
+			// Log.w("s", (sec & 0x003F)+"");
+			info = ((hour << 12) & 0xF000) | ((mins << 6) & 0x0FC0)
+					| (sec & 0x003F);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -839,7 +852,7 @@ public class Utlis {
 		return strings;
 	}
 
-	//  发送文件实现
+	// 发送文件实现
 	// 得到上位机实验信息
 	public static List<String> getPadExperimentInfoList(Experiment experiment,
 			List<Step> steps, String userName) {
@@ -875,7 +888,7 @@ public class Utlis {
 								.getTimeinfo(steps.get(i).getSblend())))
 						+ Utlis.getTempAndSwitch(steps.get(i).getStemp(), steps
 								.get(i).getSswitch()));
-								Log.w("blend time", steps.get(i).getSblend()+"");
+				Log.w("blend time", steps.get(i).getSblend() + "");
 			}
 			sendInfo.add(steps.get(i).getSname() + "\r\n");
 		}
@@ -887,7 +900,7 @@ public class Utlis {
 		return sendInfo;
 	}
 
-	//TODO
+	// TODO
 	// 从得到的实验命令中获取Step信息
 	public static Step getStepFromInfo(String info, int E_id) {
 		Step step = new Step();
@@ -899,10 +912,10 @@ public class Utlis {
 		// 孔位
 		step.setShole(Integer.parseInt(info.substring(6, 7), 16) >> 1);
 		// 混合速度
-		step.setSspeed((Integer.parseInt(info.substring(6, 8), 16) & 0x1c) >> 2 );
-		int i = step.getSspeed()+1 ;
+		step.setSspeed((Integer.parseInt(info.substring(6, 8), 16) & 0x1c) >> 2);
+		int i = step.getSspeed() + 1;
 		step.setSspeed(i);
-		Log.w("speed", i +"");
+		Log.w("speed", i + "");
 		// 体积
 		step.setSvol((Integer.parseInt(info.substring(6, 8), 16) & 0x03) * 256
 				+ Integer.parseInt(info.substring(4, 6), 16));

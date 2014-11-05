@@ -88,7 +88,7 @@ public class UpAndDownActivity extends Activity {
 		setContentView(R.layout.activity_upanddown);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-//		MainActivity.uvFlag = false;
+		MainActivity.uvFlag = false;
 		
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
@@ -521,6 +521,7 @@ public class UpAndDownActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
+				Log.w("-=-=-=", receive+"");
 				infoList = Utlis.getExperimentInfoList(receive);
 				for (int i = 0; i < experiments.size(); i++) {
 					if (experiments
