@@ -160,7 +160,6 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
-
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -175,7 +174,6 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
-
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -243,7 +241,8 @@ public class RunExperimentActivity extends Activity {
 					if (receiveMeg.length() != 0) {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
-						Thread.sleep(1000);
+						//11.07 加快发送速度
+//						Thread.sleep(1000);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -260,7 +259,7 @@ public class RunExperimentActivity extends Activity {
 				receive = Utlis.getReceive(info);
 				for (int i = 0; i < receive.size(); i++) {
 					receiveMeg = receive.get(i);
-					// Log.i("info", "命令:"+receiveMeg);
+					 Log.i("info", "命令:"+receiveMeg);
 					index = Integer.parseInt(receiveMeg.substring(15, 17), 16);
 					// 判断停止成功方法
 					if (receiveMeg.equals("ff ff 0a d1 01 0d ff 01 e7 fe ")) {
@@ -306,15 +305,38 @@ public class RunExperimentActivity extends Activity {
 					// 判断暂停成功方法
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 0b ff 01 e5 fe ")) {
-						// Log.i("info", "暂停成功");
+						 Log.i("info", "暂停成功");
+						break;
+					}
+					//仪器手动暂停 判断 返回
+					//TODO 11.07 修改
+					else if (receiveMeg
+							.equals("ff ff 0b 51 02 06 ff 01 04 66 fe ")) {
+
+						 Log.i("info", receiveMeg.substring(21, 23));
+						 Log.i("info", "仪器暂停成功");
 						break;
 					}
 					// 判断继续成功方法
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 0c ff 01 e6 fe ")) {
-						// Log.i("info", "继续成功");
+						 Log.i("info", "继续成功");
 						break;
 					}
+//					else if (receiveMeg.substring(24, 26).equals("04")) {
+//						try {
+//							wifiUtlis.sendMessage(Utlis.sendPauseMessage());
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					}
+//					else if (receiveMeg.substring(24, 26).equals("04")) {
+//						try {
+//							wifiUtlis.sendMessage(Utlis.sendPauseMessage());
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					}
 					// 如果都不是就是查询信息
 					else {
 						if (stopBtn != 1) {
@@ -631,6 +653,8 @@ public class RunExperimentActivity extends Activity {
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		MainActivity.uvFlag = false;
+
 
 		machineDao = new MachineDao();
 		machine = machineDao.getMachine(RunExperimentActivity.this);
@@ -665,7 +689,6 @@ public class RunExperimentActivity extends Activity {
 							runBtnControl++;
 							if (runBtnControl % 2 == 0) {
 								try {
-
 									wifiUtlis.sendMessage(Utlis
 											.sendPauseMessage());
 									experiment_run_body_right_bottom_run_btn
@@ -692,6 +715,11 @@ public class RunExperimentActivity extends Activity {
 										.setText(getString(R.string.pause));
 								if (wifiUtlis != null) {
 									 // 控制流程
+//									try {
+////										wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
+//									} catch (Exception e2) {
+//										e2.printStackTrace();
+//									}
 									switch (runNum) {
 									case 0:
 										try {
@@ -1006,8 +1034,8 @@ public class RunExperimentActivity extends Activity {
 																.getText()
 																.toString()
 																.length())) - 1;
-								Toast.makeText(getApplicationContext(),
-									"步骤："	+ (controlNum+1) , 1000).show();
+								Toast.makeText(getApplicationContext(),getString(R.string.run_exp_step)
+									+ (controlNum+1) , 1000).show();
 								getCurrentTime(controlNum);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -1044,7 +1072,6 @@ public class RunExperimentActivity extends Activity {
 				holder.experiment_run_item_head_wait_pb.setProgress(0);
 			} else {
 				try {
-					// TODO 设置进度条时间
 					holder.experiment_run_item_head_wait_pb
 							.setMax(Utlis.timeFormat.parse(
 									steps.get(i).getSwait()).getHours()
@@ -1320,10 +1347,6 @@ public class RunExperimentActivity extends Activity {
 			waitTimeControl = 0;
 			
 			Date date = new Date(millisUntilFinished);
-//			date = Utlis.timeFormat
-//					.parse(holders.get(i).experiment_run_item_head_blend_info_tv
-//							.getText().toString());
-			//TODO 获取时间
 			date.setHours(date.getHours() - 8);
 			String dtime = Utlis.timeFormat.format(date);
 			holders.get(controlNum).experiment_run_item_head_blend_info_tv
@@ -1331,8 +1354,6 @@ public class RunExperimentActivity extends Activity {
 			holders.get(controlNum).experiment_run_item_head_blend_pb
 					.setProgress(date.getHours() * 3600 + date.getMinutes()
 							* 60 + date.getSeconds());
-			Log.w("BlendTime", date.getHours() * 3600 + date.getMinutes()
-					* 60 + date.getSeconds() + "");
 		}
 
 		public void onFinish() {
@@ -1454,6 +1475,7 @@ public class RunExperimentActivity extends Activity {
 		// }
 	}
 
+	//TODO 
 	class SelectInfoThread implements Runnable {
 		public void run() {
 			while (selectInfoFlag) {
@@ -1462,6 +1484,7 @@ public class RunExperimentActivity extends Activity {
 					message.obj = wifiUtlis.getByteMessage();
 					selectInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
+//					wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

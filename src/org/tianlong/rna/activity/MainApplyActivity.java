@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,6 +40,7 @@ public class MainApplyActivity extends Activity {
 		public void handleMessage(Message msg) {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
+				Log.w("MainApply", info);
 				if (info.substring(21, 23).equals("00")) {
 					dialog.dismiss();
 					handler.removeCallbacks(runnable);

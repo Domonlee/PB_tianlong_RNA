@@ -498,6 +498,7 @@ public class Utlis {
 		case 10:
 			byteList[5] = (byte) Integer.parseInt("0A", 16);
 			break;
+
 		// 11.5增加 发送 当前实验数据
 		// 查询仪器当前运行实验信息
 		case 11:
@@ -888,7 +889,7 @@ public class Utlis {
 								.getTimeinfo(steps.get(i).getSblend())))
 						+ Utlis.getTempAndSwitch(steps.get(i).getStemp(), steps
 								.get(i).getSswitch()));
-				Log.w("blend time", steps.get(i).getSblend() + "");
+//				Log.w("blend time", steps.get(i).getSblend() + "");
 			}
 			sendInfo.add(steps.get(i).getSname() + "\r\n");
 		}

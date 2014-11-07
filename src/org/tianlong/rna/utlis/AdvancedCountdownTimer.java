@@ -15,7 +15,7 @@ public abstract class AdvancedCountdownTimer {
         mTotalTime = millisInFuture;   
         mCountdownInterval = countDownInterval;   
         mRemainTime = millisInFuture;   
-        Log.w("mRemainTime construt",  "mRemainTime="+ mRemainTime);
+//        Log.w("mRemainTime construt",  "mRemainTime="+ mRemainTime);
     }   
        
     public final void cancel() {   
@@ -59,7 +59,7 @@ public abstract class AdvancedCountdownTimer {
             synchronized (AdvancedCountdownTimer.this) {   
                 if (msg.what == MSG_RUN) {   
                 	//mCountdownInterval = 1s;
-                	Log.w("mRemainTime",  "mRemainTime="+ mRemainTime);
+//                	Log.w("mRemainTime",  "mRemainTime="+ mRemainTime);
                     mRemainTime = mRemainTime - mCountdownInterval;   
                     if (mRemainTime <= 0) {   
                         onFinish();   

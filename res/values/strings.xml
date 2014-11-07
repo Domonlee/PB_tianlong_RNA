@@ -242,6 +242,7 @@
     <string name="exp_temp_setting">温度设定</string>
     <!-- 运行实验 -->
     <string name="run_exp_remain_time">剩余时间</string>
+    <string name="run_exp_step">步骤：</string>
     <string name="run_exp_total_time">总时间</string>
     <string name="run_exp_stop_success">停止成功</string>
     <string name="run_exp_send_info">正在发送数据，请稍后&#8230;&#8230;</string>

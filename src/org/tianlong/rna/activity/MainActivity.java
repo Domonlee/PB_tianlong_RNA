@@ -97,7 +97,7 @@ public class MainActivity extends ActivityGroup {
 					}
 				});
 		dialog = builder.show();
-//		dialog.dismiss();
+		dialog.dismiss();
 
 		main_top_uname_tv.setText(Uname);
 
