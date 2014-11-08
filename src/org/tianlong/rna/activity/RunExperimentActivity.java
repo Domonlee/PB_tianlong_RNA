@@ -129,7 +129,9 @@ public class RunExperimentActivity extends Activity {
 			runNum, // 运行或继续控制
 			continueControl, // 继续按钮控制
 			controlNum, // 总步骤索引
-			stopBtn; // 停止控制
+			stopBtn, // 停止控制
+			pauseCtrl;//仪器操作暂停控制 0为运行，1为暂停
+	
 
 	private int E_id;
 	private int U_id;
@@ -151,7 +153,7 @@ public class RunExperimentActivity extends Activity {
 			if (info.length() != 0) {
 				Log.i("info", "发送数据回复:" + info);
 				sendControlNum++;
-				Log.i("info", "发送数据控制NUM:" + sendControlNum);
+//				Log.i("info", "发送数据控制NUM:" + sendControlNum);
 				if (sendControlNum >= 3
 						&& sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
@@ -310,33 +312,102 @@ public class RunExperimentActivity extends Activity {
 					}
 					//仪器手动暂停 判断 返回
 					//TODO 11.07 修改
-					else if (receiveMeg
-							.equals("ff ff 0b 51 02 06 ff 01 04 66 fe ")) {
+//							.equals("ff ff 0b 51 02 06 ff 01 04 66 fe ")) {
+					else if (receiveMeg.substring(24, 26)
+							.equals("04")) {
+						try {
+							wifiUtlis.sendMessage(Utlis
+									.sendPauseMessage());
+							experiment_run_body_right_bottom_run_btn
+									.setText(getString(R.string.run));
+							viewDrawable.stop();
+							selectInfoFlag = false;
+							if (waitTimeControl == 1) {
+								waitTimeCount.pause();
+							}
+							if (blendTimeControl == 1) {
+								blendTimeCount.pause();
+//								blendTimeCount.start();
+							}
+							if (magnetTimeControl == 1) {
+								magnetTimeCount.pause();
+							}
+							timeHandler.removeCallbacks(timeRunnable);
+//
+							pauseCtrl = 1;
+						} catch (Exception e) {
+							Toast.makeText(RunExperimentActivity.this,
+									getString(R.string.wifi_error),
+									Toast.LENGTH_SHORT).show();
+						}
 
-						 Log.i("info", receiveMeg.substring(21, 23));
+						 Log.i("info", receiveMeg.substring(24, 26));
 						 Log.i("info", "仪器暂停成功");
+//								selectInfoFlag = true;
+								runBtnControl = 2;
+								runNum = 2;
 						break;
 					}
+//					//仪器手动暂停 恢复 返回
+//					else if (receiveMeg.substring(24, 26) .equals("03")) 
+//					{
+//						if (pauseCtrl == 1) {
+//							try {
+//								selectInfoFlag = true;
+//								if (waitTimeControl != 0
+//										|| blendTimeControl != 0
+//										|| magnetTimeControl != 0) {
+//									continueControl = 1;
+//								} else {
+//									continueControl = 0;
+//								}
+//								if (waitTimeControl == 1) {
+//									waitTimeCount.resume();
+//									waitTimeControl = 0;
+//								}
+//								if (blendTimeControl == 1) {
+//									blendTimeCount.resume();
+//									blendTimeControl = 0;
+//								}
+//								if (magnetTimeControl == 1) {
+//									magnetTimeCount.resume();
+//									magnetTimeControl = 0;
+//								}
+//								new Thread(selectInfoThread)
+//										.start();
+//								viewDrawable.start();
+//								try {
+//									Thread.sleep(150);
+//								} catch (InterruptedException e) {
+//									// block
+//									e.printStackTrace();
+//								}
+//	
+//								timeHandler.post(timeRunnable);
+//								wifiUtlis.sendMessage(Utlis
+//										.sendContinueMessage());
+//	
+//							} catch (Exception e) {
+//								Toast.makeText(
+//										RunExperimentActivity.this,
+//										getString(R.string.wifi_error),
+//										Toast.LENGTH_SHORT).show();
+//								// inn();
+//								selectInfoFlag = false;
+//							}
+//							 Log.i("info", receiveMeg.substring(24, 26));
+//							 Log.i("info", "仪器恢复运行成功");	
+//							 pauseCtrl = 0;
+//						}
+//						break;
+//					}
 					// 判断继续成功方法
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 0c ff 01 e6 fe ")) {
 						 Log.i("info", "继续成功");
 						break;
 					}
-//					else if (receiveMeg.substring(24, 26).equals("04")) {
-//						try {
-//							wifiUtlis.sendMessage(Utlis.sendPauseMessage());
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					}
-//					else if (receiveMeg.substring(24, 26).equals("04")) {
-//						try {
-//							wifiUtlis.sendMessage(Utlis.sendPauseMessage());
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					}
+
 					// 如果都不是就是查询信息
 					else {
 						if (stopBtn != 1) {
@@ -715,11 +786,6 @@ public class RunExperimentActivity extends Activity {
 										.setText(getString(R.string.pause));
 								if (wifiUtlis != null) {
 									 // 控制流程
-//									try {
-////										wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-//									} catch (Exception e2) {
-//										e2.printStackTrace();
-//									}
 									switch (runNum) {
 									case 0:
 										try {
