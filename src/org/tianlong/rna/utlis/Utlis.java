@@ -526,6 +526,7 @@ public class Utlis {
 	}
 
 	// ∑¢ÀÕ ‘—ÈID
+	//TODO
 	public static byte[] sendExperimentId(int id) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
@@ -844,6 +845,7 @@ public class Utlis {
 						.replace(" ", "")
 						.substring(14,
 								receive.get(i).replace(" ", "").length() - 4);
+				Log.w("infos", infos);
 			}
 			if (i < 3 || (i > receive.size() - 3 && (i + 1) != receive.size())) {
 				infos = CHexConver.hexStr2Str(infos.toUpperCase());

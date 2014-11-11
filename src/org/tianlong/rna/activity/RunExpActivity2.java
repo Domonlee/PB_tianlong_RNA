@@ -149,13 +149,14 @@ public class RunExpActivity2 extends Activity {
 		public void run() {
 			while (true) {
 				try {
-					Log.w(TAGINFO, "thread");
+					Log.w("Thread", "thread");
 					Message message = getExperimentInfoHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					getExperimentInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
 					try {
-						 wifiUtlis.sendMessage(Utlis.getseleteMessage(11));
+						// wifiUtlis.sendMessage(Utlis.getseleteMessage(11));
+//						Log.w("Thread", "发送查询命令成功");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -169,58 +170,66 @@ public class RunExpActivity2 extends Activity {
 	// 将下位机实验数据转换成Pad实验数据handler
 	private Handler getExperimentInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			Log.w(TAGINFO, "handler");
+			Log.w("Handler", "handler");
 			byte[] info = (byte[]) msg.obj;
 			if (info.length != 0) {
-//				Log.w(TAG, printHexString(info));
-//				printHexString(info);
+				// Log.w(TAG, printHexString(info));
+				// printHexString(info);
 				if (receive != null) {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				Log.w(TAG, receive+ "");
+				Log.w(TAG + "receive", receive + "");
 				infoList = Utlis.getExperimentInfoList(receive);
-				Log.w(TAG, infoList+ "-=");
-//				Experiment experiment = new Experiment();
-//				if (infoList.size() != 0) {
-//					if ((infoList.get(infoList.size() - 2).substring(0, 9))
-//							.indexOf("#END_FILE") != -1) {
-//						experiment.setU_id(U_id);
-//						experiment.setEname(infoList.get(0).substring(
-//								infoList.get(0).indexOf(":") + 1,
-//								infoList.get(0).length()));
-//						String date = Utlis.systemFormat.format(new Date());
-//						experiment.setCdate(date);
-//						experiment.setRdate(date);
-//						experiment.setEremark(infoList.get(2).substring(
-//								infoList.get(2).indexOf(":") + 1,
-//								infoList.get(2).length()));
-//						experiment.setEDE_id(0);
-//						experiment.setEquick(0);
-//						experimentDao.insertExperiment(experiment,
-//								RunExpActivity2.this);
-//						experiment = experimentDao.getExperimentByCdate(date,
-//								RunExpActivity2.this, U_id);
-//						for (int i = 3; i < infoList.size(); i++) {
-//							if (infoList.get(i).indexOf("#END_FILE") != -1) {
-//								break;
-//							} else {
-//								Step step = Utlis.getStepFromInfo(
-//										infoList.get(i), experiment.getE_id());
-//								stepDao.insertStep(step, RunExpActivity2.this);
-//							}
-//						}
-//						experiments = experimentDao.getAllExperimentsByU_id(
-//								RunExpActivity2.this, U_id);
-//						Toast.makeText(RunExpActivity2.this,
-//								getString(R.string.up_success),
-//								Toast.LENGTH_SHORT);
-//					} else {
-//						Toast.makeText(RunExpActivity2.this,
-//								getString(R.string.up_failure),
-//								Toast.LENGTH_SHORT);
-//					}
-//				}
+				Log.w(TAG + "infoList", infoList + "");
+				Experiment experiment = new Experiment();
+				try {
+
+					if (infoList.size() != 0) {
+						if ((infoList.get(infoList.size() - 2).substring(0, 9)).indexOf("#END_FILE") != -1) {
+							experiment.setU_id(U_id);
+							experiment.setEname(infoList.get(0).substring(
+									infoList.get(0).indexOf(":") + 1,
+									infoList.get(0).length()));
+							String date = Utlis.systemFormat.format(new Date());
+							experiment.setCdate(date);
+							experiment.setRdate(date);
+							experiment.setEremark(infoList.get(2).substring(
+									infoList.get(2).indexOf(":") + 1,
+									infoList.get(2).length()));
+							experiment.setEDE_id(0);
+							experiment.setEquick(0);
+							experimentDao.insertExperiment(experiment,
+									RunExpActivity2.this);
+							experiment = experimentDao.getExperimentByCdate(
+									date, RunExpActivity2.this, U_id);
+							for (int i = 3; i < infoList.size(); i++) {
+								if (infoList.get(i).indexOf("#END_FILE") != -1) {
+									break;
+								} else {
+									Step step = Utlis.getStepFromInfo(
+											infoList.get(i),
+											experiment.getE_id());
+									stepDao.insertStep(step,
+											RunExpActivity2.this);
+								}
+							}
+							experiments = experimentDao
+									.getAllExperimentsByU_id(
+											RunExpActivity2.this, U_id);
+							Toast.makeText(RunExpActivity2.this,
+									getString(R.string.up_success),
+									Toast.LENGTH_SHORT);
+						} else {
+							Toast.makeText(RunExpActivity2.this,
+									getString(R.string.up_failure),
+									Toast.LENGTH_SHORT);
+						}
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					Log.w("异常", "异常");
+				}
 			}
 		};
 	};
@@ -243,7 +252,7 @@ public class RunExpActivity2 extends Activity {
 
 		try {
 			wifiUtlis = new WifiUtlis(RunExpActivity2.this);
-			wifiUtlis.sendMessage(Utlis.getseleteMessage(11));
+			wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -252,17 +261,17 @@ public class RunExpActivity2 extends Activity {
 		getExperimentInfoThread = new GetExperimentInfoThread();
 		new Thread(getExperimentInfoThread).start();
 
-//		initView();
-//		experiment_run_body_right_body_tl.setStretchAllColumns(true);
-//		createTable();
+		// initView();
+		// experiment_run_body_right_body_tl.setStretchAllColumns(true);
+		// createTable();
 
-//		experiment_run_top_uname_tv.setText(Uname);
-//		experiment_run_body_left_top_name_tv.setText("!!!");
+		// experiment_run_top_uname_tv.setText(Uname);
+		// experiment_run_body_left_top_name_tv.setText("!!!");
 	}
 
 	public void initView() {
 
-//		selectInfoThread = new SelectInfoThread();
+		// selectInfoThread = new SelectInfoThread();
 		stepDao = new StepDao();
 		experimentDao = new ExperimentDao();
 
@@ -999,7 +1008,6 @@ public class RunExpActivity2 extends Activity {
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 
-	
 	// 将指定byte数组以16进制的形式打印到控制台
 	public void printHexString(byte[] b) {
 		String hexString = null;

@@ -311,111 +311,27 @@ public class RunExperimentActivity extends Activity {
 					}
 					// 仪器手动暂停 判断 返回
 					// TODO 11.07 修改 暂停("ff ff 0b 51 02 06 ff 01 04 66 fe ")) {
-					else if (receiveMeg.substring(24, 26).equals("04")) {
-						try {
-							wifiUtlis.sendMessage(Utlis.sendPauseMessage());
-							experiment_run_body_right_bottom_run_btn
-									.setText(getString(R.string.run));
-							viewDrawable.stop();
-							selectInfoFlag = false;
-							if (waitTimeControl == 1) {
-								waitTimeCount.pause();
-							}
-							if (blendTimeControl == 1) {
-								blendTimeCount.pause();
-								// blendTimeCount.start();
-							}
-							if (magnetTimeControl == 1) {
-								magnetTimeCount.pause();
-							}
-							timeHandler.removeCallbacks(timeRunnable);
-							pauseCtrl = 1;
-						} catch (Exception e) {
-							Toast.makeText(RunExperimentActivity.this,
-									getString(R.string.wifi_error),
-									Toast.LENGTH_SHORT).show();
-						}
-
-						Log.i("info", receiveMeg.substring(24, 26));
-						Log.i("info", "仪器暂停成功");
-						selectInfoFlag = true;
-						runBtnControl++;
-						runNum = 1;
-						break;
-					}
-					// //仪器手动暂停 恢复 返回
-					else if (receiveMeg.substring(24, 26).equals("03")) {
-						if (pauseCtrl == 1) {
-							try {
-								selectInfoFlag = true;
-								 if (waitTimeControl != 0
-								 || blendTimeControl != 0
-								 || magnetTimeControl != 0) {
-								 continueControl = 1;
-								 } else {
-								 continueControl = 0;
-								 }
-								 if (waitTimeControl == 1) {
-								 waitTimeCount.resume();
-								 waitTimeControl = 0;
-								 }
-								 if (blendTimeControl == 1) {
-								 blendTimeCount.resume();
-								 blendTimeControl = 0;
-								 }
-								 if (magnetTimeControl == 1) {
-								 magnetTimeCount.resume();
-								 magnetTimeControl = 0;
-								 }
-								new Thread(selectInfoThread).start();
-								viewDrawable.start();
-//								try {
-//									Thread.sleep(50);
-//								} catch (InterruptedException e) {
-//									e.printStackTrace();
-//								}
-
-								timeHandler.post(timeRunnable);
-								wifiUtlis.sendMessage(Utlis
-										.sendContinueMessage());
-								Log.w(TAG, "发送继续信息");
-								experiment_run_body_right_bottom_run_btn
-								.setText(getString(R.string.pause));
-								
-								if (controlNum < holders.size()) {
-									experiment_run_body_right_body_hsv
-											.scrollTo(392 * controlNum,
-													0);
-									if (holders.get(controlNum).experiment_run_item_head_wait_info_tv
-											.getText().toString()
-											.equals("00:00:00")) {
-										waitTimeCount = waitTimeList
-												.get(controlNum);
-										waitTimeCount.start();
-									} else {
-										waitTimeCount = waitTimeList
-												.get(controlNum);
-										waitTimeCount.start();
-									}
-									viewDrawable = (AnimationDrawable) views
-											.get(controlNum)
-											.getBackground();
-									viewDrawable.start();
-								Log.w(TAG, controlNum+"");
-								}
-
-							} catch (Exception e) {
-								Toast.makeText(RunExperimentActivity.this,
-										getString(R.string.wifi_error),
-										Toast.LENGTH_SHORT).show();
-								selectInfoFlag = false;
-							}
-							Log.i("info", "仪器恢复运行成功");
-							pauseCtrl = 0;
-							selectInfoFlag = false;
-						}
-						break;
-					}
+//					else if (receiveMeg.substring(24, 26).equals("04")) {
+//						if (pauseCtrl == 0) {
+//							experiment_run_body_right_bottom_run_btn.performClick();
+//							Log.i("info", "点击成功");
+//							pauseCtrl = 1;
+//						}
+//						Log.i("info", "仪器暂停成功");
+//						selectInfoFlag = true;
+//						break;
+//					}
+//					// //仪器手动暂停 恢复 返回
+//					else if (receiveMeg.substring(24, 26).equals("03")) {
+//						if (pauseCtrl == 1) {
+//							experiment_run_body_right_bottom_run_btn.performClick();
+//							Log.i("info", "点击成功");
+//							Log.i("info", "仪器恢复运行成功");
+//							pauseCtrl = 0;
+//							selectInfoFlag = true;
+//						}
+//						break;
+//					}
 					// 判断继续成功方法
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 0c ff 01 e6 fe ")) {
@@ -600,6 +516,26 @@ public class RunExperimentActivity extends Activity {
 							// 如果是6号查询就是运行位置查询
 							// XXX 跳转下一个步骤
 							case 6:
+								//11.11完成暂停 重启功能
+								if (receiveMeg.substring(24, 26).equals("04")) {
+									if (pauseCtrl == 0) {
+										experiment_run_body_right_bottom_run_btn.performClick();
+										Log.i("info", "点击成功");
+										pauseCtrl = 1;
+									}
+									Log.i("info", "仪器暂停成功");
+									selectInfoFlag = true;
+								}
+								// //仪器手动暂停 恢复 返回
+								if (receiveMeg.substring(24, 26).equals("03")) {
+									if (pauseCtrl == 1) {
+										experiment_run_body_right_bottom_run_btn.performClick();
+										Log.i("info", "点击成功");
+										Log.i("info", "仪器恢复运行成功");
+										pauseCtrl = 0;
+										selectInfoFlag = true;
+									}
+								}
 								if (Integer.parseInt(
 										receiveMeg.substring(24, 26), 16) != 5) {
 									Log.w("info", "跳转步骤="+receiveMeg.substring(24, 26));
@@ -643,7 +579,6 @@ public class RunExperimentActivity extends Activity {
 											viewDrawable.start();
 										}
 									}
-
 								}
 								// 当总步骤索引等于或大于总步骤数时实验结束
 								else {
@@ -760,6 +695,7 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_top_name_tv.setText(experiment.getEname());
 
 		// TODO runBtn
+//		experiment_run_body_right_bottom_run_btn.performClick();
 		experiment_run_body_right_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {

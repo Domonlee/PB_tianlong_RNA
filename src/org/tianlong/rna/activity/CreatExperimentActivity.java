@@ -148,7 +148,7 @@ public class CreatExperimentActivity extends Activity {
 						Step step = new Step();
 						switch (fluxNum) {
 						case 1:
-							step.setSname("Step15");
+							step.setSname("Step");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);
@@ -157,7 +157,7 @@ public class CreatExperimentActivity extends Activity {
 							step.setSmagnet("00:00:00");
 							break;
 						case 2:
-							step.setSname("Step32");
+							step.setSname("Step");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);
@@ -168,7 +168,7 @@ public class CreatExperimentActivity extends Activity {
 							step.setStemp(0);
 							break;
 						case 3:
-							step.setSname("Step48");
+							step.setSname("Step");
 							step.setShole(1);
 							step.setSspeed(1);
 							step.setSvol(30);

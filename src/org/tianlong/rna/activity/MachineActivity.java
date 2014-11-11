@@ -684,16 +684,16 @@ public class MachineActivity extends Activity {
 			break;
 		// “«∆˜…Ë÷√
 		case 5:
-			// try {
-			// if (wifiUtlis == null) {
-			// wifiUtlis = new WifiUtlis(MachineActivity.this);
-			// }
-			// selectInfoFlag = true;
-			// new Thread(selectInfoThread).start();
-			// wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
+			 try {
+			 if (wifiUtlis == null) {
+			 wifiUtlis = new WifiUtlis(MachineActivity.this);
+			 }
+			 selectInfoFlag = true;
+			 new Thread(selectInfoThread).start();
+			 wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+			 } catch (Exception e) {
+			 e.printStackTrace();
+			 }
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view

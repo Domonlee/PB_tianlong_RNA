@@ -1,5 +1,6 @@
 package org.tianlong.rna.activity;
 
+import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
@@ -55,6 +56,8 @@ public class MainActivity extends ActivityGroup {
 
 		// 开启uv状态获取线程
 		uvFlag = true;
+		MachineStateInfo machineStateInfo = new MachineStateInfo(MainActivity.this);
+		machineStateInfo.runflag = false;
 		intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
