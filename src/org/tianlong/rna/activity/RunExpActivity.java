@@ -268,6 +268,7 @@ public class RunExpActivity extends Activity {
 				Thread.sleep(1000);
 				try {
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -280,69 +281,75 @@ public class RunExpActivity extends Activity {
 	// 将下位机实验数据转换成Pad实验数据handler
 	private Handler getExperimentInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
+			Log.w("Handler", "handler");
 			byte[] info = (byte[]) msg.obj;
 			if (info.length != 0) {
-				Log.w(TAG, info.toString());
 				if (receive != null) {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
+				Log.w(TAG + "receive", receive + "");
 				infoList = Utlis.getExperimentInfoList(receive);
-				for (int i = 0; i < experiments.size(); i++) {
-					if (experiments
-							.get(i)
-							.getEname()
-							.equals(infoList.get(0).substring(
-									infoList.get(0).indexOf(":") + 1,
-									infoList.get(0).length()))) {
-						Toast.makeText(RunExpActivity.this,
-								getString(R.string.up_samename),
-								Toast.LENGTH_SHORT).show();
-					}
-				}
-
+				Log.w(TAG + "infoList", infoList + "");
 				Experiment experiment = new Experiment();
-				if (infoList.size() != 0) {
-					if ((infoList.get(infoList.size() - 2).substring(0, 9))
-							.indexOf("#END_FILE") != -1) {
-						experiment.setU_id(U_id);
-						experiment.setEname(infoList.get(0).substring(
-								infoList.get(0).indexOf(":") + 1,
-								infoList.get(0).length()));
-						String date = Utlis.systemFormat.format(new Date());
-						experiment.setCdate(date);
-						experiment.setRdate(date);
-						experiment.setEremark(infoList.get(2).substring(
-								infoList.get(2).indexOf(":") + 1,
-								infoList.get(2).length()));
-						experiment.setEDE_id(0);
-						experiment.setEquick(0);
-						experimentDao.insertExperiment(experiment,
-								RunExpActivity.this);
-						experiment = experimentDao.getExperimentByCdate(date,
-								RunExpActivity.this, U_id);
-						for (int i = 3; i < infoList.size(); i++) {
-							if (infoList.get(i).indexOf("#END_FILE") != -1) {
-								break;
-							} else {
-								Step step = Utlis.getStepFromInfo(
-										infoList.get(i), experiment.getE_id());
-								stepDao.insertStep(step, RunExpActivity.this);
+				try {
+
+					if (infoList.size() != 0) {
+//						Log.w("发送文件列表", infoList+"");
+//						Log.w("发送文件长度", infoList.size()+"");
+//						Log.w("发送文件子串", infoList.get(infoList.size() -3).substring(0, 9)+"");
+//						Log.w("发送文件索引", infoList.get(infoList.size() -2).substring(0, 9).indexOf("#END_FILE")+"");
+						if ((infoList.get(infoList.size() - 3).substring(0, 9)).indexOf("#END_FILE") != -1) {
+							experiment.setU_id(U_id);
+							experiment.setEname(infoList.get(0).substring(
+									infoList.get(0).indexOf(":") + 1,
+									infoList.get(0).length()));
+							String date = Utlis.systemFormat.format(new Date());
+							experiment.setCdate(date);
+							experiment.setRdate(date);
+							experiment.setEremark(infoList.get(2).substring(
+									infoList.get(2).indexOf(":") + 1,
+									infoList.get(2).length()));
+							experiment.setEDE_id(0);
+							experiment.setEquick(0);
+
+							try {
+								
+							experimentDao.insertExperiment(experiment,
+									RunExpActivity.this);
+							} catch (Exception e) {
+								Log.w("插入异常", "插入异常");
 							}
+
+							experiment = experimentDao.getExperimentByCdate(
+									date, RunExpActivity.this, U_id);
+							for (int i = 3; i < infoList.size(); i++) {
+								if (infoList.get(i).indexOf("#END_FILE") != -1) {
+									break;
+								} else {
+									Step step = Utlis.getStepFromInfo(
+											infoList.get(i),
+											experiment.getE_id());
+									stepDao.insertStep(step,
+											RunExpActivity.this);
+								}
+							}
+							experiments = experimentDao
+									.getAllExperimentsByU_id(
+											RunExpActivity.this, U_id);
+							Log.w("RunExp", "得到实验数据正常");
+							
+						} else {
+							Log.w("RunExp", "得到实验数据失败");
 						}
-						experiments = experimentDao.getAllExperimentsByU_id(
-								RunExpActivity.this, U_id);
-						Toast.makeText(RunExpActivity.this,
-								getString(R.string.up_success),
-								Toast.LENGTH_SHORT);
-					} else {
-						Toast.makeText(RunExpActivity.this,
-								getString(R.string.up_failure),
-								Toast.LENGTH_SHORT);
 					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					Log.w("异常", "异常----");
 				}
 			}
 		};
+			
 	};
 
 	private Handler selectInfoHandler = new Handler() {
@@ -733,13 +740,21 @@ public class RunExpActivity extends Activity {
 		sbuilder.setTitle(getString(R.string.waitting));
 		Dialog waitDialog = sbuilder.show();
 
+		
+		
+		try {
+			wifiUtlis = new WifiUtlis(RunExpActivity.this);
+			wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		//TODO 查询数据得到
 		getExperimentInfoThread = new GetExperimentInfoThread();
 		new Thread(getExperimentInfoThread).start();
 		
 		
 		initView();
-		experiment_run_body_right_body_tl.setStretchAllColumns(true);
+//		experiment_run_body_right_body_tl.setStretchAllColumns(true);
 		createTable();
 		
 		

@@ -42,7 +42,7 @@ public class MainApplyActivity extends Activity {
 			if (info.length() != 0) {
 				Log.w("MainApply", info);
 				if (info.substring(21, 23).equals("00")) {
-					dialog.dismiss();
+//					dialog.dismiss();
 					handler.removeCallbacks(runnable);
 					ma_bottom_gv.setAdapter(new MainApplyAdapter(
 							MainApplyActivity.this, getguanList()));
@@ -135,6 +135,7 @@ public class MainApplyActivity extends Activity {
 											e.printStackTrace();
 										}
 										dialog.dismiss();
+										Log.w("Main", "ÄÚ²ã¹Ø±Õ");
 										handler.removeCallbacks(runnable);
 										ma_bottom_gv
 												.setAdapter(new MainApplyAdapter(
@@ -142,7 +143,7 @@ public class MainApplyActivity extends Activity {
 														getguanList()));
 									}
 								});
-						dialog = builder.show();
+//						dialog = builder.show();
 						ma_bottom_gv.setAdapter(new MainApplyAdapter(
 								MainApplyActivity.this, getList()));
 					} else {

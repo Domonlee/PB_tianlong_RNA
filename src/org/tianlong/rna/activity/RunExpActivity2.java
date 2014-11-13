@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.tianlong.rna.adapter.UpAdapter;
 import org.tianlong.rna.dao.ExperimentDao;
 import org.tianlong.rna.dao.MachineDao;
 import org.tianlong.rna.dao.StepDao;
@@ -15,7 +14,6 @@ import org.tianlong.rna.pojo.Experiment;
 import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.AdvancedCountdownTimer;
-import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
@@ -114,13 +112,15 @@ public class RunExpActivity2 extends Activity {
 
 	private List<String> infoList; // 转换后的文件列表
 	private List<Experiment> experiments;
-	private GetExperimentInfoThread getExperimentInfoThread;
+//	private GetExperimentInfoThread getExperimentInfoThread;
 
 	private int fluxNum;
 	private int hour;
 	private int min;
 	private int sec;
 	private String time;
+
+	private int exp_id;
 
 	private boolean selectInfoFlag = true; // 接收查询线程控制
 	private int startTimeControl, //
@@ -144,112 +144,127 @@ public class RunExpActivity2 extends Activity {
 
 	private String TAGINFO = "INFO";
 
-	// 读取下位机指定实验接受线程
-	class GetExperimentInfoThread implements Runnable {
-		public void run() {
-			while (true) {
-				try {
-					Log.w("Thread", "thread");
-					Message message = getExperimentInfoHandler.obtainMessage();
-					message.obj = wifiUtlis.getByteMessage();
-					getExperimentInfoHandler.sendMessage(message);
-					Thread.sleep(1000);
+	// 将下位机实验数据转换成Pad实验数据handler
+		private Handler getExperimentInfoHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				Log.w("Handler", "handler");
+				byte[] info = (byte[]) msg.obj;
+				if (info.length != 0) {
+					if (receive != null) {
+						receive.removeAll(receive);
+					}
+					receive = Utlis.getReceive(info);
+//					Log.w(TAG + "receive", receive + "");
+					infoList = Utlis.getExperimentInfoList(receive);
+					Log.w(TAG + "infoList", infoList + "");
+					Experiment experiment = new Experiment();
 					try {
-						// wifiUtlis.sendMessage(Utlis.getseleteMessage(11));
-//						Log.w("Thread", "发送查询命令成功");
+						if (infoList.size() != 0) {
+							Log.w("发送文件子串", infoList.get(infoList.size() - 2)
+									.substring(0, 9) + "");
+							Log.w("发送文件索引", infoList.get(infoList.size() - 2)
+									.substring(0, 9).indexOf("#END_FILE")
+									+ "");
+							if ((infoList.get(infoList.size() - 2).substring(0, 9))
+									.indexOf("#END_FILE") != -1) {
+								experiment.setU_id(U_id);
+								experiment.setEname(infoList.get(0).substring(
+										infoList.get(0).indexOf(":") + 1,
+										infoList.get(0).length()));
+								String date = Utlis.systemFormat.format(new Date());
+								experiment.setCdate(date);
+								experiment.setRdate(date);
+								experiment.setEremark(infoList.get(2).substring(
+										infoList.get(2).indexOf(":") + 1,
+										infoList.get(2).length()));
+								experiment.setEDE_id(0);
+								experiment.setEquick(0);
+
+								// TODO 得不到数据
+								exp_id = experiment.getE_id();
+
+								try {
+									experimentDao.insertExperiment(experiment,
+											RunExpActivity2.this);
+								} catch (Exception e) {
+									Log.w("插入异常", "插入异常");
+								}
+
+								experiment = experimentDao.getExperimentByCdate(
+										date, RunExpActivity2.this, U_id);
+								for (int i = 3; i < infoList.size(); i++) {
+									if (infoList.get(i).indexOf("#END_FILE") != -1) {
+										break;
+									} else {
+										Step step = Utlis.getStepFromInfo(
+												infoList.get(i),
+												experiment.getE_id());
+										stepDao.insertStep(step,
+												RunExpActivity2.this);
+									}
+								}
+								experiments = experimentDao
+										.getAllExperimentsByU_id(
+												RunExpActivity2.this, U_id);
+								Log.w("RunExp", "得到实验数据正常");
+
+							} else {
+								Log.w("RunExp", "得到实验数据失败");
+							}
+						}
 					} catch (Exception e) {
+						Log.w("异常", "异常----");
+					}
+				}
+			};
+		};
+	
+	// 读取下位机指定实验接受线程
+//	class GetExperimentInfoThread implements Runnable {
+//		public void run() {
+//			while (true) {
+//				try {
+//					Log.w("Thread", "thread");
+//					Message message = getExperimentInfoHandler.obtainMessage();
+//					Log.w("Thread", "1"+ message);
+//					message.obj = wifiUtlis.getByteMessage();
+//					Log.w("Thread", "2"+ message.obj);
+//					getExperimentInfoHandler.sendMessage(message);
+//					Log.w("Thread", "3"+ getExperimentInfoHandler.sendMessage(message));
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		};
+//	}
+		
+		private Thread getExperimentInfoThread = new Thread() {
+			public void run() {
+				while (true) {
+
+					try {
+						Log.w("Thread", "thread");
+						Message message = getExperimentInfoHandler.obtainMessage();
+						Log.w("Thread", "1"+ message);
+						message.obj = wifiUtlis.getByteMessage();
+						Log.w("Thread", "2"+ message.obj);
+						getExperimentInfoHandler.sendMessage(message);
+						Log.w("Thread", "3"+ getExperimentInfoHandler.sendMessage(message));
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
-			}
+			};
 		};
-	}
 
-	// 将下位机实验数据转换成Pad实验数据handler
-	private Handler getExperimentInfoHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			Log.w("Handler", "handler");
-			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				// Log.w(TAG, printHexString(info));
-				// printHexString(info);
-				if (receive != null) {
-					receive.removeAll(receive);
-				}
-				receive = Utlis.getReceive(info);
-				Log.w(TAG + "receive", receive + "");
-				infoList = Utlis.getExperimentInfoList(receive);
-				Log.w(TAG + "infoList", infoList + "");
-				Experiment experiment = new Experiment();
-				try {
-
-					if (infoList.size() != 0) {
-						if ((infoList.get(infoList.size() - 2).substring(0, 9)).indexOf("#END_FILE") != -1) {
-							experiment.setU_id(U_id);
-							experiment.setEname(infoList.get(0).substring(
-									infoList.get(0).indexOf(":") + 1,
-									infoList.get(0).length()));
-							String date = Utlis.systemFormat.format(new Date());
-							experiment.setCdate(date);
-							experiment.setRdate(date);
-							experiment.setEremark(infoList.get(2).substring(
-									infoList.get(2).indexOf(":") + 1,
-									infoList.get(2).length()));
-							experiment.setEDE_id(0);
-							experiment.setEquick(0);
-							experimentDao.insertExperiment(experiment,
-									RunExpActivity2.this);
-							experiment = experimentDao.getExperimentByCdate(
-									date, RunExpActivity2.this, U_id);
-							for (int i = 3; i < infoList.size(); i++) {
-								if (infoList.get(i).indexOf("#END_FILE") != -1) {
-									break;
-								} else {
-									Step step = Utlis.getStepFromInfo(
-											infoList.get(i),
-											experiment.getE_id());
-									stepDao.insertStep(step,
-											RunExpActivity2.this);
-								}
-							}
-							experiments = experimentDao
-									.getAllExperimentsByU_id(
-											RunExpActivity2.this, U_id);
-							Toast.makeText(RunExpActivity2.this,
-									getString(R.string.up_success),
-									Toast.LENGTH_SHORT);
-						} else {
-							Toast.makeText(RunExpActivity2.this,
-									getString(R.string.up_failure),
-									Toast.LENGTH_SHORT);
-						}
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					Log.w("异常", "异常");
-				}
-			}
-		};
-	};
+	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
-
-		MainActivity.uvFlag = false;
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-		machineDao = new MachineDao();
-		machine = machineDao.getMachine(RunExpActivity2.this);
-		fluxNum = machine.getMflux();
-
-		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
-				RunExpActivity2.this);
-		sbuilder.setTitle(getString(R.string.waitting));
-		Dialog waitDialog = sbuilder.show();
-
+		
 		try {
 			wifiUtlis = new WifiUtlis(RunExpActivity2.this);
 			wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
@@ -258,29 +273,24 @@ public class RunExpActivity2 extends Activity {
 		}
 
 		// TODO 查询数据得到
-		getExperimentInfoThread = new GetExperimentInfoThread();
+//		getExperimentInfoThread = new GetExperimentInfoThread();
 		new Thread(getExperimentInfoThread).start();
+//		new GetExperimentInfoThread().run();
 
-		// initView();
-		// experiment_run_body_right_body_tl.setStretchAllColumns(true);
-		// createTable();
+		MainActivity.uvFlag = false;
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		// experiment_run_top_uname_tv.setText(Uname);
-		// experiment_run_body_left_top_name_tv.setText("!!!");
-	}
+		machineDao = new MachineDao();
+		machine = machineDao.getMachine(RunExpActivity2.this);
+		fluxNum = machine.getMflux();
 
-	public void initView() {
-
-		// selectInfoThread = new SelectInfoThread();
 		stepDao = new StepDao();
 		experimentDao = new ExperimentDao();
 
-		Intent intent = getIntent();
-		U_id = intent.getIntExtra("U_id", 9999);
-		Uname = intent.getStringExtra("Uname");
-		E_id = intent.getIntExtra("E_id", 9999);
+		Log.w("实验id-----", exp_id + "");
 
-		steps = stepDao.getAllStep(RunExpActivity2.this, E_id);
+		// TODO step为空
+		steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
 
 		views = new ArrayList<View>();
 		changeBg = new ArrayList<Map<String, Object>>();
@@ -293,8 +303,27 @@ public class RunExpActivity2 extends Activity {
 		builder = new AlertDialog.Builder(RunExpActivity2.this);
 		stepRow = new TableRow(this);
 
-		experiment = experimentDao.getExperimentById(E_id,
+		experiment = experimentDao.getExperimentById(exp_id,
 				RunExpActivity2.this, U_id);
+
+		AlertDialog.Builder sbuilder = new AlertDialog.Builder(
+				RunExpActivity2.this);
+		sbuilder.setTitle(getString(R.string.waitting));
+		Dialog waitDialog = sbuilder.show();
+		waitDialog.dismiss();
+
+		initView();
+		experiment_run_body_right_bottom_back_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_back_btn);
+		experiment_run_body_right_body_tl.setStretchAllColumns(true);
+		createTable();
+		
+		Log.w("on create end", "");
+
+		// experiment_run_top_uname_tv.setText(Uname);
+		// experiment_run_body_left_top_name_tv.setText("!!!");
+	}
+
+	public void initView() {
 
 		// sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
 
@@ -331,6 +360,9 @@ public class RunExpActivity2 extends Activity {
 		experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		hideTempBody();
 		getTime(0);
+		
+		
+
 	}
 
 	/**
@@ -775,7 +807,8 @@ public class RunExpActivity2 extends Activity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								Process.killProcess(android.os.Process.myPid());
+								// Process.killProcess(android.os.Process.myPid());
+								finish();
 							}
 						});
 				builder.setNegativeButton(getString(R.string.cancle),

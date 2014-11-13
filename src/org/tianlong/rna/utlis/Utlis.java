@@ -515,9 +515,8 @@ public class Utlis {
 		bytes.add(byteList[5]);
 		if (num == 11) {
 			byteList[6] = (byte) Integer.parseInt("60", 16);
-		}
-		else {
-		 byteList[6] = (byte) Integer.parseInt("FF", 16);
+		} else {
+			byteList[6] = (byte) Integer.parseInt("FF", 16);
 		}
 		bytes.add(byteList[6]);
 		byteList[7] = getCheckCode(bytes);
@@ -526,7 +525,7 @@ public class Utlis {
 	}
 
 	// 发送试验ID
-	//TODO
+	// TODO
 	public static byte[] sendExperimentId(int id) {
 		bytes.removeAll(bytes);
 		byte[] byteList = new byte[9];
@@ -835,22 +834,41 @@ public class Utlis {
 	// 得到下位机实验信息
 	public static List<String> getExperimentInfoList(List<String> receive) {
 		List<String> strings = new ArrayList<String>();
+
 		for (int i = 0; i < receive.size(); i++) {
 			String infos = null;
 			if (i + 1 == receive.size()) {
 				infos = receive.get(i).replace(" ", "");
 			} else {
-				infos = receive
-						.get(i)
-						.replace(" ", "")
-						.substring(14,
-								receive.get(i).replace(" ", "").length() - 4);
-				Log.w("infos", infos);
+
+					infos = receive
+							.get(i)
+							.replace(" ", "")
+							.substring(
+									14,
+									receive.get(i).replace(" ", "").length() - 4);
+					Log.w("infos", infos);
 			}
-			if (i < 3 || (i > receive.size() - 3 && (i + 1) != receive.size())) {
-				infos = CHexConver.hexStr2Str(infos.toUpperCase());
+			// 解析头首标签
+			try {
+//			 if (i < 3 || (i > receive.size() - 3 && (i + 1) !=
+//			 receive.size())) {
+
+			Log.w("长度", infos.length() + "");
+				
+			if (infos.length() > 2) {
+				if (infos.substring(0, 2).equals("23")) {
+					infos = CHexConver.hexStr2Str(infos.toUpperCase());
+					Log.w("转换代码", "转换代码");
+				}
 			}
 			strings.add(infos);
+
+			} catch (Exception e) {
+					Log.w("infos -- error", infos);
+			}
+
+			Log.w("命令数组", strings + "");
 		}
 		return strings;
 	}
@@ -891,7 +909,7 @@ public class Utlis {
 								.getTimeinfo(steps.get(i).getSblend())))
 						+ Utlis.getTempAndSwitch(steps.get(i).getStemp(), steps
 								.get(i).getSswitch()));
-//				Log.w("blend time", steps.get(i).getSblend() + "");
+				// Log.w("blend time", steps.get(i).getSblend() + "");
 			}
 			sendInfo.add(steps.get(i).getSname() + "\r\n");
 		}

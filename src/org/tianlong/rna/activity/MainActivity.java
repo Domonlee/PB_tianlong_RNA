@@ -85,7 +85,7 @@ public class MainActivity extends ActivityGroup {
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setMessage(getString(R.string.ultraviolet));
 		builder.setCancelable(false);
-		// queryUVHandler.postDelayed(queryUVThread, 1000);
+//		 queryUVHandler.postDelayed(queryUVThread, 1000);
 		builder.setNegativeButton(getString(R.string.stop),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -96,10 +96,10 @@ public class MainActivity extends ActivityGroup {
 							e.printStackTrace();
 						}
 						dialog.dismiss();
-						// queryUVHandler.removeCallbacks(queryUVThread);
+//						 queryUVHandler.removeCallbacks(queryUVThread);
 					}
 				});
-		dialog = builder.show();
+		dialog = builder.create();
 		dialog.dismiss();
 
 		main_top_uname_tv.setText(Uname);
@@ -206,12 +206,12 @@ public class MainActivity extends ActivityGroup {
 		@Override
 		public void run() {
 			while (uvFlag) {
-				Log.w(TAG, "thread");
+//				Log.w(TAG, "thread");
 				try {
 					Message message = queryUVHandler.obtainMessage();
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
-					Thread.sleep(1500);
+					Thread.sleep(500);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -224,7 +224,7 @@ public class MainActivity extends ActivityGroup {
 
 	private Handler queryUVHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			Log.w(TAG, "handler");
+//			Log.w(TAG, "handler");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				Log.w(TAG, info);
@@ -235,24 +235,32 @@ public class MainActivity extends ActivityGroup {
 
 				// TODO 目前只检测了一步，关于紫外灯的检测
 				if (info.substring(24, 26).equals("00")) {
-					Log.w(TAG, "uv close");
-					dialog.dismiss();
+					if (dialog.isShowing()) {
+						dialog.dismiss();
+					Log.w(TAG, "外层关闭");
+					}
 				} else if (info.substring(24, 26).equals("01")) {
-					Log.w(TAG, "uv open");
+					Log.w(TAG, "外层打开");
+
 					dialog.show();
 				}
 
 				// 仪器状态检测
 				if (info.substring(21, 23).equals("00")
 						|| info.substring(21, 23).equals("05")) {
+					//测试代码 机器停止状态 跳转到另外一个地址 并且发送数据。
+					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+					startActivity(intent);
+					intent.putExtra("E_id", 9999);
 					Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
 					Log.w(TAG, "machine is runing ");
 //					uvFlag= false;
-					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+//					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+//					Intent intent = new Intent(MainActivity.this,RunExpActivity.class);
 					startActivity(intent);
 				} else if (info.substring(21, 23).equals("04")) {
-					Toast.makeText(getApplicationContext(), "pause", 1000).show();
+					Toast.makeText(getApplicationContext(), "测试用--Pause", 1000).show();
 					Log.w(TAG, "machine is pause");
 				}
 				// else {
@@ -295,7 +303,6 @@ public class MainActivity extends ActivityGroup {
 			hexString = hex + " " + hexString;
 		}
 		Log.w("HexString--", hexString.toUpperCase());
-
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

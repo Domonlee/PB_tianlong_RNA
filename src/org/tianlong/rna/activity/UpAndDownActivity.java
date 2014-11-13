@@ -179,6 +179,8 @@ public class UpAndDownActivity extends Activity {
 						gotoInfoIntent.putExtra("U_id", U_id);
 						gotoInfoIntent.putExtra("Uname", Uname);
 						startActivity(gotoInfoIntent);
+						//11.12改动 修改返回终止bug
+						finish();
 						return false;
 					}
 				});
@@ -337,6 +339,8 @@ public class UpAndDownActivity extends Activity {
 												DialogInterface dialog,
 												int which) {
 											try {
+												//TODO
+//												Log.w("上传id", down_id+"");
 												wifiUtlis.sendMessage(Utlis
 														.sendExperimentId(down_id));
 												getInfoListFlag = true;
@@ -521,8 +525,8 @@ public class UpAndDownActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				Log.w("-=-=-=", receive+"");
 				infoList = Utlis.getExperimentInfoList(receive);
+				Log.w("发送文件列表", infoList+"");
 				for (int i = 0; i < experiments.size(); i++) {
 					if (experiments
 							.get(i)
@@ -539,8 +543,13 @@ public class UpAndDownActivity extends Activity {
 
 				Experiment experiment = new Experiment();
 				if (infoList.size() != 0 && !sameNameFlag) {
+//					Log.w("发送文件列表", infoList+"");
+//					Log.w("发送文件长度", infoList.size()+"");
+//					Log.w("发送文件子串", infoList.get(infoList.size() -2).substring(0, 9)+"");
+//					Log.w("发送文件索引", infoList.get(infoList.size() -2).substring(0, 9).indexOf("#END_FILE")+"");
 					if ((infoList.get(infoList.size() - 2).substring(0, 9))
 							.indexOf("#END_FILE") != -1) {
+
 						experiment.setU_id(U_id);
 						experiment.setEname(infoList.get(0).substring(
 								infoList.get(0).indexOf(":") + 1,
