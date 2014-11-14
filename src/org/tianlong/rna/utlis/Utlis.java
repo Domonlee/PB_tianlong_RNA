@@ -807,6 +807,7 @@ public class Utlis {
 			List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < receive.size(); i++) {
+			Log.w("得到下位机实验列表", "receive"+receive);
 			String infos = receive
 					.get(i)
 					.replace(" ", "")

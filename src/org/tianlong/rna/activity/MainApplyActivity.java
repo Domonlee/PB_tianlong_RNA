@@ -42,7 +42,7 @@ public class MainApplyActivity extends Activity {
 			if (info.length() != 0) {
 				Log.w("MainApply", info);
 				if (info.substring(21, 23).equals("00")) {
-//					dialog.dismiss();
+					dialog.dismiss();
 					handler.removeCallbacks(runnable);
 					ma_bottom_gv.setAdapter(new MainApplyAdapter(
 							MainApplyActivity.this, getguanList()));

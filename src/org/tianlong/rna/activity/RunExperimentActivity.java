@@ -309,29 +309,6 @@ public class RunExperimentActivity extends Activity {
 						Log.i("info", "暂停成功");
 						break;
 					}
-					// 仪器手动暂停 判断 返回
-					// TODO 11.07 修改 暂停("ff ff 0b 51 02 06 ff 01 04 66 fe ")) {
-//					else if (receiveMeg.substring(24, 26).equals("04")) {
-//						if (pauseCtrl == 0) {
-//							experiment_run_body_right_bottom_run_btn.performClick();
-//							Log.i("info", "点击成功");
-//							pauseCtrl = 1;
-//						}
-//						Log.i("info", "仪器暂停成功");
-//						selectInfoFlag = true;
-//						break;
-//					}
-//					// //仪器手动暂停 恢复 返回
-//					else if (receiveMeg.substring(24, 26).equals("03")) {
-//						if (pauseCtrl == 1) {
-//							experiment_run_body_right_bottom_run_btn.performClick();
-//							Log.i("info", "点击成功");
-//							Log.i("info", "仪器恢复运行成功");
-//							pauseCtrl = 0;
-//							selectInfoFlag = true;
-//						}
-//						break;
-//					}
 					// 判断继续成功方法
 					else if (receiveMeg
 							.equals("ff ff 0a d1 01 0c ff 01 e6 fe ")) {
