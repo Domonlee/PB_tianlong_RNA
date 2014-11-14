@@ -160,13 +160,12 @@ public class RunExpActivity2 extends Activity {
 					Experiment experiment = new Experiment();
 					try {
 						if (infoList.size() != 0) {
-							Log.w("发送文件子串", infoList.get(infoList.size() - 2)
+							Log.w("发送文件子串", infoList.get(infoList.size() - 3)
 									.substring(0, 9) + "");
-							Log.w("发送文件索引", infoList.get(infoList.size() - 2)
+							Log.w("发送文件索引", infoList.get(infoList.size() - 3)
 									.substring(0, 9).indexOf("#END_FILE")
 									+ "");
-							if ((infoList.get(infoList.size() - 2).substring(0, 9))
-									.indexOf("#END_FILE") != -1) {
+							if( ((infoList.get(infoList.size() - 3).substring(0, 9)).indexOf("#END_FILE") != -1)||((infoList.get(infoList.size() - 2).substring(0, 9)).indexOf("#END_FILE") != -1)) {
 								experiment.setU_id(U_id);
 								experiment.setEname(infoList.get(0).substring(
 										infoList.get(0).indexOf(":") + 1,
@@ -180,8 +179,6 @@ public class RunExpActivity2 extends Activity {
 								experiment.setEDE_id(0);
 								experiment.setEquick(0);
 
-								// TODO 得不到数据
-								exp_id = experiment.getE_id();
 
 								try {
 									experimentDao.insertExperiment(experiment,
@@ -189,6 +186,8 @@ public class RunExpActivity2 extends Activity {
 								} catch (Exception e) {
 									Log.w("插入异常", "插入异常");
 								}
+
+								
 
 								experiment = experimentDao.getExperimentByCdate(
 										date, RunExpActivity2.this, U_id);
@@ -203,6 +202,14 @@ public class RunExpActivity2 extends Activity {
 												RunExpActivity2.this);
 									}
 								}
+
+								// TODO 得到数据
+								exp_id = experiment.getE_id();
+								Log.w("实验id-Handler", exp_id + "");
+								steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
+								createTable();
+								
+								
 								experiments = experimentDao
 										.getAllExperimentsByU_id(
 												RunExpActivity2.this, U_id);
@@ -241,41 +248,40 @@ public class RunExpActivity2 extends Activity {
 		
 		private Thread getExperimentInfoThread = new Thread() {
 			public void run() {
-				while (true) {
+//				while (true) {
 
 					try {
+						try {
+							wifiUtlis = new WifiUtlis(RunExpActivity2.this);
+							wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 						Log.w("Thread", "thread");
-						Message message = getExperimentInfoHandler.obtainMessage();
-						Log.w("Thread", "1"+ message);
-						message.obj = wifiUtlis.getByteMessage();
-						Log.w("Thread", "2"+ message.obj);
-						getExperimentInfoHandler.sendMessage(message);
-						Log.w("Thread", "3"+ getExperimentInfoHandler.sendMessage(message));
 						Thread.sleep(1000);
+						Message message = getExperimentInfoHandler.obtainMessage();
+						message.obj = wifiUtlis.getByteMessage();
+						getExperimentInfoHandler.sendMessage(message);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				}
+//				}
 			};
 		};
-
-	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
+		stepDao = new StepDao();
+		steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
 		
-		try {
-			wifiUtlis = new WifiUtlis(RunExpActivity2.this);
-			wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 
 		// TODO 查询数据得到
 //		getExperimentInfoThread = new GetExperimentInfoThread();
 		new Thread(getExperimentInfoThread).start();
-//		new GetExperimentInfoThread().run();
+		
+		
+		
 
 		MainActivity.uvFlag = false;
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -284,13 +290,13 @@ public class RunExpActivity2 extends Activity {
 		machine = machineDao.getMachine(RunExpActivity2.this);
 		fluxNum = machine.getMflux();
 
-		stepDao = new StepDao();
+		
 		experimentDao = new ExperimentDao();
 
-		Log.w("实验id-----", exp_id + "");
+		Log.w("实验id-OnCreate", exp_id + "");
 
 		// TODO step为空
-		steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
+		
 
 		views = new ArrayList<View>();
 		changeBg = new ArrayList<Map<String, Object>>();
@@ -315,7 +321,7 @@ public class RunExpActivity2 extends Activity {
 		initView();
 		experiment_run_body_right_bottom_back_btn = (Button) findViewById(R.id.experiment_run_body_righr_bottom_back_btn);
 		experiment_run_body_right_body_tl.setStretchAllColumns(true);
-		createTable();
+//		createTable();
 		
 		Log.w("on create end", "");
 
@@ -359,9 +365,7 @@ public class RunExpActivity2 extends Activity {
 
 		experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		hideTempBody();
-		getTime(0);
-		
-		
+//		getTime(0);
 
 	}
 
@@ -1039,20 +1043,6 @@ public class RunExpActivity2 extends Activity {
 		}
 		// Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
-	}
-
-	// 将指定byte数组以16进制的形式打印到控制台
-	public void printHexString(byte[] b) {
-		String hexString = null;
-		for (int i = 0; i < b.length; i++) {
-			String hex = Integer.toHexString(b[i] & 0xFF);
-			if (hex.length() == 1) {
-				hex = '0' + hex;
-			}
-			hexString = hex + " " + hexString;
-		}
-		Log.w("HexString--", hexString.toUpperCase());
-
 	}
 
 }

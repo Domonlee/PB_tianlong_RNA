@@ -1,5 +1,10 @@
 package org.tianlong.rna.activity;
 
+import java.util.Date;
+import java.util.List;
+
+import org.tianlong.rna.pojo.Experiment;
+import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
@@ -48,6 +53,11 @@ public class MainActivity extends ActivityGroup {
 	public static boolean uvFlag = true;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
+	
+	
+	private List<String> receive;
+	private List<String> infoList; // 转换后的文件列表
+	private int exp_id;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -249,14 +259,18 @@ public class MainActivity extends ActivityGroup {
 				if (info.substring(21, 23).equals("00")
 						|| info.substring(21, 23).equals("05")) {
 					//测试代码 机器停止状态 跳转到另外一个地址 并且发送数据。
-					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
-					startActivity(intent);
-					intent.putExtra("E_id", 9999);
+//					new Thread(getExperimentInfoThread).start()	;
+//					if (exp_id == 0 ) {
+//						Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+//						startActivity(intent);
+//						intent.putExtra("E_id", 9999);
+//						Log.w(TAG, ""+exp_id);
+//					}
 					Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
 					Log.w(TAG, "machine is runing ");
 //					uvFlag= false;
-//					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+					Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
 //					Intent intent = new Intent(MainActivity.this,RunExpActivity.class);
 					startActivity(intent);
 				} else if (info.substring(21, 23).equals("04")) {
@@ -292,18 +306,6 @@ public class MainActivity extends ActivityGroup {
 		super.onPause();
 	}
 
-	// 将指定byte数组以16进制的形式打印到控制台
-	public void printHexString(byte[] b) {
-		String hexString = null;
-		for (int i = 0; i < b.length; i++) {
-			String hex = Integer.toHexString(b[i] & 0xFF);
-			if (hex.length() == 1) {
-				hex = '0' + hex;
-			}
-			hexString = hex + " " + hexString;
-		}
-		Log.w("HexString--", hexString.toUpperCase());
-	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -327,4 +329,85 @@ public class MainActivity extends ActivityGroup {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	
+//	private Handler getExperimentInfoHandler = new Handler() {
+//		public void handleMessage(Message msg) {
+//			Log.w("Handler", "handler");
+//			byte[] info = (byte[]) msg.obj;
+//			if (info.length != 0) {
+//				if (receive != null) {
+//					receive.removeAll(receive);
+//				}
+//				receive = Utlis.getReceive(info);
+////				Log.w(TAG + "receive", receive + "");
+//				infoList = Utlis.getExperimentInfoList(receive);
+//				Log.w(TAG + "infoList", infoList + "");
+//				Experiment experiment = new Experiment();
+//				try {
+//					if (infoList.size() != 0) {
+//						Log.w("发送文件子串", infoList.get(infoList.size() - 2)
+//								.substring(0, 9) + "");
+//						Log.w("发送文件索引", infoList.get(infoList.size() - 2)
+//								.substring(0, 9).indexOf("#END_FILE")
+//								+ "");
+//						if ((infoList.get(infoList.size() - 2).substring(0, 9))
+//								.indexOf("#END_FILE") != -1) {
+//							experiment.setU_id(U_id);
+//							experiment.setEname(infoList.get(0).substring(
+//									infoList.get(0).indexOf(":") + 1,
+//									infoList.get(0).length()));
+//							String date = Utlis.systemFormat.format(new Date());
+//							experiment.setCdate(date);
+//							experiment.setRdate(date);
+//							experiment.setEremark(infoList.get(2).substring(
+//									infoList.get(2).indexOf(":") + 1,
+//									infoList.get(2).length()));
+//							experiment.setEDE_id(0);
+//							experiment.setEquick(0);
+//
+//							// TODO 得不到数据
+//							exp_id = experiment.getE_id();
+//							Log.w("实验id-Handler", exp_id + "");
+//
+//							Log.w("RunExp", "得到实验数据正常");
+//
+//						} else {
+//							Log.w("RunExp", "得到实验数据失败");
+//						}
+//					}
+//				} catch (Exception e) {
+//					Log.w("异常", "异常----");
+//				}
+//			}
+//		};
+//	};
+//	
+//	private Thread getExperimentInfoThread = new Thread() {
+//		public void run() {
+//			while (exp_id == 0 ) {
+//				try {
+//					try {
+//						wifiUtlis = new WifiUtlis(MainActivity.this);
+//						wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
+//					} catch (Exception e1) {
+//						e1.printStackTrace();
+//					}
+//					
+//						
+//			Log.w(TAG, ""+exp_id);
+//					Log.w("Thread", "thread");
+//					Message message = getExperimentInfoHandler.obtainMessage();
+//					message.obj = wifiUtlis.getByteMessage();
+//					getExperimentInfoHandler.sendMessage(message);
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			Intent intent = new Intent(MainActivity.this,RunExpActivity2.class);
+//			startActivity(intent);
+//			intent.putExtra("E_id", exp_id);
+//			Log.w(TAG, ""+exp_id);
+//		};
+//	};
 }
