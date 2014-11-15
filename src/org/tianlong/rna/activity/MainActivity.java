@@ -51,6 +51,7 @@ public class MainActivity extends ActivityGroup {
 
 	// 紫外灯标志位
 	public static boolean uvFlag = true;
+	public static boolean closeDialog = false;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
 
@@ -106,10 +107,12 @@ public class MainActivity extends ActivityGroup {
 							e.printStackTrace();
 						}
 						dialog.dismiss();
+						closeDialog = true;
 						// queryUVHandler.removeCallbacks(queryUVThread);
 					}
 				});
 		dialog = builder.create();
+		Log.w("创建dialog", "创建dialog");
 		dialog.dismiss();
 
 		main_top_uname_tv.setText(Uname);
@@ -221,7 +224,7 @@ public class MainActivity extends ActivityGroup {
 					Message message = queryUVHandler.obtainMessage();
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
-					Thread.sleep(500);
+					Thread.sleep(50);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -244,11 +247,12 @@ public class MainActivity extends ActivityGroup {
 				// Log.w(TAG, info.substring(24, 26));
 
 				// TODO 目前只检测了一步，关于紫外灯的检测
+		
 				if (info.substring(24, 26).equals("00")) {
-					if (dialog.isShowing()) {
+//					if (dialog.isShowing()) {
 						dialog.dismiss();
 						Log.w(TAG, "外层关闭");
-					}
+//					}
 				} else if (info.substring(24, 26).equals("01")) {
 					Log.w(TAG, "外层打开");
 
@@ -263,18 +267,21 @@ public class MainActivity extends ActivityGroup {
 //							RunExpActivity2.class);
 //					startActivity(intent);
 //					intent.putExtra("E_id", 9999);
-					Log.w(TAG, "machine is stop ");
+
+//					Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
-					Log.w(TAG, "machine is runing ");
+//					Log.w(TAG, "machine is runing ");
+
 					// uvFlag= false;
-					Intent intent = new Intent(MainActivity.this,
-							RunExpActivity2.class);
-					startActivity(intent);
+//					Intent intent = new Intent(MainActivity.this,
+//							RunExpActivity2.class);
+//					startActivity(intent);
 				} else if (info.substring(21, 23).equals("04")) {
 					Toast.makeText(getApplicationContext(), "测试用--Pause", 1000)
 							.show();
 					Log.w(TAG, "machine is pause");
 				}
+				//FIXME
 				// else {
 				// Log.w(TAG, "error");
 				// uvFlag = false;

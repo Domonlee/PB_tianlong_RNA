@@ -124,15 +124,15 @@ public class RunExpActivity2 extends Activity {
 
 	private boolean selectInfoFlag = true; // 接收查询线程控制
 	private int startTimeControl, //
-	waitTimeControl, // 等待时间控制
-	blendTimeControl, // 混合时间控制
-	magnetTimeControl, // 磁吸时间控制
-	runBtnControl, // 运行按钮控制
-	runNum, // 运行或继续控制
-	continueControl, // 继续按钮控制
-	controlNum, // 总步骤索引
-	stopBtn, // 停止控制
-	pauseCtrl;// 仪器操作暂停控制 0为运行，1为暂停
+			waitTimeControl, // 等待时间控制
+			blendTimeControl, // 混合时间控制
+			magnetTimeControl, // 磁吸时间控制
+			runBtnControl, // 运行按钮控制
+			runNum, // 运行或继续控制
+			continueControl, // 继续按钮控制
+			controlNum, // 总步骤索引
+			stopBtn, // 停止控制
+			pauseCtrl;// 仪器操作暂停控制 0为运行，1为暂停
 
 	private int E_id;
 	private int U_id;
@@ -234,7 +234,8 @@ public class RunExpActivity2 extends Activity {
 			try {
 				try {
 					wifiUtlis = new WifiUtlis(RunExpActivity2.this);
-					wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
+//					wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
+					wifiUtlis.sendMessage(Utlis.sendExperimentId(96));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -248,8 +249,8 @@ public class RunExpActivity2 extends Activity {
 			}
 		};
 	};
-	
-	
+
+	// 查询仪器状态
 	private Handler selectInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			byte[] info = (byte[]) msg.obj;
@@ -268,7 +269,7 @@ public class RunExpActivity2 extends Activity {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-//						inn();
+						// inn();
 					}
 					// 判断开始成功方法
 					else if (receiveMeg
@@ -324,7 +325,7 @@ public class RunExpActivity2 extends Activity {
 								// Log.i("info", "查询电机位置回复："+receiveMeg);
 								control = Integer.parseInt(
 										receiveMeg.substring(21, 23), 16);
-								 Log.i("info", "电机位置:"+control);
+								Log.i("info", "电机位置:" + control);
 								// 根据电机位置索引处理相应方法
 								switch (control) {
 								// 如果是0,电机在停止状态
@@ -379,7 +380,7 @@ public class RunExpActivity2 extends Activity {
 													RunExpActivity2.this,
 													getString(R.string.wifi_error),
 													Toast.LENGTH_SHORT).show();
-//											inn();
+											// inn();
 										}
 									}
 									break;
@@ -491,10 +492,11 @@ public class RunExpActivity2 extends Activity {
 							// 如果是6号查询就是运行位置查询
 							// XXX 跳转下一个步骤
 							case 6:
-								//11.11完成暂停 重启功能
+								// 11.11完成暂停 重启功能
 								if (receiveMeg.substring(24, 26).equals("04")) {
 									if (pauseCtrl == 0) {
-										experiment_run_body_right_bottom_run_btn.performClick();
+										experiment_run_body_right_bottom_run_btn
+												.performClick();
 										Log.i("info", "点击成功");
 										pauseCtrl = 1;
 									}
@@ -504,7 +506,8 @@ public class RunExpActivity2 extends Activity {
 								// //仪器手动暂停 恢复 返回
 								if (receiveMeg.substring(24, 26).equals("03")) {
 									if (pauseCtrl == 1) {
-										experiment_run_body_right_bottom_run_btn.performClick();
+										experiment_run_body_right_bottom_run_btn
+												.performClick();
 										Log.i("info", "点击成功");
 										Log.i("info", "仪器恢复运行成功");
 										pauseCtrl = 0;
@@ -513,13 +516,19 @@ public class RunExpActivity2 extends Activity {
 								}
 								if (Integer.parseInt(
 										receiveMeg.substring(24, 26), 16) != 5) {
-									Log.w("info", "跳转步骤="+receiveMeg.substring(24, 26));
-									Log.w("info", "Control="+controlNum);
+									Log.w("info",
+											"跳转步骤="
+													+ receiveMeg.substring(24,
+															26));
+									Log.w("info", "Control=" + controlNum);
 
 									// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 									if ((controlNum + 1) != Integer.parseInt(
 											receiveMeg.substring(21, 23), 16)) {
-									Log.w("info", "跳转步骤="+receiveMeg.substring(21, 23));
+										Log.w("info",
+												"跳转步骤="
+														+ receiveMeg.substring(
+																21, 23));
 										continueControl = 0;
 										if (viewDrawable != null) {
 											viewDrawable.stop();
@@ -629,17 +638,17 @@ public class RunExpActivity2 extends Activity {
 						Thread.sleep(100);
 						wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
 					} catch (Exception e1) {
-//						Toast.makeText(RUN.this,
-//								getString(R.string.wifi_error),
-//								Toast.LENGTH_SHORT).show();
-//						inn();
+						// Toast.makeText(RUN.this,
+						// getString(R.string.wifi_error),
+						// Toast.LENGTH_SHORT).show();
+						// inn();
 					}
 				}
 			} else {
 			}
 		};
 	};
-	
+
 	class SelectInfoThread implements Runnable {
 		public void run() {
 			while (selectInfoFlag) {
@@ -655,7 +664,7 @@ public class RunExpActivity2 extends Activity {
 			}
 		}
 	}
-	
+
 	private Handler timeHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 		};
@@ -668,7 +677,7 @@ public class RunExpActivity2 extends Activity {
 		// step 第一次初始化为空
 		steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
 
-		//查询当前实验数据线程
+		// 查询当前实验数据线程
 		new Thread(getExperimentInfoThread).start();
 
 		MainActivity.uvFlag = false;
@@ -709,6 +718,207 @@ public class RunExpActivity2 extends Activity {
 		Log.w("on create end", "");
 
 		// experiment_run_top_uname_tv.setText(Uname);
+
+		experiment_run_body_right_bottom_run_btn
+				.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						if (wifiUtlis == null) {
+							Toast.makeText(RunExpActivity2.this,
+									getString(R.string.wifi_error_run),
+									Toast.LENGTH_SHORT).show();
+						} else {
+							if (changeBg.size() != 0) {
+								((View) changeBg.get(0).get("view"))
+										.setBackgroundResource(R.anim.anim_view);
+								changeBg.removeAll(changeBg);
+							}
+							runBtnControl++;
+							Log.w("info", "runBtnControl=" + runBtnControl);
+
+							if (runBtnControl % 2 == 0) {
+								try {
+									wifiUtlis.sendMessage(Utlis
+											.sendPauseMessage());
+									experiment_run_body_right_bottom_run_btn
+											.setText(getString(R.string.run));
+									viewDrawable.stop();
+									selectInfoFlag = false;
+									if (waitTimeControl == 1) {
+										waitTimeCount.pause();
+									}
+									if (blendTimeControl == 1) {
+										blendTimeCount.pause();
+									}
+									if (magnetTimeControl == 1) {
+										magnetTimeCount.pause();
+									}
+									timeHandler.removeCallbacks(timeRunnable);
+								} catch (Exception e) {
+									Toast.makeText(RunExpActivity2.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
+							} else {
+								experiment_run_body_right_bottom_run_btn
+										.setText(getString(R.string.pause));
+								if (wifiUtlis != null) {
+									// 控制流程
+									Log.w("info", "runNum=" + runNum);
+
+									switch (runNum) {
+									//XXX11.15删除发送文件
+									// try {
+									// Log.w("info", "运行按钮发送文件--"+runNum);
+									// wifiUtlis.sendMessage(Utlis
+									// .getbyteList(
+									// sendInfo.get(0), 0));
+									// new Thread(sendFileThread).start();
+									// builder.setMessage(getString(R.string.run_exp_send_info));
+									// builder.setCancelable(false);
+									// dialog = builder.show();
+									// runNum = 1;
+									// } catch (Exception e1) {
+									// Toast.makeText(
+									// RunExpActivity2.this,
+									// getString(R.string.wifi_error),
+									// Toast.LENGTH_SHORT).show();
+									// }
+									// break;
+									case 1:
+										try {
+											Log.w("info", "运行按钮继续按钮--" + runNum);
+											selectInfoFlag = true;
+											if (waitTimeControl != 0
+													|| blendTimeControl != 0
+													|| magnetTimeControl != 0) {
+												continueControl = 1;
+											} else {
+												continueControl = 0;
+											}
+											if (waitTimeControl == 1) {
+												waitTimeCount.resume();
+												waitTimeControl = 0;
+											}
+											if (blendTimeControl == 1) {
+												blendTimeCount.resume();
+												blendTimeControl = 0;
+											}
+											if (magnetTimeControl == 1) {
+												magnetTimeCount.resume();
+												magnetTimeControl = 0;
+											}
+											new Thread(selectInfoThread)
+													.start();
+											viewDrawable.start();
+											try {
+												Thread.sleep(50);
+											} catch (InterruptedException e) {
+												// block
+												e.printStackTrace();
+											}
+
+											timeHandler.post(timeRunnable);
+											wifiUtlis.sendMessage(Utlis
+													.sendContinueMessage());
+
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExpActivity2.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
+										}
+										break;
+									case 2:
+										try {
+											Log.w("info", "运行按钮运行--" + runNum);
+											selectInfoFlag = true;
+											new Thread(selectInfoThread)
+													.start();
+											wifiUtlis.sendMessage(Utlis
+													.sendRunMessage(controlNum));
+
+											getCurrentTime(controlNum);
+										} catch (Exception e) {
+											Toast.makeText(
+													RunExpActivity2.this,
+													getString(R.string.wifi_error),
+													Toast.LENGTH_SHORT).show();
+											// inn();
+											selectInfoFlag = false;
+										}
+										runNum = 1;
+										break;
+									default:
+										break;
+									}
+								} else {
+									Toast.makeText(RunExpActivity2.this,
+											getString(R.string.wifi_error),
+											Toast.LENGTH_SHORT).show();
+								}
+							}
+						}
+					}
+				});
+
+		// stopBtn
+		experiment_run_body_right_bottom_stop_btn
+				.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						if (runBtnControl == 0) {
+							Toast.makeText(RunExpActivity2.this,
+									getString(R.string.run_exp_not_run),
+									Toast.LENGTH_SHORT).show();
+						} else {
+							try {
+								stopBtn = 1;
+								startTimeControl = 0;
+								if (selectInfoFlag == false) {
+									selectInfoFlag = true;
+									new Thread(selectInfoThread).start();
+								}
+								wifiUtlis.sendMessage(Utlis.sendStopMessage());
+								builder.setMessage(getString(R.string.run_exp_stopping));
+								builder.setCancelable(false);
+								dialog = builder.show();
+							} catch (Exception e) {
+								Toast.makeText(RunExpActivity2.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+								// inn();
+								selectInfoFlag = false;
+							}
+						}
+					}
+				});
+
+		experiment_run_body_right_bottom_back_btn
+				.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						if (runBtnControl == 0) {
+							if (wifiUtlis != null) {
+								wifiUtlis.close();
+								selectInfoFlag = false;
+							}
+							Intent intent = null;
+							intent = new Intent(RunExpActivity2.this,
+									MainActivity.class);
+							intent.putExtra("U_id", U_id);
+							intent.putExtra("Uname", Uname);
+							MainActivity.uvFlag = false;
+							startActivity(intent);
+							finish();
+						} else {
+							Toast.makeText(RunExpActivity2.this,
+									getString(R.string.run_exp_not_exit),
+									Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+
+		waitDialog.cancel();
 
 	}
 
@@ -1092,7 +1302,7 @@ public class RunExpActivity2 extends Activity {
 			}
 		}
 	};
-	
+
 	class WaitTimeCount extends AdvancedCountdownTimer {
 		public WaitTimeCount(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
@@ -1212,53 +1422,54 @@ public class RunExpActivity2 extends Activity {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (runBtnControl != 0) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						RunExpActivity2.this);
-				builder.setTitle(getString(R.string.run_exp_not_exit));
-				builder.setPositiveButton(getString(R.string.sure),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-				builder.show();
-			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						RunExpActivity2.this);
-				builder.setTitle(getString(R.string.sure_exit));
-				builder.setPositiveButton(getString(R.string.sure),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// Process.killProcess(android.os.Process.myPid());
-								finish();
-							}
-						});
-				builder.setNegativeButton(getString(R.string.cancle),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-				builder.show();
-			}
-		}
-		if (keyCode == KeyEvent.KEYCODE_POWER) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(
-					RunExpActivity2.this);
-			builder.setTitle(getString(R.string.run_exp_not_exit));
-			builder.setPositiveButton(getString(R.string.sure),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-			builder.show();
-		}
+//		if (keyCode == KeyEvent.KEYCODE_BACK) {
+//			if (runBtnControl != 0) {
+//				AlertDialog.Builder builder = new AlertDialog.Builder(
+//						RunExpActivity2.this);
+//				builder.setTitle(getString(R.string.run_exp_not_exit));
+//				builder.setPositiveButton(getString(R.string.sure),
+//						new DialogInterface.OnClickListener() {
+//							public void onClick(DialogInterface dialog,
+//									int which) {
+//								dialog.cancel();
+//							}
+//						});
+//				builder.show();
+//			} else {
+//				AlertDialog.Builder builder = new AlertDialog.Builder(
+//						RunExpActivity2.this);
+//				builder.setTitle(getString(R.string.sure_exit));
+//				builder.setPositiveButton(getString(R.string.sure),
+//						new DialogInterface.OnClickListener() {
+//							public void onClick(DialogInterface dialog,
+//									int which) {
+//								// Process.killProcess(android.os.Process.myPid());
+//								finish();
+//							}
+//						});
+//				builder.setNegativeButton(getString(R.string.cancle),
+//						new DialogInterface.OnClickListener() {
+//							public void onClick(DialogInterface dialog,
+//									int which) {
+//								dialog.cancel();
+//							}
+//						});
+//				builder.show();
+//			}
+//		}
+//		if (keyCode == KeyEvent.KEYCODE_POWER) {
+//			AlertDialog.Builder builder = new AlertDialog.Builder(
+//					RunExpActivity2.this);
+//			builder.setTitle(getString(R.string.run_exp_not_exit));
+//			builder.setPositiveButton(getString(R.string.sure),
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.cancel();
+//						}
+//					});
+//			builder.show();
+//		}
+		finish();
 		return super.onKeyDown(keyCode, event);
 	}
 

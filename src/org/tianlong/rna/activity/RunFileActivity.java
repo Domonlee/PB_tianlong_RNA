@@ -141,6 +141,7 @@ public class RunFileActivity extends Activity {
 				listChooseId = 0;
 				intent.putExtra("U_id", U_id);
 				intent.putExtra("Uname", Uname);
+				MainActivity.uvFlag = false;
 				startActivity(intent);
 				finish();
 			}

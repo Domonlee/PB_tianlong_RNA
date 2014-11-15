@@ -209,6 +209,8 @@ public class CreatExperimentActivity extends Activity {
 							if (stepChooseNum == -1 || !hasTemplet()) {
 								Log.w("w", !hasTemplet()+ "");
 								Log.w("w", stepChooseNum+ "");
+								//≤Ω÷Ëstep
+								Log.w("w", stepChooseNum+ "");
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),

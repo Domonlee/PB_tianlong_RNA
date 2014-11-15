@@ -36,28 +36,28 @@ public class MainApplyActivity extends Activity {
 	private Dialog dialog;
 	private WifiUtlis utlis;
 
-	private Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			String info = (String) msg.obj;
-			if (info.length() != 0) {
-				Log.w("MainApply", info);
-				if (info.substring(21, 23).equals("00")) {
-					dialog.dismiss();
-					handler.removeCallbacks(runnable);
-					ma_bottom_gv.setAdapter(new MainApplyAdapter(
-							MainApplyActivity.this, getguanList()));
-				} else {
-					try {
-						utlis.sendMessage(Utlis.getseleteMessage(8));
-					} catch (Exception e) {
-						Toast.makeText(MainApplyActivity.this,
-								getString(R.string.wifi_error),
-								Toast.LENGTH_SHORT).show();
-					}
-				}
-			}
-		};
-	};
+//	private Handler handler = new Handler() {
+//		public void handleMessage(Message msg) {
+//			String info = (String) msg.obj;
+//			if (info.length() != 0) {
+//				Log.w("MainApply", info);
+//				if (info.substring(21, 23).equals("00")) {
+////					dialog.dismiss();
+//					handler.removeCallbacks(runnable);
+//					ma_bottom_gv.setAdapter(new MainApplyAdapter(
+//							MainApplyActivity.this, getguanList()));
+//				} else {
+//					try {
+//						utlis.sendMessage(Utlis.getseleteMessage(8));
+//					} catch (Exception e) {
+//						Toast.makeText(MainApplyActivity.this,
+//								getString(R.string.wifi_error),
+//								Toast.LENGTH_SHORT).show();
+//					}
+//				}
+//			}
+//		};
+//	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,33 +119,33 @@ public class MainApplyActivity extends Activity {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								MainApplyActivity.this);
-						builder.setMessage(getString(R.string.ultraviolet));
-						builder.setCancelable(false);
-						handler.postDelayed(runnable, 1000);
-						builder.setNegativeButton(getString(R.string.stop),
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int which) {
-										try {
-											utlis.sendMessage(Utlis
-													.ultravioletCloseMessage());
-										} catch (Exception e) {
-											e.printStackTrace();
-										}
-										dialog.dismiss();
-										Log.w("Main", "内层关闭");
-										handler.removeCallbacks(runnable);
-										ma_bottom_gv
-												.setAdapter(new MainApplyAdapter(
-														MainApplyActivity.this,
-														getguanList()));
-									}
-								});
+//						AlertDialog.Builder builder = new AlertDialog.Builder(
+//								MainApplyActivity.this);
+//						builder.setMessage(getString(R.string.ultraviolet));
+//						builder.setCancelable(false);
+//						handler.postDelayed(runnable, 1000);
+//						builder.setNegativeButton(getString(R.string.stop),
+//								new DialogInterface.OnClickListener() {
+//									public void onClick(DialogInterface dialog,
+//											int which) {
+//										try {
+//											utlis.sendMessage(Utlis
+//													.ultravioletCloseMessage());
+//										} catch (Exception e) {
+//											e.printStackTrace();
+//										}
+//										dialog.dismiss();
+//										Log.w("Main", "内层关闭");
+//										handler.removeCallbacks(runnable);
+//										ma_bottom_gv
+//												.setAdapter(new MainApplyAdapter(
+//														MainApplyActivity.this,
+//														getguanList()));
+//									}
+//								});
 //						dialog = builder.show();
 						ma_bottom_gv.setAdapter(new MainApplyAdapter(
-								MainApplyActivity.this, getList()));
+								MainApplyActivity.this, getguanList()));
 					} else {
 						Toast.makeText(MainApplyActivity.this,
 								getString(R.string.wifi_error),
@@ -171,14 +171,14 @@ public class MainApplyActivity extends Activity {
 		});
 	}
 
-	Runnable runnable = new Runnable() {
-		public void run() {
-			Message message = handler.obtainMessage();
-			message.obj = utlis.getMessage();
-			handler.sendMessage(message);
-			handler.postDelayed(runnable, 1000);
-		}
-	};
+//	Runnable runnable = new Runnable() {
+//		public void run() {
+//			Message message = handler.obtainMessage();
+//			message.obj = utlis.getMessage();
+//			handler.sendMessage(message);
+//			handler.postDelayed(runnable, 1000);
+//		}
+//	};
 
 	private List<Map<String, Object>> getList() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();

@@ -817,10 +817,9 @@ public class Utlis {
 			if (i <= 8) {
 				map.put("id", Integer.valueOf(infos.substring(0, 1)));
 				map.put("info", infos.substring(2, infos.indexOf(",", 2)));
-				map.put("user",
-						infos.substring(infos.indexOf(",", 2) + 1,
-								infos.length() - 1));
+				map.put("user",infos.substring(infos.indexOf(",", 2) + 1,infos.length() - 1));
 			} else {
+				//Å¼ÏÖÊý¾Ý¶ªÊ§
 				map.put("id", Integer.valueOf(infos.substring(0, 2)));
 				map.put("info", infos.substring(3, infos.indexOf(",", 3)));
 				map.put("user",
