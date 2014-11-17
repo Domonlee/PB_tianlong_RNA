@@ -847,19 +847,18 @@ public class Utlis {
 							.substring(
 									14,
 									receive.get(i).replace(" ", "").length() - 4);
-					Log.w("infos", infos);
+//					Log.w("infos", infos);
 			}
 			// 解析头首标签
 			try {
 //			 if (i < 3 || (i > receive.size() - 3 && (i + 1) !=
 //			 receive.size())) {
 
-			Log.w("长度", infos.length() + "");
+//			Log.w("长度", infos.length() + "");
 				
 			if (infos.length() > 2) {
 				if (infos.substring(0, 2).equals("23")) {
 					infos = CHexConver.hexStr2Str(infos.toUpperCase());
-					Log.w("转换代码", "转换代码");
 				}
 			}
 			strings.add(infos);
@@ -868,7 +867,7 @@ public class Utlis {
 					Log.w("infos -- error", infos);
 			}
 
-			Log.w("命令数组", strings + "");
+//			Log.w("命令数组", strings + "");
 		}
 		return strings;
 	}

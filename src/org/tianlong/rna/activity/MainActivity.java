@@ -273,9 +273,9 @@ public class MainActivity extends ActivityGroup {
 //					Log.w(TAG, "machine is runing ");
 
 					// uvFlag= false;
-//					Intent intent = new Intent(MainActivity.this,
-//							RunExpActivity2.class);
-//					startActivity(intent);
+					Intent intent = new Intent(MainActivity.this,
+							RunExpActivity2.class);
+					startActivity(intent);
 				} else if (info.substring(21, 23).equals("04")) {
 					Toast.makeText(getApplicationContext(), "≤‚ ‘”√--Pause", 1000)
 							.show();
