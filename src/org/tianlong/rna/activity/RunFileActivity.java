@@ -54,7 +54,7 @@ public class RunFileActivity extends Activity {
 	private WifiUtlis wifiUtlis;
 	private readListThread listThread;
 	private readInfoThread infoThread;
-	
+
 	private RunFileAdapert logListAdapert;
 
 	private int U_id;
@@ -62,13 +62,12 @@ public class RunFileActivity extends Activity {
 	private String experNameString;
 	public static int listChooseId = 0;
 
-
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		
+
 		MainActivity.uvFlag = false;
-		
+
 		listThread = new readListThread();
 		infoThread = new readInfoThread();
 		setContentView(R.layout.activity_runfile);
@@ -90,7 +89,7 @@ public class RunFileActivity extends Activity {
 		runfile_right_output_btn = (Button) findViewById(R.id.runfile_right_output_btn);
 		runfile_left_lv = (ListView) findViewById(R.id.runfile_left_lv);
 		runfile_right_output_location_tv = (TextView) findViewById(R.id.runfile_right_output_location_tv);
-		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv = (TextView) findViewById(R.id.machine_wifi_name_tv);
 		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		runfile_left_lv.setOnItemClickListener(new OnItemClickListener() {
@@ -149,9 +148,10 @@ public class RunFileActivity extends Activity {
 
 		/**
 		 * 导出日志
+		 * 
 		 * @author Domon
 		 */
-		 
+
 		runfile_right_output_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -192,16 +192,18 @@ public class RunFileActivity extends Activity {
 	private Handler readListHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				if (receive != null) {
-					receive.removeAll(receive);
+			if (info != null) {
+				if (info.length != 0) {
+					if (receive != null) {
+						receive.removeAll(receive);
+					}
+					receive = Utlis.getReceive(info);
+					strings = Utlis.getRunFileList(receive);
+					logListAdapert = new RunFileAdapert(strings,
+							RunFileActivity.this);
+					runfile_left_lv.setAdapter(logListAdapert);
+					readListFlag = false;
 				}
-				receive = Utlis.getReceive(info);
-				strings = Utlis.getRunFileList(receive);
-				logListAdapert = new RunFileAdapert(strings,
-						RunFileActivity.this);
-				runfile_left_lv.setAdapter(logListAdapert);
-				readListFlag = false;
 			}
 		};
 	};

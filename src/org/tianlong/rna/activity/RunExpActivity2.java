@@ -560,9 +560,11 @@ public class RunExpActivity2 extends Activity {
 											if (viewDrawable != null) {
 												viewDrawable.stop();
 											}
-											views.get(controlNum)
-													.setBackgroundResource(
-															R.anim.anim_view);
+											try {
+												
+											views.get(controlNum) .setBackgroundResource( R.anim.anim_view);
+											} catch (Exception e) {
+											}
 											controlNum = Integer.parseInt(
 													receiveMeg
 															.substring(21, 23),
@@ -598,7 +600,11 @@ public class RunExpActivity2 extends Activity {
 										selectInfoFlag = false;
 										timeHandler
 												.removeCallbacks(timeRunnable);
+										//FIXME
+										try {
 										viewDrawable.stop();
+										} catch (Exception e) {
+										}
 										builder = new AlertDialog.Builder(
 												RunExpActivity2.this);
 										builder.setTitle(getString(R.string.run_exp_finsh));
@@ -693,9 +699,9 @@ public class RunExpActivity2 extends Activity {
 					selectInfoHandler.sendMessage(message);
 					Thread.sleep(1000);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
-					Thread.sleep(100);
+					Thread.sleep(1000);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
-					Thread.sleep(100);
+					Thread.sleep(1000);
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -806,6 +806,8 @@ public class Utlis {
 	public static List<Map<String, Object>> getExperimentList(
 			List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
+		//XXX 11.17修改上传下载实验数据得到
+//		for (int i = 1; i < receive.size(); i++) {
 		for (int i = 0; i < receive.size(); i++) {
 			Log.w("得到下位机实验列表", "receive"+receive);
 			String infos = receive
@@ -814,6 +816,7 @@ public class Utlis {
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
+//			if (i <= 9) {
 			if (i <= 8) {
 				map.put("id", Integer.valueOf(infos.substring(0, 1)));
 				map.put("info", infos.substring(2, infos.indexOf(",", 2)));

@@ -89,7 +89,7 @@ public class UpAndDownActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		MainActivity.uvFlag = false;
-		
+
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
@@ -119,7 +119,7 @@ public class UpAndDownActivity extends Activity {
 		activity_upanddown_down_top_lv = (ListView) findViewById(R.id.activity_upanddown_down_top_lv);
 		activity_upanddown_top_uname_tv = (TextView) findViewById(R.id.activity_upanddown_top_uname_tv);
 		activity_upanddown_down_top_delete_btn = (ImageView) findViewById(R.id.activity_upanddown_down_top_delete_btn);
-		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv = (TextView) findViewById(R.id.machine_wifi_name_tv);
 		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		activity_upanddown_top_uname_tv.setText(Uname);
@@ -179,7 +179,7 @@ public class UpAndDownActivity extends Activity {
 						gotoInfoIntent.putExtra("U_id", U_id);
 						gotoInfoIntent.putExtra("Uname", Uname);
 						startActivity(gotoInfoIntent);
-						//11.12改动 修改返回终止bug
+						// 11.12改动 修改返回终止bug
 						finish();
 						return false;
 					}
@@ -339,8 +339,8 @@ public class UpAndDownActivity extends Activity {
 												DialogInterface dialog,
 												int which) {
 											try {
-												//TODO
-//												Log.w("上传id", down_id+"");
+												// TODO
+												// Log.w("上传id", down_id+"");
 												wifiUtlis.sendMessage(Utlis
 														.sendExperimentId(down_id));
 												getInfoListFlag = true;
@@ -505,10 +505,16 @@ public class UpAndDownActivity extends Activity {
 		public void run() {
 			while (readListFlag) {
 				try {
+					try {
+						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					Message message = readListHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
 					Thread.sleep(1000);
+					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -520,79 +526,87 @@ public class UpAndDownActivity extends Activity {
 	private Handler getExperimentInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			byte[] info = (byte[]) msg.obj;
-			if (info.length != 0) {
-				if (receive != null) {
-					receive.removeAll(receive);
-				}
-				receive = Utlis.getReceive(info);
-				infoList = Utlis.getExperimentInfoList(receive);
-				Log.w("发送文件列表", infoList+"");
-				for (int i = 0; i < experiments.size(); i++) {
-					if (experiments
-							.get(i)
-							.getEname()
-							.equals(infoList.get(0).substring(
-									infoList.get(0).indexOf(":") + 1,
-									infoList.get(0).length()))) {
-						Toast.makeText(UpAndDownActivity.this,
-								getString(R.string.up_samename),
-								Toast.LENGTH_SHORT).show();
-						sameNameFlag = true;
+			if (info != null) {
+
+				if (info.length != 0) {
+					if (receive != null) {
+						receive.removeAll(receive);
 					}
-				}
-
-				Experiment experiment = new Experiment();
-				if (infoList.size() != 0 && !sameNameFlag) {
-//					Log.w("发送文件列表", infoList+"");
-//					Log.w("发送文件长度", infoList.size()+"");
-//					Log.w("发送文件子串", infoList.get(infoList.size() -2).substring(0, 9)+"");
-//					Log.w("发送文件索引", infoList.get(infoList.size() -2).substring(0, 9).indexOf("#END_FILE")+"");
-					if ((infoList.get(infoList.size() - 2).substring(0, 9))
-							.indexOf("#END_FILE") != -1) {
-
-						experiment.setU_id(U_id);
-						experiment.setEname(infoList.get(0).substring(
-								infoList.get(0).indexOf(":") + 1,
-								infoList.get(0).length()));
-						String date = Utlis.systemFormat.format(new Date());
-						experiment.setCdate(date);
-						experiment.setRdate(date);
-						experiment.setEremark(infoList.get(2).substring(
-								infoList.get(2).indexOf(":") + 1,
-								infoList.get(2).length()));
-						experiment.setEDE_id(0);
-						experiment.setEquick(0);
-						experimentDao.insertExperiment(experiment,
-								UpAndDownActivity.this);
-						experiment = experimentDao.getExperimentByCdate(date,
-								UpAndDownActivity.this, U_id);
-						for (int i = 3; i < infoList.size(); i++) {
-							if (infoList.get(i).indexOf("#END_FILE") != -1) {
-								break;
-							} else {
-								Step step = Utlis.getStepFromInfo(
-										infoList.get(i), experiment.getE_id());
-								stepDao.insertStep(step, UpAndDownActivity.this);
-							}
+					receive = Utlis.getReceive(info);
+					infoList = Utlis.getExperimentInfoList(receive);
+					Log.w("发送文件列表", infoList + "");
+					for (int i = 0; i < experiments.size(); i++) {
+						if (experiments
+								.get(i)
+								.getEname()
+								.equals(infoList.get(0).substring(
+										infoList.get(0).indexOf(":") + 1,
+										infoList.get(0).length()))) {
+							Toast.makeText(UpAndDownActivity.this,
+									getString(R.string.up_samename),
+									Toast.LENGTH_SHORT).show();
+							sameNameFlag = true;
 						}
-						experiments = experimentDao.getAllExperimentsByU_id(
-								UpAndDownActivity.this, U_id);
-						activity_upanddown_up_top_lv.setAdapter(new UpAdapter(
-								UpAndDownActivity.this, experiments));
-						getInfoListFlag = false;
-						Toast.makeText(UpAndDownActivity.this,
-								getString(R.string.up_success),
-								Toast.LENGTH_SHORT);
-					} else {
-						Toast.makeText(UpAndDownActivity.this,
-								getString(R.string.up_failure),
-								Toast.LENGTH_SHORT);
-						getInfoListFlag = false;
 					}
-				}
 
-				// 同名检测标志
-				sameNameFlag = false;
+					Experiment experiment = new Experiment();
+					if (infoList.size() != 0 && !sameNameFlag) {
+						// Log.w("发送文件列表", infoList+"");
+						// Log.w("发送文件长度", infoList.size()+"");
+						// Log.w("发送文件子串", infoList.get(infoList.size()
+						// -2).substring(0, 9)+"");
+						// Log.w("发送文件索引", infoList.get(infoList.size()
+						// -2).substring(0, 9).indexOf("#END_FILE")+"");
+						if ((infoList.get(infoList.size() - 2).substring(0, 9))
+								.indexOf("#END_FILE") != -1) {
+
+							experiment.setU_id(U_id);
+							experiment.setEname(infoList.get(0).substring(
+									infoList.get(0).indexOf(":") + 1,
+									infoList.get(0).length()));
+							String date = Utlis.systemFormat.format(new Date());
+							experiment.setCdate(date);
+							experiment.setRdate(date);
+							experiment.setEremark(infoList.get(2).substring(
+									infoList.get(2).indexOf(":") + 1,
+									infoList.get(2).length()));
+							experiment.setEDE_id(0);
+							experiment.setEquick(0);
+							experimentDao.insertExperiment(experiment,
+									UpAndDownActivity.this);
+							experiment = experimentDao.getExperimentByCdate(
+									date, UpAndDownActivity.this, U_id);
+							for (int i = 3; i < infoList.size(); i++) {
+								if (infoList.get(i).indexOf("#END_FILE") != -1) {
+									break;
+								} else {
+									Step step = Utlis.getStepFromInfo(
+											infoList.get(i),
+											experiment.getE_id());
+									stepDao.insertStep(step,
+											UpAndDownActivity.this);
+								}
+							}
+							experiments = experimentDao
+									.getAllExperimentsByU_id(
+											UpAndDownActivity.this, U_id);
+							activity_upanddown_up_top_lv
+									.setAdapter(new UpAdapter(
+											UpAndDownActivity.this, experiments));
+							getInfoListFlag = false;
+							Toast.makeText(UpAndDownActivity.this,
+									getString(R.string.up_success),
+									Toast.LENGTH_SHORT);
+						} else {
+							Toast.makeText(UpAndDownActivity.this,
+									getString(R.string.up_failure),
+									Toast.LENGTH_SHORT);
+							getInfoListFlag = false;
+						}
+					}
+					// 同名检测标志
+					sameNameFlag = false;
+				}
 			}
 		};
 	};
