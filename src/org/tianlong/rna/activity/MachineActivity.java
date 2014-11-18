@@ -435,6 +435,7 @@ public class MachineActivity extends Activity {
 		list.add(getString(R.string.system_user));
 		list.add(getString(R.string.system_clean));
 		list.add(getString(R.string.system_qr));
+		//FIXME 同步运行状态返回 出错
 		if (user.getUadmin() == 1) {
 			list.add(getString(R.string.system_machine));
 			list.add(getString(R.string.system_detection));

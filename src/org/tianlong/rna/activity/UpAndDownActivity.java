@@ -505,11 +505,11 @@ public class UpAndDownActivity extends Activity {
 		public void run() {
 			while (readListFlag) {
 				try {
-					try {
-						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+//					try {
+//						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
 					Message message = readListHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);

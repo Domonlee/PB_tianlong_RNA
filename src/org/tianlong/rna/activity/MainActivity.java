@@ -241,13 +241,6 @@ public class MainActivity extends ActivityGroup {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				Log.w(TAG, info);
-				// 仪器运行状态
-				// Log.w(TAG, info.substring(21, 23));
-				// 紫外灯运行状态
-				// Log.w(TAG, info.substring(24, 26));
-
-				// TODO 目前只检测了一步，关于紫外灯的检测
-		
 				if (info.substring(24, 26).equals("00")) {
 //					if (dialog.isShowing()) {
 						dialog.dismiss();
@@ -276,16 +269,12 @@ public class MainActivity extends ActivityGroup {
 					Intent intent = new Intent(MainActivity.this,
 							RunExpActivity2.class);
 					startActivity(intent);
-				} else if (info.substring(21, 23).equals("04")) {
-					Toast.makeText(getApplicationContext(), "测试用--Pause", 1000)
-							.show();
-					Log.w(TAG, "machine is pause");
-				}
-				//FIXME
-				// else {
-				// Log.w(TAG, "error");
-				// uvFlag = false;
-				// }
+				} 
+//				else if (info.substring(21, 23).equals("04")) {
+//					Toast.makeText(getApplicationContext(), "测试用--Pause", 1000)
+//							.show();
+//					Log.w(TAG, "machine is pause");
+//				}
 			}
 		};
 	};

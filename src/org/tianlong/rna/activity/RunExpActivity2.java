@@ -600,7 +600,9 @@ public class RunExpActivity2 extends Activity {
 										selectInfoFlag = false;
 										timeHandler
 												.removeCallbacks(timeRunnable);
-										//FIXME
+										//11.18
+										//FIXME  实验完成处理，dialog double show
+										//TODO
 										try {
 										viewDrawable.stop();
 										} catch (Exception e) {
