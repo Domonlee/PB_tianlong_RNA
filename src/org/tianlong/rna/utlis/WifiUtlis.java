@@ -78,6 +78,8 @@ public class WifiUtlis {
 			stream = socket.getInputStream();
 			byte[] buffer = new byte[stream.available()];
 			stream.read(buffer);
+			//11.20
+			stream = null;
 			info = CHexConver.bytes2HexStr(buffer, buffer.length);
 		} catch (Exception e) {
 			info = e.toString();

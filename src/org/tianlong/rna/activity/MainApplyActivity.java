@@ -114,6 +114,7 @@ public class MainApplyActivity extends Activity {
 						try {
 //							MainActivity.uvFlag = false;
 							utlis.sendMessage(Utlis.ultravioletOpenMessage());
+							MainActivity.closeFlag = false;
 							Thread.sleep(50);
 //							utlis.sendMessage(Utlis.getseleteMessage(8));
 						} catch (Exception e) {

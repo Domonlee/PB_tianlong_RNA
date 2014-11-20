@@ -52,6 +52,7 @@ public class MainActivity extends ActivityGroup {
 	// 紫外灯标志位
 	public static boolean uvFlag = true;
 	public static boolean closeDialog = false;
+	public static boolean closeFlag = false;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
 
@@ -87,7 +88,6 @@ public class MainActivity extends ActivityGroup {
 		queryUVThread = new QueryUVThread();
 		try {
 			wifiUtlis = new WifiUtlis(MainActivity.this);
-			new Thread(queryUVThread).start();
 		} catch (Exception e) {
 			Toast.makeText(MainActivity.this, getString(R.string.wifi_error),
 					Toast.LENGTH_SHORT).show();
@@ -103,18 +103,19 @@ public class MainActivity extends ActivityGroup {
 						try {
 							wifiUtlis.sendMessage(Utlis
 									.ultravioletCloseMessage());
+							queryUVHandler.removeCallbacks(queryUVThread);
+							Log.w(TAG, "发送关闭紫外灯消息");
+							closeFlag = true;
+							// Thread.sleep(50);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						dialog.dismiss();
 						closeDialog = true;
-						// queryUVHandler.removeCallbacks(queryUVThread);
 					}
 				});
 		dialog = builder.create();
 		Log.w("创建dialog", "创建dialog");
 		dialog.dismiss();
-
 		main_top_uname_tv.setText(Uname);
 
 		main_top_logout_rl.setOnClickListener(new OnClickListener() {
@@ -219,13 +220,21 @@ public class MainActivity extends ActivityGroup {
 		@Override
 		public void run() {
 			while (uvFlag) {
-				// Log.w(TAG, "thread");
 				try {
+					// if (closeFlag) {
+					// wifiUtlis.sendMessage(Utlis
+					// .ultravioletCloseMessage());
+					// queryUVHandler.removeCallbacks(queryUVThread);
+					// closeFlag = false;
+					// }
+					// else {
+					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
+					// }
 					Message message = queryUVHandler.obtainMessage();
+					message.what = 1;
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
 					Thread.sleep(50);
-					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -240,54 +249,47 @@ public class MainActivity extends ActivityGroup {
 			// Log.w(TAG, "handler");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
-				Log.w(TAG, info);
+				// Log.w(TAG, info);
 				if (info.substring(24, 26).equals("00")) {
-//					if (dialog.isShowing()) {
+					dialog.dismiss();
+					closeFlag = false;
+					Log.w(TAG, "关闭--close");
+				} else {
+					if (closeFlag == false) {
+						dialog.show();
+					}else {
 						dialog.dismiss();
-						Log.w(TAG, "外层关闭");
-//					}
-				} else if (info.substring(24, 26).equals("01")) {
-					Log.w(TAG, "外层打开");
-
-					dialog.show();
+					}
+					Log.w(TAG, "打开--open");
 				}
 
 				// 仪器状态检测
 				if (info.substring(21, 23).equals("00")
 						|| info.substring(21, 23).equals("05")) {
 					// 测试代码 机器停止状态 跳转到另外一个地址 并且发送数据。
-//					Intent intent = new Intent(MainActivity.this,
-//							RunExpActivity2.class);
-//					startActivity(intent);
-//					intent.putExtra("E_id", 9999);
-
-//					Log.w(TAG, "machine is stop ");
+					// Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
-//					Log.w(TAG, "machine is runing ");
-
-					// uvFlag= false;
+					// Log.w(TAG, "machine is runing ");
 					Intent intent = new Intent(MainActivity.this,
 							RunExpActivity2.class);
 					startActivity(intent);
-				} 
-//				else if (info.substring(21, 23).equals("04")) {
-//					Toast.makeText(getApplicationContext(), "测试用--Pause", 1000)
-//							.show();
-//					Log.w(TAG, "machine is pause");
-//				}
+				}
 			}
+			// queryUVHandler.removeMessages(1);
 		};
 	};
 
 	protected void onStop() {
-		uvFlag = false;
+		// 11.20 停止后线程持续运行
+		// uvFlag = false;
 		Log.w("TAG", "onStop");
 		super.onStop();
 	};
 
 	@Override
 	protected void onStart() {
-		// new Thread(queryUVThread).start();
+		new Thread(queryUVThread).start();
+		closeFlag = false;
 		uvFlag = true;
 		Log.w("TAG", "onStart");
 		super.onStart();
@@ -296,8 +298,15 @@ public class MainActivity extends ActivityGroup {
 	@Override
 	protected void onPause() {
 		uvFlag = false;
-		Log.w("TAG", "onStop");
+		Log.w("TAG", "onPause");
 		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		uvFlag = false;
+		Log.w("TAG", "onDestroy");
+		super.onDestroy();
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

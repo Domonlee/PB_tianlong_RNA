@@ -1233,8 +1233,6 @@ public class MachineActivity extends Activity {
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									MachineActivity.this);
 							
-							//TODO Í¨Á¿Ñ¡Ôñ
-							
 							builder.setTitle(getString(R.string.instrument_flux_selete));
 							builder.setView(fluxView);
 							builder.setPositiveButton(getString(R.string.sure),

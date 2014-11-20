@@ -936,7 +936,9 @@ public class RunExpActivity2 extends Activity {
 								intent = new Intent(RunExpActivity2.this,
 										MainActivity.class);
 								intent.putExtra("U_id", U_id);
-								intent.putExtra("Uname", Uname);
+//								intent.putExtra("Uname", Uname);
+								//11.20
+								intent.putExtra("Uname", "guest");
 								selectInfoFlag = false;
 								MainActivity.uvFlag = false;
 								startActivity(intent);
@@ -968,7 +970,7 @@ public class RunExpActivity2 extends Activity {
 							intent = new Intent(RunExpActivity2.this,
 									MainActivity.class);
 							intent.putExtra("U_id", U_id);
-							intent.putExtra("Uname", Uname);
+							intent.putExtra("Uname", "guest");
 							MainActivity.uvFlag = false;
 							startActivity(intent);
 //							finish();
