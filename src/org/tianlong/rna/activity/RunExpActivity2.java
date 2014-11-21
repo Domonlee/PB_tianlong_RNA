@@ -224,6 +224,7 @@ public class RunExpActivity2 extends Activity {
 								experiment_run_body_left_top_name_tv
 										.setText(experiment.getEname());
 								createTable();
+								Log.w("RunExp", "表格绘制完成");
 
 								experiments = experimentDao
 										.getAllExperimentsByU_id(
@@ -739,8 +740,6 @@ public class RunExpActivity2 extends Activity {
 		fluxNum = machine.getMflux();
 
 		experimentDao = new ExperimentDao();
-		Log.w("实验id-OnCreate", exp_id + "");
-
 		views = new ArrayList<View>();
 		changeBg = new ArrayList<Map<String, Object>>();
 		holders = new ArrayList<RunExpViewHolder>();
@@ -812,26 +811,7 @@ public class RunExpActivity2 extends Activity {
 								if (wifiUtlis != null) {
 									// 控制流程
 									Log.w("info", "runNum=" + runNum);
-
 									switch (runNum) {
-									// XXX11.15删除发送文件
-									// try {
-									// Log.w("info", "运行按钮发送文件--"+runNum);
-									// wifiUtlis.sendMessage(Utlis
-									// .getbyteList(
-									// sendInfo.get(0), 0));
-									// new Thread(sendFileThread).start();
-									// builder.setMessage(getString(R.string.run_exp_send_info));
-									// builder.setCancelable(false);
-									// dialog = builder.show();
-									// runNum = 1;
-									// } catch (Exception e1) {
-									// Toast.makeText(
-									// RunExpActivity2.this,
-									// getString(R.string.wifi_error),
-									// Toast.LENGTH_SHORT).show();
-									// }
-									// break;
 									case 1:
 										try {
 											Log.w("info", "运行按钮继续按钮--" + runNum);
@@ -936,14 +916,14 @@ public class RunExpActivity2 extends Activity {
 								intent = new Intent(RunExpActivity2.this,
 										MainActivity.class);
 								intent.putExtra("U_id", U_id);
-//								intent.putExtra("Uname", Uname);
 								//11.20
-								intent.putExtra("Uname", "guest");
+								intent.putExtra("Uname",MainActivity.currentUserName);
 								selectInfoFlag = false;
 								MainActivity.uvFlag = false;
 								startActivity(intent);
+								finish();
 
-//								Process.killProcess(android.os.Process.myPid());
+//								
 								runBtnControl = 0;
 								dialog.dismiss();
 							} catch (Exception e) {
@@ -969,11 +949,12 @@ public class RunExpActivity2 extends Activity {
 							Intent intent = null;
 							intent = new Intent(RunExpActivity2.this,
 									MainActivity.class);
+								selectInfoFlag = false;
 							intent.putExtra("U_id", U_id);
-							intent.putExtra("Uname", "guest");
+							intent.putExtra("Uname", MainActivity.currentUserName);
 							MainActivity.uvFlag = false;
 							startActivity(intent);
-//							finish();
+							finish();
 						} else {
 							Toast.makeText(RunExpActivity2.this,
 									getString(R.string.run_exp_not_exit),

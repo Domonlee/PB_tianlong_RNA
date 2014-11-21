@@ -1115,10 +1115,12 @@ public class Utlis {
 		return byteList;
 	}
 
-	// 得到下位机运行日志列表
+
+	//TODO 得到下位机运行日志列表
 	@SuppressLint("DefaultLocale")
 	public static List<Map<String, Object>> getRunFileList(List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
+		Log.w("getRunFileList", receive + "");
 		for (int i = 0; i < (receive.size() - 1); i++) {
 			String infos = receive
 					.get(i)

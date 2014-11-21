@@ -210,6 +210,11 @@ public class MachineActivity extends Activity {
 		selectInfoThread = new SelectInfoThread();
 		detectionInfoThread = new DetectionInfoThread();
 		user = userDao.getUserById(U_id, MachineActivity.this);
+
+		//11.21 增加同步 管理员
+		if (MainActivity.currentUserName.equals("admin")) {
+			user.setUadmin(1);
+		}
 		machine = machineDao.getMachine(MachineActivity.this);
 
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);

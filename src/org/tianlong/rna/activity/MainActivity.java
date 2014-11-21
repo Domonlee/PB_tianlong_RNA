@@ -51,14 +51,10 @@ public class MainActivity extends ActivityGroup {
 
 	// 紫外灯标志位
 	public static boolean uvFlag = true;
-	public static boolean closeDialog = false;
 	public static boolean closeFlag = false;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
-
-	private List<String> receive;
-	private List<String> infoList; // 转换后的文件列表
-	private int exp_id;
+	public static String currentUserName = "guest";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,13 +62,14 @@ public class MainActivity extends ActivityGroup {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		// 开启uv状态获取线程
-		uvFlag = true;
+//		uvFlag = true;
 		MachineStateInfo machineStateInfo = new MachineStateInfo(
 				MainActivity.this);
 		machineStateInfo.runflag = false;
 		intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
+		currentUserName = Uname;
 
 		gd = new GestureDetector(handListener);
 
@@ -110,7 +107,6 @@ public class MainActivity extends ActivityGroup {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						closeDialog = true;
 					}
 				});
 		dialog = builder.create();
@@ -221,15 +217,7 @@ public class MainActivity extends ActivityGroup {
 		public void run() {
 			while (uvFlag) {
 				try {
-					// if (closeFlag) {
-					// wifiUtlis.sendMessage(Utlis
-					// .ultravioletCloseMessage());
-					// queryUVHandler.removeCallbacks(queryUVThread);
-					// closeFlag = false;
-					// }
-					// else {
 					wifiUtlis.sendMessage(Utlis.getseleteMessage(13));
-					// }
 					Message message = queryUVHandler.obtainMessage();
 					message.what = 1;
 					message.obj = wifiUtlis.getMessage();
