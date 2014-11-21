@@ -124,9 +124,6 @@ public class RunExpActivity2 extends Activity {
 
 	private boolean selectInfoFlag = true; // 接收查询线程控制
 	private int startTimeControl, //
-			waitTimeControl, // 等待时间控制
-			blendTimeControl, // 混合时间控制
-			magnetTimeControl, // 磁吸时间控制
 			runNum, // 运行或继续控制
 			continueControl, // 继续按钮控制
 			controlNum, // 总步骤索引
@@ -407,18 +404,6 @@ public class RunExpActivity2 extends Activity {
 									// 如果是1,电机在等待状态
 									case 1:
 										if (controlNum < holders.size()) {
-											if (waitTimeControl == 0) {
-												waitTimeControl = 1;
-												if (continueControl != 1) {
-													waitTimeCount.start();
-													// Log.i("info",
-													// "电机等待状态启动等待");
-												} else {
-													continueControl = 0;
-												}
-												blendTimeControl = 0;
-												magnetTimeControl = 0;
-											}
 										} else {
 											selectInfoFlag = false;
 										}
@@ -428,33 +413,33 @@ public class RunExpActivity2 extends Activity {
 										// Log.i("info", "混合中:" +
 										// blendTimeControl
 										// + " 继续控制:" + continueControl);
-										if (blendTimeControl == 0) {
-											blendTimeControl = 1;
-											if (continueControl != 1) {
-//												blendTimeCount.start();
-											} else {
-												continueControl = 0;
-											}
-											waitTimeControl = 0;
-											magnetTimeControl = 0;
-										}
+//										if (blendTimeControl == 0) {
+//											blendTimeControl = 1;
+//											if (continueControl != 1) {
+////												blendTimeCount.start();
+//											} else {
+//												continueControl = 0;
+//											}
+//											waitTimeControl = 0;
+//											magnetTimeControl = 0;
+//										}
 										break;
 									// 如果是3,电机在磁吸状态
 									case 3:
-										Log.i("info", "磁吸中:"
-												+ magnetTimeControl + " 继续控制:"
-												+ continueControl);
-										if (magnetTimeControl == 0) {
-											magnetTimeControl = 1;
-											if (continueControl != 1) {
-												magnetTimeCount.start();
-												// Log.i("info", "磁吸启动了");
-											} else {
-												continueControl = 0;
-											}
-											waitTimeControl = 0;
-											blendTimeControl = 0;
-										}
+//										Log.i("info", "磁吸中:"
+//												+ magnetTimeControl + " 继续控制:"
+//												+ continueControl);
+//										if (magnetTimeControl == 0) {
+//											magnetTimeControl = 1;
+//											if (continueControl != 1) {
+//												magnetTimeCount.start();
+//												// Log.i("info", "磁吸启动了");
+//											} else {
+//												continueControl = 0;
+//											}
+//											waitTimeControl = 0;
+//											blendTimeControl = 0;
+//										}
 										break;
 									default:
 										break;
@@ -623,9 +608,7 @@ public class RunExpActivity2 extends Activity {
 														experiment_run_body_right_bottom_run_btn
 																.setText(getString(R.string.run));
 														startTimeControl = 0;
-														waitTimeControl = 0;
-														blendTimeControl = 0;
-														magnetTimeControl = 0;
+												
 														runBtnControl = 0;
 														continueControl = 0;
 														controlNum = 0;
@@ -790,15 +773,7 @@ public class RunExpActivity2 extends Activity {
 											.setText(getString(R.string.run));
 									viewDrawable.stop();
 									selectInfoFlag = false;
-									if (waitTimeControl == 1) {
-										waitTimeCount.pause();
-									}
-									if (blendTimeControl == 1) {
-										blendTimeCount.pause();
-									}
-									if (magnetTimeControl == 1) {
-										magnetTimeCount.pause();
-									}
+									
 									timeHandler.removeCallbacks(timeRunnable);
 								} catch (Exception e) {
 									Toast.makeText(RunExpActivity2.this,
@@ -816,25 +791,7 @@ public class RunExpActivity2 extends Activity {
 										try {
 											Log.w("info", "运行按钮继续按钮--" + runNum);
 											selectInfoFlag = true;
-											if (waitTimeControl != 0
-													|| blendTimeControl != 0
-													|| magnetTimeControl != 0) {
-												continueControl = 1;
-											} else {
-												continueControl = 0;
-											}
-											if (waitTimeControl == 1) {
-												waitTimeCount.resume();
-												waitTimeControl = 0;
-											}
-											if (blendTimeControl == 1) {
-												blendTimeCount.resume();
-												blendTimeControl = 0;
-											}
-											if (magnetTimeControl == 1) {
-												magnetTimeCount.resume();
-												magnetTimeControl = 0;
-											}
+											
 											new Thread(selectInfoThread)
 													.start();
 											viewDrawable.start();
@@ -1354,13 +1311,8 @@ public class RunExpActivity2 extends Activity {
 		}
 
 		public void onTick(long millisUntilFinished, int percent) {
-			if (continueControl == 1) {
-				waitTimeControl = 0;
-			} else {
-				waitTimeControl = 1;
-			}
-			magnetTimeControl = 0;
-			blendTimeControl = 0;
+			
+			
 			Date date = new Date(millisUntilFinished);
 			date.setHours(date.getHours() - 8);
 			String dtime = Utlis.timeFormat.format(date);
@@ -1375,7 +1327,7 @@ public class RunExpActivity2 extends Activity {
 
 		public void onFinish() {
 			waitTimeCount.cancel();
-			waitTimeControl = 0;
+		
 			holders.get(controlNum).experiment_run_item_head_wait_info_tv
 					.setText("00:00:00");
 			holders.get(controlNum).experiment_run_item_head_wait_pb
@@ -1396,13 +1348,8 @@ public class RunExpActivity2 extends Activity {
 		}
 
 		public void onTick(long millisUntilFinished, int percent) {
-			if (continueControl == 1) {
-				blendTimeControl = 0;
-			} else {
-				blendTimeControl = 1;
-			}
-			magnetTimeControl = 0;
-			waitTimeControl = 0;
+			
+			
 
 			Date date = new Date(millisUntilFinished);
 			date.setHours(date.getHours() - 8);
@@ -1418,7 +1365,7 @@ public class RunExpActivity2 extends Activity {
 
 		public void onFinish() {
 			blendTimeCount.cancel();
-			blendTimeControl = 0;
+;
 			holders.get(controlNum).experiment_run_item_head_blend_info_tv
 					.setText("00:00:00");
 			holders.get(controlNum).experiment_run_item_head_blend_pb
@@ -1439,13 +1386,7 @@ public class RunExpActivity2 extends Activity {
 		}
 
 		public void onTick(long millisUntilFinished, int percent) {
-			if (continueControl == 1) {
-				magnetTimeControl = 0;
-			} else {
-				magnetTimeControl = 1;
-			}
-			blendTimeControl = 0;
-			waitTimeControl = 0;
+			
 			Date date = new Date(millisUntilFinished);
 			date.setHours(date.getHours() - 8);
 			String dtime = Utlis.timeFormat.format(date);
@@ -1458,7 +1399,6 @@ public class RunExpActivity2 extends Activity {
 
 		public void onFinish() {
 			magnetTimeCount.cancel();
-			magnetTimeControl = 0;
 			holders.get(controlNum).experiment_run_item_head_magnet_info_tv
 					.setText("00:00:00");
 			holders.get(controlNum).experiment_run_item_head_magnet_pb
