@@ -95,8 +95,12 @@ public class UpAndDownActivity extends Activity {
 		Uname = intent.getStringExtra("Uname");
 		experimentDao = new ExperimentDao();
 		stepDao = new StepDao();
+		
+		//uid 数值不对
+		Log.w("up&down uid", U_id+"");
 		experiments = experimentDao.getAllExperimentsByU_id(
 				UpAndDownActivity.this, U_id);
+
 		experimentsList = new ArrayList<Map<String, Object>>();
 		upViewList = new ArrayList<Map<String, Object>>();
 		downViewList = new ArrayList<Map<String, Object>>();

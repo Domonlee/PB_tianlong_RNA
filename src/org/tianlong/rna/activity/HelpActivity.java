@@ -71,13 +71,11 @@ public class HelpActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 
 		help_logo_uname = (TextView) findViewById(R.id.help_top_uname_tv);
 		help_body_left_body_lv = (ListView) findViewById(R.id.help_left_lv);
 		help_body_right_rl = (RelativeLayout) findViewById(R.id.help_right_rl);
-		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+		machine_wifi_name_tv = (TextView) findViewById(R.id.machine_wifi_name_tv);
 		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		showAbout();
@@ -114,11 +112,7 @@ public class HelpActivity extends Activity {
 		// 仪器版本号 未获取
 		queryMachineInfoThread = new QueryMachineInfoThread();
 		new Thread(queryMachineInfoThread).start();
-		try {
-			wifiUtlis.sendMessage(Utlis.queryMachineInfo());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 
 		view = LayoutInflater.from(HelpActivity.this).inflate(
 				R.layout.activity_help_about, null);
@@ -138,9 +132,7 @@ public class HelpActivity extends Activity {
 				finish();
 			}
 		});
-		
 
-		
 		about_system_num_info.setText(systemNum);
 		help_body_right_rl.addView(view);
 	}
@@ -206,27 +198,41 @@ public class HelpActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				for (int i = 0; i < receive.size(); i++) {
-					receiveMeg = receive.get(i);
-					Log.i("info", "发送数据回复:" + receiveMeg);
-					queryFlag = false;
-						
-					if (receiveMeg.substring(12, 14).equals("08") && receiveMeg.substring(15, 17).equals("00") && receiveMeg.substring(18, 20).equals("00")){
-						String hole = receiveMeg.substring(21, 23);
-						machineVersionString = convertHexToString(hole);
-						hole = receiveMeg.substring(24, 26);
-						machineVersionString = machineVersionString + convertHexToString(hole);
-						hole = receiveMeg.substring(27, 29);
-						machineVersionString = machineVersionString + convertHexToString(hole);;
-						hole = receiveMeg.substring(30, 32);
-						machineVersionString = machineVersionString + convertHexToString(hole);
-						hole = receiveMeg.substring(33, 35);
-						machineVersionString = machineVersionString + convertHexToString(hole);
-						hole = receiveMeg.substring(36, 38);
-						machineVersionString = machineVersionString + convertHexToString(hole);
-						hole = receiveMeg.substring(39, 41);
-						machineVersionString = machineVersionString + convertHexToString(hole);
-						about_machine_num_info.setText(machineVersionString);
+				Log.w("receive", receive.toString());
+				if (!(receive.toString()
+						.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+					for (int i = 0; i < receive.size(); i++) {
+						receiveMeg = receive.get(i);
+						Log.i("info", "发送数据回复:" + receiveMeg);
+						queryFlag = false;
+
+						if (receiveMeg.substring(12, 14).equals("08")
+								&& receiveMeg.substring(15, 17).equals("00")
+								&& receiveMeg.substring(18, 20).equals("00")) {
+							String hole = receiveMeg.substring(21, 23);
+							machineVersionString = convertHexToString(hole);
+							hole = receiveMeg.substring(24, 26);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							hole = receiveMeg.substring(27, 29);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							;
+							hole = receiveMeg.substring(30, 32);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							hole = receiveMeg.substring(33, 35);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							hole = receiveMeg.substring(36, 38);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							hole = receiveMeg.substring(39, 41);
+							machineVersionString = machineVersionString
+									+ convertHexToString(hole);
+							about_machine_num_info
+									.setText(machineVersionString);
+						}
 					}
 				}
 			} else {
@@ -234,7 +240,6 @@ public class HelpActivity extends Activity {
 			}
 		}
 	};
-
 
 	// 查询仪器版本号
 	class QueryMachineInfoThread implements Runnable {
@@ -245,31 +250,32 @@ public class HelpActivity extends Activity {
 					message.obj = wifiUtlis.getByteMessage();
 					queryMachineInfoHandler.sendMessage(message);
 					Thread.sleep(500);
+					wifiUtlis.sendMessage(Utlis.queryMachineInfo());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	};
-	
-	public String convertHexToString(String hex){  
-		  
-	      StringBuilder sb = new StringBuilder();  
-	      StringBuilder temp = new StringBuilder();  
-	  
-	      //49204c6f7665204a617661 split into two characters 49, 20, 4c...  
-	      for( int i=0; i<hex.length()-1; i+=2 ){  
-	  
-	          //grab the hex in pairs  
-	          String output = hex.substring(i, (i + 2));  
-	          //convert hex to decimal  
-	          int decimal = Integer.parseInt(output, 16);  
-	          //convert the decimal to character  
-	          sb.append((char)decimal);  
-	  
-	          temp.append(decimal);  
-	      }  
-	  
-	      return sb.toString();  
-	      }  
+
+	public String convertHexToString(String hex) {
+
+		StringBuilder sb = new StringBuilder();
+		StringBuilder temp = new StringBuilder();
+
+		// 49204c6f7665204a617661 split into two characters 49, 20, 4c...
+		for (int i = 0; i < hex.length() - 1; i += 2) {
+
+			// grab the hex in pairs
+			String output = hex.substring(i, (i + 2));
+			// convert hex to decimal
+			int decimal = Integer.parseInt(output, 16);
+			// convert the decimal to character
+			sb.append((char) decimal);
+
+			temp.append(decimal);
+		}
+
+		return sb.toString();
+	}
 }

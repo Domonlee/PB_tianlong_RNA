@@ -73,7 +73,11 @@ public class RunFileActivity extends Activity {
 		setContentView(R.layout.activity_runfile);
 		try {
 			wifiUtlis = new WifiUtlis(RunFileActivity.this);
-			wifiUtlis.sendMessage(Utlis.sendSelectRunfileList());
+			try {
+				wifiUtlis.sendMessage(Utlis.sendSelectRunfileList());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			new Thread(listThread).start();
 		} catch (Exception e) {
 			Toast.makeText(RunFileActivity.this,
@@ -198,11 +202,23 @@ public class RunFileActivity extends Activity {
 						receive.removeAll(receive);
 					}
 					receive = Utlis.getReceive(info);
-					strings = Utlis.getRunFileList(receive);
-					logListAdapert = new RunFileAdapert(strings,
-							RunFileActivity.this);
-					runfile_left_lv.setAdapter(logListAdapert);
-					readListFlag = false;
+					// Log.w("runfile receive", receive.toString());
+					if (!(receive.toString()
+							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+						strings = Utlis.getRunFileList(receive);
+						Log.w("Strings", strings +"");
+						logListAdapert = new RunFileAdapert(strings,
+								RunFileActivity.this);
+						runfile_left_lv.setAdapter(logListAdapert);
+						readListFlag = false;
+					}
+					else {
+						try {
+							wifiUtlis.sendMessage(Utlis.sendSelectRunfileList());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		};
@@ -213,6 +229,7 @@ public class RunFileActivity extends Activity {
 		public void run() {
 			while (readListFlag) {
 				try {
+					
 					Message message = readListHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
@@ -233,8 +250,14 @@ public class RunFileActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
-				readInfoFlag = false;
+				 Log.w("runfile receive---", receive.toString().substring(0, 26));
+				 Log.w("runfile receive---", receive.toString().substring(16, 21));
+
+				if (!(receive.toString().substring(16, 21)
+						.equals("0c ff"))) {
+					runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
+					readInfoFlag = false;
+				}
 			}
 		};
 	};

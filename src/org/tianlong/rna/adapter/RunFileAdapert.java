@@ -70,7 +70,6 @@ public class RunFileAdapert extends BaseAdapter {
 		} else {
 			holder.newItemImage.setVisibility(View.GONE);
 		}
-
 		return convertView;
 	}
 

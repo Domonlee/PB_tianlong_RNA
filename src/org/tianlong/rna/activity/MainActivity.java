@@ -54,7 +54,8 @@ public class MainActivity extends ActivityGroup {
 	public static boolean closeFlag = false;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
-	public static String currentUserName = "guest";
+	public static String currentUserName = "";
+	public static int currentUserId = 1;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +71,9 @@ public class MainActivity extends ActivityGroup {
 		U_id = intent.getIntExtra("U_id", 9999);
 		Uname = intent.getStringExtra("Uname");
 		currentUserName = Uname;
+		currentUserId = U_id;
+
+		Log.w("MainActivity", "Uname="+ currentUserName+";U_id="+ currentUserId	);
 
 		gd = new GestureDetector(handListener);
 
@@ -237,7 +241,7 @@ public class MainActivity extends ActivityGroup {
 			// Log.w(TAG, "handler");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
-				// Log.w(TAG, info);
+				 Log.w(TAG, info);
 				if (info.substring(24, 26).equals("00")) {
 					dialog.dismiss();
 					closeFlag = false;
@@ -254,7 +258,6 @@ public class MainActivity extends ActivityGroup {
 				// 仪器状态检测
 				if (info.substring(21, 23).equals("00")
 						|| info.substring(21, 23).equals("05")) {
-					// 测试代码 机器停止状态 跳转到另外一个地址 并且发送数据。
 					// Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
 					// Log.w(TAG, "machine is runing ");
@@ -263,7 +266,6 @@ public class MainActivity extends ActivityGroup {
 					startActivity(intent);
 				}
 			}
-			// queryUVHandler.removeMessages(1);
 		};
 	};
 

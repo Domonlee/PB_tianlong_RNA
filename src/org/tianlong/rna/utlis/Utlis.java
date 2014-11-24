@@ -790,6 +790,7 @@ public class Utlis {
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);
+		Log.w("getReceive message", info);
 		while (info.indexOf("ff ff ") == 0) {
 			int length = Integer.parseInt(info.substring(6, 8), 16); // 得到命令信息长度
 			strings.add(info.substring(0, length * 3)); // 得到所有命令
@@ -1203,6 +1204,7 @@ public class Utlis {
 		bytes.add(byteList[6]);
 		byteList[7] = getCheckCode(bytes);
 		byteList[8] = (byte) Integer.parseInt("FE", 16);
+		Log.w("sendRunfileInfo", byteList +"");
 		return byteList;
 	}
 }

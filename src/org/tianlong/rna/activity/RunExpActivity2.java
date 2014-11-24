@@ -872,7 +872,7 @@ public class RunExpActivity2 extends Activity {
 								Intent intent = null;
 								intent = new Intent(RunExpActivity2.this,
 										MainActivity.class);
-								intent.putExtra("U_id", U_id);
+								intent.putExtra("U_id", MainActivity.currentUserId);
 								//11.20
 								intent.putExtra("Uname",MainActivity.currentUserName);
 								selectInfoFlag = false;
@@ -900,14 +900,14 @@ public class RunExpActivity2 extends Activity {
 					public void onClick(View v) {
 						if (runBtnControl == 0) {
 							if (wifiUtlis != null) {
-								wifiUtlis.close();
+//								wifiUtlis.close();
 								selectInfoFlag = false;
 							}
 							Intent intent = null;
 							intent = new Intent(RunExpActivity2.this,
 									MainActivity.class);
 								selectInfoFlag = false;
-							intent.putExtra("U_id", U_id);
+							intent.putExtra("U_id", MainActivity.currentUserId);
 							intent.putExtra("Uname", MainActivity.currentUserName);
 							MainActivity.uvFlag = false;
 							startActivity(intent);
@@ -1462,7 +1462,7 @@ public class RunExpActivity2 extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		if (wifiUtlis != null) {
-			wifiUtlis.close();
+//			wifiUtlis.close();
 			selectInfoFlag = false;
 		}
 		// if(homePressReceiver != null){
