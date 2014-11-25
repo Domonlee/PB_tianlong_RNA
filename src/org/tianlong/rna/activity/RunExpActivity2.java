@@ -147,18 +147,15 @@ public class RunExpActivity2 extends Activity {
 	// 将下位机实验数据转换成Pad实验数据handler
 	private Handler getExperimentInfoHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			Log.w("Handler", "handler");
+			Log.w("Handler", "getExperimentInfoHandler");
 			byte[] info = (byte[]) msg.obj;
 			if (info != null) {
-
 				if (info.length != 0) {
 					if (receive != null) {
 						receive.removeAll(receive);
 					}
 					receive = Utlis.getReceive(info);
-					// Log.w(TAG + "receive", receive + "");
 					infoList = Utlis.getExperimentInfoList(receive);
-//					Log.w(TAG + "infoList", infoList + "");
 					Experiment experiment = new Experiment();
 					try {
 						if (infoList.size() != 0) {
@@ -221,7 +218,7 @@ public class RunExpActivity2 extends Activity {
 								experiment_run_body_left_top_name_tv
 										.setText(experiment.getEname());
 								createTable();
-								Log.w("RunExp", "表格绘制完成");
+								Log.w("RunExp--", "表格绘制完成");
 
 								experiments = experimentDao
 										.getAllExperimentsByU_id(
@@ -244,12 +241,11 @@ public class RunExpActivity2 extends Activity {
 			try {
 				try {
 					wifiUtlis = new WifiUtlis(RunExpActivity2.this);
-					// wifiUtlis.sendMessage(Utlis.sendExperimentId(3));
 					wifiUtlis.sendMessage(Utlis.sendExperimentId(96));
+					Log.w("Run2", "发送查询消息");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				Log.w("Thread", "thread");
 				Thread.sleep(1000);
 				Message message = getExperimentInfoHandler.obtainMessage();
 				message.obj = wifiUtlis.getByteMessage();
@@ -270,10 +266,10 @@ public class RunExpActivity2 extends Activity {
 				if (info.length != 0) {
 					// Log.i("info", "不为空");
 					receive = Utlis.getReceive(info);
-					Log.i("info-------", "命令:" + receive);
+//					Log.i("info-------", "命令:" + receive);
 					for (int i = 0; i < receive.size(); i++) {
 						receiveMeg = receive.get(i);
-						Log.i("info", "命令:" + receiveMeg);
+//						Log.i("info", "命令:" + receiveMeg);
 						index = Integer.parseInt(receiveMeg.substring(15, 17),
 								16);
 						// 判断停止成功方法
@@ -341,7 +337,7 @@ public class RunExpActivity2 extends Activity {
 									// Log.i("info", "查询电机位置回复："+receiveMeg);
 									control = Integer.parseInt(
 											receiveMeg.substring(21, 23), 16);
-									Log.i("info", "电机位置:" + control);
+//									Log.i("info", "电机位置:" + control);
 									// 根据电机位置索引处理相应方法
 									switch (control) {
 									// 如果是0,电机在停止状态
@@ -526,22 +522,17 @@ public class RunExpActivity2 extends Activity {
 									}
 									if (Integer.parseInt(
 											receiveMeg.substring(24, 26), 16) != 5) {
-										Log.w("info",
-												"跳转步骤="
-														+ receiveMeg.substring(
-																24, 26));
-										Log.w("info", "Control=" + controlNum);
+//										Log.w("info",
+//												"跳转步骤="
+//														+ receiveMeg.substring(
+//																24, 26));
+//										Log.w("info", "Control=" + controlNum);
 
 										// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 										if ((controlNum + 1) != Integer
 												.parseInt(receiveMeg.substring(
 														21, 23), 16)) {
-											Log.w("info",
-													"跳转步骤="
-															+ receiveMeg
-																	.substring(
-																			21,
-																			23));
+
 											continueControl = 0;
 											if (viewDrawable != null) {
 												viewDrawable.stop();
@@ -643,6 +634,11 @@ public class RunExpActivity2 extends Activity {
 																.removeAllViews();
 														viewDrawable = null;
 														createTable();
+														
+														//11.25 增加返回
+														runBtnControl = 1;
+														experiment_run_body_right_bottom_stop_btn.setText(R.string.back);
+														
 													}
 												});
 										builder.show();
@@ -704,6 +700,7 @@ public class RunExpActivity2 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment_run);
+		Log.w("RunExpActivity2", "onCreate");
 		stepDao = new StepDao();
 		// step 第一次初始化为空
 		steps = stepDao.getAllStep(RunExpActivity2.this, exp_id);
@@ -877,10 +874,9 @@ public class RunExpActivity2 extends Activity {
 								intent.putExtra("Uname",MainActivity.currentUserName);
 								selectInfoFlag = false;
 								MainActivity.uvFlag = false;
-								startActivity(intent);
+								setResult(1, intent);
 								finish();
 
-//								
 								runBtnControl = 0;
 								dialog.dismiss();
 							} catch (Exception e) {
@@ -910,7 +906,7 @@ public class RunExpActivity2 extends Activity {
 							intent.putExtra("U_id", MainActivity.currentUserId);
 							intent.putExtra("Uname", MainActivity.currentUserName);
 							MainActivity.uvFlag = false;
-							startActivity(intent);
+							setResult(1, intent);
 							finish();
 						} else {
 							Toast.makeText(RunExpActivity2.this,
@@ -925,8 +921,6 @@ public class RunExpActivity2 extends Activity {
 	}
 
 	public void initView() {
-
-		
 		// sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
 
 		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
@@ -962,6 +956,10 @@ public class RunExpActivity2 extends Activity {
 		experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		hideTempBody();
 		// getTime(0);
+		
+		experiment_run_body_right_bottom_back_btn.setVisibility(View.GONE);
+		experiment_run_body_right_bottom_run_btn.setVisibility(View.GONE);
+		
 
 	}
 
@@ -985,6 +983,7 @@ public class RunExpActivity2 extends Activity {
 	}
 
 	private void createTable() {
+		Log.w("RunExpActivity2", "createTable");
 		experiment_run_body_right_body_hsv.scrollTo(0, 0);
 		for (int i = 0; i < steps.size(); i++) {
 			final RunExpViewHolder holder = new RunExpViewHolder();
@@ -1407,53 +1406,6 @@ public class RunExpActivity2 extends Activity {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// if (keyCode == KeyEvent.KEYCODE_BACK) {
-		// if (runBtnControl != 0) {
-		// AlertDialog.Builder builder = new AlertDialog.Builder(
-		// RunExpActivity2.this);
-		// builder.setTitle(getString(R.string.run_exp_not_exit));
-		// builder.setPositiveButton(getString(R.string.sure),
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog,
-		// int which) {
-		// dialog.cancel();
-		// }
-		// });
-		// builder.show();
-		// } else {
-		// AlertDialog.Builder builder = new AlertDialog.Builder(
-		// RunExpActivity2.this);
-		// builder.setTitle(getString(R.string.sure_exit));
-		// builder.setPositiveButton(getString(R.string.sure),
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog,
-		// int which) {
-		// // Process.killProcess(android.os.Process.myPid());
-		// finish();
-		// }
-		// });
-		// builder.setNegativeButton(getString(R.string.cancle),
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog,
-		// int which) {
-		// dialog.cancel();
-		// }
-		// });
-		// builder.show();
-		// }
-		// }
-		// if (keyCode == KeyEvent.KEYCODE_POWER) {
-		// AlertDialog.Builder builder = new AlertDialog.Builder(
-		// RunExpActivity2.this);
-		// builder.setTitle(getString(R.string.run_exp_not_exit));
-		// builder.setPositiveButton(getString(R.string.sure),
-		// new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int which) {
-		// dialog.cancel();
-		// }
-		// });
-		// builder.show();
-		// }
 		finish();
 		return super.onKeyDown(keyCode, event);
 	}

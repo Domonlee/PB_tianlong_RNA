@@ -52,6 +52,7 @@ public class MainActivity extends ActivityGroup {
 	// 紫外灯标志位
 	public static boolean uvFlag = true;
 	public static boolean closeFlag = false;
+	public static boolean runFlag = true;
 	private Dialog dialog;
 	private String TAG = "UV Thread";
 	public static String currentUserName = "";
@@ -130,6 +131,16 @@ public class MainActivity extends ActivityGroup {
 		});
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == 1) {
+			U_id = data.getIntExtra("U_id", 9999);
+			Uname = data.getStringExtra("Uname");
+		}
+		
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	private void SwitchActivity(int tid) {
 		main_body_rl.removeAllViews();
 		Intent intent = null;
@@ -261,9 +272,12 @@ public class MainActivity extends ActivityGroup {
 					// Log.w(TAG, "machine is stop ");
 				} else if (info.substring(21, 23).equals("03")) {
 					// Log.w(TAG, "machine is runing ");
+					if (runFlag == true) {
 					Intent intent = new Intent(MainActivity.this,
 							RunExpActivity2.class);
-					startActivity(intent);
+					startActivityForResult(intent, 1);
+					runFlag = false;
+					}
 				}
 			}
 		};
@@ -281,6 +295,7 @@ public class MainActivity extends ActivityGroup {
 		new Thread(queryUVThread).start();
 		closeFlag = false;
 		uvFlag = true;
+		runFlag = true;
 		Log.w("TAG", "onStart");
 		super.onStart();
 	}

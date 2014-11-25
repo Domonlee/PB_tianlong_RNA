@@ -1680,7 +1680,9 @@ public class RunExperimentActivity extends Activity {
 		hour = 0;
 		min = 0;
 		sec = 0;
+		Log.w("colNum", "colNum="+ colNum);
 		for (int j = colNum; j < steps.size(); j++) {
+		Log.w("j	", "j="+ j);
 			try {
 				sec = sec
 						+ Utlis.timeFormat.parse(steps.get(j).getSwait())

@@ -790,7 +790,7 @@ public class Utlis {
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);
-		Log.w("getReceive message", info);
+//		Log.w("getReceive message", info);
 		while (info.indexOf("ff ff ") == 0) {
 			int length = Integer.parseInt(info.substring(6, 8), 16); // 得到命令信息长度
 			strings.add(info.substring(0, length * 3)); // 得到所有命令
