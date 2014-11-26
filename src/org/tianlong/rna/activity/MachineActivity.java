@@ -2476,7 +2476,6 @@ public class MachineActivity extends Activity {
 								animationDrawable.start();
 								wifiUtlis.sendMessage(Utlis
 										.sendDetectionMessage(4));
-
 								Log.w("Test", "加热条");
 								printHexString(Utlis.sendDetectionMessage(4));
 								checkNum++;
@@ -2492,9 +2491,6 @@ public class MachineActivity extends Activity {
 			}
 		};
 	};
-
-	// 判断字符串合法值
-
 
 	// 将指定byte数组以16进制的形式打印到控制台
 	public static void printHexString(byte[] b) {

@@ -313,6 +313,12 @@ public class MainActivity extends ActivityGroup {
 		Log.w("TAG", "onDestroy");
 		super.onDestroy();
 	}
+	
+	@Override
+	protected void onResume() {
+		Log.w("TAG", "onResume");
+		super.onResume();
+	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {

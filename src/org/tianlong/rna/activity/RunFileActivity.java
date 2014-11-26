@@ -114,7 +114,6 @@ public class RunFileActivity extends Activity {
 										arg2).get("id")));
 						experNameString = (String) strings.get(arg2)
 								.get("info");
-
 						new Thread(infoThread).start();
 					} catch (Exception e) {
 						Toast.makeText(RunFileActivity.this,

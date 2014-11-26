@@ -672,7 +672,6 @@ public class RunExperimentActivity extends Activity {
 		experiment_run_body_left_top_name_tv.setText(experiment.getEname());
 
 		// TODO runBtn
-//		experiment_run_body_right_bottom_run_btn.performClick();
 		experiment_run_body_right_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
