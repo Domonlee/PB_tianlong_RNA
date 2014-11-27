@@ -253,6 +253,10 @@ public class MainActivity extends ActivityGroup {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
 				 Log.w(TAG, info);
+				 //11.27增加获取信息判断
+					
+				 
+//				if (info.substring(0, 18).equals("ff ff 0b 51 02 0d ") &&info.substring(24, 26).equals("00")) {
 				if (info.substring(24, 26).equals("00")) {
 					dialog.dismiss();
 					closeFlag = false;
@@ -317,6 +321,8 @@ public class MainActivity extends ActivityGroup {
 	@Override
 	protected void onResume() {
 		Log.w("TAG", "onResume");
+		displayWifiName();
+		machine_wifi_name_tv.setText(machine_wifi_name);
 		super.onResume();
 	}
 

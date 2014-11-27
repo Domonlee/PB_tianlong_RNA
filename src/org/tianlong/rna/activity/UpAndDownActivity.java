@@ -95,9 +95,9 @@ public class UpAndDownActivity extends Activity {
 		Uname = intent.getStringExtra("Uname");
 		experimentDao = new ExperimentDao();
 		stepDao = new StepDao();
-		
-		//uid 数值不对
-		Log.w("up&down uid", U_id+"");
+
+		// uid 数值不对
+		Log.w("up&down uid", U_id + "");
 		experiments = experimentDao.getAllExperimentsByU_id(
 				UpAndDownActivity.this, U_id);
 
@@ -496,10 +496,21 @@ public class UpAndDownActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				experimentsList = Utlis.getExperimentList(receive);
-				activity_upanddown_down_top_lv.setAdapter(new DownAdapter(
-						UpAndDownActivity.this, experimentsList, deleteFlag));
-				readListFlag = false;
+				Log.w("读取下位机实验列表", receive.toString());
+				if (!(receive.toString()
+						.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+					experimentsList = Utlis.getExperimentList(receive);
+					activity_upanddown_down_top_lv
+							.setAdapter(new DownAdapter(UpAndDownActivity.this,
+									experimentsList, deleteFlag));
+					readListFlag = false;
+				} else {
+					try {
+						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 	};
@@ -509,16 +520,11 @@ public class UpAndDownActivity extends Activity {
 		public void run() {
 			while (readListFlag) {
 				try {
-//					try {
-//						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
 					Message message = readListHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
 					Thread.sleep(1000);
-					
+
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
