@@ -1130,6 +1130,7 @@ public class Utlis {
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
 			//FIXME 11、19  长度问题
+			//FIXME 消息获取穿插5条同步数据
 			map.put("num",
 					Integer.valueOf(infos.substring(infos.length() - 2,
 							infos.length() - 1)));

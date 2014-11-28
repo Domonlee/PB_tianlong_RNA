@@ -15,6 +15,7 @@ import org.tianlong.rna.utlis.WifiUtlis;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,12 +62,19 @@ public class RunFileActivity extends Activity {
 	private String Uname;
 	private String experNameString;
 	public static int listChooseId = 0;
+	
+	public ProgressDialog pDialog;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		MainActivity.uvFlag = false;
+		
+		pDialog = new ProgressDialog(RunFileActivity.this);
+		pDialog.setMessage("数据加载中请稍后");
+		pDialog.show();
+//		pDialog = ProgressDialog.show(RunFileActivity.this, "实验日志", "数据加载中请稍后");
 
 		listThread = new readListThread();
 		infoThread = new readInfoThread();
@@ -205,10 +213,15 @@ public class RunFileActivity extends Activity {
 					}
 					receive = Utlis.getReceive(info);
 					// Log.w("runfile receive", receive.toString());
-					if (!(receive.toString()
+					//FIXME
+//					if (!(receive.toString()
+//							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+					for (int i = 0; i < receive.size(); i++) {
+					if (!(receive.get(i).toString()
 							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
 						strings = Utlis.getRunFileList(receive);
 						Log.w("Strings", strings + "");
+						pDialog.dismiss();
 						logListAdapert = new RunFileAdapert(strings,
 								RunFileActivity.this);
 						runfile_left_lv.setAdapter(logListAdapert);
@@ -222,6 +235,7 @@ public class RunFileActivity extends Activity {
 						}
 					}
 				}
+			}
 			}
 		};
 	};
