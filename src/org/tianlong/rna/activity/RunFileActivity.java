@@ -62,7 +62,7 @@ public class RunFileActivity extends Activity {
 	private String Uname;
 	private String experNameString;
 	public static int listChooseId = 0;
-	
+
 	public ProgressDialog pDialog;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +70,12 @@ public class RunFileActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		MainActivity.uvFlag = false;
-		
+
 		pDialog = new ProgressDialog(RunFileActivity.this);
 		pDialog.setMessage("数据加载中请稍后");
 		pDialog.show();
-//		pDialog = ProgressDialog.show(RunFileActivity.this, "实验日志", "数据加载中请稍后");
+		// pDialog = ProgressDialog.show(RunFileActivity.this, "实验日志",
+		// "数据加载中请稍后");
 
 		listThread = new readListThread();
 		infoThread = new readInfoThread();
@@ -213,29 +214,30 @@ public class RunFileActivity extends Activity {
 					}
 					receive = Utlis.getReceive(info);
 					// Log.w("runfile receive", receive.toString());
-					//FIXME
-//					if (!(receive.toString()
-//							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+					// XXX 
+					// if (!(receive.toString()
+					// .equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
 					for (int i = 0; i < receive.size(); i++) {
-					if (!(receive.get(i).toString()
-							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
-						strings = Utlis.getRunFileList(receive);
-						Log.w("Strings", strings + "");
-						pDialog.dismiss();
-						logListAdapert = new RunFileAdapert(strings,
-								RunFileActivity.this);
-						runfile_left_lv.setAdapter(logListAdapert);
-						readListFlag = false;
-					} else {
-						try {
-							wifiUtlis
-									.sendMessage(Utlis.sendSelectRunfileList());
-						} catch (Exception e) {
-							e.printStackTrace();
+						if (!(receive.get(i).toString()
+								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+							strings = Utlis.getRunFileList(receive);
+							Log.w("Strings", strings + "");
+							logListAdapert = new RunFileAdapert(strings,
+									RunFileActivity.this);
+							pDialog.dismiss();
+							runfile_left_lv.setAdapter(logListAdapert);
+							readListFlag = false;
+						} else {
+							try {
+								wifiUtlis.sendMessage(Utlis
+										.sendSelectRunfileList());
+								Log.w("RunFileActivity", "仪器日志获取失败");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
-			}
 			}
 		};
 	};
@@ -266,9 +268,8 @@ public class RunFileActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-//				Log.w("runfile receive---", receive.toString().substring(0, 26));
-//				Log.w("runfile receive---", receive.toString()
-//						.substring(16, 21));
+				// Log.w("runfile receive---", receive.toString()
+				// .substring(16, 21));
 
 				if (!(receive.toString().substring(16, 21).equals("0c ff"))) {
 					runfile_right_tv.setText(Utlis.getRunFileInfo(receive));

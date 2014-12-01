@@ -210,8 +210,8 @@
     <string name="exp_magnetic">磁   吸</string>
     <string name="exp_hole">孔   位</string>
     <string name="exp_vol">体   积</string>
-    <string name="exp_blend_speed">混合频率</string>
-    <string name="exp_speed_unit">&#032;Hz</string>
+    <string name="exp_blend_speed">混合模式</string>
+    <string name="exp_speed_unit">&#032;</string>
     <string name="exp_temp">温   度</string>
     <string name="exp_temp_unit">°C</string>
     <string name="exp_temp_type">温度状态</string>
@@ -232,7 +232,7 @@
     <string name="exp_vol_small">体积不能小于</string>
     <string name="exp_vol_empty">体积不能为空</string>
     <string name="exp_vol_setting">体积设定(ul)</string>
-    <string name="exp_speed_select">混合频率选择(Hz)</string>
+    <string name="exp_speed_select">混合模式选择</string>
     <string name="exp_temp_big">温度不能大于120°C</string>
     <string name="exp_temp_small">温度不能小于30°C</string>
     <string name="exp_temp_empty">温度不能为空</string>

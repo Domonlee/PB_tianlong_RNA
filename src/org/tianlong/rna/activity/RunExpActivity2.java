@@ -17,6 +17,7 @@ import org.tianlong.rna.utlis.AdvancedCountdownTimer;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -128,6 +129,7 @@ public class RunExpActivity2 extends Activity {
 			controlNum, // 总步骤索引
 			stopBtn, // 停止控制
 			pauseCtrl;// 仪器操作暂停控制 0为运行，1为暂停
+	private int stopDialogCtrl = 0;
 
 	private int runBtnControl = 1; // 运行按钮控制
 
@@ -224,10 +226,10 @@ public class RunExpActivity2 extends Activity {
 											RunExpActivity2.this, exp_id);
 									experiment_run_body_left_top_name_tv
 											.setText(experiment.getEname());
+									Log.w("RunExp--", "表格绘制");
 									createTable();
 									runInfoDialog.dismiss();
 									Log.w("RunExp--", "表格绘制完成");
-
 									experiments = experimentDao
 											.getAllExperimentsByU_id(
 													RunExpActivity2.this, U_id);
@@ -277,7 +279,6 @@ public class RunExpActivity2 extends Activity {
 				if (info.length != 0) {
 					// Log.i("info", "不为空");
 					receive = Utlis.getReceive(info);
-					// Log.i("info-------", "命令:" + receive);
 					for (int i = 0; i < receive.size(); i++) {
 						receiveMeg = receive.get(i);
 						// Log.i("info", "命令:" + receiveMeg);
@@ -391,8 +392,6 @@ public class RunExpActivity2 extends Activity {
 																1000);
 
 														waitTimeCount.start();
-														// Log.i("info",
-														// "电机停止状态启动等待");
 													} catch (Exception e) {
 														e.printStackTrace();
 													}
@@ -454,7 +453,6 @@ public class RunExpActivity2 extends Activity {
 									break;
 								// 如果是5号查询就是温度查询
 								case 5:
-									// Log.i("info", "查询温度回复："+receiveMeg);
 									t1 = (Integer.parseInt(
 											receiveMeg.substring(21, 23)
 													+ receiveMeg.substring(24,
@@ -533,24 +531,16 @@ public class RunExpActivity2 extends Activity {
 									}
 									if (Integer.parseInt(
 											receiveMeg.substring(24, 26), 16) != 5) {
-										// Log.w("info",
-										// "跳转步骤="
-										// + receiveMeg.substring(
-										// 24, 26));
-										// Log.w("info", "Control=" +
-										// controlNum);
 
 										// 如果下位机当前运行步骤不等于总步骤索引并且总索引不为0时跳转到下一个步骤
 										if ((controlNum + 1) != Integer
 												.parseInt(receiveMeg.substring(
 														21, 23), 16)) {
-
 											continueControl = 0;
 											if (viewDrawable != null) {
 												viewDrawable.stop();
 											}
 											try {
-
 												views.get(controlNum)
 														.setBackgroundResource(
 																R.anim.anim_view);
@@ -588,7 +578,10 @@ public class RunExpActivity2 extends Activity {
 									}
 									// 当总步骤索引等于或大于总步骤数时实验结束
 									else {
+										// 设置运行结束对话框关闭标志
+										stopDialogCtrl += 1;
 										selectInfoFlag = false;
+										Log.w("dialog", receiveMeg + "");
 										timeHandler
 												.removeCallbacks(timeRunnable);
 										// 11.18
@@ -598,65 +591,72 @@ public class RunExpActivity2 extends Activity {
 											viewDrawable.stop();
 										} catch (Exception e) {
 										}
-										builder = new AlertDialog.Builder(
-												RunExpActivity2.this);
-										builder.setTitle(getString(R.string.run_exp_finsh));
-										builder.setCancelable(false);
-										builder.setPositiveButton(
-												getString(R.string.sure),
-												new DialogInterface.OnClickListener() {
-													public void onClick(
-															DialogInterface dialog,
-															int which) {
-														wifiUtlis
-																.getByteMessage();
-														experiment_run_body_right_bottom_run_btn
-																.setText(getString(R.string.run));
-														startTimeControl = 0;
 
-														runBtnControl = 0;
-														continueControl = 0;
-														controlNum = 0;
-														runNum = 2;
-														if (views.size() != 0) {
+										if (stopDialogCtrl == 1) {
+											
+											if (runInfoDialog.isShowing()) {
+												runInfoDialog.dismiss();
+											}
+
+											builder = new AlertDialog.Builder(
+													RunExpActivity2.this);
+											Log.w("builder", "end builder");
+											builder.setTitle(getString(R.string.run_exp_finsh));
+											builder.setCancelable(false);
+											builder.setPositiveButton(
+													getString(R.string.sure),
+													new DialogInterface.OnClickListener() {
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															wifiUtlis
+																	.getByteMessage();
+															startTimeControl = 0;
+															runBtnControl = 0;
+															continueControl = 0;
+															controlNum = 0;
+															runNum = 2;
+															if (views.size() != 0) {
+																views.removeAll(views);
+															}
+															if (holders.size() != 0) {
+																holders.removeAll(holders);
+															}
+															if (waitTimeList
+																	.size() != 0) {
+																waitTimeList
+																		.removeAll(waitTimeList);
+															}
+															if (blendTimeList
+																	.size() != 0) {
+																blendTimeList
+																		.removeAll(blendTimeList);
+															}
+															if (magnetTimeList
+																	.size() != 0) {
+																magnetTimeList
+																		.removeAll(magnetTimeList);
+															}
+															stepRow.removeAllViews();
 															views.removeAll(views);
-														}
-														if (holders.size() != 0) {
 															holders.removeAll(holders);
+															timeHandler
+																	.removeCallbacks(timeRunnable);
+															getTime(0);
+															experiment_run_body_right_body_tl
+																	.removeAllViews();
+															viewDrawable = null;
+															// XXX
+															createTable();
+															// 11.25 增加返回
+															runBtnControl = 1;
+															experiment_run_body_right_bottom_stop_btn
+																	.setText(R.string.back);
 														}
-														if (waitTimeList.size() != 0) {
-															waitTimeList
-																	.removeAll(waitTimeList);
-														}
-														if (blendTimeList
-																.size() != 0) {
-															blendTimeList
-																	.removeAll(blendTimeList);
-														}
-														if (magnetTimeList
-																.size() != 0) {
-															magnetTimeList
-																	.removeAll(magnetTimeList);
-														}
-														stepRow.removeAllViews();
-														views.removeAll(views);
-														holders.removeAll(holders);
-														timeHandler
-																.removeCallbacks(timeRunnable);
-														getTime(0);
-														experiment_run_body_right_body_tl
-																.removeAllViews();
-														viewDrawable = null;
-														createTable();
-
-														// 11.25 增加返回
-														runBtnControl = 1;
-														experiment_run_body_right_bottom_stop_btn
-																.setText(R.string.back);
-
-													}
-												});
-										builder.show();
+													});
+											builder.show();
+											stopDialogCtrl++;
+										}
 									}
 									break;
 								default:
@@ -1428,35 +1428,35 @@ public class RunExpActivity2 extends Activity {
 		}
 	}
 
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		// 11.26增加返回按钮捕获
-//		// runBtnControl=0 实验停止
-//		
-//		Log.w("back", "back");
-//		if (keyCode == KeyEvent.KEYCODE_BACK) {
-//			if (runBtnControl == 0) {
-////				finish();
-//				Log.w("back", "finish");
-//			} else {
-//				Toast.makeText(getApplicationContext(),
-//						getString(R.string.run_exp_not_exit),
-//						Toast.LENGTH_SHORT).show();
-//				Log.w("back", "toast");
-//			}
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
-//	
-	
+	// @Override
+	// public boolean onKeyDown(int keyCode, KeyEvent event) {
+	// // 11.26增加返回按钮捕获
+	// // runBtnControl=0 实验停止
+	//
+	// Log.w("back", "back");
+	// if (keyCode == KeyEvent.KEYCODE_BACK) {
+	// if (runBtnControl == 0) {
+	// // finish();
+	// Log.w("back", "finish");
+	// } else {
+	// Toast.makeText(getApplicationContext(),
+	// getString(R.string.run_exp_not_exit),
+	// Toast.LENGTH_SHORT).show();
+	// Log.w("back", "toast");
+	// }
+	// }
+	// return super.onKeyDown(keyCode, event);
+	// }
+	//
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// 11.26增加返回按钮捕获
-//		// runBtnControl=0 实验停止
+		// // runBtnControl=0 实验停止
 		Log.w("back", "back");
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (runBtnControl == 0) {
-//				finish();
+				// finish();
 				Log.w("back", "finish");
 			} else {
 				Toast.makeText(getApplicationContext(),
@@ -1465,7 +1465,7 @@ public class RunExpActivity2 extends Activity {
 				Log.w("back", "toast");
 			}
 		}
-//		return super.onKeyDown(keyCode, event);
+		// return super.onKeyDown(keyCode, event);
 		return false;
 	}
 
@@ -1676,7 +1676,7 @@ public class RunExpActivity2 extends Activity {
 
 }
 
-class RunExpViewHolder2 {
+class RunExpViewHolder {
 	RelativeLayout experiment_run_item_rl;
 	TextView experiment_run_item_top_name_tv;
 	ProgressBar experiment_run_item_head_wait_pb;

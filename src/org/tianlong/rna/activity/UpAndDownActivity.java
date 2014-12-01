@@ -19,6 +19,7 @@ import org.tianlong.rna.utlis.WifiUtlis;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,6 +83,8 @@ public class UpAndDownActivity extends Activity {
 	private String Uname;
 	private int sendControlNum; // 发送文件控制数
 	private int num;
+	
+	private ProgressDialog pDialog;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +92,9 @@ public class UpAndDownActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		MainActivity.uvFlag = false;
+		pDialog = new ProgressDialog(UpAndDownActivity.this);
+		pDialog.setMessage("数据加载中请稍后");
+		pDialog.show();
 
 		Intent intent = getIntent();
 		U_id = intent.getIntExtra("U_id", 9999);
@@ -497,18 +503,23 @@ public class UpAndDownActivity extends Activity {
 				}
 				receive = Utlis.getReceive(info);
 				Log.w("读取下位机实验列表", receive.toString());
-				if (!(receive.toString()
-						.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
-					experimentsList = Utlis.getExperimentList(receive);
-					activity_upanddown_down_top_lv
-							.setAdapter(new DownAdapter(UpAndDownActivity.this,
-									experimentsList, deleteFlag));
-					readListFlag = false;
-				} else {
-					try {
-						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-					} catch (Exception e) {
-						e.printStackTrace();
+				for (int i = 0; i < receive.size(); i++) {
+					if (!(receive.get(i)
+							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+						experimentsList = Utlis.getExperimentList(receive);
+						activity_upanddown_down_top_lv
+								.setAdapter(new DownAdapter(
+										UpAndDownActivity.this,
+										experimentsList, deleteFlag));
+						pDialog.dismiss();
+						readListFlag = false;
+					} else {
+						try {
+							wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+								Log.w("UpAndDownActivity", "仪器下位机列表获取失败");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
