@@ -590,10 +590,10 @@ public class RunExpActivity2 extends Activity {
 										try {
 											viewDrawable.stop();
 										} catch (Exception e) {
+											Log.w("viewDrawable", "±³¾°¶¯Ì¬Òì³£");
 										}
 
 										if (stopDialogCtrl == 1) {
-											
 											if (runInfoDialog.isShowing()) {
 												runInfoDialog.dismiss();
 											}
@@ -685,7 +685,7 @@ public class RunExpActivity2 extends Activity {
 			}
 		};
 	};
-
+	
 	class SelectInfoThread implements Runnable {
 		public void run() {
 			while (selectInfoFlag) {

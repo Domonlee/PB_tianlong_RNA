@@ -381,7 +381,6 @@
                             android:id="@+id/machine_instrument_body_run_parameter_hole_space_rl"
                             android:layout_width="wrap_content"
                             android:layout_height="60dip"
-                            android:layout_marginBottom="10dp"
                             android:layout_below="@+id/machine_instrument_body_run_parameter_magnetic_rl" >
 
                             <TextView
