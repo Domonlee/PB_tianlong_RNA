@@ -165,13 +165,6 @@ public class RunExpActivity2 extends Activity {
 						Experiment experiment = new Experiment();
 						try {
 							if (infoList.size() != 0) {
-								// Log.w("发送文件子串", infoList.get(infoList.size()
-								// - 3)
-								// .substring(0, 9) + "");
-								// Log.w("发送文件索引", infoList.get(infoList.size()
-								// - 3)
-								// .substring(0, 9).indexOf("#END_FILE")
-								// + "");
 								if (((infoList.get(infoList.size() - 3)
 										.substring(0, 9)).indexOf("#END_FILE") != -1)
 										|| ((infoList.get(infoList.size() - 2)

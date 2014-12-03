@@ -193,7 +193,6 @@ public class RunFileActivity extends Activity {
 								getString(R.string.log_sdcard_error),
 								Toast.LENGTH_LONG).show();
 					}
-
 				} catch (Exception e) {
 					Toast.makeText(getApplicationContext(),
 							getString(R.string.log_output_error),
@@ -213,10 +212,7 @@ public class RunFileActivity extends Activity {
 						receive.removeAll(receive);
 					}
 					receive = Utlis.getReceive(info);
-					// Log.w("runfile receive", receive.toString());
-					// XXX 
-					// if (!(receive.toString()
-					// .equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+					 Log.w("runfile receive", receive.toString());
 					for (int i = 0; i < receive.size(); i++) {
 						if (!(receive.get(i).toString()
 								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
@@ -224,9 +220,12 @@ public class RunFileActivity extends Activity {
 							Log.w("Strings", strings + "");
 							logListAdapert = new RunFileAdapert(strings,
 									RunFileActivity.this);
-							pDialog.dismiss();
 							runfile_left_lv.setAdapter(logListAdapert);
+							Log.w("载入Adapert", "载入成功");
+							pDialog.dismiss();
 							readListFlag = false;
+					// XXX 加入break，判断若写入adapter成功后跳出循环，避免重复setAdapter
+							break;
 						} else {
 							try {
 								wifiUtlis.sendMessage(Utlis
@@ -247,7 +246,6 @@ public class RunFileActivity extends Activity {
 		public void run() {
 			while (readListFlag) {
 				try {
-
 					Message message = readListHandler.obtainMessage();
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
@@ -268,9 +266,7 @@ public class RunFileActivity extends Activity {
 					receive.removeAll(receive);
 				}
 				receive = Utlis.getReceive(info);
-				// Log.w("runfile receive---", receive.toString()
-				// .substring(16, 21));
-
+				// 0c ff 为查询日志文件目录
 				if (!(receive.toString().substring(16, 21).equals("0c ff"))) {
 					runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
 					readInfoFlag = false;

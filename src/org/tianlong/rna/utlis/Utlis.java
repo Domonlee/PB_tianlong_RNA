@@ -790,7 +790,7 @@ public class Utlis {
 	public static List<String> getReceive(byte[] receive) {
 		List<String> strings = new ArrayList<String>();
 		String info = CHexConver.bytes2HexStr(receive, receive.length);
-//		Log.w("getReceive message", info);
+		// Log.w("getReceive message", info);
 		while (info.indexOf("ff ff ") == 0) {
 			int length = Integer.parseInt(info.substring(6, 8), 16); // 得到命令信息长度
 			strings.add(info.substring(0, length * 3)); // 得到所有命令
@@ -807,23 +807,25 @@ public class Utlis {
 	public static List<Map<String, Object>> getExperimentList(
 			List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
-		//XXX 11.17修改上传下载实验数据得到
-//		for (int i = 1; i < receive.size(); i++) {
+		// XXX 11.17修改上传下载实验数据得到
+		// for (int i = 1; i < receive.size(); i++) {
 		for (int i = 0; i < receive.size(); i++) {
-			Log.w("得到下位机实验列表", "receive"+receive);
+			Log.w("得到下位机实验列表", "receive" + receive);
 			String infos = receive
 					.get(i)
 					.replace(" ", "")
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
-//			if (i <= 9) {
+			// if (i <= 9) {
 			if (i <= 8) {
 				map.put("id", Integer.valueOf(infos.substring(0, 1)));
 				map.put("info", infos.substring(2, infos.indexOf(",", 2)));
-				map.put("user",infos.substring(infos.indexOf(",", 2) + 1,infos.length() - 1));
+				map.put("user",
+						infos.substring(infos.indexOf(",", 2) + 1,
+								infos.length() - 1));
 			} else {
-				//偶现数据丢失
+				// FIXME 偶现数据丢失
 				map.put("id", Integer.valueOf(infos.substring(0, 2)));
 				map.put("info", infos.substring(3, infos.indexOf(",", 3)));
 				map.put("user",
@@ -838,40 +840,35 @@ public class Utlis {
 	// 得到下位机实验信息
 	public static List<String> getExperimentInfoList(List<String> receive) {
 		List<String> strings = new ArrayList<String>();
-
 		for (int i = 0; i < receive.size(); i++) {
 			String infos = null;
 			if (i + 1 == receive.size()) {
 				infos = receive.get(i).replace(" ", "");
 			} else {
 
-					infos = receive
-							.get(i)
-							.replace(" ", "")
-							.substring(
-									14,
-									receive.get(i).replace(" ", "").length() - 4);
-//					Log.w("infos", infos);
+				infos = receive
+						.get(i)
+						.replace(" ", "")
+						.substring(14,
+								receive.get(i).replace(" ", "").length() - 4);
+				// Log.w("infos", infos);
 			}
 			// 解析头首标签
 			try {
-//			 if (i < 3 || (i > receive.size() - 3 && (i + 1) !=
-//			 receive.size())) {
-
-//			Log.w("长度", infos.length() + "");
-				
-			if (infos.length() > 2) {
-				if (infos.substring(0, 2).equals("23")) {
-					infos = CHexConver.hexStr2Str(infos.toUpperCase());
+				// if (i < 3 || (i > receive.size() - 3 && (i + 1) !=
+				// receive.size())) {
+				// Log.w("长度", infos.length() + "");
+				if (infos.length() > 2) {
+					if (infos.substring(0, 2).equals("23")) {
+						infos = CHexConver.hexStr2Str(infos.toUpperCase());
+					}
 				}
-			}
-			strings.add(infos);
+				strings.add(infos);
 
 			} catch (Exception e) {
-					Log.w("infos -- error", infos);
+				Log.w("infos -- error", infos);
 			}
-
-//			Log.w("命令数组", strings + "");
+			// Log.w("命令数组", strings + "");
 		}
 		return strings;
 	}
@@ -1116,8 +1113,7 @@ public class Utlis {
 		return byteList;
 	}
 
-
-	//TODO 得到下位机运行日志列表
+	// TODO 得到下位机运行日志列表
 	@SuppressLint("DefaultLocale")
 	public static List<Map<String, Object>> getRunFileList(List<String> receive) {
 		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
@@ -1129,8 +1125,8 @@ public class Utlis {
 					.substring(14, receive.get(i).replace(" ", "").length() - 4);
 			infos = CHexConver.hexStr2Str(infos.toUpperCase());
 			Map<String, Object> map = new HashMap<String, Object>();
-			//FIXME 11、19  长度问题
-			//FIXME 消息获取穿插5条同步数据
+			// XXX 11、19 长度问题
+			// XXX 消息获取穿插5条同步数据
 			map.put("num",
 					Integer.valueOf(infos.substring(infos.length() - 2,
 							infos.length() - 1)));
@@ -1205,7 +1201,7 @@ public class Utlis {
 		bytes.add(byteList[6]);
 		byteList[7] = getCheckCode(bytes);
 		byteList[8] = (byte) Integer.parseInt("FE", 16);
-		Log.w("sendRunfileInfo", byteList +"");
+		Log.w("sendRunfileInfo", byteList + "");
 		return byteList;
 	}
 }

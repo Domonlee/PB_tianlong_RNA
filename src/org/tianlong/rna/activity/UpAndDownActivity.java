@@ -40,6 +40,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -83,8 +84,10 @@ public class UpAndDownActivity extends Activity {
 	private String Uname;
 	private int sendControlNum; // 发送文件控制数
 	private int num;
-	
+
 	private ProgressDialog pDialog;
+	private String newExpNameString = "";
+	private EditText editNewName;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,6 +109,9 @@ public class UpAndDownActivity extends Activity {
 		Log.w("up&down uid", U_id + "");
 		experiments = experimentDao.getAllExperimentsByU_id(
 				UpAndDownActivity.this, U_id);
+		
+		
+		
 
 		experimentsList = new ArrayList<Map<String, Object>>();
 		upViewList = new ArrayList<Map<String, Object>>();
@@ -513,10 +519,12 @@ public class UpAndDownActivity extends Activity {
 										experimentsList, deleteFlag));
 						pDialog.dismiss();
 						readListFlag = false;
+						// XXX 加入判断，若adapter有数据的话就跳出循环
+						break;
 					} else {
 						try {
 							wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-								Log.w("UpAndDownActivity", "仪器下位机列表获取失败");
+							Log.w("UpAndDownActivity", "仪器下位机列表获取失败");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -548,7 +556,6 @@ public class UpAndDownActivity extends Activity {
 		public void handleMessage(Message msg) {
 			byte[] info = (byte[]) msg.obj;
 			if (info != null) {
-
 				if (info.length != 0) {
 					if (receive != null) {
 						receive.removeAll(receive);
@@ -563,71 +570,120 @@ public class UpAndDownActivity extends Activity {
 								.equals(infoList.get(0).substring(
 										infoList.get(0).indexOf(":") + 1,
 										infoList.get(0).length()))) {
-							Toast.makeText(UpAndDownActivity.this,
-									getString(R.string.up_samename),
-									Toast.LENGTH_SHORT).show();
+							// TODO 添加输入窗口
+
+							
+							//重复实验名修复框
+							editNewName = new EditText(
+									UpAndDownActivity.this);
+							editNewName.setText("");
+							new AlertDialog.Builder(UpAndDownActivity.this)
+									.setTitle("本地有相同实验，请输入新的实验名称")
+									.setIcon(android.R.drawable.ic_dialog_info)
+									.setView(editNewName)
+									.setPositiveButton(
+											"确定",
+											new android.content.DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													if (editNewName.getText()
+															.toString()
+															.equals("")) {
+														Toast.makeText(
+																UpAndDownActivity.this,
+																"实验名称为空，请检查",
+																Toast.LENGTH_SHORT)
+																.show();
+													} else {
+														newExpNameString = editNewName
+																.getText()
+																.toString();
+														Log.w("输入新的实验名称", newExpNameString);
+														sameNameFlag = false;
+														
+														
+														
+														Experiment experiment = new Experiment();
+														if (infoList.size() != 0 && !sameNameFlag) {
+															if ((infoList.get(infoList.size() - 2).substring(0, 9))
+																	.indexOf("#END_FILE") != -1) {
+
+																experiment.setU_id(U_id);
+																if (!newExpNameString.equals("")) {
+																	experiment.setEname(newExpNameString);
+																	Log.w("setNewName", "set new Name" + newExpNameString);
+																} else {
+																	experiment.setEname(infoList.get(0).substring(
+																			infoList.get(0).indexOf(":") + 1,
+																			infoList.get(0).length()));
+																	Log.w("setOldName", "set old Name");
+																}
+																String date = Utlis.systemFormat.format(new Date());
+																experiment.setCdate(date);
+																experiment.setRdate(date);
+																experiment.setEremark(infoList.get(2).substring(
+																		infoList.get(2).indexOf(":") + 1,
+																		infoList.get(2).length()));
+																experiment.setEDE_id(0);
+																experiment.setEquick(0);
+																experimentDao.insertExperiment(experiment,
+																		UpAndDownActivity.this);
+																experiment = experimentDao.getExperimentByCdate(
+																		date, UpAndDownActivity.this, U_id);
+																for (int i = 3; i < infoList.size(); i++) {
+																	if (infoList.get(i).indexOf("#END_FILE") != -1) {
+																		break;
+																	} else {
+																		Step step = Utlis.getStepFromInfo(
+																				infoList.get(i),
+																				experiment.getE_id());
+																		stepDao.insertStep(step,
+																				UpAndDownActivity.this);
+																	}
+																}
+																experiments = experimentDao
+																		.getAllExperimentsByU_id(
+																				UpAndDownActivity.this, U_id);
+																activity_upanddown_up_top_lv
+																		.setAdapter(new UpAdapter(
+																				UpAndDownActivity.this, experiments));
+																getInfoListFlag = false;
+																Toast.makeText(UpAndDownActivity.this,
+																		getString(R.string.up_success),
+																		Toast.LENGTH_SHORT);
+															} else {
+																Toast.makeText(UpAndDownActivity.this,
+																		getString(R.string.up_failure),
+																		Toast.LENGTH_SHORT);
+																getInfoListFlag = false;
+															}
+														}
+														// 同名检测标志
+														sameNameFlag = false;
+													}
+													}
+											})
+									.setNegativeButton(
+											"取消",
+											new android.content.DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													sameNameFlag = true;
+												}
+											}).show();
+							// Toast.makeText(UpAndDownActivity.this,
+							// getString(R.string.up_samename),
+							// Toast.LENGTH_SHORT).show();
 							sameNameFlag = true;
 						}
 					}
 
-					Experiment experiment = new Experiment();
-					if (infoList.size() != 0 && !sameNameFlag) {
-						// Log.w("发送文件列表", infoList+"");
-						// Log.w("发送文件长度", infoList.size()+"");
-						// Log.w("发送文件子串", infoList.get(infoList.size()
-						// -2).substring(0, 9)+"");
-						// Log.w("发送文件索引", infoList.get(infoList.size()
-						// -2).substring(0, 9).indexOf("#END_FILE")+"");
-						if ((infoList.get(infoList.size() - 2).substring(0, 9))
-								.indexOf("#END_FILE") != -1) {
-
-							experiment.setU_id(U_id);
-							experiment.setEname(infoList.get(0).substring(
-									infoList.get(0).indexOf(":") + 1,
-									infoList.get(0).length()));
-							String date = Utlis.systemFormat.format(new Date());
-							experiment.setCdate(date);
-							experiment.setRdate(date);
-							experiment.setEremark(infoList.get(2).substring(
-									infoList.get(2).indexOf(":") + 1,
-									infoList.get(2).length()));
-							experiment.setEDE_id(0);
-							experiment.setEquick(0);
-							experimentDao.insertExperiment(experiment,
-									UpAndDownActivity.this);
-							experiment = experimentDao.getExperimentByCdate(
-									date, UpAndDownActivity.this, U_id);
-							for (int i = 3; i < infoList.size(); i++) {
-								if (infoList.get(i).indexOf("#END_FILE") != -1) {
-									break;
-								} else {
-									Step step = Utlis.getStepFromInfo(
-											infoList.get(i),
-											experiment.getE_id());
-									stepDao.insertStep(step,
-											UpAndDownActivity.this);
-								}
-							}
-							experiments = experimentDao
-									.getAllExperimentsByU_id(
-											UpAndDownActivity.this, U_id);
-							activity_upanddown_up_top_lv
-									.setAdapter(new UpAdapter(
-											UpAndDownActivity.this, experiments));
-							getInfoListFlag = false;
-							Toast.makeText(UpAndDownActivity.this,
-									getString(R.string.up_success),
-									Toast.LENGTH_SHORT);
-						} else {
-							Toast.makeText(UpAndDownActivity.this,
-									getString(R.string.up_failure),
-									Toast.LENGTH_SHORT);
-							getInfoListFlag = false;
-						}
-					}
-					// 同名检测标志
-					sameNameFlag = false;
-				}
+					
+			}
 			}
 		};
 	};
