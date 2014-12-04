@@ -46,10 +46,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*
- * 未完成：修改 仪器实验名称
- * 	     不能删除仪器中Demo的实验
- */
 @SuppressLint({ "HandlerLeak", "DefaultLocale", "ShowToast" })
 public class UpAndDownActivity extends Activity {
 
@@ -109,9 +105,6 @@ public class UpAndDownActivity extends Activity {
 		Log.w("up&down uid", U_id + "");
 		experiments = experimentDao.getAllExperimentsByU_id(
 				UpAndDownActivity.this, U_id);
-		
-		
-		
 
 		experimentsList = new ArrayList<Map<String, Object>>();
 		upViewList = new ArrayList<Map<String, Object>>();
@@ -570,19 +563,16 @@ public class UpAndDownActivity extends Activity {
 								.equals(infoList.get(0).substring(
 										infoList.get(0).indexOf(":") + 1,
 										infoList.get(0).length()))) {
-							// TODO 添加输入窗口
-
-							
-							//重复实验名修复框
-							editNewName = new EditText(
-									UpAndDownActivity.this);
+							// 重复实验名修复框
+							editNewName = new EditText(UpAndDownActivity.this);
 							editNewName.setText("");
+							sameNameFlag = true;
 							new AlertDialog.Builder(UpAndDownActivity.this)
-									.setTitle("本地有相同实验，请输入新的实验名称")
+									.setTitle(getString(R.string.has_same_exp_name))
 									.setIcon(android.R.drawable.ic_dialog_info)
 									.setView(editNewName)
 									.setPositiveButton(
-											"确定",
+											getString(R.string.sure),
 											new android.content.DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(
@@ -593,80 +583,128 @@ public class UpAndDownActivity extends Activity {
 															.equals("")) {
 														Toast.makeText(
 																UpAndDownActivity.this,
-																"实验名称为空，请检查",
+																getString(R.string.exp_name_null),
 																Toast.LENGTH_SHORT)
 																.show();
 													} else {
 														newExpNameString = editNewName
 																.getText()
 																.toString();
-														Log.w("输入新的实验名称", newExpNameString);
-														sameNameFlag = false;
-														
-														
-														
+														Log.w("输入新的实验名称",
+																newExpNameString);
+														// sameNameFlag = false;
+														//
 														Experiment experiment = new Experiment();
-														if (infoList.size() != 0 && !sameNameFlag) {
-															if ((infoList.get(infoList.size() - 2).substring(0, 9))
+														if (infoList.size() != 0
+																&& !sameNameFlag) {
+															if ((infoList
+																	.get(infoList
+																			.size() - 2)
+																	.substring(
+																			0,
+																			9))
 																	.indexOf("#END_FILE") != -1) {
 
-																experiment.setU_id(U_id);
-																if (!newExpNameString.equals("")) {
-																	experiment.setEname(newExpNameString);
-																	Log.w("setNewName", "set new Name" + newExpNameString);
+																experiment
+																		.setU_id(U_id);
+																if (!newExpNameString
+																		.equals("")) {
+																	experiment
+																			.setEname(newExpNameString);
+																	Log.w("setNewName",
+																			"set new Name"
+																					+ newExpNameString);
 																} else {
-																	experiment.setEname(infoList.get(0).substring(
-																			infoList.get(0).indexOf(":") + 1,
-																			infoList.get(0).length()));
-																	Log.w("setOldName", "set old Name");
+																	experiment
+																			.setEname(infoList
+																					.get(0)
+																					.substring(
+																							infoList.get(
+																									0)
+																									.indexOf(
+																											":") + 1,
+																							infoList.get(
+																									0)
+																									.length()));
+																	Log.w("setOldName",
+																			"set old Name");
 																}
-																String date = Utlis.systemFormat.format(new Date());
-																experiment.setCdate(date);
-																experiment.setRdate(date);
-																experiment.setEremark(infoList.get(2).substring(
-																		infoList.get(2).indexOf(":") + 1,
-																		infoList.get(2).length()));
-																experiment.setEDE_id(0);
-																experiment.setEquick(0);
-																experimentDao.insertExperiment(experiment,
-																		UpAndDownActivity.this);
-																experiment = experimentDao.getExperimentByCdate(
-																		date, UpAndDownActivity.this, U_id);
-																for (int i = 3; i < infoList.size(); i++) {
-																	if (infoList.get(i).indexOf("#END_FILE") != -1) {
+																String date = Utlis.systemFormat
+																		.format(new Date());
+																experiment
+																		.setCdate(date);
+																experiment
+																		.setRdate(date);
+																experiment
+																		.setEremark(infoList
+																				.get(2)
+																				.substring(
+																						infoList.get(
+																								2)
+																								.indexOf(
+																										":") + 1,
+																						infoList.get(
+																								2)
+																								.length()));
+																experiment
+																		.setEDE_id(0);
+																experiment
+																		.setEquick(0);
+																experimentDao
+																		.insertExperiment(
+																				experiment,
+																				UpAndDownActivity.this);
+																experiment = experimentDao
+																		.getExperimentByCdate(
+																				date,
+																				UpAndDownActivity.this,
+																				U_id);
+																for (int i = 3; i < infoList
+																		.size(); i++) {
+																	if (infoList
+																			.get(i)
+																			.indexOf(
+																					"#END_FILE") != -1) {
 																		break;
 																	} else {
-																		Step step = Utlis.getStepFromInfo(
-																				infoList.get(i),
-																				experiment.getE_id());
-																		stepDao.insertStep(step,
+																		Step step = Utlis
+																				.getStepFromInfo(
+																						infoList.get(i),
+																						experiment
+																								.getE_id());
+																		stepDao.insertStep(
+																				step,
 																				UpAndDownActivity.this);
 																	}
 																}
 																experiments = experimentDao
 																		.getAllExperimentsByU_id(
-																				UpAndDownActivity.this, U_id);
+																				UpAndDownActivity.this,
+																				U_id);
 																activity_upanddown_up_top_lv
 																		.setAdapter(new UpAdapter(
-																				UpAndDownActivity.this, experiments));
+																				UpAndDownActivity.this,
+																				experiments));
 																getInfoListFlag = false;
-																Toast.makeText(UpAndDownActivity.this,
+																Toast.makeText(
+																		UpAndDownActivity.this,
 																		getString(R.string.up_success),
 																		Toast.LENGTH_SHORT);
 															} else {
-																Toast.makeText(UpAndDownActivity.this,
+																Toast.makeText(
+																		UpAndDownActivity.this,
 																		getString(R.string.up_failure),
 																		Toast.LENGTH_SHORT);
 																getInfoListFlag = false;
 															}
 														}
 														// 同名检测标志
-														sameNameFlag = false;
+														// sameNameFlag = false;
 													}
-													}
+												}
 											})
 									.setNegativeButton(
-											"取消",
+											getString(R.string.cancle),
 											new android.content.DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(
@@ -675,15 +713,61 @@ public class UpAndDownActivity extends Activity {
 													sameNameFlag = true;
 												}
 											}).show();
-							// Toast.makeText(UpAndDownActivity.this,
-							// getString(R.string.up_samename),
-							// Toast.LENGTH_SHORT).show();
-							sameNameFlag = true;
 						}
 					}
 
-					
-			}
+					// TODO
+					if (infoList.size() != 0 && !sameNameFlag) {
+						Experiment experiment = new Experiment();
+						if ((infoList.get(infoList.size() - 2).substring(0, 9))
+								.indexOf("#END_FILE") != -1) {
+							experiment.setU_id(U_id);
+							experiment.setEname(infoList.get(0).substring(
+									infoList.get(0).indexOf(":") + 1,
+									infoList.get(0).length()));
+							String date = Utlis.systemFormat.format(new Date());
+							experiment.setCdate(date);
+							experiment.setRdate(date);
+							experiment.setEremark(infoList.get(2).substring(
+									infoList.get(2).indexOf(":") + 1,
+									infoList.get(2).length()));
+							experiment.setEDE_id(0);
+							experiment.setEquick(0);
+							experimentDao.insertExperiment(experiment,
+									UpAndDownActivity.this);
+							experiment = experimentDao.getExperimentByCdate(
+									date, UpAndDownActivity.this, U_id);
+							for (int j = 3; j < infoList.size(); j++) {
+								if (infoList.get(j).indexOf("#END_FILE") != -1) {
+									break;
+								} else {
+									Step step = Utlis.getStepFromInfo(
+											infoList.get(j),
+											experiment.getE_id());
+									stepDao.insertStep(step,
+											UpAndDownActivity.this);
+								}
+							}
+							experiments = experimentDao
+									.getAllExperimentsByU_id(
+											UpAndDownActivity.this, U_id);
+							activity_upanddown_up_top_lv
+									.setAdapter(new UpAdapter(
+											UpAndDownActivity.this, experiments));
+							getInfoListFlag = false;
+							Toast.makeText(UpAndDownActivity.this,
+									getString(R.string.up_success),
+									Toast.LENGTH_SHORT);
+						} else {
+							Toast.makeText(UpAndDownActivity.this,
+									getString(R.string.up_failure),
+									Toast.LENGTH_SHORT);
+							getInfoListFlag = false;
+						}
+					}
+					// 同名检测标志
+					sameNameFlag = false;
+				}
 			}
 		};
 	};

@@ -25,6 +25,8 @@
     <string name="template_null">None</string>
     <string name="template_one">Template 1</string>
     <string name="waitting">Waitting&#8230;&#8230;</string>
+    <string name="machine_not_connect">No Machine Connect</string>
+     <string name="has_same_exp_name">PAD has the same Experiment,please input a new name</string>
     <!-- 主页面 -->
     <string name="experiment">Experiment\nManage</string>
     <string name="log">Experiment\nLog</string>
@@ -61,7 +63,7 @@
     <string name="system_detection">Instrument Self-test</string>
     <!-- 系统设置_语言设置 -->
     <string name="language_english">English</string>
-    <string name="language_chinese">Chinese</string>
+    <string name="language_chinese">中文</string>
     <string name="language_success">Change Language Succeed</string>
     <string name="language_failure">Change Language Failed</string>
     <!-- 系统设置_网络设置 -->
@@ -208,11 +210,11 @@
     <string name="exp_magnetic">Magnetic</string>
     <string name="exp_hole">Well</string>
     <string name="exp_vol">Volume</string>
-    <string name="exp_blend_speed">Mixing Speed</string>
-    <string name="exp_speed_unit">\u0200Hz</string>
+    <string name="exp_blend_speed">Mixing Mode</string>
+    <string name="exp_speed_unit">\u0200</string>
     <string name="exp_temp">Temperature</string>
     <string name="exp_temp_unit">°C</string>
-    <string name="exp_temp_type">Temperature Status</string>
+    <string name="exp_temp_type">Temp Status</string>
     <string name="exp_next">Next</string>
     <string name="exp_closs">Close</string>
     <string name="exp_crack">Lysis Heating</string>

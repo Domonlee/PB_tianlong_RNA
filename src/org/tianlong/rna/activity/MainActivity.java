@@ -219,7 +219,7 @@ public class MainActivity extends ActivityGroup {
 			e.printStackTrace();
 		}
 		if (wifiUtlis == null) {
-			machine_wifi_name = "ÒÇÆ÷Î´Á¬½Ó";
+			machine_wifi_name = getString(R.string.machine_not_connect);
 			machine_wifi_name_tv.setText(machine_wifi_name);
 		} else {
 			machine_wifi_name = wifiUtlis.getWifiName();

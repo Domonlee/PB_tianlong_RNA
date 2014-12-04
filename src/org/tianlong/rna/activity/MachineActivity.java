@@ -2550,11 +2550,11 @@ public class MachineActivity extends Activity {
 			e.printStackTrace();
 		}
 		if (wifiUtlis == null) {
-			machine_wifi_name_tv.setText("仪器未连接");
+			machine_wifi_name_tv.setText(getString(R.string.machine_not_connect));
 		} else {
 			if (!wifiManager.getConnectionInfo().getSSID().substring(0, 6)
 					.equals("NP968_")) {
-				machine_wifi_name_tv.setText("仪器未连接");
+				machine_wifi_name_tv.setText(getString(R.string.machine_not_connect));
 			} else {
 				machine_wifi_name_tv.setText(wifiManager.getConnectionInfo()
 						.getSSID());

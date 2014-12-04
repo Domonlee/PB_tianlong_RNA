@@ -272,7 +272,17 @@
                         android:textSize="20sp" />
                 </RelativeLayout><RelativeLayout android:id="@+id/experiment_new_main_item_body_switch_rl" android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="0dip" android:layout_marginTop="2dip">
 
-                    <TextView android:id="@+id/experiment_new_main_item_body_switch_tv" android:layout_width="164dip" android:layout_height="fill_parent" android:layout_centerVertical="true" android:layout_marginLeft="2dip" android:background="#314F67" android:gravity="center" android:text="@string/exp_temp_type" android:textColor="@android:color/white" android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/experiment_new_main_item_body_switch_tv"
+                        android:layout_width="164dip"
+                        android:layout_height="fill_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="2dip"
+                        android:background="#314F67"
+                        android:gravity="center"
+                        android:text="@string/exp_temp_type"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
 
                     <TextView android:id="@+id/experiment_new_main_item_body_switch_info_tv" android:layout_width="164dip" android:layout_height="fill_parent" android:layout_centerVertical="true" android:layout_marginLeft="2dip" android:layout_toRightOf="@id/experiment_new_main_item_body_switch_tv" android:background="#314F67" android:gravity="center" android:text="裂解加温" android:textColor="@android:color/white" android:textSize="20sp" />
                 </RelativeLayout>

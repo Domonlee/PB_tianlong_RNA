@@ -27,6 +27,8 @@
     <string name="template_one">模板一</string>
     <string name="template_two">模板二</string>
     <string name="waitting">请稍后&#8230;&#8230;</string>
+    <string name="machine_not_connect">仪器未连接</string>
+    <string name="has_same_exp_name">本地有相同实验，请输入新的实验名称</string>
     <!-- 主页面 -->
     <string name="experiment">实验管理</string>
     <string name="log">实验日志</string>
