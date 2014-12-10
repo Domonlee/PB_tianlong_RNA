@@ -81,14 +81,14 @@ public class LoginActivity extends Activity {
 				.getAllDefaultExperiments(LoginActivity.this);
 		intent = getIntent();
 
-//		 Ä¬ÈÏµÇÂ¼
-		 logout = intent.getIntExtra("logout", 9999);
-		 U_id = intent.getIntExtra("U_id", 9999);
+		// Ä¬ÈÏµÇÂ¼
+		logout = intent.getIntExtra("logout", 9999);
+		U_id = intent.getIntExtra("U_id", 9999);
 
-//		//--always flase
-//		if (defaultExperiments.size() == 0) {
-//			initExperiment();
-//		}
+		// //--always flase
+		// if (defaultExperiments.size() == 0) {
+		// initExperiment();
+		// }
 
 		initial();
 		language = machineDao.getMachine(LoginActivity.this).getMlanguage();
@@ -308,8 +308,8 @@ public class LoginActivity extends Activity {
 
 	/**
 	 * 
-	 * Title: initial Description: Init  Modified By£º
-	 * Domon Modified Date: 2014-9-18
+	 * Title: initial Description: Init Modified By£º Domon Modified Date:
+	 * 2014-9-18
 	 */
 	private void initial() {
 

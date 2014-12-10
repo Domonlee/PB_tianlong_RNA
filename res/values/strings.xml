@@ -189,6 +189,7 @@
     <string name="exp_add_quick">添加快捷实验</string>
     <string name="exp_cancle_quick">取消快捷实验</string>
     <string name="exp_name_null">实验名称不能为空</string>
+    <string name="exp_name_too_long">实验名称超过20个字符，请重新输入</string>
     <string name="exp_name_already_exist">实验名称已经存在，请重新输入!</string>
     <string name="exp_save_null">步骤不能为空</string>
     <string name="exp_creating">正在建立实验,请稍后&#8230;&#8230;</string>

@@ -107,14 +107,14 @@ public class ExperimentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		
+
 		MainActivity.uvFlag = false;
 
 		dbTempletManager = new DBTempletManager(ExperimentActivity.this);
 		dbTempletManager.openDatabase();
 		dbTempletManager.closeDatabase();
 
-//		experiment_run_top_mstate_tv.setVisibility(View.GONE);
+		// experiment_run_top_mstate_tv.setVisibility(View.GONE);
 		initView();
 
 		// 通过返回值来 控制控件显示 运行状态
@@ -229,6 +229,8 @@ public class ExperimentActivity extends Activity {
 			public void onClick(View v) {
 				newControlNum++;
 				chooseE_id = -1;
+				machineStateInfo.runflag = false;
+				machineStateInfo.pauseflag = false;
 				if (view != null) {
 					experiment_right_rl.removeView(view);
 				}
@@ -273,8 +275,8 @@ public class ExperimentActivity extends Activity {
 		experiment_left_lv = (ListView) findViewById(R.id.experiment_left_lv);
 		experiment_right_rl = (RelativeLayout) findViewById(R.id.experiment_right_rl);
 		expetiment_left_new_btn_iv = (ImageView) findViewById(R.id.expetiment_left_new_btn_iv);
-		
-		machine_wifi_name_tv = (TextView)findViewById(R.id.machine_wifi_name_tv);
+
+		machine_wifi_name_tv = (TextView) findViewById(R.id.machine_wifi_name_tv);
 		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
 
 		stepDao = new StepDao();
@@ -307,14 +309,14 @@ public class ExperimentActivity extends Activity {
 		experiment_new_prepare_body_template_sp = (Spinner) view
 				.findViewById(R.id.experiment_new_prepare_body_template_sp);
 
-		//XXX 按照通量来设置 模板载入
-		
+		// XXX 按照通量来设置 模板载入
+
 		MachineDao machineDao = new MachineDao();
 		Machine machine = machineDao.getMachine(ExperimentActivity.this);
 		int fluxNum = machine.getMflux();
 		experiment_new_prepare_body_template_sp.setAdapter(new SpinnerAdapter(
-				ExperimentActivity.this, Utlis
-						.getTemplate(ExperimentActivity.this,fluxNum)));
+				ExperimentActivity.this, Utlis.getTemplate(
+						ExperimentActivity.this, fluxNum)));
 
 		experiment_new_prepare_body_quick_cb
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -332,19 +334,20 @@ public class ExperimentActivity extends Activity {
 					}
 				});
 
-		//模板弹出框 展示
+		// 模板弹出框 展示
 		experiment_new_prepare_body_template_sp
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						DE_id = defaultExperiments.get(arg2).getE_id();
 					}
+
 					public void onNothingSelected(AdapterView<?> arg0) {
 					}
 				});
 
-		//TODO
-		// --Next Btn实现同名检测 
+		// TODO
+		// --Next Btn实现同名检测
 		experiment_new_prepare_body_btn_next
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
@@ -353,6 +356,12 @@ public class ExperimentActivity extends Activity {
 								.toString().equals("")) {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.exp_name_null),
+									Toast.LENGTH_SHORT).show();
+						}
+						if (experiment_new_prepare_body_name_et.getText()
+								.toString().length() > 21) {
+							Toast.makeText(ExperimentActivity.this,
+									getString(R.string.exp_name_too_long),
 									Toast.LENGTH_SHORT).show();
 						} else {
 							if (experimentDao.hasEname(ExperimentActivity.this,
@@ -526,17 +535,27 @@ public class ExperimentActivity extends Activity {
 		experiment_info_bottom_run_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
+						WifiUtlis wifiUtlis = null;
+						try {
+							wifiUtlis = new WifiUtlis(ExperimentActivity.this);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						// TODO 字符串 String 输入
-//						if (experiment_run_top_mstate_tv.getText().toString()
-//								.equals("Run")
-//								|| experiment_run_top_mstate_tv.getText()
-//										.toString().equals("Pause")) {
-//						if (machineStateString.equals("Run") || machineStateString.equals("Pause")) {
+						// if (experiment_run_top_mstate_tv.getText().toString()
+						// .equals("Run")
+						// || experiment_run_top_mstate_tv.getText()
+						// .toString().equals("Pause")) {
+						// if (machineStateString.equals("Run") ||
+						// machineStateString.equals("Pause")) {
 						if (MachineStateInfo.stateFlag == 1) {
-							
 							Toast.makeText(ExperimentActivity.this,
 									"当前仪器有实验正在运行", 2000).show();
-
+						}
+						if (wifiUtlis == null) {
+							Toast.makeText(ExperimentActivity.this,
+									getString(R.string.wifi_error_run), 2000)
+									.show();
 						} else {
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									ExperimentActivity.this);
@@ -560,7 +579,7 @@ public class ExperimentActivity extends Activity {
 		experiment_info_bottom_edit_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-							machineStateInfo.runflag = false;
+						machineStateInfo.runflag = false;
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								ExperimentActivity.this);
 						builder.setMessage(getString(R.string.exp_creating));

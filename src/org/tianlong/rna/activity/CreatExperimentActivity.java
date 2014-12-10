@@ -321,7 +321,14 @@ public class CreatExperimentActivity extends Activity {
 								Toast.makeText(CreatExperimentActivity.this,
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
-							} else {
+							}if (!getEnameIsNull()) {
+//								Toast.makeText(
+//										CreatExperimentActivity.this,
+//										getString(R.string.exp_save_failure) + "---------",
+//										Toast.LENGTH_SHORT).show();
+							} 
+							else {
+
 								String systemTime = Utlis.systemFormat
 										.format(new Date(System
 												.currentTimeMillis()));

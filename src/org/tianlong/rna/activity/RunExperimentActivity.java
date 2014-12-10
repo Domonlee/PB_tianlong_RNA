@@ -717,7 +717,6 @@ public class RunExperimentActivity extends Activity {
 								if (wifiUtlis != null) {
 									// ¿ØÖÆÁ÷³Ì
 									Log.w("info", "runNum="+runNum);
-
 									switch (runNum) {
 									case 0:
 										try {

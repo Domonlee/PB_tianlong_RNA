@@ -61,7 +61,7 @@ public class MachineStateInfo {
 		try {
 			wifiUtlis = new WifiUtlis(context);
 		} catch (Exception e) {
-			Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
 		}
 		new Thread(selectInfoThread).start();
 	}
