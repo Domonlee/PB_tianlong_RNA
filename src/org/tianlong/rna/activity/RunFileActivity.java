@@ -74,8 +74,6 @@ public class RunFileActivity extends Activity {
 		pDialog = new ProgressDialog(RunFileActivity.this);
 		pDialog.setMessage("数据加载中请稍后");
 		pDialog.show();
-		// pDialog = ProgressDialog.show(RunFileActivity.this, "实验日志",
-		// "数据加载中请稍后");
 
 		listThread = new readListThread();
 		infoThread = new readInfoThread();
@@ -212,7 +210,7 @@ public class RunFileActivity extends Activity {
 						receive.removeAll(receive);
 					}
 					receive = Utlis.getReceive(info);
-					 Log.w("runfile receive", receive.toString());
+					Log.w("runfile receive", receive.toString());
 					for (int i = 0; i < receive.size(); i++) {
 						if (!(receive.get(i).toString()
 								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
@@ -224,7 +222,7 @@ public class RunFileActivity extends Activity {
 							Log.w("载入Adapert", "载入成功");
 							pDialog.dismiss();
 							readListFlag = false;
-					// XXX 加入break，判断若写入adapter成功后跳出循环，避免重复setAdapter
+							// XXX 加入break，判断若写入adapter成功后跳出循环，避免重复setAdapter
 							break;
 						} else {
 							try {

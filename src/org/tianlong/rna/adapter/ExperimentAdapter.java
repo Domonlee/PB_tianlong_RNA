@@ -56,6 +56,7 @@ public class ExperimentAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) arg1.getTag();
 		}
+
 		holder.left_listview_item_name
 				.setText(experiments.get(arg0).getEname());
 		if (experiments.size() != 0 && arg0 == ExperimentActivity.listChooseId) {

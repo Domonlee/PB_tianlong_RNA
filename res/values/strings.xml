@@ -45,7 +45,7 @@
     <string name="login">登\u0020\u0020\u0020\u0020\u0020录</string>
     <string name="register">注\u0020\u0020\u0020\u0020\u0020册</string>
     <string name="user_pass_delete">请输入此用户密码</string>
-    <string name="user_pass_error">密码 错误</string>
+    <string name="user_pass_error">密码错误</string>
     <string name="user_delete_successful">刪除用户成功</string>
     <!-- 注册页面 -->
     <string name="user_rpass_null">确认密码不能为空</string>
@@ -186,6 +186,7 @@
     <string name="exp_sure_to_delete">确定要删除这条实验吗？</string>
     <string name="exp_new_exp">新建实验</string>
     <string name="exp_delete_exp">删除实验</string>
+    <string name="exp_delete_success_exp">删除实验成功</string>
     <string name="exp_add_quick">添加快捷实验</string>
     <string name="exp_cancle_quick">取消快捷实验</string>
     <string name="exp_name_null">实验名称不能为空</string>

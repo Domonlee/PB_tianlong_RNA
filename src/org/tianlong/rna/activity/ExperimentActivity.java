@@ -174,6 +174,7 @@ public class ExperimentActivity extends Activity {
 			}
 		});
 
+		//FIXME
 		experiment_left_delete.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (chooseE_id != -1) {
@@ -199,6 +200,8 @@ public class ExperimentActivity extends Activity {
 											.getAllExperimentsByU_id(
 													ExperimentActivity.this,
 													U_id);
+									//设置删除背景
+									listChooseId = 999;
 									experiment_left_lv
 											.setAdapter(new ExperimentAdapter(
 													ExperimentActivity.this,
@@ -207,6 +210,9 @@ public class ExperimentActivity extends Activity {
 										experiment_right_rl.removeView(view);
 									}
 									chooseE_id = -1;
+									Toast.makeText(ExperimentActivity.this,
+											getString(R.string.exp_delete_success_exp),
+											Toast.LENGTH_SHORT).show();
 								}
 							});
 					builder.setNegativeButton(getString(R.string.cancle),
@@ -309,6 +315,7 @@ public class ExperimentActivity extends Activity {
 		experiment_new_prepare_body_template_sp = (Spinner) view
 				.findViewById(R.id.experiment_new_prepare_body_template_sp);
 
+		experiment_new_prepare_body_name_et.setText("New Experiment");
 		// XXX 按照通量来设置 模板载入
 
 		MachineDao machineDao = new MachineDao();
@@ -527,6 +534,8 @@ public class ExperimentActivity extends Activity {
 								.setVisibility(View.GONE);
 						experiment_info_body_remark_info_et
 								.setVisibility(View.GONE);
+						experiment_info_body_remark_info_et
+						.setText(experiment_info_body_remark_info_tv.getText().toString());
 						experiment_info_body_remark_info_tv
 								.setVisibility(View.VISIBLE);
 					}

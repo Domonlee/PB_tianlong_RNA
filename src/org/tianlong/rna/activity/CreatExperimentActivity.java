@@ -114,7 +114,8 @@ public class CreatExperimentActivity extends Activity {
 		Ename = intent.getStringExtra("Ename");
 		Eremark = intent.getStringExtra("Eremark");
 		DE_id = intent.getIntExtra("DE_id", 9999);
-		defaultSteps = stepDao.getAllDStep(CreatExperimentActivity.this, DE_id,fluxNum);
+		defaultSteps = stepDao.getAllDStep(CreatExperimentActivity.this, DE_id,
+				fluxNum);
 		experiment = new Experiment();
 		steps = new ArrayList<Step>();
 		holders = new ArrayList<CViewHolder>();
@@ -179,7 +180,9 @@ public class CreatExperimentActivity extends Activity {
 						}
 
 						steps.add(step);
-						Toast.makeText(CreatExperimentActivity.this, getString(R.string.exp_inset_success),2000).show();
+						Toast.makeText(CreatExperimentActivity.this,
+								getString(R.string.exp_inset_success), 3000)
+								.show();
 						deleteFlag = true;
 						saveFlag = true;
 						createTable();
@@ -207,10 +210,10 @@ public class CreatExperimentActivity extends Activity {
 							builder.show();
 						} else {
 							if (stepChooseNum == -1 || !hasTemplet()) {
-								Log.w("w", !hasTemplet()+ "");
-								Log.w("w", stepChooseNum+ "");
-								//步骤step
-								Log.w("w", stepChooseNum+ "");
+								Log.w("w", !hasTemplet() + "");
+								Log.w("w", stepChooseNum + "");
+								// 步骤step
+								Log.w("w", stepChooseNum + "");
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -295,15 +298,14 @@ public class CreatExperimentActivity extends Activity {
 					}
 				});
 
-		//TODO save btn
+		// TODO save btn
 		experiment_new_main_bottom_save_btn
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						saveFlag = hasTemplet();
 						if (steps.size() >= 50) {
 							Toast.makeText(CreatExperimentActivity.this,
-									"步骤不能超过50步，请检查",
-									Toast.LENGTH_SHORT).show();
+									"步骤不能超过50步，请检查", Toast.LENGTH_SHORT).show();
 						}
 						if (!saveFlag || (steps.size() == 0)) {
 							Toast.makeText(CreatExperimentActivity.this,
@@ -312,22 +314,17 @@ public class CreatExperimentActivity extends Activity {
 						}
 						if (steps.size() >= 50) {
 							Toast.makeText(CreatExperimentActivity.this,
-									"步骤不能超过50步，请检查",
-									Toast.LENGTH_SHORT).show();
-						}
-						else {
+									"步骤不能超过50步，请检查", Toast.LENGTH_SHORT).show();
+						} else {
 							if (experiment_new_main_bottom_ename_info_et
 									.getText().toString().equals("")) {
 								Toast.makeText(CreatExperimentActivity.this,
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
-							}if (!getEnameIsNull()) {
-//								Toast.makeText(
-//										CreatExperimentActivity.this,
-//										getString(R.string.exp_save_failure) + "---------",
-//										Toast.LENGTH_SHORT).show();
-							} 
-							else {
+							}
+							if (!getEnameIsNull()) {
+								// 上一个Toast已经显示
+							} else {
 
 								String systemTime = Utlis.systemFormat
 										.format(new Date(System
@@ -362,73 +359,74 @@ public class CreatExperimentActivity extends Activity {
 											Toast.LENGTH_SHORT).show();
 								} else {
 									if (getEnameIsNull()) {
-									if (getVolIsNull()) {
-										if (getVolIsBig()) {
-											if (getTempIsNull()) {
-												if (getTempIsBig()) {
-													for (int i = 0; i < steps
-															.size(); i++) {
-														steps.get(i)
-																.setE_id(
-																		experiment
-																				.getE_id());
-														steps.get(i)
-																.setSvol(
-																		Integer.valueOf(holders
-																				.get(i).experiment_new_main_item_body_vol_info_et
-																				.getText()
-																				.toString()));
-														steps.get(i)
-																.setStemp(
-																		Integer.valueOf(holders
-																				.get(i).experiment_new_main_item_body_temp_info_et
-																				.getText()
-																				.toString()));
-														stepDao.insertStep(
-																steps.get(i),
-																CreatExperimentActivity.this);
+										if (getVolIsNull()) {
+											if (getVolIsBig()) {
+												if (getTempIsNull()) {
+													if (getTempIsBig()) {
+														for (int i = 0; i < steps
+																.size(); i++) {
+															steps.get(i)
+																	.setE_id(
+																			experiment
+																					.getE_id());
+															steps.get(i)
+																	.setSvol(
+																			Integer.valueOf(holders
+																					.get(i).experiment_new_main_item_body_vol_info_et
+																					.getText()
+																					.toString()));
+															steps.get(i)
+																	.setStemp(
+																			Integer.valueOf(holders
+																					.get(i).experiment_new_main_item_body_temp_info_et
+																					.getText()
+																					.toString()));
+															stepDao.insertStep(
+																	steps.get(i),
+																	CreatExperimentActivity.this);
+														}
+														Intent intent = new Intent(
+																CreatExperimentActivity.this,
+																ExperimentActivity.class);
+														intent.putExtra("U_id",
+																U_id);
+														intent.putExtra(
+																"Uname", Uname);
+														startActivity(intent);
+														finish();
+														Toast.makeText(
+																CreatExperimentActivity.this,
+																getString(R.string.exp_save_success),
+																Toast.LENGTH_SHORT)
+																.show();
+													} else {
+														Toast.makeText(
+																CreatExperimentActivity.this,
+																getString(R.string.exp_temp_big),
+																Toast.LENGTH_SHORT)
+																.show();
 													}
-													Intent intent = new Intent(
-															CreatExperimentActivity.this,
-															ExperimentActivity.class);
-													intent.putExtra("U_id",
-															U_id);
-													intent.putExtra("Uname",
-															Uname);
-													startActivity(intent);
-													finish();
-													Toast.makeText(
-															CreatExperimentActivity.this,
-															getString(R.string.exp_save_success),
-															Toast.LENGTH_SHORT)
-															.show();
 												} else {
 													Toast.makeText(
 															CreatExperimentActivity.this,
-															getString(R.string.exp_temp_big),
+															getString(R.string.exp_temp_empty),
 															Toast.LENGTH_SHORT)
 															.show();
 												}
 											} else {
 												Toast.makeText(
 														CreatExperimentActivity.this,
-														getString(R.string.exp_temp_empty),
+														getString(R.string.exp_vol_big),
 														Toast.LENGTH_SHORT)
 														.show();
 											}
+
 										} else {
 											Toast.makeText(
 													CreatExperimentActivity.this,
-													getString(R.string.exp_vol_big),
+													getString(R.string.exp_vol_empty),
 													Toast.LENGTH_SHORT).show();
 										}
-
-									} else {
-										Toast.makeText(
-												CreatExperimentActivity.this,
-												getString(R.string.exp_vol_empty),
-												Toast.LENGTH_SHORT).show();
-									}
 									} else {
 										Toast.makeText(
 												CreatExperimentActivity.this,
@@ -475,9 +473,8 @@ public class CreatExperimentActivity extends Activity {
 				.getAllDefaultExperiments(CreatExperimentActivity.this);
 		if (defaultExperiments.size() == 0) {
 			return false;
-		}
-		else {
-			
+		} else {
+
 			return true;
 		}
 	}
@@ -677,8 +674,7 @@ public class CreatExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													} 
-													else if (tempTotal < 30) {
+													} else if (tempTotal < 30) {
 														Toast.makeText(
 																CreatExperimentActivity.this,
 																getString(R.string.exp_temp_small),
@@ -695,9 +691,8 @@ public class CreatExperimentActivity extends Activity {
 																	false);
 														} catch (Exception e) {
 															e.printStackTrace();
-														}	
-													}
-													else {
+														}
+													} else {
 														steps.get(p).setStemp(
 																tempTotal);
 														holder.experiment_new_main_item_body_temp_info_et
@@ -1689,9 +1684,8 @@ public class CreatExperimentActivity extends Activity {
 														} catch (Exception e) {
 															e.printStackTrace();
 														}
-													
-													}
-													else if (tempTotal < 30) {
+
+													} else if (tempTotal < 30) {
 														Toast.makeText(
 																CreatExperimentActivity.this,
 																getString(R.string.exp_temp_small),
@@ -1708,9 +1702,8 @@ public class CreatExperimentActivity extends Activity {
 																	false);
 														} catch (Exception e) {
 															e.printStackTrace();
-														}	
-													}
-													else {
+														}
+													} else {
 														steps.get(p).setStemp(
 																tempTotal);
 														holder.experiment_new_main_item_body_temp_info_et
@@ -2496,7 +2489,7 @@ public class CreatExperimentActivity extends Activity {
 													speed = 8;
 													break;
 												}
-												// TODO  频率设置
+												// TODO 频率设置
 												steps.get(p).setSspeed(speed);
 												holder.experiment_new_main_item_body_speed_info_tv
 														.setText(speed
@@ -2675,7 +2668,7 @@ public class CreatExperimentActivity extends Activity {
 		}
 		return flag;
 	}
-	
+
 	private boolean getEnameIsNull() {
 		boolean flag = false;
 		if (holders.size() != 0) {

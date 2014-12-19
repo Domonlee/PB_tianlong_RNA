@@ -119,10 +119,21 @@ public class LoginActivity extends Activity {
 				login_name_et.setText(user.getUname());
 			}
 		}
+		
+		login_name_et.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (login_name_lv.getVisibility() == View.VISIBLE) {
+					login_name_btn
+							.setBackgroundResource(R.drawable.input_name_btn_down);
+					login_name_lv.setVisibility(View.GONE);
+				}
+			}
+		});
+
 		userList = userDao.getAllUserByAdmin(LoginActivity.this);
 		login_name_lv.setAdapter(new LoginAdapter(LoginActivity.this, userList,
 				login_name_et));
-
 		login_name_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {

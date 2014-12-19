@@ -208,7 +208,15 @@ public class EditExperimentActivity extends Activity {
 													int which) {
 												experiment_new_main_body_tl
 														.removeView(stepRow);
-												editSteps.remove(stepChooseNum);
+												if (stepChooseNum != 0) {
+													
+													editSteps.remove(stepChooseNum);
+												}
+												else {
+													
+													editSteps.removeAll(editSteps);
+													steps.removeAll(steps);
+												}
 												stepChooseNum = -1;
 												if (textViews.size() != 0) {
 													textViews
