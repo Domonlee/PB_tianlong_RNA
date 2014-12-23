@@ -265,7 +265,31 @@ public class EditExperimentActivity extends Activity {
 								Toast.makeText(EditExperimentActivity.this,
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
+							}
+							if (experiment_new_main_bottom_ename_info_et.getText()
+									.toString().length() > 20) {
+								Toast.makeText(EditExperimentActivity.this,
+										getString(R.string.exp_name_too_long),
+										Toast.LENGTH_SHORT).show();
 							} else {
+								
+								boolean flag = false;
+								// 超过长度 提示错误
+								int length = 0;
+								for (int i = 0; i < editSteps.size(); i++) {
+									if (editSteps.get(i).getSname().equals("")) {
+										flag = true;
+										break;
+									}
+									if (steps.get(i).getSname().length() > 20) {
+										flag = true;
+										// 未做定位到哪一步骤名超出长度，只需要修改toast就可以
+										length = i + 1;
+										break;
+									}
+								}
+								if (!flag) {
+									
 								String systemTime = Utlis.systemFormat
 										.format(new Date(System
 												.currentTimeMillis()));
@@ -275,18 +299,20 @@ public class EditExperimentActivity extends Activity {
 												.getText().toString());
 								experimentDao.updateExperiment(experiment,
 										EditExperimentActivity.this);
-								boolean flag = false;
-								for (int i = 0; i < editSteps.size(); i++) {
-									if (editSteps.get(i).getSname().equals("")) {
-										flag = true;
-										break;
-									}
+								
 								}
 								if (flag) {
-									Toast.makeText(
-											EditExperimentActivity.this,
-											getString(R.string.exp_step_name_null),
-											Toast.LENGTH_SHORT).show();
+									if (length != 0) {
+										Toast.makeText(
+												EditExperimentActivity.this,
+												getString(R.string.exp_step_name_toolong),
+												Toast.LENGTH_SHORT).show();
+									} else {
+										Toast.makeText(
+												EditExperimentActivity.this,
+												getString(R.string.exp_step_name_null),
+												Toast.LENGTH_SHORT).show();
+									}
 								} else {
 									if (getEnameIsNull()) {
 										if (getVolIsNull()) {

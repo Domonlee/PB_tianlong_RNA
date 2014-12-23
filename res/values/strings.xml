@@ -193,7 +193,7 @@
     <string name="exp_name_too_long">实验名称超过20个字符，请重新输入</string>
     <string name="exp_name_already_exist">实验名称已经存在，请重新输入!</string>
     <string name="exp_save_null">步骤不能为空</string>
-    <string name="exp_creating">正在建立实验,请稍后&#8230;&#8230;</string>
+    <string name="exp_creating">正在编辑实验,请稍后&#8230;&#8230;</string>
     <string name="exp_prepareing">正在准备实验,请稍后&#8230;&#8230;</string>
     <string name="exp_creat_date">创建时间:</string>
     <string name="exp_edit_date">修改时间:</string>
@@ -207,6 +207,7 @@
     <string name="exp_inset_success">插入成功</string>
     <string name="exp_delete_success">删除成功</string>
     <string name="exp_step_name_null">步骤名不能为空</string>
+    <string name="exp_step_name_toolong">步骤名超过20个字符，请重新输入</string>
     <string name="exp_delete_step">删除步骤</string>
     <string name="exp_insert_step">添加步骤</string>
     <string name="exp_wait">等   待</string>

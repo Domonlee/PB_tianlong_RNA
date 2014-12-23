@@ -128,7 +128,7 @@
                                     android:layout_centerInParent="true"
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
@@ -151,7 +151,7 @@
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
                                     android:inputType="numberDecimal"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp"
                                     android:visibility="gone" />
@@ -221,7 +221,7 @@
                                     android:layout_centerInParent="true"
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
@@ -244,7 +244,7 @@
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
                                     android:inputType="numberDecimal"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp"
                                     android:visibility="gone" >
@@ -317,7 +317,7 @@
                                     android:layout_centerInParent="true"
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp" />
 
@@ -340,7 +340,7 @@
                                     android:background="@drawable/edittext"
                                     android:gravity="center"
                                     android:inputType="numberDecimal"
-                                    android:text="0.0"
+                                    android:text="0.00"
                                     android:textColor="@android:color/white"
                                     android:textSize="25sp"
                                     android:visibility="gone" />

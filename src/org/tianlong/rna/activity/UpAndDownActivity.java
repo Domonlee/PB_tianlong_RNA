@@ -72,6 +72,7 @@ public class UpAndDownActivity extends Activity {
 	private List<Map<String, Object>> experimentsList; // 下位机实验列表
 	private List<Map<String, Object>> upViewList; // 上传点击列表
 	private List<Map<String, Object>> downViewList; // 下载点击列表
+	private List<Map<String, Object>> downViewList2; // 下载点击列表
 	private Map<String, Object> map; // 点击保存列表
 	private getExperimentInfoThread experimentInfoThread;
 	private sendFileThread fileThread;
@@ -216,6 +217,7 @@ public class UpAndDownActivity extends Activity {
 							} else {
 								((View) downViewList.get(0).get("view"))
 										.setBackgroundResource(R.drawable.up_down_select);
+								// TODO仪器实验列表
 								downViewList.removeAll(downViewList);
 								map.clear();
 								arg1.setBackgroundResource(R.drawable.list_btn_select);
@@ -250,9 +252,13 @@ public class UpAndDownActivity extends Activity {
 							activity_upanddown_down_top_delete_btn
 									.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
 						}
+//						DownAdapter downAdapter = new DownAdapter(
+//								UpAndDownActivity.this, experimentsList,
+//								deleteFlag, downViewList);
+						
 						DownAdapter downAdapter = new DownAdapter(
 								UpAndDownActivity.this, experimentsList,
-								deleteFlag);
+								deleteFlag );
 						activity_upanddown_down_top_lv.setAdapter(downAdapter);
 					}
 				});
@@ -348,7 +354,6 @@ public class UpAndDownActivity extends Activity {
 												DialogInterface dialog,
 												int which) {
 											try {
-												// TODO
 												// Log.w("上传id", down_id+"");
 												wifiUtlis.sendMessage(Utlis
 														.sendExperimentId(down_id));
@@ -502,24 +507,38 @@ public class UpAndDownActivity extends Activity {
 				}
 				receive = Utlis.getReceive(info);
 				Log.w("读取下位机实验列表", receive.toString());
-				for (int i = 0; i < receive.size(); i++) {
-					if (!(receive.get(i)
-							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
-						experimentsList = Utlis.getExperimentList(receive);
-						activity_upanddown_down_top_lv
-								.setAdapter(new DownAdapter(
-										UpAndDownActivity.this,
-										experimentsList, deleteFlag));
-						pDialog.dismiss();
-						readListFlag = false;
-						// XXX 加入判断，若adapter有数据的话就跳出循环
-						break;
-					} else {
-						try {
-							wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-							Log.w("UpAndDownActivity", "仪器下位机列表获取失败");
-						} catch (Exception e) {
-							e.printStackTrace();
+
+				// FIXME 1223加入重发机制，但是不起作用
+				if (receive.size() == 1) {
+					try {
+						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+						Log.w("UpAndDownActivity", "重发");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else {
+
+					for (int i = 0; i < receive.size(); i++) {
+						if (!(receive.get(i)
+								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+							experimentsList = Utlis.getExperimentList(receive);
+							activity_upanddown_down_top_lv
+									.setAdapter(new DownAdapter(
+											UpAndDownActivity.this,
+											experimentsList, deleteFlag));
+							pDialog.dismiss();
+							readListFlag = false;
+							// XXX 加入判断，若adapter有数据的话就跳出循环
+							break;
+						} else {
+							try {
+								wifiUtlis.sendMessage(Utlis
+										.getseleteMessage(10));
+								Log.w("UpAndDownActivity", "仪器下位机列表获取失败");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -536,7 +555,6 @@ public class UpAndDownActivity extends Activity {
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
 					Thread.sleep(1000);
-
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -568,7 +586,8 @@ public class UpAndDownActivity extends Activity {
 							editNewName.setText("");
 							sameNameFlag = true;
 							new AlertDialog.Builder(UpAndDownActivity.this)
-									.setTitle(getString(R.string.has_same_exp_name))
+									.setTitle(
+											getString(R.string.has_same_exp_name))
 									.setIcon(android.R.drawable.ic_dialog_info)
 									.setView(editNewName)
 									.setPositiveButton(
@@ -593,7 +612,6 @@ public class UpAndDownActivity extends Activity {
 														Log.w("输入新的实验名称",
 																newExpNameString);
 														// sameNameFlag = false;
-														//
 														Experiment experiment = new Experiment();
 														if (infoList.size() != 0
 																&& !sameNameFlag) {
@@ -813,6 +831,7 @@ public class UpAndDownActivity extends Activity {
 	public class DownAdapter extends BaseAdapter {
 
 		private List<Map<String, Object>> strings;
+		private List<Map<String, Object>> downlists;
 		private LayoutInflater inflater;
 		private boolean deleteFlag = false;
 
@@ -820,6 +839,15 @@ public class UpAndDownActivity extends Activity {
 			super();
 			this.strings = strings;
 			this.inflater = LayoutInflater.from(context);
+		}
+
+		public DownAdapter(Context context, List<Map<String, Object>> strings,
+				boolean deleteFlag, List<Map<String, Object>> downlists) {
+			super();
+			this.strings = strings;
+			this.inflater = LayoutInflater.from(context);
+			this.deleteFlag = deleteFlag;
+			this.downlists = downlists;
 		}
 
 		public DownAdapter(Context context, List<Map<String, Object>> strings,
@@ -864,6 +892,13 @@ public class UpAndDownActivity extends Activity {
 					.get("info")
 					+ " -- "
 					+ (String) strings.get(arg0).get("user"));
+			// // 获取当前item位置 并更换背景
+//			if (downlists != null && (downlists.size() < strings.size())) {
+			if (downlists != null) {
+				if (downlists.get(arg0).get("id").equals(arg0)) {
+					arg1.setBackgroundResource(R.drawable.list_btn_select);
+				}
+			}
 			if (deleteFlag == true) {
 				holder.left_listview_item_delete_icon
 						.setVisibility(View.VISIBLE);
@@ -934,7 +969,9 @@ public class UpAndDownActivity extends Activity {
 			} else {
 				holder.left_listview_item_delete_icon.setVisibility(View.GONE);
 			}
+
 			return arg1;
+
 		}
 
 		class ViewHolder {

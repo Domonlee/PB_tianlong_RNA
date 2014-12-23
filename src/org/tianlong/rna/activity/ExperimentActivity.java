@@ -201,7 +201,7 @@ public class ExperimentActivity extends Activity {
 													ExperimentActivity.this,
 													U_id);
 									//设置删除背景
-									listChooseId = 999;
+//									listChooseId = 999;
 									experiment_left_lv
 											.setAdapter(new ExperimentAdapter(
 													ExperimentActivity.this,
@@ -366,7 +366,7 @@ public class ExperimentActivity extends Activity {
 									Toast.LENGTH_SHORT).show();
 						}
 						if (experiment_new_prepare_body_name_et.getText()
-								.toString().length() > 21) {
+								.toString().length() > 20) {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.exp_name_too_long),
 									Toast.LENGTH_SHORT).show();
@@ -550,13 +550,7 @@ public class ExperimentActivity extends Activity {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						// TODO 字符串 String 输入
-						// if (experiment_run_top_mstate_tv.getText().toString()
-						// .equals("Run")
-						// || experiment_run_top_mstate_tv.getText()
-						// .toString().equals("Pause")) {
-						// if (machineStateString.equals("Run") ||
-						// machineStateString.equals("Pause")) {
+						
 						if (MachineStateInfo.stateFlag == 1) {
 							Toast.makeText(ExperimentActivity.this,
 									"当前仪器有实验正在运行", 2000).show();

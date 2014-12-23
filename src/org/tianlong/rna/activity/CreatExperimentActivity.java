@@ -322,41 +322,64 @@ public class CreatExperimentActivity extends Activity {
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
 							}
+							
+							if (experiment_new_main_bottom_ename_info_et.getText()
+									.toString().length() > 20) {
+								Toast.makeText(CreatExperimentActivity.this,
+										getString(R.string.exp_name_too_long),
+										Toast.LENGTH_SHORT).show();							
+							}
 							if (!getEnameIsNull()) {
 								// 上一个Toast已经显示
 							} else {
-
-								String systemTime = Utlis.systemFormat
-										.format(new Date(System
-												.currentTimeMillis()));
-								experiment.setCdate(systemTime);
-								experiment.setRdate(systemTime);
-								experiment
-										.setEname(experiment_new_main_bottom_ename_info_et
-												.getText().toString());
-								experiment.setEDE_id(Enum);
-								experiment.setEquick(Equick);
-								experiment.setEremark(Eremark);
-								experiment.setU_id(U_id);
-								experimentDao.insertExperiment(experiment,
-										CreatExperimentActivity.this);
-								experiment = experimentDao
-										.getExperimentByCdate(systemTime,
-												CreatExperimentActivity.this,
-												U_id);
-
 								boolean flag = false;
+								// 超过长度 提示错误
+								int length = 0;
 								for (int i = 0; i < steps.size(); i++) {
 									if (steps.get(i).getSname().equals("")) {
 										flag = true;
 										break;
 									}
+									if (steps.get(i).getSname().length() > 20) {
+										flag = true;
+										// 未做定位到哪一步骤名超出长度，只需要修改toast就可以
+										length = i + 1;
+										break;
+									}
+								}
+								if (!flag) {
+									String systemTime = Utlis.systemFormat
+											.format(new Date(System
+													.currentTimeMillis()));
+									experiment.setCdate(systemTime);
+									experiment.setRdate(systemTime);
+									experiment
+											.setEname(experiment_new_main_bottom_ename_info_et
+													.getText().toString());
+									experiment.setEDE_id(Enum);
+									experiment.setEquick(Equick);
+									experiment.setEremark(Eremark);
+									experiment.setU_id(U_id);
+									experimentDao.insertExperiment(experiment,
+											CreatExperimentActivity.this);
+									experiment = experimentDao
+											.getExperimentByCdate(
+													systemTime,
+													CreatExperimentActivity.this,
+													U_id);
 								}
 								if (flag) {
-									Toast.makeText(
-											CreatExperimentActivity.this,
-											getString(R.string.exp_step_name_null),
-											Toast.LENGTH_SHORT).show();
+									if (length != 0) {
+										Toast.makeText(
+												CreatExperimentActivity.this,
+												getString(R.string.exp_step_name_toolong),
+												Toast.LENGTH_SHORT).show();
+									} else {
+										Toast.makeText(
+												CreatExperimentActivity.this,
+												getString(R.string.exp_step_name_null),
+												Toast.LENGTH_SHORT).show();
+									}
 								} else {
 									if (getEnameIsNull()) {
 										if (getVolIsNull()) {
@@ -420,7 +443,6 @@ public class CreatExperimentActivity extends Activity {
 														Toast.LENGTH_SHORT)
 														.show();
 											}
-
 										} else {
 											Toast.makeText(
 													CreatExperimentActivity.this,
