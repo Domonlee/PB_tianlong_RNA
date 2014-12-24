@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout android:id="@+id/time_hour_rl"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/time_hour_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true" >
+
         <org.tianlong.rna.utlis.TimeWheelView
-	        android:id="@+id/time_hour_hour"
-	        android:layout_width="70dip"
-	        android:layout_height="220dip"/>
+            android:id="@+id/time_hour_hour"
+            android:layout_width="70dip"
+            android:layout_height="220dip" />
+
         <org.tianlong.rna.utlis.TimeWheelView
-	        android:id="@+id/time_hour_minutes"
-	        android:layout_width="70dip"
-	        android:layout_height="220dip"
-	        android:layout_marginLeft="30dip"
-	        android:layout_toRightOf="@id/time_hour_hour"/>
+            android:id="@+id/time_hour_minutes"
+            android:layout_width="70dip"
+            android:layout_height="220dip"
+            android:layout_marginLeft="30dip"
+            android:layout_toRightOf="@id/time_hour_hour" />
+
         <org.tianlong.rna.utlis.TimeWheelView
-	        android:id="@+id/time_hour_seconds"
-	        android:layout_width="70dip"
-	        android:layout_height="220dip"
-	        android:layout_marginLeft="30dip"
-	        android:layout_toRightOf="@id/time_hour_minutes"/>
+            android:id="@+id/time_hour_seconds"
+            android:layout_width="70dip"
+            android:layout_height="220dip"
+            android:layout_marginLeft="30dip"
+            android:layout_toRightOf="@id/time_hour_minutes" />
     </RelativeLayout>
+
 </RelativeLayout>

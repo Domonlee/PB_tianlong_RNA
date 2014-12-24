@@ -211,7 +211,6 @@ public class CreatExperimentActivity extends Activity {
 						} else {
 							if (stepChooseNum == -1 || !hasTemplet()) {
 								Log.w("w", !hasTemplet() + "");
-								Log.w("w", stepChooseNum + "");
 								// 步骤step
 								Log.w("w", stepChooseNum + "");
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
@@ -322,12 +321,12 @@ public class CreatExperimentActivity extends Activity {
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
 							}
-							
-							if (experiment_new_main_bottom_ename_info_et.getText()
-									.toString().length() > 20) {
+
+							if (experiment_new_main_bottom_ename_info_et
+									.getText().toString().length() > 20) {
 								Toast.makeText(CreatExperimentActivity.this,
 										getString(R.string.exp_name_too_long),
-										Toast.LENGTH_SHORT).show();							
+										Toast.LENGTH_SHORT).show();
 							}
 							if (!getEnameIsNull()) {
 								// 上一个Toast已经显示
@@ -1054,9 +1053,16 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.wait);
 												}
-												step.setSwait(timeFromatStr);
-												holder.experiment_new_main_item_head_wait_info_tv
-														.setText(timeFromatStr);
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													step.setSwait("12:00:00");
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText("12:00:00");
+												} else {
+													step.setSwait(timeFromatStr);
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -1145,9 +1151,16 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.blend);
 												}
-												step.setSblend(timeFromatStr);
-												holder.experiment_new_main_item_head_blend_info_tv
-														.setText(timeFromatStr);
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													step.setSwait("12:00:00");
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText("12:00:00");
+												} else {
+													step.setSwait(timeFromatStr);
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -1235,9 +1248,16 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_magnet_info_tv
 															.setBackgroundResource(R.drawable.magnet);
 												}
-												step.setSmagnet(timeFromatStr);
-												holder.experiment_new_main_item_head_magnet_info_tv
-														.setText(timeFromatStr);
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 1) {
+													step.setSwait("01:00:00");
+													holder.experiment_new_main_item_head_magnet_info_tv
+															.setText("01:00:00");
+												} else {
+													step.setSwait(timeFromatStr);
+													holder.experiment_new_main_item_head_magnet_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -2065,10 +2085,19 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.wait);
 												}
+												//TODO cope
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													steps.get(p).setSwait(
+															"12:00:00");
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText("12:00:00");
+												} else {
 												steps.get(p).setSwait(
 														timeFromatStr);
-												holder.experiment_new_main_item_head_wait_info_tv
-														.setText(timeFromatStr);
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -2156,10 +2185,19 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.blend);
 												}
-												steps.get(p).setSblend(
+												
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													steps.get(p).setSwait(
+															"12:00:00");
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText("12:00:00");
+												} else {
+												steps.get(p).setSwait(
 														timeFromatStr);
-												holder.experiment_new_main_item_head_blend_info_tv
-														.setText(timeFromatStr);
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -2249,10 +2287,19 @@ public class CreatExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_magnet_info_tv
 															.setBackgroundResource(R.drawable.magnet);
 												}
-												steps.get(p).setSmagnet(
+												
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 1) {
+													steps.get(p).setSwait(
+															"01:00:00");
+													holder.experiment_new_main_item_head_magnet_info_tv
+															.setText("01:00:00");
+												} else {
+												steps.get(p).setSwait(
 														timeFromatStr);
-												holder.experiment_new_main_item_head_magnet_info_tv
-														.setText(timeFromatStr);
+													holder.experiment_new_main_item_head_magnet_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(

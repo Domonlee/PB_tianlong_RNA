@@ -83,6 +83,8 @@ public class LoginAdapter extends BaseAdapter {
 		if (list.get(position).getUname().equals("guest")
 				&& list.get(position).getUpass().equals("")) {
 			holder.loading_layout_item_btn.setVisibility(View.GONE);
+		} else {
+			holder.loading_layout_item_btn.setVisibility(View.VISIBLE);
 		}
 
 		holder.loading_layout_item_btn

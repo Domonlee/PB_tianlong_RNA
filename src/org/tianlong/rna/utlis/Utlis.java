@@ -778,6 +778,22 @@ public class Utlis {
 		config.locale = locale;
 		activity.getBaseContext().getResources()
 				.updateConfiguration(config, null);
+
+	}
+
+	// ”Ô—‘
+	public static void setLanguage() {
+		Locale locale = Locale.getDefault();
+		String languageToLocal = locale.getLanguage();
+		String country = locale.getCountry().toLowerCase();
+		if (languageToLocal.equals("zh")) {
+			languageToLocal = "zh";
+		} else if (languageToLocal.equals("en")) {
+			languageToLocal = "en";
+		}
+		Configuration config = new Configuration();
+		config.locale = locale;
+		Locale.setDefault(locale);
 	}
 
 	/**

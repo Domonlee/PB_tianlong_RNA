@@ -517,7 +517,6 @@ public class MachineActivity extends Activity {
 			break;
 		// -- ÍøÂçÉèÖÃ
 		case 1:
-
 			list = wifiManager.getScanResults();
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_net, null);
