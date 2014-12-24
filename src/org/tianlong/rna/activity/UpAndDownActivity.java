@@ -72,7 +72,6 @@ public class UpAndDownActivity extends Activity {
 	private List<Map<String, Object>> experimentsList; // 下位机实验列表
 	private List<Map<String, Object>> upViewList; // 上传点击列表
 	private List<Map<String, Object>> downViewList; // 下载点击列表
-	private List<Map<String, Object>> downViewList2; // 下载点击列表
 	private Map<String, Object> map; // 点击保存列表
 	private getExperimentInfoThread experimentInfoThread;
 	private sendFileThread fileThread;
@@ -85,6 +84,8 @@ public class UpAndDownActivity extends Activity {
 	private ProgressDialog pDialog;
 	private String newExpNameString = "";
 	private EditText editNewName;
+	
+	private static int downSelectId = 999;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -226,6 +227,8 @@ public class UpAndDownActivity extends Activity {
 								map.put("id", arg2);
 								map.put("view", arg1);
 								downViewList.add(map);
+								
+								downSelectId = arg2;
 							}
 						} else {
 							arg1.setBackgroundResource(R.drawable.list_btn_select);
@@ -234,6 +237,7 @@ public class UpAndDownActivity extends Activity {
 							map.put("id", arg2);
 							map.put("view", arg1);
 							downViewList.add(map);
+								downSelectId = arg2;
 						}
 					}
 				});
@@ -734,7 +738,6 @@ public class UpAndDownActivity extends Activity {
 						}
 					}
 
-					// TODO
 					if (infoList.size() != 0 && !sameNameFlag) {
 						Experiment experiment = new Experiment();
 						if ((infoList.get(infoList.size() - 2).substring(0, 9))
@@ -892,11 +895,15 @@ public class UpAndDownActivity extends Activity {
 					.get("info")
 					+ " -- "
 					+ (String) strings.get(arg0).get("user"));
+			//TODO
 			// // 获取当前item位置 并更换背景
 //			if (downlists != null && (downlists.size() < strings.size())) {
-			if (downlists != null) {
-				if (downlists.get(arg0).get("id").equals(arg0)) {
+			if (downlists != null ) {
+//				if (downlists.get(arg0).get("id").equals(arg0)) {
+//				if (map.get("id").equals(arg0)) {
+				if (downSelectId == arg0) {
 					arg1.setBackgroundResource(R.drawable.list_btn_select);
+					downSelectId = 998;
 				}
 			}
 			if (deleteFlag == true) {

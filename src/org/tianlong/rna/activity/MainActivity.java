@@ -1,10 +1,7 @@
 package org.tianlong.rna.activity;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Locale;
 
-import org.tianlong.rna.pojo.Experiment;
-import org.tianlong.rna.pojo.Step;
 import org.tianlong.rna.utlis.MachineStateInfo;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
@@ -62,6 +59,7 @@ public class MainActivity extends ActivityGroup {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//		getLanguageEnv();
 
 		// 开启uv状态获取线程
 //		uvFlag = true;
@@ -347,4 +345,18 @@ public class MainActivity extends ActivityGroup {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	private String getLanguageEnv() {  
+	       Locale l = Locale.getDefault();  
+	       String language = l.getLanguage();  
+	       String country = l.getCountry().toLowerCase();  
+	       if ("zh".equals(language)) {  
+	           if ("cn".equals(country)) {  
+	               language = "zh-CN";  
+	           }  
+	       } else if ("us".equals(language)) {  
+	               language = "US";  
+	       }  
+	       return language;  
+	   }  
 }
