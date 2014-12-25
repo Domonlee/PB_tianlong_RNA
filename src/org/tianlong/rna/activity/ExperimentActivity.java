@@ -200,7 +200,7 @@ public class ExperimentActivity extends Activity {
 											.getAllExperimentsByU_id(
 													ExperimentActivity.this,
 													U_id);
-									//…Ë÷√…æ≥˝±≥æ∞
+									//1225  …Ë÷√…æ≥˝±≥æ∞
 //									listChooseId = 999;
 									experiment_left_lv
 											.setAdapter(new ExperimentAdapter(

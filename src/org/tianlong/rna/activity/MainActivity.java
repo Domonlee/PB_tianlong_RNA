@@ -235,7 +235,9 @@ public class MainActivity extends ActivityGroup {
 					message.what = 1;
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
-					Thread.sleep(50);
+//					Thread.sleep(50);
+					//FIXME 测试代码，降低发送平率
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

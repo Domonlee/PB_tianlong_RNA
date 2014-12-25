@@ -133,7 +133,7 @@ public class EditExperimentActivity extends Activity {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								EditExperimentActivity.this);
 						deleteFlag = hasTemplet();
-//						if (!deleteFlag) {
+						// if (!deleteFlag) {
 						if (steps.size() == 0) {
 							builder.setTitle("当前没有步骤!");
 							builder.setPositiveButton(getString(R.string.sure),
@@ -148,10 +148,10 @@ public class EditExperimentActivity extends Activity {
 									});
 							builder.show();
 						} else {
-							//TODO
+							// TODO
 							if (stepChooseNum == -1 || !hasTemplet()) {
-								Log.w("text", hasTemplet()+ "");
-//							if (stepChooseNum == -1 ) {
+								Log.w("text", hasTemplet() + "");
+								// if (stepChooseNum == -1 ) {
 								builder.setTitle(getString(R.string.exp_sure_delete_all));
 								builder.setPositiveButton(
 										getString(R.string.sure),
@@ -209,12 +209,13 @@ public class EditExperimentActivity extends Activity {
 												experiment_new_main_body_tl
 														.removeView(stepRow);
 												if (stepChooseNum != 0) {
-													
-													editSteps.remove(stepChooseNum);
-												}
-												else {
-													
-													editSteps.removeAll(editSteps);
+
+													editSteps
+															.remove(stepChooseNum);
+												} else {
+
+													editSteps
+															.removeAll(editSteps);
 													steps.removeAll(steps);
 												}
 												stepChooseNum = -1;
@@ -266,13 +267,13 @@ public class EditExperimentActivity extends Activity {
 										getString(R.string.exp_name_null),
 										Toast.LENGTH_SHORT).show();
 							}
-							if (experiment_new_main_bottom_ename_info_et.getText()
-									.toString().length() > 20) {
+							if (experiment_new_main_bottom_ename_info_et
+									.getText().toString().length() > 20) {
 								Toast.makeText(EditExperimentActivity.this,
 										getString(R.string.exp_name_too_long),
 										Toast.LENGTH_SHORT).show();
 							} else {
-								
+
 								boolean flag = false;
 								// 超过长度 提示错误
 								int length = 0;
@@ -289,17 +290,17 @@ public class EditExperimentActivity extends Activity {
 									}
 								}
 								if (!flag) {
-									
-								String systemTime = Utlis.systemFormat
-										.format(new Date(System
-												.currentTimeMillis()));
-								experiment.setRdate(systemTime);
-								experiment
-										.setEname(experiment_new_main_bottom_ename_info_et
-												.getText().toString());
-								experimentDao.updateExperiment(experiment,
-										EditExperimentActivity.this);
-								
+
+									String systemTime = Utlis.systemFormat
+											.format(new Date(System
+													.currentTimeMillis()));
+									experiment.setRdate(systemTime);
+									experiment
+											.setEname(experiment_new_main_bottom_ename_info_et
+													.getText().toString());
+									experimentDao.updateExperiment(experiment,
+											EditExperimentActivity.this);
+
 								}
 								if (flag) {
 									if (length != 0) {
@@ -1054,38 +1055,14 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_hour
-														.getCurrentItem() < 10) {
-													hours = "0"
-															+ experiment_new_main_item_time_hour_hour
-																	.getCurrentItem();
-												} else {
-													hours = experiment_new_main_item_time_hour_hour
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() * 5 < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem()
-															* 5;
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															* 5 + "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														experiment_new_main_item_time_hour_hour
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -1093,13 +1070,19 @@ public class EditExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.wait);
 												}
-												editSteps.get(p).setSwait(
-														hours + ":" + mins
-																+ ":" + secs);
-												holder.experiment_new_main_item_head_wait_info_tv
-														.setText(hours + ":"
-																+ mins + ":"
-																+ secs);
+
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													editSteps.get(p).setSwait(
+															"12:00:00");
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText("12:00:00");
+												} else {
+													editSteps.get(p).setSwait(
+															timeFromatStr);
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -1172,38 +1155,14 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_hour
-														.getCurrentItem() < 10) {
-													hours = "0"
-															+ experiment_new_main_item_time_hour_hour
-																	.getCurrentItem();
-												} else {
-													hours = experiment_new_main_item_time_hour_hour
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() * 5 < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem()
-															* 5;
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															* 5 + "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														experiment_new_main_item_time_hour_hour
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -1211,13 +1170,20 @@ public class EditExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.blend);
 												}
-												editSteps.get(p).setSblend(
-														hours + ":" + mins
-																+ ":" + secs);
-												holder.experiment_new_main_item_head_blend_info_tv
-														.setText(hours + ":"
-																+ mins + ":"
-																+ secs);
+
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													editSteps.get(p).setSblend(
+															"12:00:00");
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText("12:00:00");
+												} else {
+													editSteps.get(p).setSblend(
+															timeFromatStr);
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText(timeFromatStr);
+													//XXX--
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -1279,28 +1245,13 @@ public class EditExperimentActivity extends Activity {
 											public void onClick(
 													DialogInterface dialog,
 													int which) {
-												if (experiment_new_main_item_time_hour_minutes
-														.getCurrentItem() < 10) {
-													mins = "0"
-															+ experiment_new_main_item_time_hour_minutes
-																	.getCurrentItem();
-												} else {
-													mins = experiment_new_main_item_time_hour_minutes
-															.getCurrentItem()
-															+ "";
-												}
-												if (experiment_new_main_item_time_hour_seconds
-														.getCurrentItem() * 5 < 10) {
-													secs = "0"
-															+ experiment_new_main_item_time_hour_seconds
-																	.getCurrentItem()
-															* 5;
-												} else {
-													secs = experiment_new_main_item_time_hour_seconds
-															.getCurrentItem()
-															* 5 + "";
-												}
-												if ((hours + ":" + mins + ":" + secs)
+												String timeFromatStr = timeFormat(
+														0,
+														experiment_new_main_item_time_hour_minutes
+																.getCurrentItem(),
+														experiment_new_main_item_time_hour_seconds
+																.getCurrentItem());
+												if (timeFromatStr
 														.equals("00:00:00")) {
 													holder.experiment_new_main_item_head_magnet_info_tv
 															.setBackgroundResource(R.drawable.zero);
@@ -1309,11 +1260,9 @@ public class EditExperimentActivity extends Activity {
 															.setBackgroundResource(R.drawable.magnet);
 												}
 												editSteps.get(p).setSmagnet(
-														"00:" + mins + ":"
-																+ secs);
+														timeFromatStr);
 												holder.experiment_new_main_item_head_magnet_info_tv
-														.setText("00:" + mins
-																+ ":" + secs);
+														.setText(timeFromatStr);
 											}
 										});
 								builder.setNegativeButton(
@@ -2194,6 +2143,7 @@ public class EditExperimentActivity extends Activity {
 								experiment_new_main_item_time_hour_seconds
 										.setCurrentItem(date.getSeconds() / 5);
 
+								// XXX--------
 								AlertDialog.Builder builder = new AlertDialog.Builder(
 										EditExperimentActivity.this);
 								builder.setTitle(getString(R.string.exp_wait_time_setting));
@@ -2219,10 +2169,18 @@ public class EditExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_wait_info_tv
 															.setBackgroundResource(R.drawable.wait);
 												}
-												editSteps.get(p).setSwait(
-														timeFromatStr);
-												holder.experiment_new_main_item_head_wait_info_tv
-														.setText(timeFromatStr);
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													editSteps.get(p).setSwait(
+															"12:00:00");
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText("12:00:00");
+												} else {
+													editSteps.get(p).setSwait(
+															timeFromatStr);
+													holder.experiment_new_main_item_head_wait_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(
@@ -2310,10 +2268,19 @@ public class EditExperimentActivity extends Activity {
 													holder.experiment_new_main_item_head_blend_info_tv
 															.setBackgroundResource(R.drawable.blend);
 												}
-												editSteps.get(p).setSblend(
-														timeFromatStr);
-												holder.experiment_new_main_item_head_blend_info_tv
-														.setText(timeFromatStr);
+												
+												if (experiment_new_main_item_time_hour_hour
+														.getCurrentItem() == 12) {
+													editSteps.get(p).setSblend(
+															"12:00:00");
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText("12:00:00");
+												} else {
+													editSteps.get(p).setSblend(
+															timeFromatStr);
+													holder.experiment_new_main_item_head_blend_info_tv
+															.setText(timeFromatStr);
+												}
 											}
 										});
 								builder.setNegativeButton(

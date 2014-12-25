@@ -211,26 +211,44 @@ public class RunFileActivity extends Activity {
 					}
 					receive = Utlis.getReceive(info);
 					Log.w("runfile receive", receive.toString());
-					for (int i = 0; i < receive.size(); i++) {
-						if (!(receive.get(i).toString()
-								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
-							strings = Utlis.getRunFileList(receive);
-							Log.w("Strings", strings + "");
-							logListAdapert = new RunFileAdapert(strings,
-									RunFileActivity.this);
-							runfile_left_lv.setAdapter(logListAdapert);
-							Log.w("载入Adapert", "载入成功");
-							pDialog.dismiss();
-							readListFlag = false;
-							// XXX 加入break，判断若写入adapter成功后跳出循环，避免重复setAdapter
-							break;
-						} else {
-							try {
-								wifiUtlis.sendMessage(Utlis
-										.sendSelectRunfileList());
-								Log.w("RunFileActivity", "仪器日志获取失败");
-							} catch (Exception e) {
-								e.printStackTrace();
+
+					if (receive.toString().equals(
+							"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
+							|| receive.toString().equals(
+									"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")) {
+
+						try {
+							wifiUtlis
+									.sendMessage(Utlis.sendSelectRunfileList());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						Log.w("RunFileActivity", "重新发送数据");
+					} else
+
+					{
+						for (int i = 0; i < receive.size(); i++) {
+							if (!(receive.get(i).toString()
+									.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+								strings = Utlis.getRunFileList(receive);
+								Log.w("Strings", strings + "");
+								logListAdapert = new RunFileAdapert(strings,
+										RunFileActivity.this);
+								runfile_left_lv.setAdapter(logListAdapert);
+								Log.w("载入Adapert", "载入成功");
+								pDialog.dismiss();
+								readListFlag = false;
+								// XXX
+								// 加入break，判断若写入adapter成功后跳出循环，避免重复setAdapter
+								break;
+							} else {
+								try {
+									wifiUtlis.sendMessage(Utlis
+											.sendSelectRunfileList());
+									Log.w("RunFileActivity", "仪器日志获取失败");
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
 						}
 					}
@@ -248,6 +266,15 @@ public class RunFileActivity extends Activity {
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
 					Thread.sleep(1000);
+					// FIXME 测试代码
+
+					// try {
+					// wifiUtlis.sendMessage(Utlis
+					// .sendSelectRunfileList());
+					// Log.w("RunFileActivity", "发送");
+					// } catch (Exception e) {
+					// e.printStackTrace();
+					// }
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
