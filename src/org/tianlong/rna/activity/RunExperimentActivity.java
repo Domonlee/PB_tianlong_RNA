@@ -457,6 +457,7 @@ public class RunExperimentActivity extends Activity {
 										receiveMeg.substring(39, 41)
 												+ receiveMeg.substring(42, 44),
 										16) + 5) / 10;
+								//XXX偶现数组越界
 								t5 = (Integer.parseInt(
 										receiveMeg.substring(45, 47)
 												+ receiveMeg.substring(48, 50),

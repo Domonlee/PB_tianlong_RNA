@@ -59,10 +59,10 @@ public class MainActivity extends ActivityGroup {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//		getLanguageEnv();
+		// getLanguageEnv();
 
 		// 开启uv状态获取线程
-//		uvFlag = true;
+		// uvFlag = true;
 		MachineStateInfo machineStateInfo = new MachineStateInfo(
 				MainActivity.this);
 		machineStateInfo.runflag = false;
@@ -72,7 +72,8 @@ public class MainActivity extends ActivityGroup {
 		currentUserName = Uname;
 		currentUserId = U_id;
 
-		Log.w("MainActivity", "Uname="+ currentUserName+";U_id="+ currentUserId	);
+		Log.w("MainActivity", "Uname=" + currentUserName + ";U_id="
+				+ currentUserId);
 
 		gd = new GestureDetector(handListener);
 
@@ -135,10 +136,9 @@ public class MainActivity extends ActivityGroup {
 			U_id = data.getIntExtra("U_id", 9999);
 			Uname = data.getStringExtra("Uname");
 		}
-		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	private void SwitchActivity(int tid) {
 		main_body_rl.removeAllViews();
 		Intent intent = null;
@@ -235,9 +235,9 @@ public class MainActivity extends ActivityGroup {
 					message.what = 1;
 					message.obj = wifiUtlis.getMessage();
 					queryUVHandler.sendMessage(message);
-//					Thread.sleep(50);
-					//FIXME 测试代码，降低发送平率
-					Thread.sleep(5000);
+					// Thread.sleep(50);
+					// FIXME 测试代码，降低发送平率
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -252,35 +252,50 @@ public class MainActivity extends ActivityGroup {
 			// Log.w(TAG, "handler");
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
-				 Log.w(TAG, info);
-				 //11.27增加获取信息判断
-					
-				 
-//				if (info.substring(0, 18).equals("ff ff 0b 51 02 0d ") &&info.substring(24, 26).equals("00")) {
-				if (info.substring(24, 26).equals("00")) {
-					dialog.dismiss();
-					closeFlag = false;
-					Log.w(TAG, "关闭--close");
-				} else {
-					if (closeFlag == false) {
-						dialog.show();
-					}else {
-						dialog.dismiss();
-					}
-					Log.w(TAG, "打开--open");
-				}
+				Log.w(TAG, info);
+				// 11.27增加获取信息判断
 
-				// 仪器状态检测
-				if (info.substring(21, 23).equals("00")
-						|| info.substring(21, 23).equals("05")) {
-					// Log.w(TAG, "machine is stop ");
-				} else if (info.substring(21, 23).equals("03")) {
-					// Log.w(TAG, "machine is runing ");
-					if (runFlag == true) {
-					Intent intent = new Intent(MainActivity.this,
-							RunExpActivity2.class);
-					startActivityForResult(intent, 1);
-					runFlag = false;
+//				Log.w("info--", info.substring(0, 2));
+//				Log.w("info--", info.substring(3, 5));
+//				Log.w("info--", info.substring(6, 8));
+//				Log.w("info--", info.substring(9, 11));
+//				Log.w("info--", info.substring(12, 14));
+//				Log.w("info--", info.substring(15, 17));
+//				Log.w("info--", info.substring(18, 20));
+				if ((info.substring(15, 20).equals("00 00"))
+						|| (info.substring(15, 20).equals("06 ff"))
+						|| (info.substring(15, 20).equals("0a ff"))
+						|| (info.substring(15, 20).equals("0c ff"))) {
+					Toast.makeText(MainActivity.this, "---", 1000).show();
+				} else {
+
+					// if (info.substring(0, 18).equals("ff ff 0b 51 02 0d ")
+					// &&info.substring(24, 26).equals("00")) {
+					if (info.substring(24, 26).equals("00")) {
+						dialog.dismiss();
+						closeFlag = false;
+						Log.w(TAG, "关闭--close");
+					} else {
+						if (closeFlag == false) {
+							dialog.show();
+						} else {
+							dialog.dismiss();
+						}
+						Log.w(TAG, "打开--open");
+					}
+
+					// 仪器状态检测
+					if (info.substring(21, 23).equals("00")
+							|| info.substring(21, 23).equals("05")) {
+						// Log.w(TAG, "machine is stop ");
+					} else if (info.substring(21, 23).equals("03")) {
+						// Log.w(TAG, "machine is runing ");
+						if (runFlag == true) {
+							Intent intent = new Intent(MainActivity.this,
+									RunExpActivity2.class);
+							startActivityForResult(intent, 1);
+							runFlag = false;
+						}
 					}
 				}
 			}
@@ -317,7 +332,7 @@ public class MainActivity extends ActivityGroup {
 		Log.w("TAG", "onDestroy");
 		super.onDestroy();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		Log.w("TAG", "onResume");
@@ -347,18 +362,18 @@ public class MainActivity extends ActivityGroup {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	private String getLanguageEnv() {  
-	       Locale l = Locale.getDefault();  
-	       String language = l.getLanguage();  
-	       String country = l.getCountry().toLowerCase();  
-	       if ("zh".equals(language)) {  
-	           if ("cn".equals(country)) {  
-	               language = "zh-CN";  
-	           }  
-	       } else if ("us".equals(language)) {  
-	               language = "US";  
-	       }  
-	       return language;  
-	   }  
+
+	private String getLanguageEnv() {
+		Locale l = Locale.getDefault();
+		String language = l.getLanguage();
+		String country = l.getCountry().toLowerCase();
+		if ("zh".equals(language)) {
+			if ("cn".equals(country)) {
+				language = "zh-CN";
+			}
+		} else if ("us".equals(language)) {
+			language = "US";
+		}
+		return language;
+	}
 }

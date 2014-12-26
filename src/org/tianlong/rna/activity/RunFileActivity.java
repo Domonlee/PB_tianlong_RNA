@@ -102,14 +102,13 @@ public class RunFileActivity extends Activity {
 		runfile_right_output_location_tv = (TextView) findViewById(R.id.runfile_right_output_location_tv);
 		machine_wifi_name_tv = (TextView) findViewById(R.id.machine_wifi_name_tv);
 		machine_wifi_name_tv.setText(MainActivity.machine_wifi_name);
-
+		
 		runfile_left_lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				runfile_right_tv.setText("");
 				listChooseId = arg2;
 				logListAdapert.notifyDataSetChanged();
-
 				if (!readInfoFlag) {
 					readInfoFlag = true;
 				}
@@ -132,11 +131,14 @@ public class RunFileActivity extends Activity {
 						wifiUtlis.sendMessage(Utlis
 								.sendSelectRunfileInfo((Integer) strings.get(
 										arg2).get("id")));
+						new Thread(infoThread).start();
 						experNameString = (String) strings.get(arg2)
 								.get("info");
+						Log.w("右侧信息输入-string id", "id="
+								+ strings.get(arg2).get("id"));
 						Log.w("右侧信息输入--", "arg2=" + arg2 + ";experNameString="
 								+ experNameString);
-						new Thread(infoThread).start();
+						// new Thread(infoThread).start();
 					} catch (Exception e) {
 						Toast.makeText(RunFileActivity.this,
 								getString(R.string.wifi_error),
@@ -212,11 +214,13 @@ public class RunFileActivity extends Activity {
 					receive = Utlis.getReceive(info);
 					Log.w("runfile receive", receive.toString());
 
+					// 12.25添加消息返回判断
 					if (receive.toString().equals(
 							"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
 							|| receive.toString().equals(
-									"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")) {
-
+									"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")
+							|| receive.toString().equals(
+									"[ff ff 0b 51 02 0d ff 00 00 68 fe ]")) {
 						try {
 							wifiUtlis
 									.sendMessage(Utlis.sendSelectRunfileList());
@@ -266,15 +270,6 @@ public class RunFileActivity extends Activity {
 					message.obj = wifiUtlis.getByteMessage();
 					readListHandler.sendMessage(message);
 					Thread.sleep(1000);
-					// FIXME 测试代码
-
-					// try {
-					// wifiUtlis.sendMessage(Utlis
-					// .sendSelectRunfileList());
-					// Log.w("RunFileActivity", "发送");
-					// } catch (Exception e) {
-					// e.printStackTrace();
-					// }
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -294,6 +289,7 @@ public class RunFileActivity extends Activity {
 				// 0c ff 为查询日志文件目录
 				if (!(receive.toString().substring(16, 21).equals("0c ff"))) {
 					runfile_right_tv.setText(Utlis.getRunFileInfo(receive));
+					// Log.w("日志内容", Utlis.getRunFileInfo(receive));
 					readInfoFlag = false;
 				}
 			}

@@ -196,8 +196,8 @@ public class MachineActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_machine);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		
-		//控制uv紫外灯
+
+		// 控制uv紫外灯
 		MainActivity.uvFlag = false;
 
 		Intent intent = getIntent();
@@ -211,7 +211,7 @@ public class MachineActivity extends Activity {
 		detectionInfoThread = new DetectionInfoThread();
 		user = userDao.getUserById(U_id, MachineActivity.this);
 
-		//11.21 增加同步 管理员
+		// 11.21 增加同步 管理员
 		if (MainActivity.currentUserName.equals("admin")) {
 			user.setUadmin(1);
 		}
@@ -440,7 +440,7 @@ public class MachineActivity extends Activity {
 		list.add(getString(R.string.system_user));
 		list.add(getString(R.string.system_clean));
 		list.add(getString(R.string.system_qr));
-		//FIXME 同步运行状态返回 出错
+		// FIXME 同步运行状态返回 出错
 		if (user.getUadmin() == 1) {
 			list.add(getString(R.string.system_machine));
 			list.add(getString(R.string.system_detection));
@@ -689,16 +689,16 @@ public class MachineActivity extends Activity {
 			break;
 		// 仪器设置
 		case 5:
-			 try {
-			 if (wifiUtlis == null) {
-			 wifiUtlis = new WifiUtlis(MachineActivity.this);
-			 }
-			 selectInfoFlag = true;
-			 new Thread(selectInfoThread).start();
-			 wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
-			 } catch (Exception e) {
-			 e.printStackTrace();
-			 }
+			try {
+				if (wifiUtlis == null) {
+					wifiUtlis = new WifiUtlis(MachineActivity.this);
+				}
+				selectInfoFlag = true;
+				new Thread(selectInfoThread).start();
+				wifiUtlis.sendMessage(Utlis.getseleteMessage(7));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			view = LayoutInflater.from(MachineActivity.this).inflate(
 					R.layout.activity_machine_instrument, null);
 			machine_instrument_body_flux_info_tv = (TextView) view
@@ -747,7 +747,7 @@ public class MachineActivity extends Activity {
 			machine_instrument_body_run_parameter_hole_space_info_btn_rl = (RelativeLayout) view
 					.findViewById(R.id.machine_instrument_body_run_parameter_hole_space_info_btn_rl);
 
-			//TODO
+			// TODO
 			fluxNum = machine.getMflux();
 			machine_instrument_body_flux_info_tv.setText(getNum(fluxNum));
 
@@ -1236,7 +1236,7 @@ public class MachineActivity extends Activity {
 
 							AlertDialog.Builder builder = new AlertDialog.Builder(
 									MachineActivity.this);
-							
+
 							builder.setTitle(getString(R.string.instrument_flux_selete));
 							builder.setView(fluxView);
 							builder.setPositiveButton(getString(R.string.sure),
@@ -1259,8 +1259,8 @@ public class MachineActivity extends Activity {
 												selectInfoFlag = true;
 												new Thread(selectInfoThread)
 														.start();
-												 wifiUtlis.sendMessage(Utlis
-												 .getseleteMessage(7));
+												wifiUtlis.sendMessage(Utlis
+														.getseleteMessage(7));
 												Toast.makeText(
 														MachineActivity.this,
 														getString(R.string.instrument_success),
@@ -1300,17 +1300,18 @@ public class MachineActivity extends Activity {
 								selectInfoFlag = true;
 								new Thread(selectInfoThread).start();
 								wifiUtlis.sendMessage(Utlis.getseleteMessage(9));
-								if( machine_instrument_body_run_parameter_blend_info_btn_rl.getVisibility() != View.GONE){
+								if (machine_instrument_body_run_parameter_blend_info_btn_rl
+										.getVisibility() != View.GONE) {
 									machine_instrument_body_run_parameter_magnetic_info_btn_rl
-									.setVisibility(View.GONE);
+											.setVisibility(View.GONE);
 									machine_instrument_body_run_parameter_blend_info_btn_rl
-									.setVisibility(View.GONE);
+											.setVisibility(View.GONE);
 									machine_instrument_body_run_parameter_hole_space_info_btn_rl
-									.setVisibility(View.GONE);
+											.setVisibility(View.GONE);
 									machine_instrument_body_run_parameter_hole_space_btn_rl
-									.setVisibility(View.VISIBLE);
+											.setVisibility(View.VISIBLE);
 								}
-								
+
 								Toast.makeText(getApplicationContext(),
 										getString(R.string.instrument_reboot),
 										1000).show();
@@ -1322,67 +1323,68 @@ public class MachineActivity extends Activity {
 							}
 						}
 					});
-			
-			// 混合电机复位
-						machine_instrument_body_run_parameter_blend_info_reset_btn
-								.setOnClickListener(new OnClickListener() {
-									public void onClick(View v) {
-										if (wifiUtlis != null) {
-											machine_instrument_body_run_parameter_magnetic_info_btn_rl
-													.setVisibility(View.VISIBLE);
-										} else {
-											Toast.makeText(MachineActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-										}
-									}
-								});
-						// 磁吸电机复位
-						machine_instrument_body_run_parameter_magnetic_info_reset_btn
-								.setOnClickListener(new OnClickListener() {
-									public void onClick(View v) {
-										if (wifiUtlis != null) {
-											machine_instrument_body_run_parameter_hole_space_info_btn_rl
-													.setVisibility(View.VISIBLE);
-										} else {
-											Toast.makeText(MachineActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-										}
-									}
-								});
-						// 水平电机
-						machine_instrument_body_run_parameter_hole_info_reset_btn
-								.setOnClickListener(new OnClickListener() {
-									public void onClick(View v) {
-										if (wifiUtlis != null) {
-											machine_instrument_body_run_parameter_blend_info_btn_rl
-													.setVisibility(View.VISIBLE);
-										} else {
-											Toast.makeText(MachineActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-										}
-									}
-								});
 
-						// 孔间距电机
-						machine_instrument_body_run_parameter_hole_space_info_reset_btn
-								.setOnClickListener(new OnClickListener() {
-									public void onClick(View v) {
-										if (wifiUtlis != null) {
-											try {
-												wifiUtlis.sendMessage(Utlis.sendSystemResetMessage());
-											} catch (Exception e) {
-												e.printStackTrace();
-											}
-										} else {
-											Toast.makeText(MachineActivity.this,
-													getString(R.string.wifi_error),
-													Toast.LENGTH_SHORT).show();
-										}
-									}
-								});
+			// 混合电机复位
+			machine_instrument_body_run_parameter_blend_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								machine_instrument_body_run_parameter_magnetic_info_btn_rl
+										.setVisibility(View.VISIBLE);
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+			// 磁吸电机复位
+			machine_instrument_body_run_parameter_magnetic_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								machine_instrument_body_run_parameter_hole_space_info_btn_rl
+										.setVisibility(View.VISIBLE);
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+			// 水平电机
+			machine_instrument_body_run_parameter_hole_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								machine_instrument_body_run_parameter_blend_info_btn_rl
+										.setVisibility(View.VISIBLE);
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+
+			// 孔间距电机
+			machine_instrument_body_run_parameter_hole_space_info_reset_btn
+					.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							if (wifiUtlis != null) {
+								try {
+									wifiUtlis.sendMessage(Utlis
+											.sendSystemResetMessage());
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							} else {
+								Toast.makeText(MachineActivity.this,
+										getString(R.string.wifi_error),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 
 			// 混合电机移动
 			machine_instrument_body_run_parameter_blend_info_send_btn
@@ -1652,7 +1654,6 @@ public class MachineActivity extends Activity {
 		}
 	}
 
-	
 	private void defaultLogin() {
 		machine_user_right_btn_default.setVisibility(View.GONE);
 		machine_user_right_btn_pass_default.setVisibility(View.GONE);
@@ -1948,7 +1949,7 @@ public class MachineActivity extends Activity {
 					if (receiveMeg.equals("ff ff 0a d1 01 00 ff 01 da fe ")) {
 						machine_instrument_body_flux_info_tv.setClickable(true);
 						machine_instrument_body_run_parameter_hole_info_btn_rl
-						.setVisibility(View.VISIBLE);
+								.setVisibility(View.VISIBLE);
 						machine_instrument_body_run_parameter_blend_btn_rl
 								.setVisibility(View.VISIBLE);
 						machine_instrument_body_run_parameter_magnetic_btn_rl
@@ -2549,11 +2550,13 @@ public class MachineActivity extends Activity {
 			e.printStackTrace();
 		}
 		if (wifiUtlis == null) {
-			machine_wifi_name_tv.setText(getString(R.string.machine_not_connect));
+			machine_wifi_name_tv
+					.setText(getString(R.string.machine_not_connect));
 		} else {
 			if (!wifiManager.getConnectionInfo().getSSID().substring(0, 6)
 					.equals("NP968_")) {
-				machine_wifi_name_tv.setText(getString(R.string.machine_not_connect));
+				machine_wifi_name_tv
+						.setText(getString(R.string.machine_not_connect));
 			} else {
 				machine_wifi_name_tv.setText(wifiManager.getConnectionInfo()
 						.getSSID());

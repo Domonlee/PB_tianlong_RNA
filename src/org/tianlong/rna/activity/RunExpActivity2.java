@@ -126,10 +126,11 @@ public class RunExpActivity2 extends Activity {
 	private int startTimeControl, //
 			runNum, // 运行或继续控制
 			continueControl, // 继续按钮控制
-			controlNum, // 总步骤索引
 			stopBtn, // 停止控制
 			pauseCtrl;// 仪器操作暂停控制 0为运行，1为暂停
 	private int stopDialogCtrl = 0;
+	//12.26 设定索引初始值
+	private int controlNum = 0;// 总步骤索引
 
 	private int runBtnControl = 1; // 运行按钮控制
 
@@ -143,7 +144,6 @@ public class RunExpActivity2 extends Activity {
 	final IntentFilter homeFilter = new IntentFilter(
 			Intent.ACTION_CLOSE_SYSTEM_DIALOGS);// home键监听
 
-	private String TAGINFO = "INFO";
 	private boolean getExperimentInfoFlag = true;
 	private Dialog runInfoDialog;
 
@@ -450,6 +450,7 @@ public class RunExpActivity2 extends Activity {
 											receiveMeg.substring(21, 23)
 													+ receiveMeg.substring(24,
 															26), 16) + 5) / 10;
+									// XXX偶现数组越界bug
 									t2 = (Integer.parseInt(
 											receiveMeg.substring(27, 29)
 													+ receiveMeg.substring(30,
@@ -678,7 +679,7 @@ public class RunExpActivity2 extends Activity {
 			}
 		};
 	};
-	
+
 	class SelectInfoThread implements Runnable {
 		public void run() {
 			while (selectInfoFlag) {
@@ -1578,93 +1579,96 @@ public class RunExpActivity2 extends Activity {
 		hour = 0;
 		min = 0;
 		sec = 0;
-		for (int j = colNum; j < steps.size(); j++) {
-			try {
-				sec = sec
-						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
-								.getSeconds();
-				if (sec >= 60) {
-					min++;
-					if (min >= 60) {
-						hour++;
-						min = 0;
-					}
-					sec = sec - 60;
-				}
-				min = min
-						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
-								.getMinutes();
-				if (min >= 60) {
-					hour++;
-					min = min - 60;
-				}
-				hour = hour
-						+ Utlis.timeFormat.parse(steps.get(j).getSwait())
-								.getHours();
-				sec = sec
-						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
-								.getSeconds();
-				if (sec >= 60) {
-					min++;
-					if (min >= 60) {
-						hour++;
-						min = 0;
-					}
-					sec = sec - 60;
-				}
-				min = min
-						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
-								.getMinutes();
-				if (min >= 60) {
-					hour++;
-					min = min - 60;
-				}
-				hour = hour
-						+ Utlis.timeFormat.parse(steps.get(j).getSblend())
-								.getHours();
+		if (steps.size() != 0) {
 
-				sec = sec
-						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
-								.getSeconds();
-				if (sec >= 60) {
-					min++;
+			for (int j = colNum; j < steps.size(); j++) {
+				try {
+					sec = sec
+							+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+									.getSeconds();
+					if (sec >= 60) {
+						min++;
+						if (min >= 60) {
+							hour++;
+							min = 0;
+						}
+						sec = sec - 60;
+					}
+					min = min
+							+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+									.getMinutes();
 					if (min >= 60) {
 						hour++;
-						min = 0;
+						min = min - 60;
 					}
-					sec = sec - 60;
+					hour = hour
+							+ Utlis.timeFormat.parse(steps.get(j).getSwait())
+									.getHours();
+					sec = sec
+							+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+									.getSeconds();
+					if (sec >= 60) {
+						min++;
+						if (min >= 60) {
+							hour++;
+							min = 0;
+						}
+						sec = sec - 60;
+					}
+					min = min
+							+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+									.getMinutes();
+					if (min >= 60) {
+						hour++;
+						min = min - 60;
+					}
+					hour = hour
+							+ Utlis.timeFormat.parse(steps.get(j).getSblend())
+									.getHours();
+
+					sec = sec
+							+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+									.getSeconds();
+					if (sec >= 60) {
+						min++;
+						if (min >= 60) {
+							hour++;
+							min = 0;
+						}
+						sec = sec - 60;
+					}
+					min = min
+							+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+									.getMinutes();
+					if (min >= 60) {
+						hour++;
+						min = min - 60;
+					}
+					hour = hour
+							+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
+									.getHours();
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
-				min = min
-						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
-								.getMinutes();
-				if (min >= 60) {
-					hour++;
-					min = min - 60;
-				}
-				hour = hour
-						+ Utlis.timeFormat.parse(steps.get(j).getSmagnet())
-								.getHours();
-			} catch (ParseException e) {
-				e.printStackTrace();
 			}
+			if (hour <= 9) {
+				time = "0" + hour + ":";
+			} else {
+				time = hour + ":";
+			}
+			if (min <= 9) {
+				time = time + "0" + min + ":";
+			} else {
+				time = time + min + ":";
+			}
+			if (sec <= 9) {
+				time = time + "0" + sec;
+			} else {
+				time = time + sec;
+			}
+			// Toast.makeText(RunExperimentActivity.this, time, 2000).show();
+			experiment_run_body_left_body_time_info_tv.setText(time);
 		}
-		if (hour <= 9) {
-			time = "0" + hour + ":";
-		} else {
-			time = hour + ":";
-		}
-		if (min <= 9) {
-			time = time + "0" + min + ":";
-		} else {
-			time = time + min + ":";
-		}
-		if (sec <= 9) {
-			time = time + "0" + sec;
-		} else {
-			time = time + sec;
-		}
-		// Toast.makeText(RunExperimentActivity.this, time, 2000).show();
-		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
 
 }

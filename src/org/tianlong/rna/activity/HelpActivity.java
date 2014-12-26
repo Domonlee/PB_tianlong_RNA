@@ -198,45 +198,61 @@ public class HelpActivity extends Activity {
 				}
 				receive = Utlis.getReceive(info);
 				Log.w("receive", receive.toString());
-				for (int j = 0; j < receive.size(); j++) {
 
-					if (!(receive.get(j)
-							.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
-						for (int i = 0; i < receive.size(); i++) {
-							receiveMeg = receive.get(i);
-							Log.i("info", "发送数据回复:" + receiveMeg);
-							queryFlag = false;
-							if (receiveMeg.substring(12, 14).equals("08")
-									&& receiveMeg.substring(15, 17)
-											.equals("00")
-									&& receiveMeg.substring(18, 20)
-											.equals("00")) {
-								String hole = receiveMeg.substring(21, 23);
-								machineVersionString = convertHexToString(hole);
-								hole = receiveMeg.substring(24, 26);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								hole = receiveMeg.substring(27, 29);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								hole = receiveMeg.substring(30, 32);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								hole = receiveMeg.substring(33, 35);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								hole = receiveMeg.substring(36, 38);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								hole = receiveMeg.substring(39, 41);
-								machineVersionString = machineVersionString
-										+ convertHexToString(hole);
-								about_machine_num_info
-										.setText(machineVersionString);
+				// 12.26添加消息返回判断
+				if (receive.toString().equals(
+						"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
+						|| receive.toString().equals(
+								"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")
+						|| receive.toString().equals(
+								"[ff ff 0b 51 02 0d ff 00 00 68 fe ]")) {
+					try {
+						wifiUtlis.sendMessage(Utlis.queryMachineInfo());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Log.w("HelpActivity", "重新发送数据");
+				} else {
+
+					for (int j = 0; j < receive.size(); j++) {
+						if (!(receive.get(j)
+								.equals("[ff ff 0b 51 02 0d ff 05 00 6d fe ]"))) {
+							for (int i = 0; i < receive.size(); i++) {
+								receiveMeg = receive.get(i);
+								Log.i("info", "发送数据回复:" + receiveMeg);
+								queryFlag = false;
+								if (receiveMeg.substring(12, 14).equals("08")
+										&& receiveMeg.substring(15, 17).equals(
+												"00")
+										&& receiveMeg.substring(18, 20).equals(
+												"00")) {
+									String hole = receiveMeg.substring(21, 23);
+									machineVersionString = convertHexToString(hole);
+									hole = receiveMeg.substring(24, 26);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									hole = receiveMeg.substring(27, 29);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									hole = receiveMeg.substring(30, 32);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									hole = receiveMeg.substring(33, 35);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									hole = receiveMeg.substring(36, 38);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									hole = receiveMeg.substring(39, 41);
+									machineVersionString = machineVersionString
+											+ convertHexToString(hole);
+									about_machine_num_info
+											.setText(machineVersionString);
+								}
 							}
+						} else {
+							Log.i("info", "空");
 						}
-					} else {
-						Log.i("info", "空");
 					}
 				}
 			}

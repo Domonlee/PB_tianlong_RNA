@@ -513,13 +513,27 @@ public class UpAndDownActivity extends Activity {
 				Log.w("读取下位机实验列表", receive.toString());
 
 				// FIXME 1223加入重发机制，但是不起作用
-				if (receive.size() == 1) {
-					try {
-						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-						Log.w("UpAndDownActivity", "重发");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+//				if (receive.size() == 1) {
+//					try {
+//						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+//						Log.w("UpAndDownActivity", "重发");
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					
+					// 12.26添加消息返回判断
+					if (receive.toString().equals(
+							"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
+							|| receive.toString().equals(
+									"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")
+							|| receive.toString().equals(
+									"[ff ff 0b 51 02 0d ff 00 00 68 fe ]")) {
+						try {
+							wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						Log.w("UpAndDownActivity", "重新发送数据");
 
 				} else {
 
