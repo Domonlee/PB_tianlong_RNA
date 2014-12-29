@@ -266,7 +266,7 @@ public class MainActivity extends ActivityGroup {
 						|| (info.substring(15, 20).equals("06 ff"))
 						|| (info.substring(15, 20).equals("0a ff"))
 						|| (info.substring(15, 20).equals("0c ff"))) {
-					Toast.makeText(MainActivity.this, "---", 1000).show();
+//					Toast.makeText(MainActivity.this, "---", 1000).show();
 				} else {
 
 					// if (info.substring(0, 18).equals("ff ff 0b 51 02 0d ")

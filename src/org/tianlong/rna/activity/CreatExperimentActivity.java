@@ -1492,7 +1492,6 @@ public class CreatExperimentActivity extends Activity {
 								switchInfo = step.getSswitch();
 								if (switchInfo != 0) {
 									switchInfo = 0;
-
 								} else {
 									if (holder.experiment_new_main_item_body_hole_info_tv
 											.getText().toString().equals("1")) {
