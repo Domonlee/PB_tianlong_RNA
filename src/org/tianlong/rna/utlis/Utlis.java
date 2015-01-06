@@ -34,6 +34,10 @@ public class Utlis {
 			"yyyy-MM-dd hh:mm:ss");
 	private static List<Byte> bytes = new ArrayList<Byte>();
 	private static List<String> strings = new ArrayList<String>();
+	
+	public static String uvHour = "01";
+	public static String uvMin = "00";
+	public static String uvSec = "00";
 
 	public static String getSystemTime() {
 		Date curDate = new Date(System.currentTimeMillis());
@@ -88,18 +92,33 @@ public class Utlis {
 	}
 
 	// 紫光灯开启
-	//1.6号更改
+	//--1.6号更改 添加时间
 	public static byte[] ultravioletOpenMessage() {
-		byte[] byteList = new byte[9];
+		Log.w("紫外灯开启时间", uvHour + " " + uvMin+ " "+ uvSec);
+		bytes.removeAll(bytes);
+		byte[] byteList = new byte[11];
 		byteList[0] = (byte) Integer.parseInt("FF", 16);
+		bytes.add(byteList[0]);
 		byteList[1] = (byte) Integer.parseInt("FF", 16);
-		byteList[2] = (byte) Integer.parseInt("09", 16);
+		bytes.add(byteList[1]);
+		byteList[2] = (byte) Integer.parseInt("0C", 16);
+		bytes.add(byteList[2]);
 		byteList[3] = (byte) Integer.parseInt("8A", 16);
-		byteList[4] = (byte) Integer.parseInt("00", 16);
+		bytes.add(byteList[3]);
+		byteList[4] = (byte) Integer.parseInt("03", 16);
+		bytes.add(byteList[4]);
 		byteList[5] = (byte) Integer.parseInt("07", 16);
+		bytes.add(byteList[5]);
 		byteList[6] = (byte) Integer.parseInt("01", 16);
-		byteList[7] = (byte) Integer.parseInt("99", 16);
-		byteList[8] = (byte) Integer.parseInt("FE", 16);
+		bytes.add(byteList[6]);
+		byteList[7] = (byte) Integer.parseInt(uvHour, 16);
+		bytes.add(byteList[7]);
+		byteList[8] = (byte) Integer.parseInt(uvMin, 16);
+		bytes.add(byteList[8]);
+		byteList[9] = (byte) Integer.parseInt(uvSec, 16);
+		bytes.add(byteList[9]);
+		byteList[10] = getCheckCode(bytes);
+		byteList[11] = (byte) Integer.parseInt("FE", 16);
 		return byteList;
 	}
 

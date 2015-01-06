@@ -575,9 +575,12 @@ public class MachineActivity extends Activity {
 					.findViewById(R.id.machine_dismdect_body_time_et);
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
-			Log.w("消毒时间获取", machine.getMDtime().toString());
-			Log.w("消毒时间获取--getTimeinfo", Utlis.getTimeinfo(machine.getMDtime().toString())+"");
-			Log.w("消毒时间获取-----", Utlis.addByte(Utlis.getTimeinfo(machine.getMDtime().toString()))+"");
+			
+			//测试代码
+//			Log.w("消毒时间获取", machine.getMDtime().toString());
+//			Log.w("消毒时间获取--getTimeinfo", Utlis.getTimeinfo(machine.getMDtime().toString())+"");
+//			Log.w("消毒时间获取--addByte", Utlis.addByte(Utlis.getTimeinfo(machine.getMDtime().toString()))+"");
+//			Log.w("消毒时间获取--changeInfo", Utlis.changeInfo(Utlis.addByte(Utlis.getTimeinfo(machine.getMDtime().toString())))+"");
 
 			if (machine.getMDtime().equals("null:null:null")
 					|| machine.getMDtime().equals("null")) {
@@ -647,7 +650,6 @@ public class MachineActivity extends Activity {
 															.getCurrentItem(),
 													time_hour_seconds
 															.getCurrentItem());
-
 											disinfectStr = timeTotal;
 											machine_dismdect_body_time_et
 													.setText(timeTotal);
@@ -674,6 +676,28 @@ public class MachineActivity extends Activity {
 										getString(R.string.dismdect_success),
 										Toast.LENGTH_SHORT).show();
 								machine.setMDtime(disinfectStr);
+								
+								
+//											Log.w("--disinfectStr-", disinfectStr);
+											String[] time =disinfectStr.split(":");
+											
+											String h = Integer.toHexString(Integer.parseInt(time[0]));
+											String m = Integer.toHexString(Integer.parseInt(time[1]));
+											String s = Integer.toHexString(Integer.parseInt(time[2]));
+											if (h.length() ==1) {
+												h = "0"+h;
+											}
+											if (m.length() ==1) {
+												m = "0"+m;
+											}
+											if (s.length() ==1) {
+												s = "0"+s;
+											}
+											Utlis.uvHour = h;
+											Utlis.uvMin = m;
+											Utlis.uvSec = s;
+											Log.w("----------", h+" "+ m +" " +s);
+
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.dismdect_failure),
