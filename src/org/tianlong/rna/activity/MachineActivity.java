@@ -575,6 +575,9 @@ public class MachineActivity extends Activity {
 					.findViewById(R.id.machine_dismdect_body_time_et);
 			machine_dismdect_bottom_btn_save = (Button) view
 					.findViewById(R.id.machine_dismdect_bottom_btn_save);
+			Log.w("消毒时间获取", machine.getMDtime().toString());
+			Log.w("消毒时间获取--getTimeinfo", Utlis.getTimeinfo(machine.getMDtime().toString())+"");
+			Log.w("消毒时间获取-----", Utlis.addByte(Utlis.getTimeinfo(machine.getMDtime().toString()))+"");
 
 			if (machine.getMDtime().equals("null:null:null")
 					|| machine.getMDtime().equals("null")) {
