@@ -676,28 +676,7 @@ public class MachineActivity extends Activity {
 										getString(R.string.dismdect_success),
 										Toast.LENGTH_SHORT).show();
 								machine.setMDtime(disinfectStr);
-								
-								
 //											Log.w("--disinfectStr-", disinfectStr);
-											String[] time =disinfectStr.split(":");
-											
-											String h = Integer.toHexString(Integer.parseInt(time[0]));
-											String m = Integer.toHexString(Integer.parseInt(time[1]));
-											String s = Integer.toHexString(Integer.parseInt(time[2]));
-											if (h.length() ==1) {
-												h = "0"+h;
-											}
-											if (m.length() ==1) {
-												m = "0"+m;
-											}
-											if (s.length() ==1) {
-												s = "0"+s;
-											}
-											Utlis.uvHour = h;
-											Utlis.uvMin = m;
-											Utlis.uvSec = s;
-											Log.w("----------", h+" "+ m +" " +s);
-
 							} else {
 								Toast.makeText(MachineActivity.this,
 										getString(R.string.dismdect_failure),

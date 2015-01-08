@@ -367,7 +367,7 @@ int id action_context_bar 0x7f0a001d
 int id action_menu_divider 0x7f0a0002
 int id action_menu_presenter 0x7f0a0003
 int id action_mode_close_button 0x7f0a0024
-int id action_settings 0x7f0a026e
+int id action_settings 0x7f0a026f
 int id activity_chooser_view_content 0x7f0a0025
 int id activity_runfile_item_new_iv 0x7f0a0248
 int id activity_runfile_item_tv 0x7f0a0247
@@ -714,8 +714,9 @@ int id ifRoom 0x7f0a0011
 int id image 0x7f0a0027
 int id info_sv 0x7f0a0127
 int id ins_rl 0x7f0a0157
-int id left_listview_item_delete_icon 0x7f0a0269
+int id left_listview_item_delete_icon 0x7f0a026a
 int id left_listview_item_name 0x7f0a015c
+int id left_listview_layout 0x7f0a0269
 int id listMode 0x7f0a0006
 int id list_item 0x7f0a0029
 int id login_below_white 0x7f0a016c
@@ -963,12 +964,12 @@ int id user_admin_item_modify_psw_rl 0x7f0a0207
 int id user_admin_item_name_tv 0x7f0a0203
 int id vol_bits 0x7f0a015b
 int id vol_hundred 0x7f0a0159
-int id vol_rl 0x7f0a026a
+int id vol_rl 0x7f0a026b
 int id vol_ten 0x7f0a015a
 int id vol_thousand 0x7f0a0158
-int id wifi_ig 0x7f0a026b
-int id wifi_signal_strenth_tv 0x7f0a026d
-int id wifi_tv 0x7f0a026c
+int id wifi_ig 0x7f0a026c
+int id wifi_signal_strenth_tv 0x7f0a026e
+int id wifi_tv 0x7f0a026d
 int id withText 0x7f0a0013
 int integer abc_max_action_buttons 0x7f090000
 int layout abc_action_bar_decor 0x7f030000

@@ -43,6 +43,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +85,7 @@ public class UpAndDownActivity extends Activity {
 	private ProgressDialog pDialog;
 	private String newExpNameString = "";
 	private EditText editNewName;
-	
+
 	private static int downSelectId = 999;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,8 @@ public class UpAndDownActivity extends Activity {
 		setContentView(R.layout.activity_upanddown);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		//下载列表选择初始
+		downSelectId = 999;
 		MainActivity.uvFlag = false;
 		pDialog = new ProgressDialog(UpAndDownActivity.this);
 		pDialog.setMessage("数据加载中请稍后");
@@ -227,7 +230,7 @@ public class UpAndDownActivity extends Activity {
 								map.put("id", arg2);
 								map.put("view", arg1);
 								downViewList.add(map);
-								
+
 								downSelectId = arg2;
 							}
 						} else {
@@ -237,7 +240,7 @@ public class UpAndDownActivity extends Activity {
 							map.put("id", arg2);
 							map.put("view", arg1);
 							downViewList.add(map);
-								downSelectId = arg2;
+							downSelectId = arg2;
 						}
 					}
 				});
@@ -256,13 +259,13 @@ public class UpAndDownActivity extends Activity {
 							activity_upanddown_down_top_delete_btn
 									.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
 						}
+						 DownAdapter downAdapter = new DownAdapter(
+						 UpAndDownActivity.this, experimentsList,
+						 deleteFlag, downViewList);
+
 //						DownAdapter downAdapter = new DownAdapter(
 //								UpAndDownActivity.this, experimentsList,
-//								deleteFlag, downViewList);
-						
-						DownAdapter downAdapter = new DownAdapter(
-								UpAndDownActivity.this, experimentsList,
-								deleteFlag );
+//								deleteFlag);
 						activity_upanddown_down_top_lv.setAdapter(downAdapter);
 					}
 				});
@@ -513,27 +516,27 @@ public class UpAndDownActivity extends Activity {
 				Log.w("读取下位机实验列表", receive.toString());
 
 				// FIXME 1223加入重发机制，但是不起作用
-//				if (receive.size() == 1) {
-//					try {
-//						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-//						Log.w("UpAndDownActivity", "重发");
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//					
-					// 12.26添加消息返回判断
-					if (receive.toString().equals(
-							"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
-							|| receive.toString().equals(
-									"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")
-							|| receive.toString().equals(
-									"[ff ff 0b 51 02 0d ff 00 00 68 fe ]")) {
-						try {
-							wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						Log.w("UpAndDownActivity", "重新发送数据");
+				// if (receive.size() == 1) {
+				// try {
+				// wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+				// Log.w("UpAndDownActivity", "重发");
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// }
+				//
+				// 12.26添加消息返回判断
+				if (receive.toString().equals(
+						"[ff ff 0b 51 02 06 ff 00 00 61 fe ]")
+						|| receive.toString().equals(
+								"[ff ff 0b 51 02 0d ff 05 00 6d fe ]")
+						|| receive.toString().equals(
+								"[ff ff 0b 51 02 0d ff 00 00 68 fe ]")) {
+					try {
+						wifiUtlis.sendMessage(Utlis.getseleteMessage(10));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Log.w("UpAndDownActivity", "重新发送数据");
 
 				} else {
 
@@ -892,38 +895,67 @@ public class UpAndDownActivity extends Activity {
 
 		@Override
 		public View getView(final int arg0, View arg1, ViewGroup arg2) {
-			ViewHolder holder = null;
-			if (arg1 == null) {
-				holder = new ViewHolder();
-				arg1 = inflater.inflate(
-						R.layout.activity_upanddown_left_listview_item, null);
-				holder.left_listview_item_name = (TextView) arg1
-						.findViewById(R.id.left_listview_item_name);
-				holder.left_listview_item_delete_icon = (ImageView) arg1
-						.findViewById(R.id.left_listview_item_delete_icon);
-				arg1.setTag(holder);
-			} else {
-				holder = (ViewHolder) arg1.getTag();
-			}
-			holder.left_listview_item_name.setText((String) strings.get(arg0)
-					.get("info")
-					+ " -- "
-					+ (String) strings.get(arg0).get("user"));
-			//TODO
+			// ViewHolder holder = null;
+			// if (arg1 == null) {
+			// holder = new ViewHolder();
+			// arg1 = inflater.inflate(
+			// R.layout.activity_upanddown_left_listview_item, null);
+			// holder.left_listview_item_name = (TextView) arg1
+			// .findViewById(R.id.left_listview_item_name);
+			// holder.left_listview_item_delete_icon = (ImageView) arg1
+			// .findViewById(R.id.left_listview_item_delete_icon);
+			// arg1.setTag(holder);
+			// } else {
+			// holder = (ViewHolder) arg1.getTag();
+			// }
+
+			// 1.8好修改
+			arg1 = inflater.inflate(
+					R.layout.activity_upanddown_left_listview_item, null);
+			RelativeLayout relativeLayout = (RelativeLayout)arg1.findViewById(R.id.left_listview_layout);
+			TextView left_listview_item_name = (TextView) arg1
+					.findViewById(R.id.left_listview_item_name);
+			ImageView left_listview_item_delete_icon = (ImageView) arg1
+					.findViewById(R.id.left_listview_item_delete_icon);
+			left_listview_item_name.setText((String) strings.get(arg0).get(
+					"info")
+					+ " -- " + (String) strings.get(arg0).get("user"));
+			// TODO
 			// // 获取当前item位置 并更换背景
-//			if (downlists != null && (downlists.size() < strings.size())) {
-			if (downlists != null ) {
-//				if (downlists.get(arg0).get("id").equals(arg0)) {
-//				if (map.get("id").equals(arg0)) {
-				if (downSelectId == arg0) {
+			// if (downlists != null && (downlists.size() < strings.size())) {
+			// if (downlists != null ) {
+			// // if (downlists.get(arg0).get("id").equals(arg0)) {
+			// // if (map.get("id").equals(arg0)) {
+			// if (downSelectId == arg0) {
+			// arg1.setBackgroundResource(R.drawable.list_btn_select);
+			// downSelectId = 998;
+			// }
+			// }
+			if (downlists == null) {
+				
+				Log.w("downlists","null");
+				Log.w("postion", arg0 + "");
+			}
+
+			if (downlists != null) {
+
+				Log.w("downlists", downlists.toString());
+				Log.w("postion", arg0 + "");
+				Log.w("downlists id", downlists.get(arg0).get("id") + "");
+				if (downlists.get(arg0).get("id").equals(arg0)) {
 					arg1.setBackgroundResource(R.drawable.list_btn_select);
-					downSelectId = 998;
 				}
 			}
+			if (arg0 == downSelectId) {
+					arg1.setBackgroundResource(R.drawable.list_btn_select);
+			}
+			else {
+				relativeLayout.setBackgroundResource(R.drawable.up_down_select);
+			}
+
 			if (deleteFlag == true) {
-				holder.left_listview_item_delete_icon
-						.setVisibility(View.VISIBLE);
-				holder.left_listview_item_delete_icon
+				left_listview_item_delete_icon.setVisibility(View.VISIBLE);
+				left_listview_item_delete_icon
 						.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
@@ -988,7 +1020,7 @@ public class UpAndDownActivity extends Activity {
 							}
 						});
 			} else {
-				holder.left_listview_item_delete_icon.setVisibility(View.GONE);
+				left_listview_item_delete_icon.setVisibility(View.GONE);
 			}
 
 			return arg1;

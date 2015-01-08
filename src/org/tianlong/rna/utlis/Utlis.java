@@ -96,7 +96,7 @@ public class Utlis {
 	public static byte[] ultravioletOpenMessage() {
 		Log.w("紫外灯开启时间", uvHour + " " + uvMin+ " "+ uvSec);
 		bytes.removeAll(bytes);
-		byte[] byteList = new byte[11];
+		byte[] byteList = new byte[12];
 		byteList[0] = (byte) Integer.parseInt("FF", 16);
 		bytes.add(byteList[0]);
 		byteList[1] = (byte) Integer.parseInt("FF", 16);
@@ -119,6 +119,7 @@ public class Utlis {
 		bytes.add(byteList[9]);
 		byteList[10] = getCheckCode(bytes);
 		byteList[11] = (byte) Integer.parseInt("FE", 16);
+		Log.w("发送紫外灯打开时间命令", byteList.toString());
 		return byteList;
 	}
 

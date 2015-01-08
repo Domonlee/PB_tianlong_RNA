@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.tianlong.rna.adapter.MainApplyAdapter;
+import org.tianlong.rna.dao.MachineDao;
+import org.tianlong.rna.pojo.Machine;
 import org.tianlong.rna.utlis.Utlis;
 import org.tianlong.rna.utlis.WifiUtlis;
 
@@ -113,6 +115,10 @@ public class MainApplyActivity extends Activity {
 					if (utlis != null) {
 						try {
 //							MainActivity.uvFlag = false;
+							MachineDao machineDao = new MachineDao();
+							Machine machine = machineDao.getMachine(MainApplyActivity.this);
+							String disinfectStr = machine.getMDtime();
+							setUVtime(disinfectStr);
 							utlis.sendMessage(Utlis.ultravioletOpenMessage());
 							MainActivity.closeFlag = false;
 							Thread.sleep(50);
@@ -285,5 +291,26 @@ public class MainApplyActivity extends Activity {
 			builder.show();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void setUVtime(String mdTime){
+		String[] time =mdTime.split(":");
+		
+		String h = Integer.toHexString(Integer.parseInt(time[0]));
+		String m = Integer.toHexString(Integer.parseInt(time[1]));
+		String s = Integer.toHexString(Integer.parseInt(time[2]));
+		if (h.length() ==1) {
+			h = "0"+h;
+		}
+		if (m.length() ==1) {
+			m = "0"+m;
+		}
+		if (s.length() ==1) {
+			s = "0"+s;
+		}
+		Utlis.uvHour = h;
+		Utlis.uvMin = m;
+		Utlis.uvSec = s;
+		Log.w("----------", h+" "+ m +" " +s);
 	}
 }

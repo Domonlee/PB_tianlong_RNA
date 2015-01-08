@@ -1218,7 +1218,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0002;
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_close_button=0x7f0a0024;
-        public static final int action_settings=0x7f0a026e;
+        public static final int action_settings=0x7f0a026f;
         public static final int activity_chooser_view_content=0x7f0a0025;
         public static final int activity_runfile_item_new_iv=0x7f0a0248;
         public static final int activity_runfile_item_tv=0x7f0a0247;
@@ -1565,8 +1565,9 @@ containing a value of this type.
         public static final int image=0x7f0a0027;
         public static final int info_sv=0x7f0a0127;
         public static final int ins_rl=0x7f0a0157;
-        public static final int left_listview_item_delete_icon=0x7f0a0269;
+        public static final int left_listview_item_delete_icon=0x7f0a026a;
         public static final int left_listview_item_name=0x7f0a015c;
+        public static final int left_listview_layout=0x7f0a0269;
         public static final int listMode=0x7f0a0006;
         public static final int list_item=0x7f0a0029;
         public static final int login_below_white=0x7f0a016c;
@@ -1814,12 +1815,12 @@ containing a value of this type.
         public static final int user_admin_item_name_tv=0x7f0a0203;
         public static final int vol_bits=0x7f0a015b;
         public static final int vol_hundred=0x7f0a0159;
-        public static final int vol_rl=0x7f0a026a;
+        public static final int vol_rl=0x7f0a026b;
         public static final int vol_ten=0x7f0a015a;
         public static final int vol_thousand=0x7f0a0158;
-        public static final int wifi_ig=0x7f0a026b;
-        public static final int wifi_signal_strenth_tv=0x7f0a026d;
-        public static final int wifi_tv=0x7f0a026c;
+        public static final int wifi_ig=0x7f0a026c;
+        public static final int wifi_signal_strenth_tv=0x7f0a026e;
+        public static final int wifi_tv=0x7f0a026d;
         public static final int withText=0x7f0a0013;
     }
     public static final class integer {
