@@ -916,10 +916,10 @@ public class Utlis {
 			List<Step> steps, String userName) {
 		List<String> sendInfo = new ArrayList<String>();
 		sendInfo.add("#FILE:" + experiment.getEname() + "\r\n");
-		Log.w("发送实验 tilte -- FILE", sendInfo.toString());
+//		Log.w("发送实验 tilte -- FILE", sendInfo.toString());
 		String dates = dateFormat.format(new Date());
 		sendInfo.add("#DATE:" + dates + "\r\n");
-		Log.w("发送实验 tilte -- DATE", sendInfo.toString());
+//		Log.w("发送实验 tilte -- DATE", sendInfo.toString());
 		sendInfo.add("#INFORMATION:Examples Experiment\r\n");
 		for (int i = 0; i < steps.size(); i++) {
 			if ((i + 1 == steps.size())) {

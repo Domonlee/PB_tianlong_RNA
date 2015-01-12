@@ -2509,7 +2509,6 @@ public class MachineActivity extends Activity {
 			hexString = hex + " " + hexString;
 		}
 		Log.w("HexString--", hexString.toUpperCase());
-
 	}
 
 	private int wheelNum(TextView tv, int numInfo) {

@@ -160,9 +160,9 @@ public class RunExperimentActivity extends Activity {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
-							Log.w(TAGINFO, "1--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(
-									sendInfo.get(sendControlNum),
+							Log.w(TAGINFO, "1--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0)+"");
+							printHexString(Utlis.getMessageByte( sendInfo.get(sendControlNum), sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
@@ -180,6 +180,7 @@ public class RunExperimentActivity extends Activity {
 							Log.w(TAGINFO, "2--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0)+"");
+							printHexString(Utlis.getMessageByte( sendInfo.get(sendControlNum), sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
@@ -197,6 +198,7 @@ public class RunExperimentActivity extends Activity {
 										sendInfo.get(sendControlNum), 0));
 								Log.w(TAGINFO, "3--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getbyteList(
 										sendInfo.get(sendControlNum),  0)+"");
+							printHexString(Utlis.getbyteList(sendInfo.get(sendControlNum), 0));
 							} catch (Exception e) {
 								Toast.makeText(RunExperimentActivity.this,
 										getString(R.string.wifi_error),
@@ -228,6 +230,7 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum), 0));
 							Log.w(TAGINFO, "4--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getbyteList(
 									sendInfo.get(sendControlNum),  0)+"");
+							printHexString(Utlis.getbyteList(sendInfo.get(sendControlNum), 0));
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -1780,6 +1783,21 @@ public class RunExperimentActivity extends Activity {
 		// Toast.makeText(RunExperimentActivity.this, time, 2000).show();
 		experiment_run_body_left_body_time_info_tv.setText(time);
 	}
+	
+	
+	// 将指定byte数组以16进制的形式打印到控制台
+	public static void printHexString(byte[] b) {
+		String hexString = null;
+		for (int i = 0; i < b.length; i++) {
+			String hex = Integer.toHexString(b[i] & 0xFF);
+			if (hex.length() == 1) {
+				hex = '0' + hex;
+			}
+			hexString = hex + " " + hexString;
+		}
+		Log.w("HexString--", hexString.toUpperCase());
+	}
+
 
 }
 

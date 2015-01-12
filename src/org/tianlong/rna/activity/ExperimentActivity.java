@@ -174,7 +174,7 @@ public class ExperimentActivity extends Activity {
 			}
 		});
 
-		//FIXME
+		// FIXME
 		experiment_left_delete.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (chooseE_id != -1) {
@@ -200,8 +200,8 @@ public class ExperimentActivity extends Activity {
 											.getAllExperimentsByU_id(
 													ExperimentActivity.this,
 													U_id);
-									//1225  设置删除背景
-//									listChooseId = 999;
+									// 1225 设置删除背景
+									// listChooseId = 999;
 									experiment_left_lv
 											.setAdapter(new ExperimentAdapter(
 													ExperimentActivity.this,
@@ -210,7 +210,8 @@ public class ExperimentActivity extends Activity {
 										experiment_right_rl.removeView(view);
 									}
 									chooseE_id = -1;
-									Toast.makeText(ExperimentActivity.this,
+									Toast.makeText(
+											ExperimentActivity.this,
 											getString(R.string.exp_delete_success_exp),
 											Toast.LENGTH_SHORT).show();
 								}
@@ -535,7 +536,8 @@ public class ExperimentActivity extends Activity {
 						experiment_info_body_remark_info_et
 								.setVisibility(View.GONE);
 						experiment_info_body_remark_info_et
-						.setText(experiment_info_body_remark_info_tv.getText().toString());
+								.setText(experiment_info_body_remark_info_tv
+										.getText().toString());
 						experiment_info_body_remark_info_tv
 								.setVisibility(View.VISIBLE);
 					}
@@ -550,31 +552,33 @@ public class ExperimentActivity extends Activity {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
-						if (MachineStateInfo.stateFlag == 1) {
-							Toast.makeText(ExperimentActivity.this,
-									"当前仪器有实验正在运行", 2000).show();
-						}
+
 						if (wifiUtlis == null) {
 							Toast.makeText(ExperimentActivity.this,
 									getString(R.string.wifi_error_run), 2000)
 									.show();
 						} else {
-							AlertDialog.Builder builder = new AlertDialog.Builder(
-									ExperimentActivity.this);
-							builder.setMessage(getString(R.string.exp_prepareing));
-							builder.setCancelable(false);
-							dialog = builder.show();
-							Intent intent = new Intent(ExperimentActivity.this,
-									RunExperimentActivity.class);
-							intent.putExtra("U_id", U_id);
-							intent.putExtra("Uname", Uname);
-							intent.putExtra("jump", "experiment");
-							intent.putExtra("E_id", experiment.getE_id());
-							machineStateInfo.runflag = false;
-							machineStateInfo.pauseflag = false;
-							startActivity(intent);
-							finish();
+							if (MachineStateInfo.stateFlag == 1) {
+								Toast.makeText(ExperimentActivity.this,
+										"当前仪器有实验正在运行", 2000).show();
+							} else {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										ExperimentActivity.this);
+								builder.setMessage(getString(R.string.exp_prepareing));
+								builder.setCancelable(false);
+								dialog = builder.show();
+								Intent intent = new Intent(
+										ExperimentActivity.this,
+										RunExperimentActivity.class);
+								intent.putExtra("U_id", U_id);
+								intent.putExtra("Uname", Uname);
+								intent.putExtra("jump", "experiment");
+								intent.putExtra("E_id", experiment.getE_id());
+								machineStateInfo.runflag = false;
+								machineStateInfo.pauseflag = false;
+								startActivity(intent);
+								finish();
+							}
 						}
 					}
 				});
