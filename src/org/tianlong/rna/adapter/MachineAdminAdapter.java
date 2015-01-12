@@ -77,14 +77,18 @@ public class MachineAdminAdapter extends BaseAdapter {
 		if (modifyFlag) {
 			holder.user_admin_item_modify_psw_iv
 					.setBackgroundResource(R.drawable.user_admin_modify_icon);
+
 		}else {
 			holder.user_admin_item_modify_psw_iv.setVisibility(View.INVISIBLE);
 		}
 
+		if (lists.get(arg0).getUname().equals("guest") || lists.get(arg0).getUadmin() == 1) {
+			holder.user_admin_item_modify_psw_iv.setVisibility(View.INVISIBLE);
+		}
 		if (lists.get(arg0).getUadmin() == 1) {
 			holder.user_admin_item_admin_tv.setText(context
 					.getString(R.string.user_admin_admin));
-			holder.user_admin_item_modify_psw_iv.setVisibility(View.INVISIBLE);
+//			holder.user_admin_item_modify_psw_iv.setVisibility(View.INVISIBLE);
 		} else {
 			holder.user_admin_item_admin_tv.setText(context
 					.getString(R.string.user_admin_user));

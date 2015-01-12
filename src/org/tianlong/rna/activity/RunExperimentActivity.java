@@ -143,16 +143,16 @@ public class RunExperimentActivity extends Activity {
 	final IntentFilter homeFilter = new IntentFilter(
 			Intent.ACTION_CLOSE_SYSTEM_DIALOGS);// home键监听
 
-	private String TAGINFO = "INFO";
+	private String TAGINFO = "数据发送----";
 
 	private Handler sendFileHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			Log.i("info", "发文件");
 			String info = (String) msg.obj;
+//			Log.w(TAGINFO, sendInfo.toString());
 			if (info.length() != 0) {
-				Log.i("info", "发送数据回复:" + info);
+				Log.i(TAGINFO, "发送数据回复:--" + info);
 				sendControlNum++;
-				// Log.i("info", "发送数据控制NUM:" + sendControlNum);
+				 Log.i(TAGINFO, "发送数据控制NUM:" + sendControlNum);
 				if (sendControlNum >= 3
 						&& sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
@@ -160,6 +160,9 @@ public class RunExperimentActivity extends Activity {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
+							Log.w(TAGINFO, "1--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(
+									sendInfo.get(sendControlNum),
+									sendInfo.get(sendControlNum + 1), 0)+"");
 							sendControlNum++;
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
@@ -174,6 +177,9 @@ public class RunExperimentActivity extends Activity {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
 									sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
+							Log.w(TAGINFO, "2--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(
+									sendInfo.get(sendControlNum),
+									sendInfo.get(sendControlNum + 1), 0)+"");
 							sendControlNum++;
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
@@ -189,6 +195,8 @@ public class RunExperimentActivity extends Activity {
 							try {
 								wifiUtlis.sendMessage(Utlis.getbyteList(
 										sendInfo.get(sendControlNum), 0));
+								Log.w(TAGINFO, "3--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getbyteList(
+										sendInfo.get(sendControlNum),  0)+"");
 							} catch (Exception e) {
 								Toast.makeText(RunExperimentActivity.this,
 										getString(R.string.wifi_error),
@@ -218,6 +226,8 @@ public class RunExperimentActivity extends Activity {
 							sendControlNum--;
 							wifiUtlis.sendMessage(Utlis.getbyteList(
 									sendInfo.get(sendControlNum), 0));
+							Log.w(TAGINFO, "4--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getbyteList(
+									sendInfo.get(sendControlNum),  0)+"");
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -243,7 +253,8 @@ public class RunExperimentActivity extends Activity {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
 						// 11.07 加快发送速度
-						// Thread.sleep(1000);
+
+						 Thread.sleep(1000);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -688,7 +699,6 @@ public class RunExperimentActivity extends Activity {
 							}
 							runBtnControl++;
 									Log.w("info", "runBtnControl="+runBtnControl);
-
 							if (runBtnControl % 2 == 0) {
 								try {
 									wifiUtlis.sendMessage(Utlis
@@ -914,6 +924,7 @@ public class RunExperimentActivity extends Activity {
 		experiment = experimentDao.getExperimentById(E_id,
 				RunExperimentActivity.this, U_id);
 
+		//TODO SendInfo
 		sendInfo = Utlis.getPadExperimentInfoList(experiment, steps, "");
 
 		experiment_run_body_left_body_time_info_tv = (TextView) findViewById(R.id.experiment_run_body_left_body_time_info_tv);
