@@ -93,7 +93,7 @@ public class UpAndDownActivity extends Activity {
 		setContentView(R.layout.activity_upanddown);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		//下载列表选择初始
+		// 下载列表选择初始
 		downSelectId = 999;
 		MainActivity.uvFlag = false;
 		pDialog = new ProgressDialog(UpAndDownActivity.this);
@@ -259,13 +259,13 @@ public class UpAndDownActivity extends Activity {
 							activity_upanddown_down_top_delete_btn
 									.setBackgroundResource(R.drawable.upanddown_delete_ctrl_cancel_icon);
 						}
-						 DownAdapter downAdapter = new DownAdapter(
-						 UpAndDownActivity.this, experimentsList,
-						 deleteFlag, downViewList);
+						DownAdapter downAdapter = new DownAdapter(
+								UpAndDownActivity.this, experimentsList,
+								deleteFlag, downViewList);
 
-//						DownAdapter downAdapter = new DownAdapter(
-//								UpAndDownActivity.this, experimentsList,
-//								deleteFlag);
+						// DownAdapter downAdapter = new DownAdapter(
+						// UpAndDownActivity.this, experimentsList,
+						// deleteFlag);
 						activity_upanddown_down_top_lv.setAdapter(downAdapter);
 					}
 				});
@@ -912,7 +912,8 @@ public class UpAndDownActivity extends Activity {
 			// 1.8好修改
 			arg1 = inflater.inflate(
 					R.layout.activity_upanddown_left_listview_item, null);
-			RelativeLayout relativeLayout = (RelativeLayout)arg1.findViewById(R.id.left_listview_layout);
+			RelativeLayout relativeLayout = (RelativeLayout) arg1
+					.findViewById(R.id.left_listview_layout);
 			TextView left_listview_item_name = (TextView) arg1
 					.findViewById(R.id.left_listview_item_name);
 			ImageView left_listview_item_delete_icon = (ImageView) arg1
@@ -920,41 +921,10 @@ public class UpAndDownActivity extends Activity {
 			left_listview_item_name.setText((String) strings.get(arg0).get(
 					"info")
 					+ " -- " + (String) strings.get(arg0).get("user"));
-			// TODO
-			// // 获取当前item位置 并更换背景
-			// if (downlists != null && (downlists.size() < strings.size())) {
-			// if (downlists != null ) {
-			// // if (downlists.get(arg0).get("id").equals(arg0)) {
-			// // if (map.get("id").equals(arg0)) {
-			// if (downSelectId == arg0) {
-			// arg1.setBackgroundResource(R.drawable.list_btn_select);
-			// downSelectId = 998;
-			// }
-			// }
-			if (downlists == null) {
-				
-				Log.w("downlists","null");
-				Log.w("postion", arg0 + "");
-			}
-
-			if (downlists != null) {
-
-				Log.w("downlists", downlists.toString());
-				Log.w("postion", arg0 + "");
-				Log.w("downlists id", downlists.get(arg0).get("id") + "");
-				if (downlists.get(arg0).get("id").equals(arg0)) {
-					arg1.setBackgroundResource(R.drawable.list_btn_select);
-				}
-			}
-			if (arg0 == downSelectId) {
-					arg1.setBackgroundResource(R.drawable.list_btn_select);
-			}
-			else {
-				relativeLayout.setBackgroundResource(R.drawable.up_down_select);
-			}
-
+			downlists = null;
 			if (deleteFlag == true) {
 				left_listview_item_delete_icon.setVisibility(View.VISIBLE);
+				//1.13添加
 				left_listview_item_delete_icon
 						.setOnClickListener(new OnClickListener() {
 							@Override
@@ -1015,13 +985,104 @@ public class UpAndDownActivity extends Activity {
 											}
 										});
 								builder.show();
-
 								DownAdapter.this.notifyDataSetChanged();
 							}
 						});
 			} else {
 				left_listview_item_delete_icon.setVisibility(View.GONE);
 			}
+			if (downlists == null) {
+				Log.w("downlists", "null");
+				Log.w("postion", arg0 + "");
+			} else {
+
+				if (downlists != null && downlists.size() != 0) {
+
+					Log.w("downlists", downlists.toString());
+					Log.w("postion", arg0 + "");
+					// Log.w("downlists id", downlists.get(arg0).get("id") +
+					// "");
+					if (downlists.get(arg0).get("id").equals(arg0)) {
+						arg1.setBackgroundResource(R.drawable.list_btn_select);
+					}
+				}
+			}
+
+			if (arg0 == downSelectId) {
+				arg1.setBackgroundResource(R.drawable.list_btn_select);
+			} else {
+				relativeLayout.setBackgroundResource(R.drawable.up_down_select);
+			}
+
+//			if (deleteFlag == true) {
+//				left_listview_item_delete_icon.setVisibility(View.VISIBLE);
+//				left_listview_item_delete_icon
+//						.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//								AlertDialog.Builder builder = new AlertDialog.Builder(
+//										UpAndDownActivity.this);
+//								builder.setTitle(getString(R.string.delete_file));
+//								builder.setPositiveButton(
+//										getString(R.string.sure),
+//										new DialogInterface.OnClickListener() {
+//											public void onClick(
+//													DialogInterface dialog,
+//													int which) {
+//												if (!readListFlag) {
+//													readListFlag = true;
+//												}
+//												try {
+//													if (arg0 == 0) {
+//														Toast.makeText(
+//																UpAndDownActivity.this,
+//																getString(R.string.up_delete_forbid),
+//																Toast.LENGTH_SHORT)
+//																.show();
+//													} else {
+//														wifiUtlis
+//																.sendMessage(Utlis
+//																		.sendDeleteExperiment((Integer) experimentsList
+//																				.get(arg0)
+//																				.get("id")));
+//														wifiUtlis
+//																.sendMessage(Utlis
+//																		.getseleteMessage(10));
+//														strings.remove(arg0);
+//														Toast.makeText(
+//																UpAndDownActivity.this,
+//																getString(R.string.up_delete_successful),
+//																Toast.LENGTH_SHORT)
+//																.show();
+//														new Thread(listThread)
+//																.start();
+//													}
+//												} catch (Exception e) {
+//													Toast.makeText(
+//															UpAndDownActivity.this,
+//															getString(R.string.wifi_error),
+//															Toast.LENGTH_SHORT)
+//															.show();
+//												}
+//											}
+//										});
+//								builder.setNegativeButton(
+//										getString(R.string.cancle),
+//										new DialogInterface.OnClickListener() {
+//											public void onClick(
+//													DialogInterface dialog,
+//													int which) {
+//												dialog.cancel();
+//											}
+//										});
+//								builder.show();
+//
+//								DownAdapter.this.notifyDataSetChanged();
+//							}
+//						});
+//			} else {
+//				left_listview_item_delete_icon.setVisibility(View.GONE);
+//			}
 
 			return arg1;
 

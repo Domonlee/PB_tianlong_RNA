@@ -150,15 +150,13 @@ public class RunExperimentActivity extends Activity {
 			String info = (String) msg.obj;
 //			Log.w(TAGINFO, sendInfo.toString());
 			if (info.length() != 0) {
-				Log.i(TAGINFO, "发送数据回复:--" + info);
 				sendControlNum++;
+				Log.i(TAGINFO, "发送数据回复:--" + info);
 				 Log.i(TAGINFO, "发送数据控制NUM:" + sendControlNum);
-				if (sendControlNum >= 3
-						&& sendControlNum <= (sendInfo.size() - 3)) {
+				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
 						try {
-							wifiUtlis.sendMessage(Utlis.getMessageByte(
-									sendInfo.get(sendControlNum),
+							wifiUtlis.sendMessage(Utlis.getMessageByte( sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0));
 							Log.w(TAGINFO, "1--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getMessageByte(sendInfo.get(sendControlNum),
 									sendInfo.get(sendControlNum + 1), 0)+"");
@@ -172,7 +170,7 @@ public class RunExperimentActivity extends Activity {
 							runNum = 0;
 						}
 					} else {
-						sendControlNum--;
+						sendControlNum-= 2;
 						try {
 							wifiUtlis.sendMessage(Utlis.getMessageByte(
 									sendInfo.get(sendControlNum),
@@ -210,10 +208,8 @@ public class RunExperimentActivity extends Activity {
 							// wifiUtlis.sendMessage(Utlis.getseleteMessage(6));
 							try {
 								sendFileFlag = false;
-								wifiUtlis
-										.sendMessage(Utlis.getseleteMessage(5));
-								wifiUtlis
-										.sendMessage(Utlis.getseleteMessage(2));
+								wifiUtlis.sendMessage(Utlis.getseleteMessage(5));
+								wifiUtlis.sendMessage(Utlis.getseleteMessage(2));
 								new Thread(selectInfoThread).start();
 							} catch (Exception e) {
 								Toast.makeText(RunExperimentActivity.this,
@@ -225,7 +221,7 @@ public class RunExperimentActivity extends Activity {
 						}
 					} else {
 						try {
-							sendControlNum--;
+							sendControlNum-= 2;
 							wifiUtlis.sendMessage(Utlis.getbyteList(
 									sendInfo.get(sendControlNum), 0));
 							Log.w(TAGINFO, "4--->sendConNum = "+ sendControlNum+",sendMsg = " +Utlis.getbyteList(
@@ -256,8 +252,7 @@ public class RunExperimentActivity extends Activity {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
 						// 11.07 加快发送速度
-
-						 Thread.sleep(1000);
+//						Thread.sleep(1000);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
