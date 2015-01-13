@@ -409,6 +409,7 @@ public class UpAndDownActivity extends Activity {
 		public void handleMessage(Message msg) {
 			String info = (String) msg.obj;
 			if (info.length() != 0) {
+				Log.i("上传下载", "发送数据回复:--" + info);
 				sendControlNum++;
 				if (sendControlNum >= 3
 						&& sendControlNum <= (infoList.size() - 3)) {

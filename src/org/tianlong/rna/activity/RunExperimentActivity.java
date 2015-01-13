@@ -152,7 +152,7 @@ public class RunExperimentActivity extends Activity {
 			if (info.length() != 0) {
 				sendControlNum++;
 				Log.i(TAGINFO, "发送数据回复:--" + info);
-				 Log.i(TAGINFO, "发送数据控制NUM:" + sendControlNum);
+				Log.i(TAGINFO, "发送数据控制NUM:" + sendControlNum);
 				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
 						try {
@@ -243,11 +243,9 @@ public class RunExperimentActivity extends Activity {
 	private Thread sendFileThread = new Thread() {
 		public void run() {
 			while (sendFileFlag) {
-
 				Message message = sendFileHandler.obtainMessage();
 				try {
 					receiveMeg = wifiUtlis.getMessage();
-
 					if (receiveMeg.length() != 0) {
 						message.obj = receiveMeg;
 						sendFileHandler.sendMessage(message);
