@@ -149,10 +149,11 @@ public class RunExperimentActivity extends Activity {
 		public void handleMessage(Message msg) {
 			String info = (String) msg.obj;
 //			Log.w(TAGINFO, sendInfo.toString());
-			if (info.length() != 0) {
+			//1.14加入条件判断
+			if (info.length() != 0 && !info.toString().equals("ff ff 0b 51 02 06 ff 00 00 61 fe ") &&!info.toString().equals("ff ff 0b 51 02 06 ff 01 05 67 fe ")) {
 				sendControlNum++;
 				Log.i(TAGINFO, "发送数据回复:--" + info);
-				Log.i(TAGINFO, "发送数据控制NUM:" + sendControlNum);
+				Log.i(TAGINFO, "发送数据控制NUM初始:" + sendControlNum);
 				if (sendControlNum >= 3 && sendControlNum <= (sendInfo.size() - 3)) {
 					if (Utlis.checkReceive(info, 0)) {
 						try {
@@ -162,6 +163,7 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum + 1), 0)+"");
 							printHexString(Utlis.getMessageByte( sendInfo.get(sendControlNum), sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
+				Log.i(TAGINFO, "发送数据控制NUM controlnum >3:" + sendControlNum);
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -180,6 +182,7 @@ public class RunExperimentActivity extends Activity {
 									sendInfo.get(sendControlNum + 1), 0)+"");
 							printHexString(Utlis.getMessageByte( sendInfo.get(sendControlNum), sendInfo.get(sendControlNum + 1), 0));
 							sendControlNum++;
+				Log.i(TAGINFO, "发送数据控制NUM controlnum >3 else:" + sendControlNum);
 						} catch (Exception e) {
 							Toast.makeText(RunExperimentActivity.this,
 									getString(R.string.wifi_error),
@@ -731,6 +734,9 @@ public class RunExperimentActivity extends Activity {
 											wifiUtlis.sendMessage(Utlis
 													.getbyteList(
 															sendInfo.get(0), 0));
+											//TODO 第一次发送
+											Log.i("第一次发送", sendInfo.get(0));
+											printHexString(Utlis.getbyteList(sendInfo.get(0), 0));
 											new Thread(sendFileThread).start();
 											builder.setMessage(getString(R.string.run_exp_send_info));
 											builder.setCancelable(false);
@@ -1573,8 +1579,6 @@ public class RunExperimentActivity extends Activity {
 		controlNum = 0;
 		createTable();
 		
-		Log.w("info", "inn()");
-
 		if (viewDrawable != null) {
 			if (viewDrawable.isRunning()) {
 				viewDrawable.stop();
